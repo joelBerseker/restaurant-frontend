@@ -1,6 +1,31 @@
+<script setup>
+import { BasicModel } from "@/models/BasicModel";
+import { ref } from "vue";
+
+const item = ref(new BasicModel());
+const form = ref(null);
+</script>
 <template>
   <div class="about">
     <h1>This is an about page</h1>
+    <g-form
+      v-slot="{ element, validateLabel }"
+      :elementModel="BasicModel"
+      ref="form"
+    >
+      <g-input-val
+        v-model="element.table_name"
+        :label="element.table_name.name"
+        helpText="Nose que poner"
+        @validate="validateLabel"
+      />
+      <g-input-val
+        v-model="element.table_description"
+        :label="element.table_description.name"
+        helpText="Nose que poner"
+        @validate="validateLabel"
+      />
+    </g-form>
   </div>
 </template>
 

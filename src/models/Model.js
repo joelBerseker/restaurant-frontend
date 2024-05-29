@@ -1,35 +1,47 @@
-import { isEmpty } from "@/helpers/Utilities";
-import { noValid } from "@/helpers/Validations";
+import { isEmpty } from "@/helpers/utilities";
+import { noValid, validations } from "@/helpers/validations";
 
 export class Model {
-  validation = {
-    value: false,
-  };
-  status = {
-    value: 1, // int
-  };
-  formatData() {}
-  errorValidation(key, error) {
-    const val = this[key];
-    val.validation = noValid(error);
-  }
+  id = { value: null };
+  status = { value: 1 };
 
-  getValue(key) {
-    const val = this[key];
-
-    return isEmpty(val.value) ? val.default : val.value;
-  }
-  getValueLabel(_data) {
-    return isEmpty(_data.value) ? _data.default : _data.value;
-  }
-  resetValue(key) {
+  resetLabelValue(key) {
     const val = this[key];
     val.value = null;
-    val.validation = {};
   }
-  resetValidation(key) {
+  resetLabelValidation(key) {
     const val = this[key];
     val.validation = {};
+  }
+  resetLabel(key) {
+    resetLabelValue(key);
+    resetLabelValidation(key);
+  }
+  validateLabel(_data) {
+    let resp = false;
+    if (_data.required === false) {
+      resp = validations.noRequired(_data);
+      if (resp.isValid) {
+        _data.validation = resp;
+        return;
+      }
+    } else {
+      resp = validations.required(_data);
+      if (!resp.isValid) {
+        _data.validation = resp;
+        return;
+      }
+    }
+
+    console.log("SIGUI VERIFICANDO");
+    console.log(_data);
+    for (let i = 0; i < _data.validate.length; i++) {
+      const element = _data.validate[i];
+      console.log(element);
+      resp = validations[element](_data);
+      if (!resp.isValid) break;
+    }
+    _data.validation = resp;
   }
   validate() {
     let resp = true;
@@ -48,8 +60,9 @@ export class Model {
         resp = resp && this[key].validation.isValid;
       }
     }
-    this.validation.value = resp;
+    return resp;
   }
+
   copy(data) {
     for (var key in data) {
       if (this[key].copy !== false)
@@ -90,7 +103,21 @@ export class Model {
       status: status_new,
     };
   }
-  getViewText(_key, _value) {
-    return this[_key].value === null ? "No definido" : this[_key].value[_value];
+
+  addData() {
+    return {
+      table_name: this.table_name.value,
+      table_description: isEmpty(this.table_description.value)
+        ? this.table_description.default
+        : this.table_description.value,
+    };
+  }
+  getData() {
+    return {
+      id: this.id.value,
+      name: this.table_name.value,
+      description: this.table_description.value,
+      status: this.status.value,
+    };
   }
 }

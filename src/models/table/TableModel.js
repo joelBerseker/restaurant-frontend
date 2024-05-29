@@ -1,6 +1,5 @@
-
 import { validations } from "@/helpers/validations";
-import { isEmpty } from "@/helpers/Utilities";
+import { isEmpty } from "@/helpers/utilities";
 import { Model } from "@/models/";
 
 export class TableModel extends Model {

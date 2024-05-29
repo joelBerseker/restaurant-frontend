@@ -11,7 +11,7 @@ const useToast = useToastStore();
 const toastRef = ref(null);
 
 function showToast(_text) {
-  useToast.show("validation_error");
+  useToast.show("validation_error", "adicional", ["unio", "dos"]);
 }
 </script>
 

@@ -7,7 +7,7 @@
     "gs": "node scripts/generateService.js",
     "gm": "node scripts/generateModel.js",
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --mode production",
     "preview": "vite preview"
   },
   "dependencies": {

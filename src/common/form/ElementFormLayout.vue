@@ -1,28 +1,23 @@
 <script setup>
 import { isEmpty } from "@/helpers/utilities";
 import { computed, ref } from "vue";
-
 const props = defineProps({
   id: { default: null },
-
   label: { default: null },
   value: { default: null },
-  helpText: { default: "" },
-  showHelpText: { default: true },
-  disabled: { default: true },
-  loading: { default: false },
-  viewMode: { default: true },
-  clearButton: { default: true },
   type: { default: null },
   validation: { default: null },
-
+  showHelpText: { default: true },
+  disabled: { default: true },
+  viewMode: { default: true },
+  clearButton: { default: true },
+  loading: { default: false },
+  helpText: { default: "" },
   contentClass: { default: "" },
   labelClass: { default: "" },
 });
 const emit = defineEmits(["clear"]);
-function clear() {
-  emit("clear");
-}
+const isHover = ref(null);
 const showClearButton = computed(() => {
   let resp = false;
   if (
@@ -36,10 +31,8 @@ const showClearButton = computed(() => {
   }
   return resp;
 });
-
 const showValidationIcon = computed(() => {
   let resp = false;
-
   if (
     props.validation !== null &&
     props.validation.isValid !== undefined &&
@@ -47,11 +40,11 @@ const showValidationIcon = computed(() => {
   ) {
     resp = true;
   }
-
   return resp;
 });
-
-const isHover = ref(null);
+function clear() {
+  emit("clear");
+}
 </script>
 <template>
   <div

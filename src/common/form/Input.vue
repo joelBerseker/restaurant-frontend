@@ -6,21 +6,21 @@ import ElementFormLayout from "@/common/form/ElementFormLayout.vue";
 const props = defineProps({
   modelValue: { default: null },
   id: { default: null },
-  viewMode: { default: true },
-  type: { default: "text" },
-  disabled: { default: false },
   placeholder: { default: null },
   display: { default: null },
-  inputClass: { default: "" },
-  viewClass: { default: "" },
-  loading: { default: false },
   label: { default: null },
-  labelClass: { default: "" },
-  helpText: { default: "" },
-  showHelpText: { default: true },
-  uppercase: { default: true },
   formatInBlur: { default: null },
   validation: { default: null },
+  viewMode: { default: true },
+  showHelpText: { default: true },
+  uppercase: { default: true },
+  disabled: { default: false },
+  loading: { default: false },
+  type: { default: "text" },
+  inputClass: { default: "" },
+  viewClass: { default: "" },
+  labelClass: { default: "" },
+  helpText: { default: "" },
 });
 const emit = defineEmits(["update:modelValue", "input", "clear"]);
 const inputRef = ref(null);
@@ -60,17 +60,14 @@ function displayText() {
 const formatInBlurOptions = reactive({
   init(_data) {
     if (_data === null) return;
-
     if (this[_data] !== undefined) {
       this[_data](value.value);
     }
   },
   price() {
     let number = Number(value.value);
-
     if (isNaN(number)) return;
     if (value.value === null) return;
-
     value.value = number.toFixed(2);
   },
 });

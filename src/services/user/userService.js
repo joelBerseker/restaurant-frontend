@@ -3,6 +3,8 @@ import { handleError } from "@/helpers";
 import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
 import { UserModel } from "@/models";
+import { useToastStore } from "@/stores";
+const useToast = useToastStore();
 
 const servicePath = "/user/user";
 export const userService = {
@@ -89,6 +91,7 @@ export const userService = {
       const data_new = dataTransform.transformApiData(response.data, UserModel);
       return data_new;
     } catch (error) {
+      useToast.show("add_error");
       handleError(error);
     }
   },

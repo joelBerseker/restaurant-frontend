@@ -1,11 +1,10 @@
 import { defineStore } from "pinia";
-import Cookies from "js-cookie";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
     User: "",
-    token: Cookies.get("token") || "", // Obtener el token de la cookie si existe
-    refresh: Cookies.get("refresh") || "",
+    token: "", // Obtener el token de la cookie si existe
+    refresh: "",
     id: "",
     mayus: true,
     permises: {},
@@ -26,8 +25,7 @@ export const useUserStore = defineStore("user", {
     logout() {
       console.log("entre a realizar un logout");
       this.token = ""; // Limpiar el token
-      Cookies.remove("token"); // Eliminar la cookie que contiene el token
-      Cookies.remove("refresh"); // Eliminar la cookie que contiene el token
+
       this.$reset();
     },
     updateUser(new_user) {
@@ -37,16 +35,6 @@ export const useUserStore = defineStore("user", {
       this.token = new_token;
       this.refresh = new_refresh;
       // Guardar el token en la cookie
-      Cookies.set("token", new_token, {
-        expires: 1,
-        sameSite: "Strict",
-        secure: false,
-      });
-      Cookies.set("refresh", new_refresh, {
-        expires: 1,
-        sameSite: "Strict",
-        secure: false,
-      });
     },
     updateId(new_id) {
       this.id = new_id;

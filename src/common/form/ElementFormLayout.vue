@@ -25,7 +25,6 @@ function clear() {
 }
 const showClearButton = computed(() => {
   let resp = false;
-
   if (
     !props.loading &&
     !isEmpty(props.value) &&
@@ -38,28 +37,15 @@ const showClearButton = computed(() => {
   return resp;
 });
 
-const validationIcon = computed(() => {
-  let resp = {
-    show: false,
-    iconClass: null,
-    icon: "fa-solid fa-check",
-  };
+const showValidationIcon = computed(() => {
+  let resp = false;
+
   if (
     props.validation !== null &&
     props.validation.isValid !== undefined &&
     !showClearButton.value
   ) {
-    resp.show = true;
-    if (props.validation.isValid) {
-      resp.iconClass = "g-valid-icon";
-      resp.icon = "fa-solid fa-check";
-      if (isEmpty(props.value)) {
-        resp.show = false;
-      }
-    } else {
-      resp.iconClass = "g-invalid-icon";
-      resp.icon = "fa-solid fa-exclamation";
-    }
+    resp = true;
   }
 
   return resp;
@@ -69,7 +55,7 @@ const isHover = ref(null);
 </script>
 <template>
   <div
-    class="g-form-element"
+    :class="['g-form-element', validation.validationClass, type]"
     @mouseover="isHover = true"
     @mouseleave="isHover = false"
   >
@@ -80,10 +66,10 @@ const isHover = ref(null);
       <slot name="view"></slot>
     </div>
     <div v-show="!(viewMode && disabled)" class="g-form-container">
-      <div class="g-form-container-aditional">
+      <main class="g-form-container-aditional">
         <div class="g-form-wrapper">
           <slot name="form"></slot>
-          <div v-show="loading" :class="['loading ', type]">
+          <div v-show="loading" class="loading">
             <span
               class="spinner-border spinner-border-sm"
               role="status"
@@ -91,73 +77,59 @@ const isHover = ref(null);
             >
             </span>
           </div>
-          <div v-show="!loading && showClearButton" :class="['close', type]">
+          <div v-show="!loading && showClearButton" class="close">
             <g-button-x-min @click="clear()" title="Limpiar" />
           </div>
-          <div
-            v-show="!loading && validationIcon.show"
-            :class="['validation-icon', validationIcon.iconClass, type]"
-          >
-            <font-awesome-icon :icon="validationIcon.icon" />
+          <div v-show="!loading && showValidationIcon" class="validation-icon">
+            <font-awesome-icon
+              v-if="!isEmpty(validation.icon)"
+              :icon="validation.icon"
+            />
           </div>
         </div>
         <slot name="aditional"></slot>
-      </div>
-      <div v-if="!isEmpty(helpText) && showHelpText" class="g-message">
-        <font-awesome-icon icon="fa-solid fa-circle-info" />
-        {{ helpText }}
-      </div>
+      </main>
+      <footer>
+        <div v-if="!isEmpty(validation.message)" class="validation-message">
+          <font-awesome-icon :icon="validation.icon_text" />
+
+          {{ validation.message }}
+        </div>
+        <div v-if="!isEmpty(helpText) && showHelpText" class="g-message">
+          <font-awesome-icon icon="fa-solid fa-circle-info" />
+          {{ helpText }}
+        </div>
+      </footer>
     </div>
   </div>
 </template>
 <style>
-.important-label {
-  color: var(--g-important-text-2);
+.g-input:focus,
+.g-select:focus {
+  box-shadow: 0 0 0 3px rgba(184, 184, 184, 0.25) inset;
+  border-color: var(--g-wb500);
 }
-.show-extra > .g-form-container > .g-input {
-  padding-right: 2.3rem;
+.valid > div > main > div > :is(.g-input) {
+  border-color: var(--color-s);
 }
-.show-extra > .g-form-container > .g-select {
-  background-position: right 2rem center !important;
-  padding-right: 3.2rem;
+.valid > div > main > div > :is(.g-input:focus) {
+  box-shadow: 0 0 0 3px rgba(var(--color-s-rgb), 0.25) inset;
 }
-.label-no-color label {
-  color: var(--g-wb500) !important;
+.no-valid > div > main > div > :is(.g-input) {
+  border-color: var(--color-d);
+}
+.no-valid > div > main > div > :is(.g-input:focus) {
+  box-shadow: 0 0 0 3px rgba(var(--color-d-rgb), 0.25) inset;
 }
 </style>
-
 <style scoped>
 .g-label {
   width: 100%;
 }
-.validation-icon {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: 0.6rem;
-  border-radius: 999rem;
-
-  height: 20px;
-  width: 20px;
-  transition: 0.3s;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.g-valid-icon {
-  background-color: var(--color-s);
-  color: var(--color-w);
-}
-.g-invalid-icon {
-  background-color: var(--color-d);
-  color: var(--color-w);
-}
-.g-message {
+.g-message,
+.validation-message {
   font-size: 13px !important;
   color: var(--g-wb500);
-}
-.g-message.no-valid {
-  color: var(--g-danger);
 }
 .g-form-element {
   width: 100%;
@@ -165,7 +137,6 @@ const isHover = ref(null);
 .g-form-wrapper {
   position: relative;
 }
-
 .loading {
   color: var(--g-wb800);
   position: absolute;
@@ -180,17 +151,47 @@ const isHover = ref(null);
   transform: translateY(-50%);
   right: 0.6rem;
 }
-.loading.textarea {
+.validation-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0.6rem;
+  border-radius: 999rem;
+  height: 20px;
+  width: 20px;
+  transition: 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-w);
+}
+.textarea > div > main > div > .loading {
   top: 0.4rem;
   transform: translateY(0);
 }
-.close.textarea,
-.close.inputimg,
-.g-invalid-icon.textarea,
-.g-valid-icon.textarea,
-.g-invalid-icon.inputimg,
-.g-valid-icon.inputimg {
+.textarea > div > main > div > .validation-icon,
+.textarea > div > main > div > .close {
   top: 0.35rem;
   transform: translateY(0);
+}
+/*NO VALID */
+.no-valid > div > footer > .validation-message {
+  color: var(--color-d);
+}
+.no-valid > .g-label {
+  color: var(--color-d);
+}
+.no-valid > div > main > div > .validation-icon {
+  background-color: var(--color-d);
+}
+/*VALID */
+.valid > div > footer > .validation-message {
+  color: var(--color-s);
+}
+.valid > .g-label {
+  color: var(--color-s);
+}
+.valid > div > main > div > .validation-icon {
+  background-color: var(--color-s);
 }
 </style>

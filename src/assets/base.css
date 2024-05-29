@@ -26,8 +26,11 @@
   --color-w: white;
   --color-b: black;
 
-  --color-d: red;
-  --color-s: rgb(9, 255, 0);
+  --color-d: rgb(255, 0, 0);
+  --color-s: rgb(8, 255, 0);
+
+  --color-d-rgb: 255, 0, 0;
+  --color-s-rgb: 8, 255, 0;
 }
 
 /* semantic color variables for this project */

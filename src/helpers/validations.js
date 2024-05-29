@@ -1,11 +1,13 @@
 import { isEmpty, dateDiffInDays } from "./utilities";
 import { globalSettings } from "./constants/globalSettings";
+import { icon } from "@fortawesome/fontawesome-svg-core";
 
 function valid(text = "") {
   return {
     isValid: true,
     message: text,
-    icon: "bi bi-exclamation-circle",
+    icon: "fa-solid fa-check",
+    icon_text: "fa-solid fa-circle-exclamation",
     validationClass: "valid",
   };
 }
@@ -13,7 +15,9 @@ function noValid(text = "") {
   return {
     isValid: false,
     message: text,
-    icon: "bi bi-exclamation-circle",
+    icon: "fa-solid fa-exclamation",
+
+    icon_text: "fa-solid fa-circle-exclamation",
     validationClass: "no-valid",
   };
 }
@@ -21,7 +25,7 @@ function validating() {
   return {
     isValid: false,
     message: "Validando...",
-    icon: "bi bi-info-circle",
+    icon_text: "fa-solid fa-circle-info",
     validationClass: "normal",
   };
 }
@@ -29,7 +33,7 @@ function noRequired() {
   return {
     isValid: true,
     message: "No requerido",
-    icon: "bi bi-info-circle",
+    icon_text: "fa-solid fa-circle-info",
     validationClass: "normal",
   };
 }

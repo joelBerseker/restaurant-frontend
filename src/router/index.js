@@ -1,18 +1,36 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
-      name: "home",
-      component: HomeView,
+      name: "system",
+      component: () => import("@/components/system/SystemView.vue"),
+      meta: {
+        requiresAuth: false, // Esta ruta requiere autenticación
+      },
+      children: [],
     },
     {
-      path: "/about",
-      name: "about",
-      component: () => import("../views/AboutView.vue"),
+      path: "/autentication",
+      name: "auth",
+      component: () => import("@/components/auth/AuthView.vue"),
+      meta: {
+        requiresAuth: false, // Esta ruta no requiere autenticación
+        moduleid: 0,
+      },
+      children: [
+        {
+          path: "/login",
+          name: "login",
+          component: () => import("@/components/auth/LoginView.vue"),
+          meta: {
+            requiresAuth: false, // Esta ruta no requiere autenticación
+            moduleid: 0,
+          },
+        },
+      ],
     },
   ],
 });

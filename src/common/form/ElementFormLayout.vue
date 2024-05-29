@@ -48,7 +48,11 @@ function clear() {
 </script>
 <template>
   <div
-    :class="['g-form-element', validation.validationClass, type]"
+    :class="[
+      'g-form-element',
+      validation === null ? '' : validation.validationClass,
+      type,
+    ]"
     @mouseover="isHover = true"
     @mouseleave="isHover = false"
   >
@@ -75,7 +79,7 @@ function clear() {
           </div>
           <div v-show="!loading && showValidationIcon" class="validation-icon">
             <font-awesome-icon
-              v-if="!isEmpty(validation.icon)"
+              v-if="validation !== null && !isEmpty(validation.icon)"
               :icon="validation.icon"
             />
           </div>
@@ -83,7 +87,10 @@ function clear() {
         <slot name="aditional"></slot>
       </main>
       <footer>
-        <div v-if="!isEmpty(validation.message)" class="validation-message">
+        <div
+          v-if="validation !== null && !isEmpty(validation.message)"
+          class="validation-message"
+        >
           <font-awesome-icon :icon="validation.icon_text" />
 
           {{ validation.message }}

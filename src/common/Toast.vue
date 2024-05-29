@@ -1,12 +1,24 @@
 <script setup>
 import { Toast } from "bootstrap";
-import { computed, ref, reactive } from "vue";
+import { ref, reactive, watch } from "vue";
 import { toastText } from "@/helpers/constants/toastText";
+import { storeToRefs } from "pinia";
+
+import { useToastStore } from "@/stores/systemStore";
+const useToast = useToastStore();
 
 const text = ref(null);
 const icon = ref("fa-solid fa-circle-check");
 const title = ref(null);
 const toastClass = ref(null);
+const { count } = storeToRefs(useToast);
+
+watch(count, (newValue, oldValue) => {
+  console.log(newValue);
+
+  console.log(useToast.text);
+  show(useToast.text, useToast.aditional);
+});
 
 const toastType = reactive([
   {
@@ -29,11 +41,6 @@ const toastType = reactive([
 ]);
 
 function show(_text, _additional = null) {
-  console.log({ _text });
-  console.log(toastText[_text]);
-
-  console.log({ _additional });
-
   let type = toastText[_text].type;
 
   text.value = toastText[_text].text;
@@ -46,15 +53,16 @@ function show(_text, _additional = null) {
   var myToast = Toast.getOrCreateInstance(myToastEl);
   myToast.show();
 }
-defineExpose({
-  show,
-});
 </script>
 <template>
-  <div class="position-fixed top-0 end-0 p-3" style="z-index: 10000">
+  <div
+    class="position-fixed top-0 end-0 m-3"
+    style="z-index: 10000"
+    :class="[toastClass]"
+  >
     <div
       id="myToastEl"
-      :class="['toast hide', toastClass]"
+      class="toast hide"
       role="alert"
       aria-live="assertive"
       aria-atomic="true"
@@ -158,11 +166,11 @@ defineExpose({
 .toast-danger .content-toast::before {
   background-color: var(--color-d);
 }
-.toast.toast-danger .icon-container,
-.toast.toast-danger .title-toast {
+.toast-danger .icon-container,
+.toast-danger .title-toast {
   color: var(--color-d);
 }
-.toast.toast-danger .content-toast {
+.toast-danger .content-toast {
   border-color: var(--color-d) !important;
 }
 .toast-danger .button-close:hover {
@@ -177,12 +185,12 @@ defineExpose({
 .toast-success .content-toast::before {
   background-color: var(--color-s);
 }
-.toast.toast-success .icon-container,
-.toast.toast-success .title-toast {
+.toast-success .icon-container,
+.toast-success .title-toast {
   color: var(--color-s);
 }
 
-.toast.toast-success .content-toast {
+.toast-success .content-toast {
   border-color: var(--color-s) !important;
 }
 

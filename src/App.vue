@@ -5,10 +5,13 @@ import { computed, ref, reactive } from "vue";
 import HelloWorld from "./components/HelloWorld.vue";
 import Toast from "./common/Toast.vue";
 
+import { useToastStore } from "@/stores/systemStore";
+const useToast = useToastStore();
+
 const toastRef = ref(null);
 
 function showToast(_text) {
-  toastRef.value.show("validation_error");
+  useToast.show("validation_error");
 }
 </script>
 
@@ -32,6 +35,7 @@ function showToast(_text) {
     </div>
   </header>
   <button @click="showToast">asdasd</button>
+
   <Toast ref="toastRef" />
   <RouterView />
 </template>

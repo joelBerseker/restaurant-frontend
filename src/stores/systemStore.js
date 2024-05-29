@@ -30,7 +30,7 @@ export const useSystemStore = defineStore("system", {
   },
   persist: true,
 });
-export const useSystemStoreNoPersist = defineStore("system_no_persist", {
+export const useSystemUtilStore = defineStore("system_util", {
   state: () => ({
     loading_app: true,
     loading_app_message: "Bienvenido, espere por favor.",
@@ -48,6 +48,29 @@ export const useSystemStoreNoPersist = defineStore("system_no_persist", {
     },
     loadingRestart() {
       this.$reset();
+    },
+  },
+});
+
+export const useToastStore = defineStore("toast", {
+  state: () => ({
+    toast_text: null,
+    toast_count: 0,
+    toast_aditional: null,
+  }),
+  getters: {
+    text: (state) => state.toast_text,
+    count: (state) => state.toast_count,
+    aditional: (state) => state.toast_aditional,
+  },
+  actions: {
+    show(_text, _aditional) {
+      this.toast_text = _text;
+      this.toast_aditional = _aditional;
+      this.toast_count++;
+      if (this.toast_count > 10) {
+        this.toast_count = 0;
+      }
     },
   },
 });

@@ -27,45 +27,32 @@ if (!modelName) {
 }
 
 const modelContent = `
-import { validations } from "@/helpers/validations";
-import { isEmpty } from "@/helpers/Utilities";
 import { Model } from "@/models/";
 
 export class ${modelName}Model extends Model {
-  id = {
-    value: null,
-  };
+
   ${modelName.toLowerCase()}_name = {
+    id: "${modelName.toLowerCase()}_name",
+    name: "Nombre",
+
     value: null,
+
     validation: {},
-    validate() {
-      this.validation = validations.text(this.value, 3, 25);
-    },
+    validate: ["length"],
   };
   ${modelName.toLowerCase()}_description = {
+    id: "${modelName.toLowerCase()}_description",
+    name: "Descripción",
+    type: "textarea",
+
     value: null,
-    validation: {},
-    validate() {
-      this.validation = validations.text(this.value, 3, 100, false);
-    },
     default: "Sin descripción",
+
+    required: false,
+    validation: {},
+    validate: ["length"],
   };
-  addData() {
-    return {
-      ${modelName.toLowerCase()}_name: this.${modelName.toLowerCase()}_name.value,
-      ${modelName.toLowerCase()}_description: isEmpty(this.${modelName.toLowerCase()}_description.value)
-        ? this.${modelName.toLowerCase()}_description.default
-        : this.${modelName.toLowerCase()}_description.value,
-    };
-  }
-  getData() {
-    return {
-      id: this.id.value,
-      name: this.${modelName.toLowerCase()}_name.value,
-      description: this.${modelName.toLowerCase()}_description.value,
-      status: this.status.value,
-    };
-  }
+  
   getDataOptions() {
     return {
       value: this.id.value,

@@ -1,11 +1,26 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterLink, RouterView } from "vue-router";
+import { computed, ref, reactive } from "vue";
+
+import HelloWorld from "./components/HelloWorld.vue";
+import Toast from "./common/Toast.vue";
+
+const toastRef = ref(null);
+
+function showToast(_text) {
+  toastRef.value.show("validation_error");
+}
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <img
+      alt="Vue logo"
+      class="logo"
+      src="@/assets/logo.svg"
+      width="125"
+      height="125"
+    />
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
@@ -16,7 +31,8 @@ import HelloWorld from './components/HelloWorld.vue'
       </nav>
     </div>
   </header>
-
+  <button @click="showToast">asdasd</button>
+  <Toast ref="toastRef" />
   <RouterView />
 </template>
 

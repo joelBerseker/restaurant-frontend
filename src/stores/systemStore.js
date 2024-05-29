@@ -57,17 +57,20 @@ export const useToastStore = defineStore("toast", {
     toast_text: null,
     toast_count: 0,
     toast_aditional: null,
+    toast_list: [],
   }),
   getters: {
     text: (state) => state.toast_text,
     count: (state) => state.toast_count,
     aditional: (state) => state.toast_aditional,
+    list: (state) => state.toast_list,
   },
   actions: {
-    show(_text, _aditional) {
+    show(_text, _aditional = null, _list = []) {
       this.toast_text = _text;
       this.toast_aditional = _aditional;
       this.toast_count++;
+      this.toast_list = _list;
       if (this.toast_count > 10) {
         this.toast_count = 0;
       }

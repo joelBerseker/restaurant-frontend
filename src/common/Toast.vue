@@ -11,13 +11,13 @@ const text = ref(null);
 const icon = ref("fa-solid fa-circle-check");
 const title = ref(null);
 const toastClass = ref(null);
+const list = ref([]);
+const aditional = ref(null);
+
 const { count } = storeToRefs(useToast);
 
 watch(count, (newValue, oldValue) => {
-  console.log(newValue);
-
-  console.log(useToast.text);
-  show(useToast.text, useToast.aditional);
+  show(useToast.text, useToast.aditional, useToast.list);
 });
 
 const toastType = reactive([
@@ -40,13 +40,16 @@ const toastType = reactive([
   },
 ]);
 
-function show(_text, _additional = null) {
+function show(_text, _additional = null, _list = []) {
   let type = toastText[_text].type;
 
   text.value = toastText[_text].text;
   icon.value = toastType[type].icon;
   toastClass.value = toastType[type].toastClass;
   title.value = toastType[type].title;
+
+  list.value = _list;
+  aditional.value = _additional;
 
   var myToastEl = document.getElementById("myToastEl");
   myToastEl.classList.remove("show");
@@ -88,7 +91,19 @@ function show(_text, _additional = null) {
               </div>
 
               <div class="text-toast">
-                {{ text }}
+                <div>
+                  {{ text }}
+                </div>
+                <div v-show="aditional !== null">
+                  {{ aditional }}
+                </div>
+                <div v-show="list.length > 0">
+                  <ul class="list-errors">
+                    <li v-for="(element, index) in list" :key="index">
+                      {{ element }}
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -99,6 +114,9 @@ function show(_text, _additional = null) {
 </template>
 
 <style scoped>
+.list-errors {
+  margin: 0;
+}
 .toast:hover .content-toast::before {
   animation: none !important;
 }

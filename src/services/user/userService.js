@@ -53,6 +53,8 @@ export const userService = {
       searches,
       // Otros parámetros de filtro que puedas necesitar
     };
+    console.log("Restaurant Frontend: 1");
+
     let filteredFilters = Object.entries(filters)
       .filter(
         ([key, value]) => value !== undefined && value !== null && value !== ""

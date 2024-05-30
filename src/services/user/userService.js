@@ -4,9 +4,8 @@ import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
 import { UserModel } from "@/models";
 import { useToastStore } from "@/stores";
-const useToast = useToastStore();
 
-const servicePath = "/user/user";
+const servicePath = "/user/users";
 export const userService = {
   async getUser(user_id) {
     try {
@@ -26,47 +25,51 @@ export const userService = {
     }
   },
   async getListUser(filterParams = null) {
-    const {
-      search,
-      searchBy,
-      status,
-      order,
-      orderBy,
-      specific_date,
-      end_date,
-      start_date,
-      interval,
-      year_date,
-      searches,
-      // Otros parámetros de filtro que puedas necesitar
-      table_number,
-    } = filterParams;
+    let filteredFilters = "";
 
-    const filters = {
-      orderBy,
-      order,
-      status,
-      search,
-      end_date,
-      start_date,
-      interval,
-      specific_date,
-      year_date,
-      searches,
-      // Otros parámetros de filtro que puedas necesitar
-    };
-    console.log("Restaurant Frontend: 1");
+    if (filterParams) {
+      const {
+        search,
+        searchBy,
+        status,
+        order,
+        orderBy,
+        specific_date,
+        end_date,
+        start_date,
+        interval,
+        year_date,
+        searches,
+        // Otros parámetros de filtro que puedas necesitar
+        table_number,
+      } = filterParams;
 
-    let filteredFilters = Object.entries(filters)
-      .filter(
-        ([key, value]) => value !== undefined && value !== null && value !== ""
-      )
-      .map(([key, value]) => `${key}=${value}`)
-      .join("&");
+      const filters = {
+        orderBy,
+        order,
+        status,
+        search,
+        end_date,
+        start_date,
+        interval,
+        specific_date,
+        year_date,
+        searches,
+        // Otros parámetros de filtro que puedas necesitar
+      };
 
-    if (search && searchBy) {
-      const searchByParam = `searchBy=${searchBy.join(",")}`;
-      filteredFilters += searchByParam ? `&${searchByParam}` : "";
+      filteredFilters = Object.entries(filters)
+        .filter(
+          ([key, value]) =>
+            value !== undefined && value !== null && value !== ""
+        )
+        .map(([key, value]) => `${key}=${value}`)
+        .join("&");
+
+      if (search && searchBy) {
+        const searchByParam = `searchBy=${searchBy.join(",")}`;
+        filteredFilters += searchByParam ? `&${searchByParam}` : "";
+      }
     }
 
     try {
@@ -79,6 +82,7 @@ export const userService = {
       return quotes;
     } catch (error) {
       handleError(error);
+      throw error; // Asegurarse de lanzar el error para manejarlo adecuadamente en el contexto superior
     }
   },
 
@@ -91,6 +95,7 @@ export const userService = {
       const data_new = dataTransform.transformApiData(response.data, UserModel);
       return data_new;
     } catch (error) {
+      const useToast = useToastStore();
       useToast.show("add_error");
       handleError(error);
     }

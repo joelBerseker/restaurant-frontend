@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 export const useUserStore = defineStore("user", {
   state: () => ({
     User: "",
-    token: "", // Obtener el token de la cookie si existe
+    token: "",
     refresh: "",
     id: "",
     mayus: true,
@@ -34,7 +34,6 @@ export const useUserStore = defineStore("user", {
     updateToken(new_token, new_refresh) {
       this.token = new_token;
       this.refresh = new_refresh;
-      // Guardar el token en la cookie
     },
     updateId(new_id) {
       this.id = new_id;
@@ -43,7 +42,7 @@ export const useUserStore = defineStore("user", {
       return this.User.is_p;
     },
     isUser() {
-      return this.User.is_user;
+      return true;
     },
     getRol() {
       return this.User.rol;

@@ -7,6 +7,8 @@ import { createApp } from "vue";
 import { createPinia } from "pinia";
 import { registerComponents } from "@/registerComponents";
 
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
+
 import App from "./App.vue";
 import router from "./router";
 
@@ -26,7 +28,17 @@ const app = createApp(App);
 registerComponents(app);
 app.component("font-awesome-icon", FontAwesomeIcon);
 
-app.use(createPinia());
+const pinia = createPinia();
+const customFilter = ({ key }) => {
+  return !["user.token", "user.refresh"].includes(key);
+};
+
+// Configurar el plugin de persisted state con el filtro personalizado
+pinia.use(piniaPluginPersistedstate, {
+  filter: customFilter,
+});
+
+app.use(pinia);
 app.use(router);
 
 app.mount("#app");

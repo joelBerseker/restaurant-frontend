@@ -1,5 +1,4 @@
 import { Model } from "@/models/";
-
 export class BasicModel extends Model {
   table_name = {
     id: "table_name",

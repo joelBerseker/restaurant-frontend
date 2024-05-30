@@ -1,16 +1,17 @@
 import { useUserStore } from "@/stores";
 import axiosInstance from "./axios-instance";
-import { permissionsService, userService } from "@/services";
+import { userService } from "@/services";
 import { handleError } from "@/helpers";
-import { rolService } from "./user";
+//import { rolService } from "./user";
 
 export const authService = {
   //metodo para obtener token de un usuario enviando sus credenciales (correo,contraseña)
   async obtain_token(credentials) {
     try {
+      console.log("enviando consulta");
       const response = await axiosInstance.post("user/token/", credentials);
       const userStore = useUserStore();
-
+      console.log("respuesta recivida");
       userStore.updateToken(response.data.access, response.data.refresh);
       userStore.updateId(response.data.user_id);
       await this.setUser();
@@ -62,8 +63,8 @@ export const authService = {
       this.logoutUser();
       throw Error("No tiene permiso de ingreso");
     }
-    let data = await permissionsService.getPermissionsUser(userStore.getId);
-    await userStore.setPermises(data);
+    let data = [true, true, true];
+    const add = userStore.setPermises(data);
     console.log(data);
   },
 };

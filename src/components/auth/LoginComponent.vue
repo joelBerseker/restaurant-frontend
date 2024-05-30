@@ -1,16 +1,27 @@
 <script setup>
 import { ref, inject } from "vue";
-
+import { authService } from "@/services";
 import { sleep } from "@/helpers/utilities";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const _email = ref("");
 const _password = ref("");
 
 const loadingButton = ref(false);
 
 async function login() {
-  console.log(_email.value);
-  console.log(_password.value);
+  const credentials = {
+    email: _email.value,
+    password: _password.value,
+  };
+  try {
+    await authService.obtain_token(credentials);
+    router.push("/");
+  } catch (error) {
+    console.log(error);
+    console.log("Restaurant Frontend: Error");
+  }
 }
 </script>
 <template>

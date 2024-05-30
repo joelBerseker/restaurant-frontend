@@ -146,7 +146,7 @@ defineExpose({
 .form-control,
 .input-group-text,
 .form-select {
-  border-radius: var(--g-br1);
+  border-radius: var(--br);
   border-color: var(--g-wb400);
   font-size: 14px;
 }

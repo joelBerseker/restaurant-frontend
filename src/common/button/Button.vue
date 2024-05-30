@@ -1,37 +1,15 @@
 <script setup>
 import { ref } from "vue";
+import { isEmpty } from "@/helpers/utilities";
 
 const props = defineProps({
-  text: {
-    default: "",
-  },
-  icon: {
-    default: "",
-  },
-  type: {
-    default: "primary",
-  },
-  textColor: {
-    default: "",
-  },
-  loading: {
-    default: false,
-  },
-  disabled: {
-    default: false,
-  },
-  min: {
-    default: false,
-  },
-  buttonClass: {
-    default: "",
-  },
-  iconPosition: {
-    default: null,
-  },
-  title: {
-    default: null,
-  },
+  text: { default: "" },
+  icon: { default: null },
+  type: { default: "primary" },
+  loading: { default: false },
+  disabled: { default: false },
+  iconPosition: { default: "left" },
+  title: { default: null },
 });
 
 const iconClass = ref("");
@@ -56,70 +34,86 @@ init();
     :class="[
       'btn btn-sm',
       'btn-' + props.type,
-      'btn-text-' + props.textColor,
-      buttonClass,
       paddingClass,
-      min ? 'btn-min' : '',
+      isEmpty(text) ? 'btn-icon-mode' : '',
     ]"
     :disabled="props.disabled || props.loading"
     :title="props.title"
   >
-    <div class="d-flex">
-      <div :class="[iconClass, 'd-flex']">
-        <div v-if="loading" class="d-flex align-items-center">
-          <span
-            class="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
-          >
-          </span>
-        </div>
-        <div v-else class="icon-button-container">
-          <i :class="[icon, ' icon-button']"></i>
-        </div>
+    <div :class="['button-container', loading ? 'opacity-0' : '']">
+      <div
+        v-if="icon !== null"
+        :class="'btn-icon icon-position-' + iconPosition"
+      >
+        <font-awesome-icon :icon="icon" />
       </div>
-      <div v-if="text !== ''" :class="spaceClass">&nbsp</div>
-      <div>{{ text }}</div>
+      <div class="btn-text">{{ text }}</div>
+    </div>
+    <div v-if="loading" class="loading">
+      <span
+        class="spinner-border spinner-border-sm"
+        role="status"
+        aria-hidden="true"
+      >
+      </span>
     </div>
   </button>
 </template>
-<style>
-.icon-button-container {
-  height: 21px !important;
+<style scoped>
+.button-container {
+  transition: 0.3s;
+  display: flex;
 }
-.icon-button {
-  height: 21px !important;
-  display: inline-block;
-  vertical-align: middle;
+.btn-icon-mode .button-container {
+  justify-content: center;
 }
-.order-3 {
+.loading {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.icon-position-left {
+  order: 1;
+  margin-right: 0.25rem;
+}
+.icon-position-right {
   order: 3;
+  margin-left: 0.25rem;
 }
-.order-2 {
+.btn-icon-mode .btn-icon {
+  margin-left: 0;
+  margin-right: 0;
+}
+.btn-text {
   order: 2;
 }
-
 .btn {
   font-size: 14px;
-  border-radius: var(--g-br1);
+  border-radius: var(--br);
   border: none;
   padding-top: calc(0.25rem + 1px);
   padding-bottom: calc(0.25rem + 1px);
   padding-left: calc(0.5rem + 1px);
   padding-right: calc(0.5rem + 1px);
   transition: 0.3s;
+  position: relative;
+}
+.btn-icon-mode {
+  padding-left: 0;
+  padding-right: 0;
+  width: 31px;
+  aspect-ratio: 1;
 }
 .padding-button-text {
   padding-left: calc(0.7rem);
   padding-right: calc(0.7rem);
 }
-.btn-min {
-  padding-top: 3px;
-  padding-bottom: 3px;
-  padding-left: calc(0.5rem + 1px);
-  padding-right: calc(0.5rem + 1px);
-  font-size: 13px;
-}
+
 .btn:hover,
 .btn:active,
 .btn:focus-visible,
@@ -128,11 +122,11 @@ init();
 }
 
 .btn:disabled {
-  background-color: var(--g-wb600);
+  background-color: var(--color-b);
 }
 
 .btn-primary {
-  background-color: var(--g-pc500);
+  background-color: var(--color-1);
   color: var(--g-wb300) !important;
 }
 .btn-primary:hover,
@@ -141,14 +135,7 @@ init();
   background-color: var(--g-pc600) !important;
   color: var(--g-wb100) !important;
 }
-/*--------------------------------------*/
-.btn-primary-light,
-.btn-primary-light:hover,
-.btn-primary-light:active,
-.btn-primary-light:focus-visible {
-  background-color: #e3e5e5;
-  color: var(--g-wb900);
-}
+
 /*--------------------------------------*/
 .btn-secondary,
 .btn-secondary.show,
@@ -165,43 +152,5 @@ init();
 .btn-secondary-light:focus-visible {
   background-color: #d4d4d4c7;
   color: var(--g-wb900);
-}
-/*--------------------------------------*/
-.btn-opaque-light,
-.btn-opaque-light:hover,
-.btn-opaque-light:active,
-.btn-opaque-light:focus-visible {
-  background-color: rgba(255, 255, 255, 0.644);
-  color: var(--g-wb900);
-}
-/*--------------------------------------*/
-.btn-transparent,
-.btn-transparent:hover,
-.btn-transparent:active,
-.btn-transparent:focus-visible {
-  background-color: transparent;
-  color: var(--g-wb100);
-}
-/*--------------------------------------*/
-.btn-danger,
-.btn-danger:hover,
-.btn-danger:active,
-.btn-danger:focus-visible {
-  background-color: var(--g-sc500);
-  color: var(--g-wb100);
-}
-.btn-danger:hover,
-.btn-danger:active,
-.btn-danger:focus-visible {
-  box-shadow: inset 0px 0px 0px 200px rgba(0, 0, 0, 0.15);
-}
-.btn-text-light {
-  color: var(--g-wb100) !important;
-}
-.btn-text-dark {
-  color: var(--g-wb900) !important;
-}
-.btn-text-blue {
-  color: var(--g-important-text) !important;
 }
 </style>

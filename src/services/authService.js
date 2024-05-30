@@ -2,6 +2,7 @@ import { useUserStore } from "@/stores";
 import axiosInstance from "./axios-instance";
 import { userService } from "@/services";
 import { handleError } from "@/helpers";
+import router from "@/router";
 //import { rolService } from "./user";
 
 export const authService = {
@@ -35,6 +36,8 @@ export const authService = {
         userStore.logout();
         location.reload(); //
       } else {
+        userStore.logout();
+        //location.reload(); //
         handleError(Error("Ocurrió un error al obtener el token"));
       }
     }

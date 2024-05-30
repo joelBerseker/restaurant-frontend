@@ -8,7 +8,7 @@ const router = createRouter({
       name: "system",
       component: () => import("@/components/system/SystemView.vue"),
       meta: {
-        requiresAuth: false, // Esta ruta requiere autenticación
+        requiresAuth: true, // Esta ruta requiere autenticación
       },
       children: [],
     },
@@ -42,13 +42,13 @@ router.beforeEach(async (to, from, next) => {
 
   const userStore = useUserStore();
   const isLoggedIn = userStore.isActive;
-
+  console.log("->" + isLoggedIn);
   if (to.meta.requiresAuth && !isLoggedIn) {
     // Si la ruta requiere autenticación y el usuario no está autenticado, redirige a la página de inicio de sesión
-    next("/ingreso");
-  } else if (to.fullPath === "/ingreso" && isLoggedIn) {
+    next("/login");
+  } else if (to.fullPath === "/login" && isLoggedIn) {
     // Si el usuario ya está autenticado y trata de acceder a la página de inicio de sesión, redirige a la página de inicio (por ejemplo, /home)
-    next("/inicio");
+    next("/");
   } else {
     const module_id = to.meta.moduleid;
     system.isLoadingContentSystem(true);
@@ -57,7 +57,7 @@ router.beforeEach(async (to, from, next) => {
       module_id,
       Permission_data.View
     );*/
-    if (to.fullPath !== "/ingreso") {
+    if (to.fullPath !== "/login") {
       await authService.setPermisos();
     }
     if (hasPermission || module_id == 0) {
@@ -65,7 +65,7 @@ router.beforeEach(async (to, from, next) => {
     } else {
       // Si el usuario no tiene permisos, muestra un mensaje de alerta y redirige a la página de inicio
       alert("No tienes permiso para entrar");
-      next("/inicio");
+      next("/");
     }
   }
 });

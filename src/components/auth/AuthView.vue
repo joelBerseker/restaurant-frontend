@@ -1,4 +1,11 @@
-<script setup></script>
+<script setup>
+import { useSystemUtilStore } from "@/stores";
+const useSystemUtil = useSystemUtilStore();
+function init() {
+  useSystemUtil.isLoadingApp(false);
+}
+init();
+</script>
 <template>
   <main class="auth-background">
     <div class="auth-wrapper">

@@ -3,8 +3,10 @@ import { ref, inject } from "vue";
 import { authService } from "@/services";
 import { sleep } from "@/helpers/utilities";
 import { useRouter } from "vue-router";
-
 import { useToastStore } from "@/stores";
+import { useSystemUtilStore } from "@/stores";
+
+const useSystemUtil = useSystemUtilStore();
 const useToast = useToastStore();
 
 const router = useRouter();
@@ -21,6 +23,11 @@ async function login() {
   };
   try {
     await authService.obtain_token(credentials);
+    useSystemUtil.isLoadingApp(
+      true,
+      "Ingresando al sistema, espere por favor."
+    );
+    await sleep(300);
     router.push("/");
   } catch (error) {
     console.log(error);

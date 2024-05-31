@@ -73,3 +73,6 @@ body {
 .big-icon .icon {
   transform: scale(1.3);
 }
+p {
+  margin-bottom: 0;
+}

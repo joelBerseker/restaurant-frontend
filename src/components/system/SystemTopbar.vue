@@ -6,8 +6,6 @@ import SystemBreadcrumb from "@/components/system/SystemBreadcrumb.vue";
 import { navigationInfo } from "@/helpers";
 import { useRoute } from "vue-router";
 
-const route = useRoute();
-
 const props = defineProps({
   topbar: {
     default: {
@@ -16,10 +14,11 @@ const props = defineProps({
     },
   },
 });
-const router = useRouter();
+const switchSidebar = inject("switchSidebar");
+const confirmLogout = inject("confirmLogout");
 
-const switchSidebar = null;
-const confirmLogout = null;
+const router = useRouter();
+const route = useRoute();
 
 function buttonLogout() {
   confirmLogout();

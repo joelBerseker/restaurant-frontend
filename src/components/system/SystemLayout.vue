@@ -15,7 +15,7 @@ function closeSidebar() {
         <slot name="topbar"></slot>
       </header>
       <main id="system-content">
-        <slot></slot>
+        <slot name="content"></slot>
       </main>
     </main>
   </main>
@@ -43,14 +43,12 @@ function closeSidebar() {
   display: flex !important;
 }
 .sidebar-item {
-  padding-left: 0rem !important;
-  padding-right: 0rem !important;
-  justify-content: center;
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
 }
 #system-sidebar.open .sidebar-item {
   padding-left: 1.75rem !important;
   padding-right: 1.75rem !important;
-  justify-content: start;
 }
 
 #system-sidebar .text-sidebar-item {

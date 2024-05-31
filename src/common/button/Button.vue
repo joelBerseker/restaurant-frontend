@@ -33,7 +33,7 @@ init();
   <button
     :class="[
       'btn btn-sm',
-      'btn-' + props.type,
+      'g-btn-' + props.type,
       paddingClass,
       isEmpty(text) ? 'btn-icon-mode' : '',
     ]"
@@ -98,9 +98,9 @@ init();
   border: none;
   padding-top: calc(0.25rem + 1px);
   padding-bottom: calc(0.25rem + 1px);
-  padding-left: calc(0.5rem + 1px);
-  padding-right: calc(0.5rem + 1px);
-  transition: 0.3s;
+  padding-left: calc(0.75rem + 1px);
+  padding-right: calc(0.75rem + 1px);
+
   position: relative;
   color: var(--color-b-v2);
 }
@@ -110,44 +110,28 @@ init();
   width: 31px;
   aspect-ratio: 1;
 }
-.padding-button-text {
-  padding-left: calc(0.7rem);
-  padding-right: calc(0.7rem);
-}
 
 .btn:hover,
 .btn:active,
 .btn:focus-visible,
 .btn.show {
-  box-shadow: inset 0px 0px 0px 200px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0px 0px 0px 200px rgba(51, 51, 51, 0.2);
 }
 
 .btn:disabled {
   background-color: var(--color-b);
 }
 
-.btn-primary {
-  background-color: var(--color-1);
-  color: var(--g-wb300) !important;
-}
-.btn-primary:hover,
-.btn-primary:active,
-.btn-primary:focus-visible {
-  background-color: var(--g-pc600) !important;
-  color: var(--g-wb100) !important;
+.g-btn-primary {
+  background-color: var(--color-1) !important;
+  color: var(--color-w) !important;
 }
 
-/*--------------------------------------*/
-.btn-secondary,
-.btn-secondary.show,
-.btn-secondary:hover,
-.btn-secondary:active,
-.btn-secondary:focus-visible {
-  background-color: rgba(0, 0, 0, 0.08) !important;
-  color: var(--g-wb900) !important;
+.g-btn-secondary {
+  background-color: transparent !important;
 }
-/*--------------------------------------*/
-.btn-transparent-1 {
-  background-color: transparent;
+
+.g-btn-transparent-1 {
+  background-color: transparent !important;
 }
 </style>

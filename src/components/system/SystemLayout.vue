@@ -15,7 +15,7 @@ function closeSidebar() {
         <slot name="topbar"></slot>
       </header>
       <main id="system-content">
-        <slot></slot>
+        <slot name="content"></slot>
       </main>
     </main>
   </main>

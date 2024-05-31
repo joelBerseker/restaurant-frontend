@@ -26,8 +26,8 @@
   --color-3: rgb(165, 165, 165);
 
   --color-w: white;
-  --color-w-v2: rgb(241, 241, 241);
-  --color-w-v3: rgb(175, 175, 175);
+  --color-w-v2: rgb(224, 224, 224);
+  --color-w-v3: rgb(165, 165, 165);
 
   --color-b: black;
   --color-b-v2: rgb(24, 24, 24);
@@ -75,4 +75,12 @@ body {
 }
 p {
   margin-bottom: 0;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
+input[data-autocompleted] {
+  background-color: transparent !important;
 }

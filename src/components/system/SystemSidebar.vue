@@ -4,7 +4,11 @@ import { ref, onMounted, onUnmounted } from "vue";
 import { navigationInfo } from "@/helpers";
 
 const showSidebar = ref(true);
-let list = [{ ...navigationInfo.user }, { ...navigationInfo.table }];
+let list = [
+  { ...navigationInfo.home },
+  { ...navigationInfo.user },
+  { ...navigationInfo.table },
+];
 
 async function getPermise(module_id) {
   let status = await permissionsService.getPermises(
@@ -79,20 +83,25 @@ defineExpose({
     <header
       class="mt-4 d-flex flex-column align-items-center sidebar-icon-container"
     >
-      <!---transition name="t-sidebar-item" mode="out-in">
-        <img
-          v-if="showSidebar"
-          src="@/assets/images/logo-mym-w.png"
-          alt="MyM logo"
-          class="sidebar-icon"
-        />
+      <transition name="t-sidebar-item" mode="out-in">
+        <div v-if="showSidebar">
+          <div class="normal-img-container">
+            <img
+              src="@/assets/imgs/logo-app.jpg"
+              alt="app logo"
+              class="sidebar-icon"
+            />
+          </div>
+          <p class="text-center mt-1 text-img">Restapp</p>
+        </div>
+
         <img
           v-else
-          src="@/assets/images/logo-mym-min.png"
-          alt="MyM logo"
+          src="@/assets/imgs/logo-app.jpg"
+          alt="app logo"
           class="sidebar-icon-min"
         />
-      </transition--->
+      </transition>
     </header>
     <ul class="w-100 sidebar-list-item px-0">
       <li v-for="item in list" :key="item.title">
@@ -160,6 +169,14 @@ defineExpose({
   </nav>
 </template>
 <style scoped>
+.normal-img-container {
+  display: flex;
+
+  justify-content: center;
+}
+.text-img {
+  color: var(--color-w);
+}
 .line-sidebar {
   border-color: rgba(255, 255, 255, 0.4);
   margin-left: calc(1rem - 0.25rem);
@@ -190,14 +207,16 @@ defineExpose({
   align-items: center;
 }
 .sidebar-icon-container {
-  height: 50px;
+  height: 90px;
 }
 .sidebar-icon {
-  max-width: 175px;
+  max-width: 60px;
+  border-radius: 1.5rem;
 }
 .sidebar-icon-min {
-  max-width: 32px;
-  margin-top: 0.5rem;
+  max-width: 38px;
+  margin-top: 1rem;
+  border-radius: 999rem;
 }
 .sidebar-footer {
   font-size: 0.6rem;

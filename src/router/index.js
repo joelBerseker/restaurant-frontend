@@ -6,11 +6,22 @@ const router = createRouter({
     {
       path: "/",
       name: "system",
+      redirect: { name: "home" },
+
       component: () => import("@/components/system/SystemView.vue"),
       meta: {
         requiresAuth: true, // Esta ruta requiere autenticación
       },
       children: [
+        {
+          path: "/home",
+          name: "home",
+          component: () => import("@/components/home/HomeView.vue"),
+          meta: {
+            requiresAuth: false, // Esta ruta no requiere autenticación
+            moduleid: 0,
+          },
+        },
         {
           path: "/user",
           name: "user",

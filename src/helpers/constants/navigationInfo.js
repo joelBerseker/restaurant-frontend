@@ -1,5 +1,11 @@
 const navigationInfo = {
   /*INICIO*/
+  home: {
+    module: 0,
+    name: "home",
+    icon: "fa-solid fa-house",
+    title: "Inicio",
+  },
   table: {
     module: 0,
     name: "table",

@@ -41,7 +41,7 @@ export const userService = {
         year_date,
         searches,
         // Otros parámetros de filtro que puedas necesitar
-        table_number,
+        id_role,
       } = filterParams;
 
       const filters = {
@@ -56,6 +56,7 @@ export const userService = {
         year_date,
         searches,
         // Otros parámetros de filtro que puedas necesitar
+        id_role,
       };
 
       filteredFilters = Object.entries(filters)

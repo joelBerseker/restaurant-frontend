@@ -5,11 +5,8 @@ import { provide, ref } from "vue";
 
 const confirmDialogueRef = ref(null);
 async function confirmDialogue(type) {
-  var resp = false;
-  await confirmDialogueRef.value.show(type).then((result) => {
-    resp = result;
-  });
-  return resp;
+  let confirm = await confirmDialogueRef.value.show(type);
+  return confirm;
 }
 provide("confirmDialogue", confirmDialogue);
 </script>

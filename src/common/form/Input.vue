@@ -154,8 +154,18 @@ defineExpose({
 .form-select {
   background-color: transparent;
 }
+.form-control:hover,
+.form-control:focus,
+.form-select:hover,
+.form-select:focus {
+  background-color: transparent;
+}
 .input-white {
-  background-color: var(--color-w);
+  color: var(--color-w);
+}
+.input-white:hover,
+.input-white:focus {
+  color: var(--color-w);
 }
 </style>
 <style scoped></style>

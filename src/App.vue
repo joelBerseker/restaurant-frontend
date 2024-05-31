@@ -1,6 +1,8 @@
 <script setup>
 import Toast from "@/common/Toast.vue";
 import ConfirmDialogue from "@/common/ConfirmDialogue.vue";
+import AppContainer from "@/common/container/AppContainer.vue";
+
 import { provide, ref } from "vue";
 
 const confirmDialogueRef = ref(null);
@@ -13,5 +15,7 @@ provide("confirmDialogue", confirmDialogue);
 <template>
   <Toast />
   <ConfirmDialogue ref="confirmDialogueRef"></ConfirmDialogue>
-  <RouterView />
+  <AppContainer>
+    <RouterView />
+  </AppContainer>
 </template>

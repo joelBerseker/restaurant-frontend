@@ -6,10 +6,13 @@ import { ref, provide, inject, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { sleep } from "@/helpers";
 import { authService } from "@/services";
+import { useSystemUtilStore } from "@/stores";
 
 const confirmDialogue = inject("confirmDialogue");
 
 const router = useRouter();
+const useSystemUtil = useSystemUtilStore();
+
 const sidebarRef = ref(null);
 const topbarRef = ref(null);
 const topbar = ref({
@@ -31,6 +34,8 @@ function buttonBack() {
 async function confirmLogout() {
   let confirm = await confirmDialogue("logout");
   if (confirm) {
+    useSystemUtil.isLoadingApp(true, "Saliendo del sistema, espere por favor.");
+    await sleep(700);
     await authService.logoutUser();
     router.push("/login");
   }

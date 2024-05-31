@@ -227,8 +227,7 @@ defineExpose({
   display: inline-block;
   padding-top: 0.6rem;
   padding-bottom: 0.6rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+
   transition: 0.3s;
   position: relative;
 }
@@ -257,7 +256,7 @@ defineExpose({
   background-color: var(--color-1);
 }
 .sidebar-item-active::after {
-  transform: translateX(0.5rem);
+  transform: translateX(0.35rem);
   background-color: var(--color-1);
 }
 .sidebar-item-children {

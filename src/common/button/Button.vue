@@ -119,7 +119,7 @@ init();
 }
 
 .btn:disabled {
-  background-color: var(--color-b);
+  background-color: var(--color-w-v3) !important;
 }
 
 .g-btn-primary {

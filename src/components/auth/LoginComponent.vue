@@ -4,6 +4,9 @@ import { authService } from "@/services";
 import { sleep } from "@/helpers/utilities";
 import { useRouter } from "vue-router";
 
+import { useToastStore } from "@/stores";
+const useToast = useToastStore();
+
 const router = useRouter();
 const _email = ref("");
 const _password = ref("");
@@ -11,6 +14,7 @@ const _password = ref("");
 const loadingButton = ref(false);
 
 async function login() {
+  loadingButton.value = true;
   const credentials = {
     email: _email.value,
     password: _password.value,
@@ -21,93 +25,86 @@ async function login() {
   } catch (error) {
     console.log(error);
     console.log("Restaurant Frontend: Error");
+    loadingButton.value = false;
+    useToast.show("login_error");
   }
 }
 </script>
 <template>
   <div class="center">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-12 col-sm-12 col-md-10 col-lg-8 col-xl-7">
-          <div class="card card-login">
-            <div class="row g-0">
-              <div class="col-12 col-sm-5 image-bg">
-                <div
-                  class="image-side d-flex align-items-center justify-content-center"
-                >
-                  <!--img
-                    src="@/assets/images/logo-mym.png"
-                    alt="MyM logo"
-                    class="auth-icon"
-                  /-->
-                </div>
-              </div>
-              <div class="col-12 col-sm-7">
-                <div class="p-3 pt-4 pb-4">
-                  <div class="mb-2 title-text">INICIAR SESIÓN</div>
+    <div class="form-container">
+      <h6 class="title-text">Iniciar Sesión</h6>
+      <p>Bienvenido, ingrese sus datos para acceder al sistema</p>
+      <hr class="my-4" />
 
-                  <p class="g-wb600">
-                    Bienvenido, ingrese sus datos para acceder al sistema
-                  </p>
-                  <hr class="my-3" />
-
-                  <div class="">
-                    <g-input
-                      v-model="_email"
-                      label="Correo electrónico"
-                      labelClass="label-no-color"
-                      id="email"
-                      class="mb-3"
-                      :uppercase="false"
-                    />
-                    <g-input
-                      v-model="_password"
-                      label="Contraseña"
-                      labelClass="label-no-color"
-                      id="password"
-                      type="password"
-                      class="mb-4"
-                      :uppercase="false"
-                    />
-                    <div>
-                      <g-button
-                        icon="bi bi-chevron-right"
-                        text="Ingresar"
-                        @click="login"
-                        :loading="loadingButton"
-                        iconPosition="right"
-                        buttonClass="button-loggin"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <g-input
+        v-model="_email"
+        label="Correo electrónico"
+        labelClass="label-no-color"
+        id="email"
+        class="mb-4"
+        :uppercase="false"
+      />
+      <g-input
+        v-model="_password"
+        label="Contraseña"
+        labelClass="label-no-color"
+        id="password"
+        type="password"
+        class="margin-b"
+        :uppercase="false"
+      />
+      <div>
+        <g-button
+          icon="fa-solid fa-right-to-bracket"
+          text="Ingresar"
+          @click="login"
+          :loading="loadingButton"
+          iconPosition="right"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.margin-b {
+  margin-bottom: 2rem;
+}
+.title-logo {
+  margin-bottom: 2rem;
+  color: var(--color-1-v2);
+  text-align: center;
+}
+.title-text {
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  color: var(--color-1-v2);
+}
+.form-container {
+  width: 100%;
+  color: var(--color-w);
+}
 .button-loggin {
   padding-right: 0.6rem;
 }
 .center {
   height: 100%;
-  height: 100vh;
+
   display: flex;
   align-items: center;
+  width: 100%;
   margin: 0;
   overflow-x: hidden;
   overflow-y: hidden;
   min-height: 100%;
-  width: 100%;
-  width: 100vw;
 }
 .card-login {
   overflow: hidden;
+  background: rgba(44, 44, 44, 1);
+  border: none;
+  color: white !important;
+  /*#41c96b */
 }
 .auth-icon {
   width: 100%;
@@ -121,8 +118,13 @@ async function login() {
   padding: 1rem;
 }
 .image-bg {
-  /*background-image: url("@/assets/images/bg-portada.jpg");*/
+  background-image: url("@/assets/images/login.jpg");
   background-position: center;
   background-size: cover;
+}
+@media screen and (max-width: 767px) {
+  .center {
+    align-items: start;
+  }
 }
 </style>

@@ -35,6 +35,10 @@ const toastText = {
     text: "Datos no válidos, revise si todos los campos se llenaron correctamente.",
     type: 2,
   },
+  login_error: {
+    text: "Datos no válidos, revise si el correo y la contraseña son correctos.",
+    type: 2,
+  },
 };
 
 export { toastText };

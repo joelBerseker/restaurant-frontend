@@ -1,10 +1,8 @@
-<template>
-  <main>SYSTEM</main>
-</template>
 <script setup>
-import { userService } from "@/services";
-import { useUserStore } from "@/stores/";
-let data = userService.getListUser([]);
-console.log(data);
+import SystemComponent from "@/components/system/SystemComponent.vue";
 </script>
+<template>
+  <SystemComponent />
+</template>
+
 <style scoped></style>

@@ -10,7 +10,26 @@ const router = createRouter({
       meta: {
         requiresAuth: true, // Esta ruta requiere autenticación
       },
-      children: [],
+      children: [
+        {
+          path: "/user",
+          name: "user",
+          component: () => import("@/components/user/UserView.vue"),
+          meta: {
+            requiresAuth: false, // Esta ruta no requiere autenticación
+            moduleid: 0,
+          },
+        },
+        {
+          path: "/table",
+          name: "table",
+          component: () => import("@/components/table/TableView.vue"),
+          meta: {
+            requiresAuth: false, // Esta ruta no requiere autenticación
+            moduleid: 0,
+          },
+        },
+      ],
     },
     {
       path: "/autentication",

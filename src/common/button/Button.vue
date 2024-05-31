@@ -45,7 +45,7 @@ init();
         v-if="icon !== null"
         :class="'btn-icon icon-position-' + iconPosition"
       >
-        <font-awesome-icon :icon="icon" />
+        <font-awesome-icon class="icon" :icon="icon" />
       </div>
       <div class="btn-text">{{ text }}</div>
     </div>
@@ -59,7 +59,7 @@ init();
     </div>
   </button>
 </template>
-<style scoped>
+<style>
 .button-container {
   transition: 0.3s;
   display: flex;
@@ -94,7 +94,7 @@ init();
 }
 .btn {
   font-size: 14px;
-  border-radius: var(--br);
+  border-radius: 999rem;
   border: none;
   padding-top: calc(0.25rem + 1px);
   padding-bottom: calc(0.25rem + 1px);
@@ -102,6 +102,7 @@ init();
   padding-right: calc(0.5rem + 1px);
   transition: 0.3s;
   position: relative;
+  color: var(--color-b-v2);
 }
 .btn-icon-mode {
   padding-left: 0;
@@ -146,11 +147,7 @@ init();
   color: var(--g-wb900) !important;
 }
 /*--------------------------------------*/
-.btn-secondary-light,
-.btn-secondary-light:hover,
-.btn-secondary-light:active,
-.btn-secondary-light:focus-visible {
-  background-color: #d4d4d4c7;
-  color: var(--g-wb900);
+.btn-transparent-1 {
+  background-color: transparent;
 }
 </style>

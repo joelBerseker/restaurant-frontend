@@ -3,44 +3,39 @@ import { isEmpty } from "@/helpers/utilities";
 import { Model } from "@/models/";
 
 export class TableModel extends Model {
-  id = {
+  name = {
+    id: "name",
+    name: "Nombre",
     value: null,
-  };
-  table_name = {
-    value: null,
+    required: false, // blank=True in Django
     validation: {},
-    validate() {
-      this.validation = validations.text(this.value, 3, 25);
-    },
+    validate: ["length"],
   };
-  table_description = {
+
+  number = {
+    id: "number",
+    name: "Número",
     value: null,
+    required: false, // null=True, blank=True in Django
     validation: {},
-    validate() {
-      this.validation = validations.text(this.value, 3, 100, false);
-    },
+    validate: ["number"],
+  };
+
+  description = {
+    id: "description",
+    name: "Descripción",
+    value: null,
+    required: false, // null=True in Django
+    type: "textarea",
+    validation: {},
+    validate: ["length"],
     default: "Sin descripción",
   };
-  addData() {
-    return {
-      table_name: this.table_name.value,
-      table_description: isEmpty(this.table_description.value)
-        ? this.table_description.default
-        : this.table_description.value,
-    };
-  }
-  getData() {
-    return {
-      id: this.id.value,
-      name: this.table_name.value,
-      description: this.table_description.value,
-      status: this.status.value,
-    };
-  }
+
   getDataOptions() {
     return {
       value: this.id.value,
-      text: this.table_name.value,
+      text: this.name.value,
     };
   }
 }

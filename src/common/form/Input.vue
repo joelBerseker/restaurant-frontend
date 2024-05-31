@@ -152,7 +152,10 @@ defineExpose({
 }
 .form-control,
 .form-select {
-  background-color: transparent !important;
+  background-color: transparent;
+}
+.input-white {
+  background-color: var(--color-w);
 }
 </style>
 <style scoped></style>

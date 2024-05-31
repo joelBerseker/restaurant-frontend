@@ -50,6 +50,7 @@ async function login() {
         labelClass="label-no-color"
         id="email"
         class="mb-4"
+        inputClass="input-white"
         :uppercase="false"
       />
       <g-input
@@ -59,6 +60,7 @@ async function login() {
         id="password"
         type="password"
         class="margin-b"
+        inputClass="input-white"
         :uppercase="false"
       />
       <div>

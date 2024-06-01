@@ -92,7 +92,7 @@ async function login() {
 }
 .form-container {
   width: 100%;
-  color: var(--color-w);
+  color: var(--color-w-v2);
 }
 .button-loggin {
   padding-right: 0.6rem;

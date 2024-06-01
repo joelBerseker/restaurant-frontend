@@ -163,7 +163,7 @@ defineExpose({
 
     <transition name="t-sidebar-item" mode="out-in">
       <footer v-show="showSidebar" class="sidebar-footer">
-        Desarrollado por Gleaming Glow
+        Desarrollado por Gleaming Grove
       </footer>
     </transition>
   </nav>
@@ -175,7 +175,7 @@ defineExpose({
   justify-content: center;
 }
 .text-img {
-  color: var(--color-w);
+  color: var(--color-w-v2);
 }
 .line-sidebar {
   border-color: rgba(255, 255, 255, 0.4);
@@ -221,11 +221,11 @@ defineExpose({
 .sidebar-footer {
   font-size: 0.6rem;
   position: absolute;
-  color: var(--g-wb100);
-  bottom: 0;
-  right: 0;
-  margin-bottom: 1rem;
-  margin-right: 0.5rem;
+  color: var(--color-w-v2);
+  bottom: 0.1rem;
+  right: 0.35rem;
+  overflow: hidden;
+  text-wrap: nowrap;
 }
 .sidebar-list-item {
   margin-top: 2rem;
@@ -241,7 +241,7 @@ defineExpose({
 }
 .sidebar-item {
   text-decoration-line: none;
-  color: var(--color-w);
+  color: var(--color-w-v2);
   transform: translateX(0px);
   display: inline-block;
   padding-top: 0.6rem;

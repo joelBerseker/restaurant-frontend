@@ -41,11 +41,11 @@ init();
 }
 .form-auth {
   background-image: url("@/assets/imgs/cutlery.png");
-  background-size: 300px;
+  background-size: auto 50%;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position-x: calc(100% + 7rem);
-  background-position-y: calc(100% + 8rem);
+  background-position-x: calc(100% + 12%);
+  background-position-y: calc(100% + 44%);
   height: 100%;
   padding: 3rem;
 }

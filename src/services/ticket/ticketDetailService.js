@@ -33,51 +33,54 @@ export const ticketDetailService = {
     }
   },
   async getListTicketDetail(filterParams = null) {
-    const {
-      search,
-      searchBy,
-      status,
-      order,
-      orderBy,
-      specific_date,
-      end_date,
-      start_date,
-      interval,
-      year_date,
-      searches,
-      // Otros parámetros de filtro que puedas necesitar
-      product_id,
-      ticket_id,
-    } = filterParams;
+    let filteredFilters = "";
+    if (filterParams != null) {
+      const {
+        search,
+        searchBy,
+        status,
+        order,
+        orderBy,
+        specific_date,
+        end_date,
+        start_date,
+        interval,
+        year_date,
+        searches,
+        // Otros parámetros de filtro que puedas necesitar
+        product_id,
+        ticket_id,
+      } = filterParams;
 
-    const filters = {
-      orderBy,
-      order,
-      status,
-      search,
-      end_date,
-      start_date,
-      interval,
-      specific_date,
-      year_date,
-      searches,
-      // Otros parámetros de filtro que puedas necesitar
-      product_id,
-      ticket_id,
-    };
+      const filters = {
+        orderBy,
+        order,
+        status,
+        search,
+        end_date,
+        start_date,
+        interval,
+        specific_date,
+        year_date,
+        searches,
+        // Otros parámetros de filtro que puedas necesitar
+        product_id,
+        ticket_id,
+      };
 
-    let filteredFilters = Object.entries(filters)
-      .filter(
-        ([key, value]) => value !== undefined && value !== null && value !== ""
-      )
-      .map(([key, value]) => `${key}=${value}`)
-      .join("&");
+      filteredFilters = Object.entries(filters)
+        .filter(
+          ([key, value]) =>
+            value !== undefined && value !== null && value !== ""
+        )
+        .map(([key, value]) => `${key}=${value}`)
+        .join("&");
 
-    if (search && searchBy) {
-      const searchByParam = `searchBy=${searchBy.join(",")}`;
-      filteredFilters += searchByParam ? `&${searchByParam}` : "";
+      if (search && searchBy) {
+        const searchByParam = `searchBy=${searchBy.join(",")}`;
+        filteredFilters += searchByParam ? `&${searchByParam}` : "";
+      }
     }
-
     try {
       const response = await axiosInstance.get(
         `${servicePath}/?${filteredFilters}`

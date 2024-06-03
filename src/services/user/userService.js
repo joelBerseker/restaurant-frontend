@@ -4,7 +4,7 @@ import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
 import { UserModel } from "@/models";
 import { useToastStore } from "@/stores";
-
+const useToast = useToastStore();
 const servicePath = "/user/users";
 export const userService = {
   async getUser(user_id) {
@@ -20,6 +20,7 @@ export const userService = {
         );
       }
     } catch (error) {
+      useToast.show("get_error", "user"); //
       handleError(error);
       throw new Error(`Ocurrió un error al obtener el elemento ${serviceName}`);
     }
@@ -96,8 +97,8 @@ export const userService = {
       const data_new = dataTransform.transformApiData(response.data, UserModel);
       return data_new;
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show("add_error");
+      error(401);
+      useToast.show("get_element_error", "no existe"); //
       handleError(error);
     }
   },

@@ -14,7 +14,7 @@ export class TableModel extends Model {
 
   number = {
     id: "number",
-    name: "Número",
+    name: "Sitios",
     value: null,
     required: false, // null=True, blank=True in Django
     validation: {},

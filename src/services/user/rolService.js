@@ -1,4 +1,3 @@
-
 import axiosInstance from "@/services/axios-instance";
 import { handleError } from "@/helpers";
 import { dataTransform } from "@/services";
@@ -24,7 +23,7 @@ export const rolService = {
       throw new Error(`Ocurrió un error al obtener el elemento ${serviceName}`);
     }
   },
-  async getListRol(filterParams=null) {
+  async getListRol(filterParams = null) {
     const {
       search,
       searchBy,
@@ -38,7 +37,7 @@ export const rolService = {
       year_date,
       searches,
       // Otros parámetros de filtro que puedas necesitar
-      table_number
+      table_number,
     } = filterParams;
 
     const filters = {
@@ -56,7 +55,9 @@ export const rolService = {
     };
 
     let filteredFilters = Object.entries(filters)
-      .filter(([key, value]) => value !== undefined && value !== null && value !== "")
+      .filter(
+        ([key, value]) => value !== undefined && value !== null && value !== ""
+      )
       .map(([key, value]) => `${key}=${value}`)
       .join("&");
 
@@ -66,7 +67,9 @@ export const rolService = {
     }
 
     try {
-      const response = await axiosInstance.get(`${servicePath}/?${filteredFilters}`);
+      const response = await axiosInstance.get(
+        `${servicePath}/?${filteredFilters}`
+      );
       const quotes = response.data.map((apiData) =>
         dataTransform.transformApiData(apiData, RolModel)
       );
@@ -82,10 +85,7 @@ export const rolService = {
         `${servicePath}/`,
         new_data.addData()
       );
-      const data_new = dataTransform.transformApiData(
-        response.data,
-        RolModel
-      );
+      const data_new = dataTransform.transformApiData(response.data, RolModel);
       return data_new;
     } catch (error) {
       handleError(error);
@@ -98,10 +98,7 @@ export const rolService = {
         `${servicePath}/${dataid}/`,
         new_data.addData()
       );
-      const data_new = dataTransform.transformApiData(
-        response.data,
-        RolModel
-      );
+      const data_new = dataTransform.transformApiData(response.data, RolModel);
       return data_new;
     } catch (error) {
       handleError(error);

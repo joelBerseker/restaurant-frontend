@@ -23,7 +23,7 @@ export const userService = {
       const useToast = useToastStore();
       useToast.show(
         "get_element_error",
-        error.message ? error.message : "Error al obtener user"
+        error.message ? error.message : "Error al obtener Usuario."
       ); //
       handleError(error);
       throw new Error(`Ocurrió un error al obtener el elemento ${serviceName}`);
@@ -90,7 +90,7 @@ export const userService = {
       const useToast = useToastStore();
       useToast.show(
         "get_list_error",
-        error.message ? error.message : "Error al obtener los usuarios"
+        error.message ? error.message : "Error al obtener los Usuarios."
       );
       handleError(error);
       //throw error; // Asegurarse de lanzar el error para manejarlo adecuadamente en el contexto superior
@@ -140,7 +140,7 @@ export const userService = {
       const useToast = useToastStore();
       useToast.show(
         "delete_error",
-        error.message ? error.message : "Error al eliminar los usuarios"
+        error.message ? error.message : "Error al eliminar el Usuario."
       );
       handleError(error);
     }

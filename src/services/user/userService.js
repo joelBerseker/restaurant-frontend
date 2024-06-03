@@ -4,7 +4,7 @@ import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
 import { UserModel } from "@/models";
 import { useToastStore } from "@/stores";
-const useToast = useToastStore();
+//const useToast = useToastStore();
 const servicePath = "/user/users";
 export const userService = {
   async getUser(user_id) {

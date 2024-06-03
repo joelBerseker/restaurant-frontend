@@ -32,6 +32,15 @@ const router = createRouter({
           },
         },
         {
+          path: "/rol",
+          name: "rol",
+          component: () => import("@/components/rol/RolView.vue"),
+          meta: {
+            requiresAuth: false, // Esta ruta no requiere autenticación
+            moduleid: 0,
+          },
+        },
+        {
           path: "/table",
           name: "table",
           component: () => import("@/components/table/TableView.vue"),

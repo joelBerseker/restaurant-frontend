@@ -18,5 +18,11 @@ const navigationInfo = {
     icon: "fa-solid fa-user",
     title: "Usuarios",
   },
+  rol: {
+    module: 0,
+    name: "rol",
+    icon: "fa-solid fa-users-gear",
+    title: "Roles",
+  },
 };
 export { navigationInfo };

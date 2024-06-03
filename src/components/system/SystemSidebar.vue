@@ -8,6 +8,7 @@ let list = [
   { ...navigationInfo.home },
   { ...navigationInfo.user },
   { ...navigationInfo.table },
+  { ...navigationInfo.rol },
 ];
 
 async function getPermise(module_id) {

@@ -23,7 +23,7 @@ function validate() {
 }
 </script>
 <template>
-  <form>
+  <form @submit.prevent>
     <slot :element="element" :validateLabel="validateLabel"></slot>
   </form>
 </template>

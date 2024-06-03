@@ -47,7 +47,7 @@ async function login() {
       <g-input
         v-model="_email"
         label="Correo electrónico"
-        labelClass="label-no-color"
+        labelClass="label-login"
         id="email"
         class="mb-4"
         inputClass="input-white"
@@ -56,7 +56,7 @@ async function login() {
       <g-input
         v-model="_password"
         label="Contraseña"
-        labelClass="label-no-color"
+        labelClass="label-login"
         id="password"
         type="password"
         class="margin-b"

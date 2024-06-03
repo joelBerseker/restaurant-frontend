@@ -146,8 +146,16 @@ defineExpose({
 .form-control,
 .input-group-text,
 .form-select {
-  border-radius: var(--br);
-  border-color: var(--g-wb400);
+  border-radius: 0;
+  border-color: var(--color-b-v4) !important;
+  padding-left: 0;
+  padding-right: 0;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  padding-top: calc(0.25rem + 1px);
+  padding-bottom: 0.25rem;
+
   font-size: 14px;
 }
 .form-control,
@@ -166,6 +174,10 @@ defineExpose({
 .input-white:hover,
 .input-white:focus {
   color: var(--color-w-v2);
+}
+::placeholder {
+  color: var(--color-b-v3) !important;
+  opacity: 1; /* Firefox */
 }
 </style>
 <style scoped></style>

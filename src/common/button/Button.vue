@@ -61,7 +61,6 @@ init();
 </template>
 <style>
 .button-container {
-  transition: 0.3s;
   display: flex;
 }
 .btn-icon-mode .button-container {
@@ -100,17 +99,27 @@ init();
   padding-bottom: calc(0.25rem + 1px);
   padding-left: calc(0.75rem + 1px);
   padding-right: calc(0.75rem + 1px);
-
   position: relative;
   color: var(--color-b-v2);
+  transition: 0.3s;
 }
+
 .btn-icon-mode {
   padding-left: 0;
   padding-right: 0;
   width: 31px;
   aspect-ratio: 1;
 }
+.btn.collapseOpen .icon {
+  transform: rotate(180deg);
+}
+.btn.collapseOpen {
+  box-shadow: inset 0px 0px 0px 200px rgba(51, 51, 51, 0.2);
+}
 
+.btn.btn-collapse .icon {
+  transition: 0.3s;
+}
 .btn:hover,
 .btn:active,
 .btn:focus-visible,
@@ -125,6 +134,20 @@ init();
 .g-btn-primary {
   background-color: var(--color-1) !important;
   color: var(--color-w) !important;
+}
+
+.g-btn-search {
+  padding-top: calc(0.25rem);
+  padding-bottom: calc(0.25rem);
+  padding-left: calc(0.75rem);
+  padding-right: calc(0.75rem);
+  border: 1px solid var(--color-b-v4);
+}
+.g-btn-search:hover,
+.g-btn-search:active,
+.g-btn-search:focus-visible,
+.g-btn-search.show {
+  border: 1px solid var(--color-b-v4);
 }
 
 .g-btn-secondary {

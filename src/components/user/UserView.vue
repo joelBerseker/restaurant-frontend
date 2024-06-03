@@ -1,6 +1,9 @@
 <script setup>
 import SystemContainer from "@/components/system/SystemContainer.vue";
+import UserComponent from "@/components/user/UserComponent.vue";
 </script>
 <template>
-  <SystemContainer>USER</SystemContainer>
+  <SystemContainer>
+    <UserComponent />
+  </SystemContainer>
 </template>

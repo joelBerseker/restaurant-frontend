@@ -74,9 +74,11 @@ function clear() {
             >
             </span>
           </div>
+
           <div v-show="!loading && showClearButton" class="close">
             <g-button-x-min @click="clear()" title="Limpiar" />
           </div>
+
           <div v-show="!loading && showValidationIcon" class="validation-icon">
             <font-awesome-icon
               v-if="validation !== null && !isEmpty(validation.icon)"
@@ -106,25 +108,30 @@ function clear() {
 <style>
 .g-input:focus,
 .g-select:focus {
-  box-shadow: 0 0 0 3px rgba(184, 184, 184, 0.25) inset;
+  box-shadow: 0px -3px 0px 0px rgba(87, 87, 87, 0.25) inset;
   border-color: var(--g-wb500);
 }
-.valid > div > main > div > :is(.g-input) {
-  border-color: var(--color-s);
+.valid > div > main > div > :is(.g-input, .g-select) {
+  border-color: var(--color-s) !important;
 }
-.valid > div > main > div > :is(.g-input:focus) {
-  box-shadow: 0 0 0 3px rgba(var(--color-s-rgb), 0.25) inset;
+.valid > div > main > div > :is(.g-input:focus, .g-select:focus) {
+  box-shadow: 0px -3px 0px 0px rgba(var(--color-s-rgb), 0.25) inset;
 }
-.no-valid > div > main > div > :is(.g-input) {
-  border-color: var(--color-d);
+.no-valid > div > main > div > :is(.g-input, .g-select) {
+  border-bottom-color: var(--color-d) !important;
 }
-.no-valid > div > main > div > :is(.g-input:focus) {
-  box-shadow: 0 0 0 3px rgba(var(--color-d-rgb), 0.25) inset;
+.no-valid > div > main > div > :is(.g-input:focus, .g-select:focus) {
+  box-shadow: 0px -3px 0px 0px rgba(var(--color-d-rgb), 0.25) inset;
 }
 </style>
 <style scoped>
 .g-label {
   width: 100%;
+  font-weight: 500;
+  color: var(--color-1-v3);
+}
+.label-login {
+  color: var(--color-1-v2);
 }
 .g-message,
 .validation-message {
@@ -164,6 +171,7 @@ function clear() {
   justify-content: center;
   align-items: center;
   color: var(--color-w);
+  font-size: 12px;
 }
 .textarea > div > main > div > .loading {
   top: 0.4rem;

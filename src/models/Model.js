@@ -35,13 +35,17 @@ export class Model {
 
     console.log("SIGUI VERIFICANDO");
     console.log(_data);
-    for (let i = 0; i < _data.validate.length; i++) {
-      const element = _data.validate[i];
-      console.log(element);
-      resp = validations[element](_data);
-      if (!resp.isValid) break;
+    if (_data.validate !== undefined) {
+      for (let i = 0; i < _data.validate.length; i++) {
+        const element = _data.validate[i];
+        console.log(element);
+        resp = validations[element](_data);
+        if (!resp.isValid) break;
+      }
     }
+    console.log({ resp });
     _data.validation = resp;
+    console.log({ resp });
   }
   validate() {
     let resp = true;

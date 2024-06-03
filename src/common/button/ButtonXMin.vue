@@ -13,7 +13,7 @@ function click() {
 </template>
 <style scoped>
 .close-button {
-  background-color: var(--color-b);
+  background-color: var(--color-b-v3);
   border-radius: 999rem;
   position: relative;
   height: 20px;
@@ -23,9 +23,10 @@ function click() {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--color-w);
+  color: var(--color-w-v2);
+  font-size: 12px;
 }
 .close-button:hover {
-  background-color: var(--color-b);
+  background-color: var(--color-b-v2);
 }
 </style>

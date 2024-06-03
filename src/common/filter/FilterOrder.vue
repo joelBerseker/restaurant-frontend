@@ -77,7 +77,6 @@ function sort(_data) {
   search();
 }
 function changeSort(_data) {
-  console.log({ _data });
   filterOptions.orderBy.value = _data.orderBy;
   filterOptions.order.value = _data.order;
 }

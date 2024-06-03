@@ -82,7 +82,6 @@ function restoreFilter() {
 }
 
 function initFilter() {
-  console.log(props.columns);
   filterOptions.searchBy = [];
   for (let i = 0; i < props.columns.length; i++) {
     const element = props.columns[i];

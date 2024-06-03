@@ -109,19 +109,17 @@ export class Model {
   }
 
   addData() {
-    return {
-      table_name: this.table_name.value,
-      table_description: isEmpty(this.table_description.value)
-        ? this.table_description.default
-        : this.table_description.value,
-    };
+    let resp = {};
+    for (var key in this) {
+      resp[key] = this[key].value;
+    }
+    return resp;
   }
   getData() {
-    return {
-      id: this.id.value,
-      name: this.table_name.value,
-      description: this.table_description.value,
-      status: this.status.value,
-    };
+    let resp = {};
+    for (var key in this) {
+      resp[key] = this[key].value;
+    }
+    return resp;
   }
 }

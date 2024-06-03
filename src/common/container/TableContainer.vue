@@ -77,6 +77,7 @@ const props = defineProps({
   justify-content: center;
 }
 .table-wrapper {
+  width: 100%;
   position: relative;
   overflow-x: auto;
   overflow-y: auto;

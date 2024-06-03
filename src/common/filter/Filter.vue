@@ -96,7 +96,7 @@ defineExpose({
     <slot :search="search"></slot>
     <div v-show="showClearButton" class="ms-1">
       <g-button
-        icon="bi bi-x-lg"
+        icon="fa-solid fa-xmark"
         type="secondary"
         title="Limpiar filtro"
         @click="clearFilter()"

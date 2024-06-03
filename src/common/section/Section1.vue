@@ -3,7 +3,7 @@ import { ref, inject, onMounted, onUnmounted } from "vue";
 import { navigationInfo, sleep } from "@/helpers";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 const buttonBack = inject("buttonBack");
-const emit = defineEmits(["buttonRefresh"]);
+const emit = defineEmits(["onRefresh"]);
 const props = defineProps({
   icon: {
     default: "bi bi-card-list",
@@ -38,8 +38,8 @@ onMounted(() => {
 onUnmounted(() => {
   observer.disconnect();
 });
-function buttonRefresh() {
-  emit("buttonRefresh");
+function onRefresh() {
+  emit("onRefresh");
 }
 function buttonCollapse() {
   collapseOpen.value = collapseRef.value.swichCollapse();
@@ -64,7 +64,7 @@ function buttonCollapse() {
         <g-button
           type="transparent-1"
           icon="fa-solid fa-rotate-right"
-          @click="buttonRefresh()"
+          @click="onRefresh()"
           title="Recargar"
         />
       </span>

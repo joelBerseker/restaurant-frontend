@@ -2,35 +2,20 @@
 import Table from "@/common/table/Table.vue";
 import Filter from "@/common/filter/Filter.vue";
 
-import { ref } from "vue";
+import { ref, inject } from "vue";
 
 const props = defineProps({
   columns: { default: [] },
   filter: { default: {} },
+  deleteConsult: { default: null },
+  getListConsult: { default: null },
 });
+const emit = defineEmits(["onViewItem", "onDeleteItem"]);
+const confirmDialogue = inject("confirmDialogue");
+
 const localColumns = ref([]);
 const filterRef = ref(null);
-const rows = ref([
-  { id: "adasdasd" },
-  { id: "adasdasd" },
-  { id: "adasdasd" },
-  { id: "adasdasd" },
-  { id: "adasdasd" },
-  { id: "adasdasd" },
-  { id: "adasdasd" },
-  { id: "adasdasd" },
-  { id: "adasdasd" },
-  { id: "adasdasd" },
-  { id: "adasdasd" },
-  { id: "adasdasd" },
-  { id: "adasdasd" },
-  { id: "adasdasd" },
-  { id: "adasdasd" },
-  { id: "adasdasd" },
-  { id: "adasdasd" },
-  { id: "adasdasd" },
-  { id: "adasdasd" },
-]);
+const rows = ref([]);
 function fillRows() {
   rows.value = [];
   for (let i = 0; i < 30; i++) {
@@ -41,11 +26,31 @@ const isLoading = ref(false);
 function sort(_data) {
   filterRef.value.sort(_data);
 }
-function viewItem(_data) {}
-function deleteItem(_data) {}
+function viewItem(_data) {
+  emit("onViewItem", _data);
+}
+async function getList(loading = true) {
+  isLoading.value = loading;
+  let resp = await props.getListConsult();
+  if (resp !== null) {
+    rows.value = resp.map((element) => element.getData());
+  }
+  isLoading.value = false;
+}
+
+async function deleteItem(_data) {
+  let confirm = await confirmDialogue("delete");
+  if (confirm) {
+    isLoading.value = true;
+
+    console.log(_data);
+    await props.deleteConsult(_data.id);
+    isLoading.value = false;
+    await getList();
+  }
+}
 function init() {
   if (props.filter.order !== undefined && props.filter.orderBy !== undefined) {
-    console.log("no undefidend");
     let search = props.columns.find((x) => x.field === props.filter.orderBy);
     if (search !== undefined) search.sort = props.filter.order;
   }
@@ -58,19 +63,28 @@ function init() {
       rowClass: "th-buttons",
     },
   ];
-  console.log("fix columns");
+
   fillRows();
+  getList(false);
+}
+function refresh() {
+  getList(true);
 }
 init();
+defineExpose({
+  refresh,
+});
 </script>
 <template>
   <Filter ref="filterRef" :columns="localColumns" :filter="filter" />
   <Table
+    ref="tableRef"
     :rows="rows"
     :columns="localColumns"
     :isLoading="isLoading"
     class="mt-4"
     @sort="sort"
+    @rowClicked="viewItem"
   >
     <template v-slot:quick="{ row, index }">
       <div class="btns-container">

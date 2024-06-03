@@ -29,7 +29,6 @@ function rowClicked(row, index) {
 }
 function sortColumn(column) {
   if (column.sortable !== true) return;
-  console.log(column);
 
   let auxSort = column.sort;
   props.columns.forEach((element) => {
@@ -160,6 +159,7 @@ function iconCurrentSort(sort) {
   cursor: pointer;
   width: fit-content;
   transition: 0.3s;
+  text-wrap: nowrap;
 }
 .sort-column {
   color: var(--color-1-v2);

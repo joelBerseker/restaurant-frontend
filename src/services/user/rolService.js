@@ -28,6 +28,7 @@ export const rolService = {
     }
   },
   async getListRol(filterParams = null) {
+    let filteredFilters = null;
     if (filterParams != null) {
       const {
         search,
@@ -58,7 +59,7 @@ export const rolService = {
         // Otros parámetros de filtro que puedas necesitar
       };
 
-      let filteredFilters = Object.entries(filters)
+      filteredFilters = Object.entries(filters)
         .filter(
           ([key, value]) =>
             value !== undefined && value !== null && value !== ""
@@ -74,7 +75,7 @@ export const rolService = {
 
     try {
       const response = await axiosInstance.get(
-        `${servicePath}/?${filteredFilters ? filterParams : ""}`
+        `${servicePath}/?${filteredFilters ? filteredFilters : ""}`
       );
       const quotes = response.data.map((apiData) =>
         dataTransform.transformApiData(apiData, RolModel)

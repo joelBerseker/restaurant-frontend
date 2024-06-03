@@ -28,46 +28,50 @@ export const tableService = {
     }
   },
   async getListTable(filterParams = null) {
-    const {
-      search,
-      searchBy,
-      status,
-      order,
-      orderBy,
-      specific_date,
-      end_date,
-      start_date,
-      interval,
-      year_date,
-      searches,
-      // Otros parámetros de filtro que puedas necesitar
-      table_number,
-    } = filterParams;
+    let filteredFilters = "";
+    if (filterParams != null) {
+      const {
+        search,
+        searchBy,
+        status,
+        order,
+        orderBy,
+        specific_date,
+        end_date,
+        start_date,
+        interval,
+        year_date,
+        searches,
+        // Otros parámetros de filtro que puedas necesitar
+        table_number,
+      } = filterParams;
 
-    const filters = {
-      orderBy,
-      order,
-      status,
-      search,
-      end_date,
-      start_date,
-      interval,
-      specific_date,
-      year_date,
-      searches,
-      // Otros parámetros de filtro que puedas necesitar
-    };
+      const filters = {
+        orderBy,
+        order,
+        status,
+        search,
+        end_date,
+        start_date,
+        interval,
+        specific_date,
+        year_date,
+        searches,
+        // Otros parámetros de filtro que puedas necesitar
+      };
 
-    let filteredFilters = Object.entries(filters)
-      .filter(
-        ([key, value]) => value !== undefined && value !== null && value !== ""
-      )
-      .map(([key, value]) => `${key}=${value}`)
-      .join("&");
+      filteredFilters = Object.entries(filters)
+        .filter(
+          ([key, value]) =>
+            value !== undefined && value !== null && value !== ""
+        )
+        .map(([key, value]) => `${key}=${value}`)
+        .join("&");
 
-    if (search && searchBy) {
-      const searchByParam = `searchBy=${searchBy.join(",")}`;
-      filteredFilters += searchByParam ? `&${searchByParam}` : "";
+      if (search && searchBy) {
+        const searchByParam = `searchBy=${searchBy.join(",")}`;
+        filteredFilters += searchByParam ? `&${searchByParam}` : "";
+      }
     }
 
     try {

@@ -28,7 +28,7 @@ export const rolService = {
     }
   },
   async getListRol(filterParams = null) {
-    let filteredFilters = null;
+    let filteredFilters = "";
     if (filterParams != null) {
       const {
         search,
@@ -75,7 +75,7 @@ export const rolService = {
 
     try {
       const response = await axiosInstance.get(
-        `${servicePath}/?${filteredFilters ? filteredFilters : ""}`
+        `${servicePath}/?${filteredFilters}`
       );
       const quotes = response.data.map((apiData) =>
         dataTransform.transformApiData(apiData, RolModel)

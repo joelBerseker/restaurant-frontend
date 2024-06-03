@@ -19,8 +19,11 @@ export const rolService = {
         );
       }
     } catch (error) {
+      useToast.show(
+        "get_element_error",
+        error.message ? error.message : "Error al obtener el Rol"
+      );
       handleError(error);
-      throw new Error(`Ocurrió un error al obtener el elemento ${serviceName}`);
     }
   },
   async getListRol(filterParams = null) {
@@ -75,6 +78,10 @@ export const rolService = {
       );
       return quotes;
     } catch (error) {
+      useToast.show(
+        "get_list_error",
+        error.message ? error.message : "Error al obtener los roles"
+      );
       handleError(error);
     }
   },
@@ -88,6 +95,10 @@ export const rolService = {
       const data_new = dataTransform.transformApiData(response.data, RolModel);
       return data_new;
     } catch (error) {
+      useToast.show(
+        "add_error",
+        error.message ? error.message : "Error al añadir el Rol"
+      );
       handleError(error);
     }
   },
@@ -101,6 +112,10 @@ export const rolService = {
       const data_new = dataTransform.transformApiData(response.data, RolModel);
       return data_new;
     } catch (error) {
+      useToast.show(
+        "edit_error",
+        error.message ? error.message : "Error al editar el Rol"
+      );
       handleError(error);
     }
   },
@@ -109,6 +124,10 @@ export const rolService = {
       const response = await axiosInstance.delete(`${servicePath}/${dataid}/`);
       return response;
     } catch (error) {
+      useToast.show(
+        "delete_error",
+        error.message ? error.message : "Error al eliminar el Rol"
+      );
       handleError(error);
     }
   },

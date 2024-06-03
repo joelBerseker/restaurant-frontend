@@ -70,10 +70,10 @@ provide("buttonBack", buttonBack);
 <style scoped>
 .transition-enter-active,
 .transition-enter {
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 .transition-leave-active {
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 .transition-leave-to {
   transform: translateY(10px);

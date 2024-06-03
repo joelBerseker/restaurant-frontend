@@ -39,6 +39,10 @@ const toastText = {
     text: "Datos no válidos, revise si el correo y la contraseña son correctos.",
     type: 2,
   },
+  check_validation_filter: {
+    text: "Debe existir al menos un elemento marcado.",
+    type: 2,
+  },
 };
 
 export { toastText };

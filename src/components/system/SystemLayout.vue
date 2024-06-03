@@ -106,11 +106,11 @@ function closeSidebar() {
 #system-main {
   transition: margin-left 0.3s;
   margin-left: 60px;
+  height: auto;
   min-height: 100vh;
-  height: 100vh;
 
   background-size: cover;
-  overflow-x: hidden;
+
   position: relative;
 
   display: flex;

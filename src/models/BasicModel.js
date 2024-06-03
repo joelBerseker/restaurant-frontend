@@ -17,7 +17,6 @@ export class BasicModel extends Model {
     aditional: {},
 
     validation: {},
-    validate: ["select"],
   };
   table_description = {
     id: "table_description",

@@ -3,7 +3,7 @@ import { handleError } from "@/helpers";
 import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
 import { TicketDetailModel } from "@/models";
-
+import { useToastStore } from "@/stores";
 const servicePath = "/ticket/ticketdetail";
 export const ticketDetailService = {
   async getTicketDetail(ticketdetail_id) {
@@ -24,8 +24,12 @@ export const ticketDetailService = {
         );
       }
     } catch (error) {
+      const useToast = useToastStore();
+      useToast.show(
+        "get_element_error",
+        error.message ? error.message : "Error al obtener user"
+      );
       handleError(error);
-      throw new Error(`Ocurrió un error al obtener el elemento ${serviceName}`);
     }
   },
   async getListTicketDetail(filterParams = null) {
@@ -83,6 +87,11 @@ export const ticketDetailService = {
       );
       return quotes;
     } catch (error) {
+      const useToast = useToastStore();
+      useToast.show(
+        "get_list_error",
+        error.message ? error.message : "Error al obtener los usuarios"
+      );
       handleError(error);
     }
   },
@@ -99,6 +108,11 @@ export const ticketDetailService = {
       );
       return data_new;
     } catch (error) {
+      const useToast = useToastStore();
+      useToast.show(
+        "add_error",
+        error.message ? error.message : "Error al añadir los usuarios"
+      );
       handleError(error);
     }
   },
@@ -115,6 +129,11 @@ export const ticketDetailService = {
       );
       return data_new;
     } catch (error) {
+      const useToast = useToastStore();
+      useToast.show(
+        "edit_error",
+        error.message ? error.message : "Error al editar los usuarios"
+      );
       handleError(error);
     }
   },

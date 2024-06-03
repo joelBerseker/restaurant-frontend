@@ -1,18 +1,22 @@
-
 import axiosInstance from "@/services/axios-instance";
 import { handleError } from "@/helpers";
 import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
 import { TypeProductModel } from "@/models";
-
+import { useToastStore } from "@/stores";
 const servicePath = "/product/typeproduct";
 export const typeProductService = {
   async getTypeProduct(typeproduct_id) {
     try {
-      const response = await axiosInstance.get(`${servicePath}/${typeproduct_id}/`);
+      const response = await axiosInstance.get(
+        `${servicePath}/${typeproduct_id}/`
+      );
 
       if (response && response.data) {
-        const data = dataTransform.transformApiData(response.data, TypeProductModel);
+        const data = dataTransform.transformApiData(
+          response.data,
+          TypeProductModel
+        );
         return data;
       } else {
         throw new Error(
@@ -20,11 +24,15 @@ export const typeProductService = {
         );
       }
     } catch (error) {
+      const useToast = useToastStore();
+      useToast.show(
+        "get_element_error",
+        error.message ? error.message : "Error al obtener user"
+      );
       handleError(error);
-      throw new Error(`Ocurrió un error al obtener el elemento ${serviceName}`);
     }
   },
-  async getListTypeProduct(filterParams=null) {
+  async getListTypeProduct(filterParams = null) {
     const {
       search,
       searchBy,
@@ -38,7 +46,7 @@ export const typeProductService = {
       year_date,
       searches,
       // Otros parámetros de filtro que puedas necesitar
-      table_number
+      table_number,
     } = filterParams;
 
     const filters = {
@@ -56,7 +64,9 @@ export const typeProductService = {
     };
 
     let filteredFilters = Object.entries(filters)
-      .filter(([key, value]) => value !== undefined && value !== null && value !== "")
+      .filter(
+        ([key, value]) => value !== undefined && value !== null && value !== ""
+      )
       .map(([key, value]) => `${key}=${value}`)
       .join("&");
 
@@ -66,12 +76,19 @@ export const typeProductService = {
     }
 
     try {
-      const response = await axiosInstance.get(`${servicePath}/?${filteredFilters}`);
+      const response = await axiosInstance.get(
+        `${servicePath}/?${filteredFilters}`
+      );
       const quotes = response.data.map((apiData) =>
         dataTransform.transformApiData(apiData, TypeProductModel)
       );
       return quotes;
     } catch (error) {
+      const useToast = useToastStore();
+      useToast.show(
+        "get_list_error",
+        error.message ? error.message : "Error al obtener los usuarios"
+      );
       handleError(error);
     }
   },
@@ -88,6 +105,11 @@ export const typeProductService = {
       );
       return data_new;
     } catch (error) {
+      const useToast = useToastStore();
+      useToast.show(
+        "add_error",
+        error.message ? error.message : "Error al añadir los usuarios"
+      );
       handleError(error);
     }
   },
@@ -104,6 +126,11 @@ export const typeProductService = {
       );
       return data_new;
     } catch (error) {
+      const useToast = useToastStore();
+      useToast.show(
+        "edit_error",
+        error.message ? error.message : "Error al editar los usuarios"
+      );
       handleError(error);
     }
   },

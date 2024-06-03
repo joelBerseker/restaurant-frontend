@@ -1,10 +1,9 @@
-
 import axiosInstance from "@/services/axios-instance";
 import { handleError } from "@/helpers";
 import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
 import { TableModel } from "@/models";
-
+import { useToastStore } from "@/stores";
 const servicePath = "/table/table";
 export const tableService = {
   async getTable(table_id) {
@@ -20,11 +19,15 @@ export const tableService = {
         );
       }
     } catch (error) {
+      const useToast = useToastStore();
+      useToast.show(
+        "get_element_error",
+        error.message ? error.message : "Error al obtener user"
+      );
       handleError(error);
-      throw new Error(`Ocurrió un error al obtener el elemento ${serviceName}`);
     }
   },
-  async getListTable(filterParams=null) {
+  async getListTable(filterParams = null) {
     const {
       search,
       searchBy,
@@ -38,7 +41,7 @@ export const tableService = {
       year_date,
       searches,
       // Otros parámetros de filtro que puedas necesitar
-      table_number
+      table_number,
     } = filterParams;
 
     const filters = {
@@ -56,7 +59,9 @@ export const tableService = {
     };
 
     let filteredFilters = Object.entries(filters)
-      .filter(([key, value]) => value !== undefined && value !== null && value !== "")
+      .filter(
+        ([key, value]) => value !== undefined && value !== null && value !== ""
+      )
       .map(([key, value]) => `${key}=${value}`)
       .join("&");
 
@@ -66,12 +71,19 @@ export const tableService = {
     }
 
     try {
-      const response = await axiosInstance.get(`${servicePath}/?${filteredFilters}`);
+      const response = await axiosInstance.get(
+        `${servicePath}/?${filteredFilters}`
+      );
       const quotes = response.data.map((apiData) =>
         dataTransform.transformApiData(apiData, TableModel)
       );
       return quotes;
     } catch (error) {
+      const useToast = useToastStore();
+      useToast.show(
+        "get_list_error",
+        error.message ? error.message : "Error al obtener los usuarios"
+      );
       handleError(error);
     }
   },
@@ -88,6 +100,11 @@ export const tableService = {
       );
       return data_new;
     } catch (error) {
+      const useToast = useToastStore();
+      useToast.show(
+        "add_error",
+        error.message ? error.message : "Error al añadir los usuarios"
+      );
       handleError(error);
     }
   },
@@ -104,6 +121,11 @@ export const tableService = {
       );
       return data_new;
     } catch (error) {
+      const useToast = useToastStore();
+      useToast.show(
+        "edit_error",
+        error.message ? error.message : "Error al editar los usuarios"
+      );
       handleError(error);
     }
   },

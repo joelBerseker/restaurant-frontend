@@ -3,7 +3,7 @@ import { handleError } from "@/helpers";
 import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
 import { RolModel } from "@/models";
-
+import { useToastStore } from "@/stores";
 const servicePath = "/user/rol";
 export const rolService = {
   async getRol(rol_id) {

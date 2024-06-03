@@ -4,7 +4,7 @@ import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
 import { RolModel } from "@/models";
 import { useToastStore } from "@/stores";
-const servicePath = "/user/rol";
+const servicePath = "/user/roles";
 export const rolService = {
   async getRol(rol_id) {
     try {
@@ -28,51 +28,53 @@ export const rolService = {
     }
   },
   async getListRol(filterParams = null) {
-    const {
-      search,
-      searchBy,
-      status,
-      order,
-      orderBy,
-      specific_date,
-      end_date,
-      start_date,
-      interval,
-      year_date,
-      searches,
-      // Otros parámetros de filtro que puedas necesitar
-      table_number,
-    } = filterParams;
+    if (filterParams != null) {
+      const {
+        search,
+        searchBy,
+        status,
+        order,
+        orderBy,
+        specific_date,
+        end_date,
+        start_date,
+        interval,
+        year_date,
+        searches,
+        // Otros parámetros de filtro que puedas necesitar
+      } = filterParams;
 
-    const filters = {
-      orderBy,
-      order,
-      status,
-      search,
-      end_date,
-      start_date,
-      interval,
-      specific_date,
-      year_date,
-      searches,
-      // Otros parámetros de filtro que puedas necesitar
-    };
+      const filters = {
+        orderBy,
+        order,
+        status,
+        search,
+        end_date,
+        start_date,
+        interval,
+        specific_date,
+        year_date,
+        searches,
+        // Otros parámetros de filtro que puedas necesitar
+      };
 
-    let filteredFilters = Object.entries(filters)
-      .filter(
-        ([key, value]) => value !== undefined && value !== null && value !== ""
-      )
-      .map(([key, value]) => `${key}=${value}`)
-      .join("&");
+      let filteredFilters = Object.entries(filters)
+        .filter(
+          ([key, value]) =>
+            value !== undefined && value !== null && value !== ""
+        )
+        .map(([key, value]) => `${key}=${value}`)
+        .join("&");
 
-    if (search && searchBy) {
-      const searchByParam = `searchBy=${searchBy.join(",")}`;
-      filteredFilters += searchByParam ? `&${searchByParam}` : "";
+      if (search && searchBy) {
+        const searchByParam = `searchBy=${searchBy.join(",")}`;
+        filteredFilters += searchByParam ? `&${searchByParam}` : "";
+      }
     }
 
     try {
       const response = await axiosInstance.get(
-        `${servicePath}/?${filteredFilters}`
+        `${servicePath}/?${filteredFilters ? filterParams : ""}`
       );
       const quotes = response.data.map((apiData) =>
         dataTransform.transformApiData(apiData, RolModel)

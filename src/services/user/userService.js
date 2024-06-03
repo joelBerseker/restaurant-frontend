@@ -20,7 +20,10 @@ export const userService = {
         );
       }
     } catch (error) {
-      useToast.show("get_error", "user"); //
+      useToast.show(
+        "get_element_error",
+        error.message ? error.message : "Error al obtener user"
+      ); //
       handleError(error);
       throw new Error(`Ocurrió un error al obtener el elemento ${serviceName}`);
     }
@@ -83,8 +86,12 @@ export const userService = {
       );
       return quotes;
     } catch (error) {
+      useToast.show(
+        "get_list_error",
+        error.message ? error.message : "Error al obtener los usuarios"
+      );
       handleError(error);
-      throw error; // Asegurarse de lanzar el error para manejarlo adecuadamente en el contexto superior
+      //throw error; // Asegurarse de lanzar el error para manejarlo adecuadamente en el contexto superior
     }
   },
 
@@ -97,8 +104,10 @@ export const userService = {
       const data_new = dataTransform.transformApiData(response.data, UserModel);
       return data_new;
     } catch (error) {
-      error(401);
-      useToast.show("get_element_error", "no existe"); //
+      useToast.show(
+        "add_error",
+        error.message ? error.message : "Error al añadir los usuarios"
+      );
       handleError(error);
     }
   },
@@ -112,6 +121,10 @@ export const userService = {
       const data_new = dataTransform.transformApiData(response.data, UserModel);
       return data_new;
     } catch (error) {
+      useToast.show(
+        "edit_error",
+        error.message ? error.message : "Error al editar los usuarios"
+      );
       handleError(error);
     }
   },
@@ -120,6 +133,10 @@ export const userService = {
       const response = await axiosInstance.delete(`${servicePath}/${dataid}/`);
       return response;
     } catch (error) {
+      useToast.show(
+        "delete_error",
+        error.message ? error.message : "Error al eliminar los usuarios"
+      );
       handleError(error);
     }
   },

@@ -19,6 +19,7 @@ export const rolService = {
         );
       }
     } catch (error) {
+      const useToast = useToastStore();
       useToast.show(
         "get_element_error",
         error.message ? error.message : "Error al obtener el Rol"
@@ -78,6 +79,7 @@ export const rolService = {
       );
       return quotes;
     } catch (error) {
+      const useToast = useToastStore();
       useToast.show(
         "get_list_error",
         error.message ? error.message : "Error al obtener los roles"
@@ -95,6 +97,7 @@ export const rolService = {
       const data_new = dataTransform.transformApiData(response.data, RolModel);
       return data_new;
     } catch (error) {
+      const useToast = useToastStore();
       useToast.show(
         "add_error",
         error.message ? error.message : "Error al añadir el Rol"
@@ -112,6 +115,7 @@ export const rolService = {
       const data_new = dataTransform.transformApiData(response.data, RolModel);
       return data_new;
     } catch (error) {
+      const useToast = useToastStore();
       useToast.show(
         "edit_error",
         error.message ? error.message : "Error al editar el Rol"
@@ -124,6 +128,7 @@ export const rolService = {
       const response = await axiosInstance.delete(`${servicePath}/${dataid}/`);
       return response;
     } catch (error) {
+      const useToast = useToastStore();
       useToast.show(
         "delete_error",
         error.message ? error.message : "Error al eliminar el Rol"

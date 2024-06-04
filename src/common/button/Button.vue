@@ -157,4 +157,17 @@ init();
 .g-btn-transparent-1 {
   background-color: transparent !important;
 }
+.status-button.active {
+  color: var(--color-1-v3);
+}
+.status-button.inactive {
+  color: var(--color-d);
+}
+.g-btn-link-min {
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  font-size: 12px;
+}
 </style>

@@ -134,14 +134,13 @@ function iconCurrentSort(sort) {
   background-color: rgb(255, 255, 255);
 }
 .g-table tbody tr:nth-last-child(odd) {
-  background-color: rgb(241, 241, 241);
+  background-color: var(--color-w-v3);
 }
 .g-table tr td {
   transition: 0.3s;
 }
 .g-table tr:hover td {
-  background-color: var(--color-b-v4);
-  color: var(--color-w-v2);
+  color: var(--color-1-v3);
 }
 .table-min td,
 .table-min th {

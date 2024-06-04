@@ -6,6 +6,8 @@ import Select from "./common/form/Select.vue";
 import SelectValidation from "./common/form/SelectValidation.vue";
 import Form from "./common/form/Form.vue";
 import Button from "./common/button/Button.vue";
+import ButtonSelect from "./common/button/ButtonSelect.vue";
+
 import Collapse from "./common/Collapse.vue";
 
 import Section1 from "./common/section/Section1.vue";
@@ -20,5 +22,6 @@ function registerComponents(app) {
   app.component("g-button", Button);
   app.component("g-collapse", Collapse);
   app.component("g-section-1", Section1);
+  app.component("g-button-select", ButtonSelect);
 }
 export { registerComponents };

@@ -1,7 +1,7 @@
 <script setup>
 import Table from "@/common/table/Table.vue";
 import Filter from "@/common/filter/Filter.vue";
-
+import { status } from "@/helpers";
 import { ref, inject } from "vue";
 
 const props = defineProps({
@@ -31,7 +31,7 @@ function viewItem(_data) {
 }
 async function getList(loading = true) {
   isLoading.value = loading;
-  let resp = await props.getListConsult();
+  let resp = await props.getListConsult(props.filter);
   if (resp !== null) {
     rows.value = resp.map((element) => element.getData());
   }
@@ -50,12 +50,13 @@ async function deleteItem(_data) {
   }
 }
 function init() {
-  if (props.filter.order !== undefined && props.filter.orderBy !== undefined) {
-    let search = props.columns.find((x) => x.field === props.filter.orderBy);
-    if (search !== undefined) search.sort = props.filter.order;
-  }
   localColumns.value = [
     ...props.columns,
+    {
+      label: "Estado",
+      field: "status",
+      width: "1%",
+    },
     {
       label: "",
       field: "quick",
@@ -76,7 +77,12 @@ defineExpose({
 });
 </script>
 <template>
-  <Filter ref="filterRef" :columns="localColumns" :filter="filter" />
+  <Filter
+    ref="filterRef"
+    :columns="localColumns"
+    :filter="filter"
+    @filterSearch="refresh"
+  />
   <Table
     ref="tableRef"
     :rows="rows"
@@ -89,28 +95,54 @@ defineExpose({
     <template v-slot:quick="{ row, index }">
       <div class="btns-container">
         <g-button
-          icon="fa-solid fa-arrow-up-right-from-square"
-          @click.stop="viewItem(row)"
-          type="transparent-1"
-          class="btn-row-table"
-          title="Detalles"
-        />
-        <g-button
           icon="fa-solid fa-trash-can"
           @click.stop="deleteItem(row)"
           type="transparent-1"
           class="btn-row-table"
           title="Eliminar"
         />
+        <g-button
+          icon="fa-solid fa-arrow-up-right-from-square"
+          @click.stop="viewItem(row)"
+          type="transparent-1"
+          class="btn-row-table"
+          title="Detalles"
+        />
       </div>
+    </template>
+    <template v-slot:status="{ row, index }">
+      <span
+        v-if="row.status"
+        :class="['status-container', status.options[row.status].color]"
+      >
+        <span>
+          <font-awesome-icon :icon="status.options[row.status].icon" />
+        </span>
+        <span class="status-text">
+          {{ status.options[row.status].text }}
+        </span>
+      </span>
     </template>
   </Table>
 </template>
 <style scoped>
 .g-table tr:hover td .btn-row-table {
-  color: var(--color-w-v2);
+  color: var(--color-1-v3);
 }
 .btns-container {
   display: flex;
+}
+.status-container {
+  text-wrap: nowrap;
+  font-size: 13px;
+}
+.status-text {
+  margin-left: 0.25rem;
+}
+.status-container.active {
+  color: var(--color-1-v3);
+}
+.status-container.inactive {
+  color: var(--color-d);
 }
 </style>

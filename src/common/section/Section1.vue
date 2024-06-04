@@ -58,7 +58,7 @@ function buttonCollapse() {
       </span>
       <span class="title-text">
         {{ navigationInfo[name].title }}
-        <div class="aditional-text">25 Elementos</div>
+        <div class="subTitle">25 Elementos</div>
       </span>
       <span v-if="refresh" class="title-refresh">
         <g-button
@@ -92,7 +92,7 @@ function buttonCollapse() {
 .content-container {
   margin-top: 1.5rem;
 }
-.aditional-text {
+.subTitle {
   font-size: 13px;
   color: var(--color-b-v3);
 }

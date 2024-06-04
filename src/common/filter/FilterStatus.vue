@@ -50,12 +50,15 @@ defineExpose({
 });
 </script>
 <template>
-  <!---g-select-button
-    v-model="statusOptions.value"
-    :options="statusOptionsPermises"
-    @change="search()"
-    label="Estado"
-    icon="bi bi-arrow-repeat"
-    class="no-wrap"
-  /--->
+  <div>
+    <div>
+      <label>Estado</label>
+    </div>
+    <g-button-select
+      v-model="statusOptions.value"
+      :options="status.options"
+      @change="search()"
+      type="search"
+    />
+  </div>
 </template>

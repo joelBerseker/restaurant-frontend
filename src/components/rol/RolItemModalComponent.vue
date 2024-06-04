@@ -5,14 +5,23 @@ import FormButtons from "@/common/form/FormButtons.vue";
 
 import { reactive, ref } from "vue";
 
-const emit = defineEmits(["onAdded", "onDeleted", "onEdited"]);
+const emit = defineEmits([
+  "onAdded",
+  "onDeleted",
+  "onEdited",
+  "onEditedStatus",
+]);
 
 const modalRef = ref(null);
 const formRef = ref(null);
 
+const statusValue = ref(null);
+
 const modal = reactive({
   title: "Rol",
   titleBefore: "",
+  subTitle: "0014 - ADMINISTRADOR",
+
   isLoading: false,
 });
 const mode = ref(null);
@@ -64,7 +73,14 @@ function onCancel() {
 function onDelete() {
   formRef.value.deleteElement();
 }
+function onStatus() {
+  formRef.value.editStatusElement();
+}
 
+function onGot(_data) {
+  console.log(_data);
+  statusValue.value = _data.status.value;
+}
 function onAdded() {
   closeModal();
   emit("onAdded");
@@ -77,6 +93,9 @@ function onDeleted() {
   closeModal();
   emit("onDeleted");
 }
+function onEditedStatus() {
+  emit("onEditedStatus");
+}
 defineExpose({
   addMode,
   viewMode,
@@ -87,22 +106,27 @@ defineExpose({
     ref="modalRef"
     :titleModal="modal.title"
     :titleBeforeModal="modal.titleBefore"
+    :subTitleModal="modal.subTitle"
   >
     <RolFormComponent
       ref="formRef"
       :disabled="disabled"
+      @onGot="onGot"
       @onAdded="onAdded"
       @onEdited="onEdited"
       @onDeleted="onDeleted"
+      @onEditedStatus="onEditedStatus"
     />
     <template #footer>
       <FormButtons
         :mode="mode"
+        :statusValue="statusValue"
         @onAdd="onAdd"
         @onEdit="onEdit"
         @onCancel="onCancel"
         @onSave="onSave"
         @onDelete="onDelete"
+        @onStatus="onStatus"
       />
     </template>
   </Modal>

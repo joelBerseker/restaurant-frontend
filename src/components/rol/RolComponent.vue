@@ -20,6 +20,7 @@ const table = reactive({
       field: "name",
       sortable: true,
       searchable: true,
+      sort: "desc",
     },
     {
       label: "Descripción",
@@ -51,6 +52,7 @@ function addItem() {
     @onAdded="refresh"
     @onDeleted="refresh"
     @onEdited="refresh"
+    @onEditedStatus="refresh"
   />
   <g-section-1 name="rol" :refresh="true" @onRefresh="refresh()">
     <template #buttons> <TableButtons @onAdd="addItem" /> </template>

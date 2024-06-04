@@ -1,9 +1,17 @@
 <script setup>
-import { inject } from "vue";
+import { status } from "@/helpers";
+import { inject, computed } from "vue";
 
 const props = defineProps({
   mode: { default: null },
+  statusValue: { default: null },
 });
+
+const statusData = computed(() => {
+  console.log(status.getAll(props.statusValue));
+  return status.getAll(props.statusValue);
+});
+
 const confirmDialogue = inject("confirmDialogue");
 
 const emit = defineEmits([
@@ -18,8 +26,10 @@ const emit = defineEmits([
 function onAdd() {
   emit("onAdd");
 }
-function onStatus() {
-  emit("onStatus");
+async function onStatus() {
+  let statusConfirm = props.statusValue === 1 ? "deactivate" : "activate";
+  let confirm = await confirmDialogue(statusConfirm);
+  if (confirm) emit("onStatus");
 }
 async function onDelete() {
   let confirm = await confirmDialogue("delete");
@@ -43,15 +53,17 @@ function onSave() {
     <span v-else-if="mode === 'view'">
       <g-button
         type="transparent-1"
-        icon="fa-solid fa-print"
-        text="Estado"
-        @click="onStatus()"
-      />
-      <g-button
-        type="transparent-1"
         icon="fa-solid fa-trash-can"
         text="Eliminar"
         @click="onDelete()"
+      />
+      <g-button
+        v-if="statusData !== null"
+        type="transparent-1"
+        :class="['status-button', statusData.color]"
+        :icon="statusData.icon"
+        :text="statusData.text"
+        @click="onStatus()"
       />
       <g-button
         icon="fa-solid fa-pen-to-square"

@@ -1,5 +1,4 @@
 <script setup>
-import { Dropdown } from "bootstrap";
 import { ref, computed } from "vue";
 import { isEmpty } from "@/helpers";
 import LoadingContainer from "@/common/container/LoadingContainer.vue";
@@ -116,8 +115,6 @@ function changeValue(_item) {
 }
 function selectItem(_item) {
   changeValue(_item);
-  var dropdown = Dropdown.getInstance(selectRef.value);
-  dropdown.hide();
 }
 function tabAction(_item) {
   selectItem(_item);

@@ -65,40 +65,47 @@ defineExpose({
 </script>
 <template>
   <div class="filter-container">
-    <div class="filter-search-container">
-      <FilterSearch
-        ref="filterSearchRef"
+    <div class="filters-container">
+      <div class="filter-search-container">
+        <FilterSearch
+          ref="filterSearchRef"
+          :filter="filter"
+          :columns="columns"
+          @search="search()"
+        />
+      </div>
+
+      <FilterOrder
+        ref="filterOrderRef"
+        class="ms-2"
         :filter="filter"
         :columns="columns"
         @search="search()"
       />
-    </div>
+      <div v-if="status">
+        <FilterStatus
+          class="ms-2"
+          ref="filterStatusRef"
+          :filter="filter"
+          @search="search()"
+        />
+      </div>
+      <div v-if="date">
+        <FilterDate
+          ref="filterDateRef"
+          :filter="filter"
+          @search="search()"
+          class="ms-1"
+        />
+      </div>
 
-    <FilterOrder
-      ref="filterOrderRef"
-      class="ms-2"
-      :filter="filter"
-      :columns="columns"
-      @search="search()"
-    />
-    <div v-if="status">
-      <FilterStatus ref="filterStatusRef" :filter="filter" @search="search()" />
+      <slot :search="search"></slot>
     </div>
-    <div v-if="date">
-      <FilterDate
-        ref="filterDateRef"
-        :filter="filter"
-        @search="search()"
-        class="ms-1"
-      />
-    </div>
-
-    <slot :search="search"></slot>
-    <div v-show="showClearButton" class="ms-1">
+    <div v-show="showClearButton" class="clear-filter">
       <g-button
         icon="fa-solid fa-xmark"
-        type="secondary"
-        title="Limpiar filtro"
+        type="link-min"
+        text="Limpiar Filtro"
         @click="clearFilter()"
       />
     </div>
@@ -108,10 +115,19 @@ defineExpose({
 .filter-container {
   background-color: var(--color-w-v3);
   padding: 1rem;
+  padding-bottom: 1.4rem;
   border-radius: var(--br-v2);
+  position: relative;
+}
+.filters-container {
   display: flex;
 }
 .filter-search-container {
   width: 50%;
+}
+.clear-filter {
+  position: absolute;
+  bottom: 0rem;
+  right: 0rem;
 }
 </style>

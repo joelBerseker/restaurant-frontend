@@ -7,7 +7,13 @@ const props = defineProps({
   disabled: { default: false },
 });
 
-const emit = defineEmits(["onAdded", "onDeleted", "onEdited", "onGot"]);
+const emit = defineEmits([
+  "onAdded",
+  "onDeleted",
+  "onEdited",
+  "onEditedStatus",
+  "onGot",
+]);
 
 const formRef = ref(null);
 
@@ -35,6 +41,13 @@ async function deleteElement() {
   let resp = await rolService.deleteRol(formRef.value.getElement().id.value);
   if (resp !== null) emit("onDeleted", resp);
 }
+async function editStatusElement() {
+  let resp = await rolService.changeStatusRol(formRef.value.getElement());
+  if (resp !== null) {
+    console.log(resp);
+    emit("onEditedStatus", resp);
+  }
+}
 function restoreElement() {
   formRef.value.restore();
 }
@@ -48,6 +61,7 @@ defineExpose({
   deleteElement,
   restoreElement,
   resetElement,
+  editStatusElement,
 });
 </script>
 <template>

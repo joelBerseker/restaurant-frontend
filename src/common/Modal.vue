@@ -54,12 +54,15 @@ defineExpose({
         <header class="modal-header">
           <slot name="header"></slot>
           <div class="modal-title">
-            <p>
-              <span v-if="titleBeforeModal != ''">
+            <div class="title-text">
+              <div class="title-principal">
                 {{ titleBeforeModal }}
-              </span>
-              {{ titleModal }}
-            </p>
+
+                {{ titleModal }}
+              </div>
+              <div class="subTitle">{{ subTitleModal }}</div>
+            </div>
+
             <span>
               <g-button
                 v-if="closeButton"
@@ -98,6 +101,19 @@ defineExpose({
     </div>
   </div>
 </template>
+<style scoped>
+.title-principal {
+  font-size: 20px;
+  font-weight: 500;
+}
+.title-text {
+  line-height: 1.3;
+}
+.subTitle {
+  font-size: 13px;
+  color: var(--color-b-v3);
+}
+</style>
 <style>
 .modal-title {
   display: flex;

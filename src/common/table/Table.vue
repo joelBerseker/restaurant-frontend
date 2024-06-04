@@ -48,9 +48,9 @@ function sortColumn(column) {
 function iconCurrentSort(sort) {
   let resp = "";
   if (sort === "asc") {
-    resp = "fa-solid fa-arrow-up-z-a";
+    resp = "fa-solid fa-arrow-up-a-z";
   } else if (sort === "desc") {
-    resp = "fa-solid fa-arrow-down-a-z";
+    resp = "fa-solid fa-arrow-down-z-a";
   } else {
     resp = "fa-solid fa-arrow-down-up-across-line";
   }

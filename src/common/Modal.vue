@@ -6,7 +6,7 @@ const props = defineProps({
   zIndex: { default: "5000" },
   scrollable: { default: true },
   titleModal: { default: "" },
-  titleAditionalModal: { default: "" },
+  titleBeforeModal: { default: "" },
   subTitleModal: { default: "" },
   closeButton: { default: true },
   size: { default: "" },
@@ -55,8 +55,8 @@ defineExpose({
           <slot name="header"></slot>
           <div class="modal-title">
             <p>
-              <span v-if="titleAditionalModal != ''">
-                {{ titleAditionalModal }}
+              <span v-if="titleBeforeModal != ''">
+                {{ titleBeforeModal }}
               </span>
               {{ titleModal }}
             </p>
@@ -73,13 +73,12 @@ defineExpose({
             </span>
           </div>
         </header>
-        <hr class="mx-3 my-0" />
 
         <main class="modal-body">
           <slot></slot>
         </main>
         <div v-show="slots.footer === undefined" class="mt-2"></div>
-        <hr v-show="slots.footer !== undefined" class="mx-3 my-0" />
+
         <footer v-show="slots.footer !== undefined" class="modal-footer">
           <slot name="footer"></slot>
         </footer>
@@ -139,7 +138,7 @@ defineExpose({
   font-size: 17px;
 }
 .modal-body {
-  padding: 1rem;
+  padding: 0.5rem 1rem;
 }
 .modal-footer {
   border-top: none;

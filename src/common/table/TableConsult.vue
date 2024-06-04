@@ -96,7 +96,7 @@ defineExpose({
           title="Detalles"
         />
         <g-button
-          icon="fa-solid fa-trash"
+          icon="fa-solid fa-trash-can"
           @click.stop="deleteItem(row)"
           type="transparent-1"
           class="btn-row-table"

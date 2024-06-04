@@ -1,24 +1,36 @@
-<script setup></script>
+<script setup>
+const emit = defineEmits(["onSearch", "onPrint", "onAdd"]);
+
+function search() {
+  emit("onSearch");
+}
+function print() {
+  emit("onPrint");
+}
+function add() {
+  emit("onAdd");
+}
+</script>
 <template>
   <div class="buttons-container">
     <g-button
       type="transparent-1"
       icon="fa-solid fa-magnifying-glass"
       text="Buscar"
-      @click="buttonRefresh()"
+      @click="search()"
       title="Recargar"
     />
     <g-button
       type="transparent-1"
       icon="fa-solid fa-print"
       text="Imprimir"
-      @click="buttonRefresh()"
+      @click="print()"
       title="Recargar"
     />
     <g-button
       icon="fa-solid fa-plus"
       text="Agregar"
-      @click="buttonRefresh()"
+      @click="add()"
       title="Recargar"
     />
   </div>

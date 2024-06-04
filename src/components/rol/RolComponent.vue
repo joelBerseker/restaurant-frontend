@@ -1,9 +1,12 @@
 <script setup>
 import TableConsult from "@/common/table/TableConsult.vue";
 import TableButtons from "@/common/table/TableButtons.vue";
+import RolItemModalComponent from "@/components/rol/RolItemModalComponent.vue";
 import { ref, reactive, onMounted, inject } from "vue";
 import { rolService } from "@/services";
 const tableRef = ref(null);
+const modalRef = ref(null);
+
 const table = reactive({
   columns: [
     {
@@ -36,11 +39,21 @@ function refresh() {
 }
 function viewItem(_data) {
   console.log(_data);
+  modalRef.value.viewMode(_data.id);
+}
+function addItem() {
+  modalRef.value.addMode();
 }
 </script>
 <template>
+  <RolItemModalComponent
+    ref="modalRef"
+    @onAdded="refresh"
+    @onDeleted="refresh"
+    @onEdited="refresh"
+  />
   <g-section-1 name="rol" :refresh="true" @onRefresh="refresh()">
-    <template #buttons> <TableButtons /> </template>
+    <template #buttons> <TableButtons @onAdd="addItem" /> </template>
     <template #content>
       <TableConsult
         ref="tableRef"

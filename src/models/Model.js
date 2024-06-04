@@ -33,8 +33,6 @@ export class Model {
       }
     }
 
-    console.log("SIGUI VERIFICANDO");
-    console.log(_data);
     if (_data.validate !== undefined) {
       for (let i = 0; i < _data.validate.length; i++) {
         const element = _data.validate[i];
@@ -43,25 +41,20 @@ export class Model {
         if (!resp.isValid) break;
       }
     }
-    console.log({ resp });
+
     _data.validation = resp;
-    console.log({ resp });
   }
   validate() {
     let resp = true;
     for (var key in this) {
-      if (this[key].validate != undefined) {
-        if (this[key].consider === false) {
+      let element = this[key];
+      if (element.validate != undefined) {
+        if (element.consider === false) {
           continue;
         }
 
-        if (
-          this[key].validation.isValid === undefined ||
-          this[key].revalidate !== false
-        ) {
-          this[key].validate();
-        }
-        resp = resp && this[key].validation.isValid;
+        this.validateLabel(element);
+        resp = resp && element.validation.isValid;
       }
     }
     return resp;
@@ -111,7 +104,8 @@ export class Model {
   addData() {
     let resp = {};
     for (var key in this) {
-      resp[key] = this[key].value;
+      let element = this[key];
+      resp[key] = isEmpty(element.value) ? element.default : element.value;
     }
     return resp;
   }

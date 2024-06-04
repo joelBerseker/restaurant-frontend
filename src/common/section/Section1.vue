@@ -20,6 +20,9 @@ const props = defineProps({
   refresh: {
     default: false,
   },
+  collapse: {
+    default: false,
+  },
 });
 const sticking = ref(false);
 const collapseRef = ref(null);
@@ -73,7 +76,7 @@ function buttonCollapse() {
           title="Recargar"
         />
       </span>
-      <span class="title-collpase">
+      <span v-if="collapse" class="title-collpase">
         <g-button
           type="transparent-1"
           icon="fa-solid fa-chevron-down"

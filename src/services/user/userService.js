@@ -109,7 +109,7 @@ export const userService = {
       const useToast = useToastStore();
       useToast.show(
         "add_error",
-        error.message ? error.message : "Error al añadir los usuarios"
+        error.message ? error.message : "Error al agregar los usuarios"
       );
       handleError(error);
     }

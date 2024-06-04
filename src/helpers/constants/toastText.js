@@ -19,6 +19,14 @@ const toastText = {
     text: "El registro se elimino correctamente.",
     type: 1,
   },
+  status_success: {
+    text: "El registro se elimino correctamente.",
+    type: 1,
+  },
+  status_error: {
+    text: "El registro se elimino correctamente.",
+    type: 1,
+  },
   delete_error: {
     text: "No se pudo eliminar el registro, si continúa sucediendo contacte con su proveedor.",
     type: 2,

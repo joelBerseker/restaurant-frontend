@@ -36,6 +36,7 @@ import { handleError } from "@/helpers";
 import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
 import { ${serviceName}Model } from "@/models";
+import { useToastStore } from "@/stores";
 
 const servicePath = "/${subfolderName}/${serviceName.toLowerCase()}";
 export const ${lowerCaseFirstLetter(serviceName)}Service = {
@@ -52,6 +53,11 @@ export const ${lowerCaseFirstLetter(serviceName)}Service = {
         );
       }
     } catch (error) {
+      const useToast = useToastStore();
+      useToast.show(
+        get_element_error",
+        error.message ? error.message : "Error al obtener user"
+      );
       handleError(error);
       throw new Error(\`Ocurrió un error al obtener el elemento \${serviceName}\`);
     }

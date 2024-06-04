@@ -96,9 +96,16 @@ export class Model {
     if (this.status.value == 1) {
       status_new = 2;
     }
+    this.status.value = status_new;
     return {
       status: status_new,
     };
+  }
+  getStatus() {
+    if (this.status.value == 1) return "activado";
+    if (this.status.value == 2) return "desactivado";
+    if (this.status.value == 3) return "eliminado";
+    return "Gaseoso";
   }
 
   addData() {

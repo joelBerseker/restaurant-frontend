@@ -107,12 +107,14 @@ export const rolService = {
         new_data.addData()
       );
       const data_new = dataTransform.transformApiData(response.data, RolModel);
+      const useToast = useToastStore();
+      useToast.show("add_success", "Rol agregado.");
       return data_new;
     } catch (error) {
       const useToast = useToastStore();
       useToast.show(
         "add_error",
-        error.message ? error.message : "Error al añadir el Rol"
+        error.message ? error.message : "Error al agregar el Rol"
       );
       handleError(error);
     }
@@ -125,6 +127,8 @@ export const rolService = {
         new_data.addData()
       );
       const data_new = dataTransform.transformApiData(response.data, RolModel);
+      const useToast = useToastStore();
+      useToast.show("edit_success", "Rol editado.");
       return data_new;
     } catch (error) {
       const useToast = useToastStore();
@@ -138,6 +142,8 @@ export const rolService = {
   async deleteRol(dataid) {
     try {
       const response = await axiosInstance.delete(`${servicePath}/${dataid}/`);
+      const useToast = useToastStore();
+      useToast.show("delete_success", "Rol editado.");
       return response;
     } catch (error) {
       const useToast = useToastStore();

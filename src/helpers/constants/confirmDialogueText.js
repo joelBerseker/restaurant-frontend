@@ -3,6 +3,7 @@ const confirmDialogueText = {
     title: "Eliminar Registro",
     message: "¿Estas seguro que quieres eliminar el registro?",
     okButton: "Eliminar",
+    typeButton: "danger",
   },
   activate: {
     title: "Activar Registro",
@@ -13,6 +14,7 @@ const confirmDialogueText = {
     title: "Desactivar Registro",
     message: "¿Estas seguro que quieres desactivar el registro?",
     okButton: "Desactivar",
+    typeButton: "danger",
   },
   logout: {
     title: "Cerrar Sesión",

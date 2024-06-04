@@ -132,6 +132,10 @@ init();
   background-color: var(--color-1) !important;
   color: var(--color-w) !important;
 }
+.g-btn-danger {
+  background-color: var(--color-d) !important;
+  color: var(--color-w) !important;
+}
 
 .g-btn-search {
   padding-top: calc(0.25rem);

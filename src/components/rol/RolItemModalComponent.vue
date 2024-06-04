@@ -4,7 +4,7 @@ import RolFormComponent from "@/components/rol/RolFormComponent.vue";
 import FormButtons from "@/common/form/FormButtons.vue";
 
 import { reactive, ref } from "vue";
-import { status } from "@/helpers";
+import { status, subTitleGen } from "@/helpers";
 
 const emit = defineEmits([
   "onAdded",
@@ -31,6 +31,7 @@ const disabled = ref(false);
 function addMode() {
   mode.value = "add";
   modal.titleBefore = "Agregar";
+  modal.subTitle = null;
   disabled.value = false;
   openModal();
   formRef.value.resetElement();
@@ -94,6 +95,10 @@ function onDeleted() {
   closeModal();
   emit("onDeleted");
 }
+function onUpdated(_data) {
+  console.log(_data);
+  modal.subTitle = _data.getText();
+}
 function onEditedStatus(_value) {
   statusValue.value = _value;
   emit("onEditedStatus");
@@ -118,6 +123,7 @@ defineExpose({
       @onEdited="onEdited"
       @onDeleted="onDeleted"
       @onEditedStatus="onEditedStatus"
+      @onUpdated="onUpdated"
     />
     <template #footer>
       <FormButtons

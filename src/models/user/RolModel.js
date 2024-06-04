@@ -29,4 +29,7 @@ export class RolModel extends Model {
       text: this.name.value,
     };
   }
+  getText() {
+    return this.id.value + " - " + this.name.value;
+  }
 }

@@ -19,6 +19,10 @@ const subTitleGen = {
     }
     return resp;
   },
+  elementCode(_id, _text) {
+    if (_id === null || _text === null) return null;
+    return _id + " - " + _text;
+  },
 };
 function fixedDates(fechaOriginal) {
   if (isEmpty(fechaOriginal)) {

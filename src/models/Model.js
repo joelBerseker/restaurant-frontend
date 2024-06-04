@@ -123,4 +123,7 @@ export class Model {
     }
     return resp;
   }
+  getText() {
+    return null;
+  }
 }

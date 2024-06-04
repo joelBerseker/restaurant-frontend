@@ -13,6 +13,8 @@ export default defineComponent({
       title: undefined,
       message: undefined,
       okButton: undefined,
+      typeButton: undefined,
+
       resolvePromise: undefined,
       rejectPromise: undefined,
       modal: {
@@ -34,6 +36,12 @@ export default defineComponent({
       this.modal.title = confirmDialogueText[type].title;
       this.message = confirmDialogueText[type].message;
       this.okButton = confirmDialogueText[type].okButton;
+      let _typeButton = confirmDialogueText[type].typeButton;
+      if (_typeButton === undefined) {
+        this.typeButton = "primary";
+      } else {
+        this.typeButton = _typeButton;
+      }
     },
 
     _confirm() {
@@ -72,6 +80,7 @@ export default defineComponent({
       />
       <g-button
         icon="fa-solid fa-check"
+        :type="typeButton"
         :text="okButton"
         @click="_confirm"
         class="ms-1"

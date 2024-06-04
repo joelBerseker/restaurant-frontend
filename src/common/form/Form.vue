@@ -1,6 +1,6 @@
 <script setup>
-import { ref } from "vue";
-
+import { onUpdated, ref } from "vue";
+const emit = defineEmits(["onUpdated"]);
 const props = defineProps({
   elementModel: { default: null },
 });
@@ -30,6 +30,7 @@ function getElement() {
 function copy(_data) {
   element.value.copy(_data);
   elementBackup.value.copy(element.value);
+  emit("onUpdated", element.value);
 }
 function restore() {
   element.value.copy(elementBackup.value);

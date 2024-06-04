@@ -1,4 +1,7 @@
 <script setup>
+const props = defineProps({
+  switchSearchValue: { default: false },
+});
 const emit = defineEmits(["onSearch", "onPrint", "onAdd"]);
 
 function search() {
@@ -19,6 +22,7 @@ function add() {
       text="Buscar"
       @click="search()"
       title="Recargar"
+      :collapse="switchSearchValue"
     />
     <g-button
       type="transparent-1"

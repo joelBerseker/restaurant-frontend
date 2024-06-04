@@ -10,6 +10,7 @@ const props = defineProps({
   disabled: { default: false },
   iconPosition: { default: "left" },
   title: { default: null },
+  collapse: { default: false },
 });
 
 const iconClass = ref("");
@@ -36,6 +37,7 @@ init();
       'g-btn-' + props.type,
       paddingClass,
       isEmpty(text) ? 'btn-icon-mode' : '',
+      collapse ? 'collapse-open' : 'collapse-close',
     ]"
     :disabled="props.disabled || props.loading"
     :title="props.title"
@@ -110,16 +112,11 @@ init();
   width: 31px;
   aspect-ratio: 1;
 }
-.btn.collapseOpen .icon {
-  transform: rotate(180deg);
-}
-.btn.collapseOpen {
+
+.btn.collapse-open {
   box-shadow: inset 0px 0px 0px 200px rgba(51, 51, 51, 0.2);
 }
 
-.btn.btn-collapse .icon {
-  transition: 0.3s;
-}
 .btn:hover,
 .btn:active,
 .btn:focus-visible,

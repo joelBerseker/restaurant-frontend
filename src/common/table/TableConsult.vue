@@ -15,6 +15,7 @@ const confirmDialogue = inject("confirmDialogue");
 
 const localColumns = ref([]);
 const filterRef = ref(null);
+const collapseRef = ref(null);
 const rows = ref([]);
 function fillRows() {
   rows.value = [];
@@ -72,24 +73,32 @@ function init() {
 function refresh() {
   getList(true);
 }
+function switchSearch() {
+  return collapseRef.value.swichCollapse();
+}
 init();
 defineExpose({
   refresh,
+  switchSearch,
 });
 </script>
 <template>
-  <Filter
-    ref="filterRef"
-    :columns="localColumns"
-    :filter="filter"
-    @filterSearch="refresh"
-  />
+  <g-collapse ref="collapseRef">
+    <div class="pb-4">
+      <Filter
+        ref="filterRef"
+        :columns="localColumns"
+        :filter="filter"
+        @filterSearch="refresh"
+      />
+    </div>
+  </g-collapse>
+
   <Table
     ref="tableRef"
     :rows="rows"
     :columns="localColumns"
     :isLoading="isLoading"
-    class="mt-4"
     @sort="sort"
     @rowClicked="viewItem"
   >

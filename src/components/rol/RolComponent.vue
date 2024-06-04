@@ -50,6 +50,11 @@ function addItem() {
 function onGotList(_data) {
   subTitle.value = subTitleGen.countElement(_data);
 }
+
+const switchSearchValue = ref(false);
+function switchSearch() {
+  switchSearchValue.value = tableRef.value.switchSearch();
+}
 </script>
 <template>
   <RolItemModalComponent
@@ -65,7 +70,13 @@ function onGotList(_data) {
     :refresh="true"
     @onRefresh="refresh()"
   >
-    <template #buttons> <TableButtons @onAdd="addItem" /> </template>
+    <template #buttons>
+      <TableButtons
+        :switchSearchValue="switchSearchValue"
+        @onAdd="addItem"
+        @onSearch="switchSearch"
+      />
+    </template>
     <template #content>
       <TableConsult
         ref="tableRef"

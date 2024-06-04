@@ -5,25 +5,23 @@ import { Collapse } from "bootstrap";
 const collapseRef = ref(null);
 const collapse = ref(null);
 const status = ref(false);
+const switching = ref(false);
 
 function closeCollapse() {
   status.value = false;
-
   collapse.value.hide();
 }
 function openCollapse() {
   status.value = true;
-
   collapse.value.show();
 }
 function swichCollapse() {
-  collapse.value.show();
+  if (switching.value) return status.value;
+
   if (status.value) {
-    collapse.value.hide();
-    status.value = false;
+    closeCollapse();
   } else {
-    collapse.value.show();
-    status.value = true;
+    openCollapse();
   }
   return status.value;
 }

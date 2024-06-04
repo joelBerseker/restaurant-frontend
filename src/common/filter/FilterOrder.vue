@@ -50,6 +50,7 @@ const filterOptions = reactive({
 function search() {
   props.filter.orderBy = filterOptions.orderBy.value;
   props.filter.order = filterOptions.order.value;
+  emit("search");
 }
 function copyFilter() {
   filterBackup.value.orderBy = props.filter.orderBy;

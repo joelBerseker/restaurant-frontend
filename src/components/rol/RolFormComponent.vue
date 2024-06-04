@@ -45,7 +45,7 @@ async function editStatusElement() {
   let resp = await rolService.changeStatusRol(formRef.value.getElement());
   if (resp !== null) {
     console.log(resp);
-    emit("onEditedStatus", resp);
+    emit("onEditedStatus", formRef.value.getElement().status.value);
   }
 }
 function restoreElement() {

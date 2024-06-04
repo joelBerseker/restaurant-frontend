@@ -4,6 +4,7 @@ import RolFormComponent from "@/components/rol/RolFormComponent.vue";
 import FormButtons from "@/common/form/FormButtons.vue";
 
 import { reactive, ref } from "vue";
+import { status } from "@/helpers";
 
 const emit = defineEmits([
   "onAdded",
@@ -93,7 +94,8 @@ function onDeleted() {
   closeModal();
   emit("onDeleted");
 }
-function onEditedStatus() {
+function onEditedStatus(_value) {
+  statusValue.value = _value;
   emit("onEditedStatus");
 }
 defineExpose({

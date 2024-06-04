@@ -57,7 +57,6 @@ export const ticketService = {
         interval,
         specific_date,
         year_date,
-        searches,
         // Otros parámetros de filtro que puedas necesitar
         user_id,
         table_id,
@@ -74,6 +73,16 @@ export const ticketService = {
       if (search && searchBy) {
         const searchByParam = `searchBy=${searchBy.join(",")}`;
         filteredFilters += searchByParam ? `&${searchByParam}` : "";
+      }
+      if (searches && searches != undefined) {
+        console.log("entre a searches");
+        searches.forEach((search, index) => {
+          if (search.value && search.by) {
+            filteredFilters += `&search${index + 1}=${encodeURIComponent(
+              search.value
+            )}&searchBy${index + 1}=${encodeURIComponent(search.by)}`;
+          }
+        });
       }
     }
 

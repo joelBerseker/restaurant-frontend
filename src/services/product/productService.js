@@ -59,7 +59,6 @@ export const productService = {
         interval,
         specific_date,
         year_date,
-        searches,
         // Otros parámetros de filtro que puedas necesitar
         id_typeproduct,
       };
@@ -69,12 +68,22 @@ export const productService = {
           ([key, value]) =>
             value !== undefined && value !== null && value !== ""
         )
-        .map(([key, value]) => `${key}=${value}`)
+        .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
         .join("&");
 
       if (search && searchBy) {
         const searchByParam = `searchBy=${searchBy.join(",")}`;
         filteredFilters += searchByParam ? `&${searchByParam}` : "";
+      }
+      if (searches && searches != undefined) {
+        console.log("entre a searches");
+        searches.forEach((search, index) => {
+          if (search.value && search.by) {
+            filteredFilters += `&search${index + 1}=${encodeURIComponent(
+              search.value
+            )}&searchBy${index + 1}=${encodeURIComponent(search.by)}`;
+          }
+        });
       }
     }
 

@@ -11,6 +11,9 @@ const props = defineProps({
   title: {
     default: null,
   },
+  subTitle: {
+    default: null,
+  },
   name: {
     default: null,
   },
@@ -24,7 +27,7 @@ const collapseOpen = ref(false);
 const statusBefStick = ref(false);
 
 const titleRef = ref(null);
-
+/*
 const observer = new IntersectionObserver(
   async ([entry]) => {
     sticking.value = !entry.isIntersecting;
@@ -37,7 +40,7 @@ onMounted(() => {
 });
 onUnmounted(() => {
   observer.disconnect();
-});
+});*/
 function onRefresh() {
   emit("onRefresh");
 }
@@ -57,8 +60,10 @@ function buttonCollapse() {
         />
       </span>
       <span class="title-text">
-        {{ navigationInfo[name].title }}
-        <div class="subTitle">25 Elementos</div>
+        <div>
+          {{ navigationInfo[name].title }}
+          <div class="subTitle">{{ subTitle }}</div>
+        </div>
       </span>
       <span v-if="refresh" class="title-refresh">
         <g-button
@@ -105,12 +110,16 @@ function buttonCollapse() {
 .title-back {
   margin-left: -0.4rem;
 }
+.title-text div {
+  font-weight: 500;
+}
 .title-text {
   font-size: 20px;
-  font-weight: 500;
   margin-left: 0.25rem;
   height: 100%;
   line-height: 1.3;
+  display: flex;
+  align-items: center;
 }
 .title-wrap {
   display: flex;
@@ -119,7 +128,7 @@ function buttonCollapse() {
   display: flex;
   justify-content: space-between;
   top: -1px;
-  position: sticky;
+  /*position: sticky;*/
   z-index: 11;
 }
 .title-container.sticking {

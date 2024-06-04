@@ -5,6 +5,21 @@ function isEmpty(text) {
   }
   return resp;
 }
+const subTitleGen = {
+  countElement(_list) {
+    if (_list === null) return null;
+    let resp = "";
+    if (_list.length > 0) {
+      resp = _list.length + " Elemento";
+      if (_list.length > 1) {
+        resp += "s";
+      }
+    } else {
+      resp = null;
+    }
+    return resp;
+  },
+};
 function fixedDates(fechaOriginal) {
   if (isEmpty(fechaOriginal)) {
     return fechaOriginal;
@@ -497,4 +512,5 @@ export {
   dateDiffInDays,
   getModuleBitacora,
   getActionBitacora,
+  subTitleGen,
 };

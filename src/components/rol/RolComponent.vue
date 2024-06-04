@@ -4,9 +4,11 @@ import TableButtons from "@/common/table/TableButtons.vue";
 import RolItemModalComponent from "@/components/rol/RolItemModalComponent.vue";
 import { ref, reactive, onMounted, inject } from "vue";
 import { rolService } from "@/services";
+import { subTitleGen } from "@/helpers";
 const tableRef = ref(null);
 const modalRef = ref(null);
 
+const subTitle = ref(null);
 const table = reactive({
   columns: [
     {
@@ -20,7 +22,7 @@ const table = reactive({
       field: "name",
       sortable: true,
       searchable: true,
-      sort: "desc",
+      sort: "asc",
     },
     {
       label: "Descripción",
@@ -30,7 +32,7 @@ const table = reactive({
     },
   ],
   filter: {
-    order: "desc",
+    order: "asc",
     orderBy: "name",
     status: "1",
   },
@@ -45,6 +47,9 @@ function viewItem(_data) {
 function addItem() {
   modalRef.value.addMode();
 }
+function onGotList(_data) {
+  subTitle.value = subTitleGen.countElement(_data);
+}
 </script>
 <template>
   <RolItemModalComponent
@@ -54,7 +59,12 @@ function addItem() {
     @onEdited="refresh"
     @onEditedStatus="refresh"
   />
-  <g-section-1 name="rol" :refresh="true" @onRefresh="refresh()">
+  <g-section-1
+    name="rol"
+    :subTitle="subTitle"
+    :refresh="true"
+    @onRefresh="refresh()"
+  >
     <template #buttons> <TableButtons @onAdd="addItem" /> </template>
     <template #content>
       <TableConsult
@@ -64,6 +74,7 @@ function addItem() {
         :deleteConsult="rolService.deleteRol"
         :getListConsult="rolService.getListRol"
         @onViewItem="viewItem"
+        @onGotList="onGotList"
       ></TableConsult>
     </template>
   </g-section-1>

@@ -4,6 +4,8 @@ import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
 import { RolModel } from "@/models";
 import { useToastStore } from "@/stores";
+import { formatearErrores } from "@/helpers/utilities";
+
 const servicePath = "/user/roles";
 export const rolService = {
   async getRol(rol_id) {
@@ -111,11 +113,19 @@ export const rolService = {
       useToast.show("add_success", "Rol agregado.");
       return data_new;
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "add_error",
-        error.message ? error.message : "Error al agregar el Rol"
-      );
+      if (error.response.status == 400) {
+        const value = error.response.data;
+        const useToast = useToastStore();
+        const mensaje = formatearErrores(value);
+        useToast.show("add_error", mensaje);
+      } else {
+        console.log(error.response.data);
+        const useToast = useToastStore();
+        useToast.show(
+          "add_error",
+          error.message ? error.message : "Error al agregar el Rol"
+        );
+      }
       handleError(error);
     }
   },

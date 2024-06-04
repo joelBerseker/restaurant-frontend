@@ -28,6 +28,7 @@ function fixedDates(fechaOriginal) {
   if (isEmpty(fechaOriginal)) {
     return fechaOriginal;
   }
+
   const getDateMonth = (numeroMes) => {
     const nombresMes = [
       "enero",
@@ -497,6 +498,13 @@ function getActionBitacora(_action) {
     return "Editar";
   }
 }
+function formatearErrores(errors) {
+  return Object.entries(errors)
+    .map(([campo, mensajes]) =>
+      mensajes.map((mensaje) => `- ${mensaje}`).join("\n")
+    )
+    .join("\n");
+}
 export {
   isEmpty,
   sleep,
@@ -517,4 +525,5 @@ export {
   getModuleBitacora,
   getActionBitacora,
   subTitleGen,
+  formatearErrores,
 };

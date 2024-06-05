@@ -65,6 +65,7 @@ defineExpose({
       :label="element.first_name.name"
       @validate="validateLabel"
       :disabled="disabled"
+      class="col-4"
     />
 
     <g-input-val
@@ -72,6 +73,27 @@ defineExpose({
       :label="element.last_name.name"
       @validate="validateLabel"
       :disabled="disabled"
+      class="col-4"
+    />
+    <g-input-val
+      v-model="element.email"
+      :label="element.email.name"
+      @validate="validateLabel"
+      :disabled="disabled"
+      class="col-4"
+    />
+    <g-input-val
+      v-model="element.ruc"
+      :label="element.ruc.name"
+      @validate="validateLabel"
+      :disabled="disabled"
+    />
+    <g-input-check
+      v-model="element.dark_mode.value"
+      :label="element.dark_mode.name"
+      :disabled="disabled"
+      labelClass="imp-label"
+      :labelLeft="true"
     />
   </g-form>
 </template>

@@ -52,7 +52,7 @@ export class UserModel extends Model {
 
   dark_mode = {
     id: "dark_mode",
-    name: "dark mode",
+    name: "modo oscuro",
     value: false,
     validation: {},
     validate: [],

@@ -4,3 +4,6 @@ label {
   text-transform: uppercase;
   font-weight: 500;
 }
+.imp-label {
+  color: var(--color-1-v3);
+}

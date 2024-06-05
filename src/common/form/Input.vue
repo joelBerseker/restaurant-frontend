@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref, reactive } from "vue";
-import { isEmpty } from "@/helpers/utilities";
+import { isEmpty, sleep } from "@/helpers/utilities";
 import ElementFormLayout from "@/common/form/ElementFormLayout.vue";
 
 const props = defineProps({
@@ -21,6 +21,7 @@ const props = defineProps({
   viewClass: { default: "" },
   labelClass: { default: "" },
   helpText: { default: "" },
+  awaitInput: { default: false },
 });
 const emit = defineEmits(["update:modelValue", "input", "clear"]);
 const inputRef = ref(null);
@@ -40,8 +41,26 @@ function focus() {
   inputRef.value.focus();
 }
 function input() {
+  if (props.awaitInput) {
+    inputAwait();
+    return;
+  }
   emit("input");
 }
+
+const waitNumber = ref(0);
+const waitLoading = ref(false);
+async function inputAwait() {
+  waitLoading.value = true;
+  waitNumber.value++;
+  const _waitNumber = waitNumber.value;
+  await sleep(400);
+  if (_waitNumber === waitNumber.value) {
+    waitLoading.value = false;
+    emit("input");
+  }
+}
+
 function blur() {
   if (props.formatInBlur === null) return;
   formatInBlurOptions.init(props.formatInBlur);
@@ -85,7 +104,7 @@ defineExpose({
     :helpText="helpText"
     :showHelpText="showHelpText"
     :disabled="disabled"
-    :loading="loading"
+    :loading="loading || waitLoading"
     :viewMode="viewMode"
     :type="type"
     @clear="clear"

@@ -138,9 +138,6 @@ function clear() {
   font-size: 13px !important;
   color: var(--g-wb500);
 }
-.g-form-element {
-  width: 100%;
-}
 .g-form-wrapper {
   position: relative;
 }

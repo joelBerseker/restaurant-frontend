@@ -47,22 +47,7 @@ function checkValidation(index) {
   }
   return _searchBy;
 }
-const searchInput = reactive({
-  value: "",
-  loading: false,
-  waitNumber: 0,
-  async searchWait() {
-    this.loading = true;
-    const searched = this.value;
-    this.waitNumber++;
-    const waitNumberLocal = this.waitNumber;
-    await sleepInput();
-    if (searched === this.value && waitNumberLocal === this.waitNumber) {
-      this.loading = false;
-      search();
-    }
-  },
-});
+const searchInput = ref(null);
 function copyFilter() {
   if (props.filter.searchBy !== undefined) {
     filterBackup.value.searchBy = JSON.parse(
@@ -118,12 +103,12 @@ defineExpose({
     </div>
     <div class="w-100 search-icon-container">
       <g-input
-        v-model="searchInput.value"
+        v-model="searchInput"
         inputClass="filter-input"
         placeholder="¿Que estas buscando?"
-        @input="searchInput.searchWait()"
-        :loading="searchInput.loading"
+        @input="search()"
         @clear="search()"
+        :awaitInput="true"
       />
       <div class="search-icon">
         <font-awesome-icon icon="fa-solid fa-magnifying-glass" />

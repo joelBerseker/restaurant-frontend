@@ -18,7 +18,7 @@ export const authService = {
       await this.setUser();
       await this.setPermisos();
     } catch (error) {
-      handleError(error);
+      handleError(error, "get_element_error", "Login");
     }
   },
   //metodo para extender el tiempo de vida de un token
@@ -38,7 +38,11 @@ export const authService = {
       } else {
         userStore.logout();
         //location.reload(); //
-        handleError(Error("Ocurrió un error al obtener el token"));
+        handleError(
+          Error("Ocurrió un error al obtener el token"),
+          "get_element_error",
+          "Login"
+        );
       }
     }
   },

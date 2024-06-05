@@ -13,7 +13,6 @@ export const BaseService = {
     } catch (error) {
       const useToast = useToastStore();
       handleError(error, "status_error", module);
-      handleError(error);
     }
   },
 };

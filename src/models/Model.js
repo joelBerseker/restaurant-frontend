@@ -121,9 +121,15 @@ export class Model {
     for (var key in this) {
       resp[key] = this[key].value;
     }
+    resp.elementText = this.getText();
+    resp.elementTextModel = this.getTextModel();
+
     return resp;
   }
   getText() {
+    return null;
+  }
+  getTextModel() {
     return null;
   }
 }

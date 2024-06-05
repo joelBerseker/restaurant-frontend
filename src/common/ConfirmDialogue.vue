@@ -11,7 +11,11 @@ export default defineComponent({
   data() {
     return {
       title: undefined,
-      message: undefined,
+      prevMessage: undefined,
+      nextMessage: undefined,
+
+      importantMessage: "hola",
+
       okButton: undefined,
       typeButton: undefined,
 
@@ -24,17 +28,20 @@ export default defineComponent({
     };
   },
   methods: {
-    show(type) {
-      this.init(type);
+    show(type, _importantMessage = null) {
+      this.init(type, _importantMessage);
       this.openModal();
       return new Promise((resolve, reject) => {
         this.resolvePromise = resolve;
         this.rejectPromise = reject;
       });
     },
-    init(type) {
+    init(type, _importantMessage = null) {
       this.modal.title = confirmDialogueText[type].title;
-      this.message = confirmDialogueText[type].message;
+      this.prevMessage = confirmDialogueText[type].prevMessage;
+      this.nextMessage = confirmDialogueText[type].nextMessage;
+      this.importantMessage = _importantMessage;
+
       this.okButton = confirmDialogueText[type].okButton;
       let _typeButton = confirmDialogueText[type].typeButton;
       if (_typeButton === undefined) {
@@ -69,8 +76,10 @@ export default defineComponent({
     :titleModal="modal.title"
     :closeButton="modal.closeButton"
     zIndex="5100"
+    size="sm"
   >
-    {{ message }}
+    {{ prevMessage }}
+    <span class="important-text">{{ importantMessage }}</span> {{ nextMessage }}
     <template v-slot:footer>
       <g-button
         icon="fa-solid fa-xmark"
@@ -88,4 +97,8 @@ export default defineComponent({
     </template>
   </GModal>
 </template>
-<style></style>
+<style scoped>
+.important-text {
+  font-weight: 600;
+}
+</style>

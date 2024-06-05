@@ -5,14 +5,23 @@ import { useToastStore } from "@/stores";
 
 export const BaseService = {
   async changeStatus(endpoint, data, module = null) {
+    let successToast = "active_success";
+    let errorToast = "active_error";
+    if (data.status.value === 1) {
+      successToast = "deactive_success";
+      errorToast = "deactive_error";
+    }
+
     try {
       const response = await axiosInstance.patch(endpoint, data.changeStatus());
       const useToast = useToastStore();
-      useToast.show("status_success", `Estado cambiado a ${data.getStatus()}.`);
+      useToast.show(successToast, {
+        important_text: data.getTextModel(),
+      });
       return response;
     } catch (error) {
       const useToast = useToastStore();
-      handleError(error, "status_error", module);
+      handleError(error, errorToast, module);
       handleError(error);
     }
   },

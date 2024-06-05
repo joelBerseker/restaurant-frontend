@@ -115,6 +115,11 @@ defineExpose({
 }
 </style>
 <style>
+@media (min-width: 576px) {
+  .modal-sm {
+    --bs-modal-width: 400px;
+  }
+}
 .modal-title {
   display: flex;
   justify-content: space-between;

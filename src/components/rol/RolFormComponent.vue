@@ -19,7 +19,7 @@ const formRef = ref(null);
 
 async function getElement(_id) {
   let resp = await rolService.getRol(_id);
-  if (resp !== null) {
+  if (resp !== undefined) {
     formRef.value.copy(resp);
     emit("onGot", resp);
   }
@@ -27,23 +27,24 @@ async function getElement(_id) {
 async function addElement() {
   if (!formRef.value.validate()) return;
   let resp = await rolService.addRol(formRef.value.getElement());
-  if (resp !== null) emit("onAdded", resp);
+  if (resp !== undefined) emit("onAdded", resp);
+  console.log(resp);
 }
 async function editElement() {
   if (!formRef.value.validate()) return;
   let resp = await rolService.updateRol(formRef.value.getElement());
-  if (resp !== null) {
+  if (resp !== undefined) {
     formRef.value.copy(resp);
     emit("onEdited", resp);
   }
 }
 async function deleteElement() {
   let resp = await rolService.deleteRol(formRef.value.getElement().id.value);
-  if (resp !== null) emit("onDeleted", resp);
+  if (resp !== undefined) emit("onDeleted", resp);
 }
 async function editStatusElement() {
   let resp = await rolService.changeStatusRol(formRef.value.getElement());
-  if (resp !== null) {
+  if (resp !== undefined) {
     console.log(resp);
     emit("onEditedStatus", formRef.value.getElement().status.value);
   }

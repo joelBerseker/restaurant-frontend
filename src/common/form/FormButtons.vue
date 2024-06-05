@@ -5,6 +5,7 @@ import { inject, computed } from "vue";
 const props = defineProps({
   mode: { default: null },
   statusValue: { default: null },
+  elementText: { default: null },
 });
 
 const statusData = computed(() => {
@@ -28,11 +29,11 @@ function onAdd() {
 }
 async function onStatus() {
   let statusConfirm = props.statusValue === 1 ? "deactivate" : "activate";
-  let confirm = await confirmDialogue(statusConfirm);
+  let confirm = await confirmDialogue(statusConfirm, props.elementText);
   if (confirm) emit("onStatus");
 }
 async function onDelete() {
-  let confirm = await confirmDialogue("delete");
+  let confirm = await confirmDialogue("delete", props.elementText);
   if (confirm) emit("onDelete");
 }
 function onEdit() {

@@ -1,6 +1,6 @@
 <script setup>
 import { UserModel } from "@/models";
-import { userService } from "@/services";
+import { userService, rolService } from "@/services";
 import { ref, onMounted, inject } from "vue";
 
 const props = defineProps({
@@ -94,6 +94,13 @@ defineExpose({
       :disabled="disabled"
       labelClass="imp-label"
       :labelLeft="true"
+    />
+    <g-select-consult-val
+      v-model="element.id_role"
+      :disabled="disabled"
+      @validate="validateLabel"
+      :consult="rolService.getListRol"
+      :filter="{ order: 'asc', orderBy: 'name', searchBy: ['name'] }"
     />
   </g-form>
 </template>

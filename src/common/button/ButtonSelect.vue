@@ -185,13 +185,6 @@ function tabAction(_item) {
   padding-bottom: 0rem;
   overflow: hidden;
 }
-
-.dropdown-item.active,
-.dropdown-item:active,
-.dropdown-item:hover {
-  background-color: var(--g-wb300) !important;
-  color: var(--my-c1) !important;
-}
 .dropdown-text {
   width: 100%;
   display: block;

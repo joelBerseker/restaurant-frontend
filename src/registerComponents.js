@@ -5,6 +5,7 @@ import InputCheck from "./common/form/InputCheck.vue";
 
 import InputValidation from "./common/form/InputValidation.vue";
 import Select from "./common/form/Select.vue";
+import SelectConsultValidation from "./common/form/SelectConsultValidation.vue";
 import SelectValidation from "./common/form/SelectValidation.vue";
 import Form from "./common/form/Form.vue";
 import Button from "./common/button/Button.vue";
@@ -21,6 +22,8 @@ function registerComponents(app) {
   app.component("g-input-val", InputValidation);
   app.component("g-select", Select);
   app.component("g-select-val", SelectValidation);
+  app.component("g-select-consult-val", SelectConsultValidation);
+
   app.component("g-form", Form);
   app.component("g-button", Button);
   app.component("g-collapse", Collapse);

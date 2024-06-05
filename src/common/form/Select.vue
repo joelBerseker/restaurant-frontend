@@ -245,6 +245,16 @@ function tabAction(_item) {
   color: var(--g-wb500);
   display: flex;
 }
+.dropdown-item {
+  transition: 0.3s;
+  font-size: 14px;
+}
+.dropdown-item.active,
+.dropdown-item:active,
+.dropdown-item:hover {
+  background-color: var(--color-1) !important;
+  color: var(--color-w-v2) !important;
+}
 </style>
 <style scoped>
 .empty-text-list {
@@ -274,12 +284,6 @@ function tabAction(_item) {
   overflow: hidden;
 }
 
-.dropdown-item.active,
-.dropdown-item:active,
-.dropdown-item:hover {
-  background-color: var(--g-wb300) !important;
-  color: var(--my-c1) !important;
-}
 .dropdown-text {
   width: 100%;
   display: block;

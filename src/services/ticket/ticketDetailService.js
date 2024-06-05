@@ -5,6 +5,7 @@ import { BaseService } from "@/services/BaseService";
 import { TicketDetailModel } from "@/models";
 import { useToastStore } from "@/stores";
 const servicePath = "/ticket/ticketdetail";
+const module = "Detalle";
 export const ticketDetailService = {
   async getTicketDetail(ticketdetail_id) {
     try {
@@ -24,12 +25,7 @@ export const ticketDetailService = {
         );
       }
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "get_element_error",
-        error.message ? error.message : "Error al obtener user"
-      );
-      handleError(error);
+      handleError(error, "get_element_error", module);
     }
   },
   async getListTicketDetail(filterParams = null) {
@@ -99,12 +95,7 @@ export const ticketDetailService = {
       );
       return datas;
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "get_list_error",
-        error.message ? error.message : "Error al obtener los usuarios"
-      );
-      handleError(error);
+      handleError(error, "get_list_error", module);
     }
   },
 
@@ -125,7 +116,7 @@ export const ticketDetailService = {
         "add_error",
         error.message ? error.message : "Error al agregar los usuarios"
       );
-      handleError(error);
+      handleError(error, "add_error", module);
     }
   },
   async updateTicketDetail(new_data) {
@@ -141,12 +132,7 @@ export const ticketDetailService = {
       );
       return data_new;
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "edit_error",
-        error.message ? error.message : "Error al editar los usuarios"
-      );
-      handleError(error);
+      handleError(error, "edit_error", module);
     }
   },
   async deleteTicketDetail(dataid) {
@@ -154,11 +140,11 @@ export const ticketDetailService = {
       const response = await axiosInstance.delete(`${servicePath}/${dataid}/`);
       return response;
     } catch (error) {
-      handleError(error);
+      handleError(error, "delete_error", module);
     }
   },
   async changeStatusTicketDetail(data) {
     const endpoint = `${servicePath}/${data.id.value}/`;
-    return BaseService.changeStatus(endpoint, data);
+    return BaseService.changeStatus(endpoint, data, module);
   },
 };

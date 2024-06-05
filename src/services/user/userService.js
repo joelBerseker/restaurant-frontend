@@ -127,12 +127,7 @@ export const userService = {
       });
       return response;
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "delete_error",
-        error.message ? error.message : "Error al eliminar el Usuario."
-      );
-      handleError(error);
+      handleError(error, "delete_error", module);
     }
   },
   async changeStatusUser(data) {

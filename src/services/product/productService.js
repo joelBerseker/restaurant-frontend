@@ -5,6 +5,7 @@ import { BaseService } from "@/services/BaseService";
 import { ProductModel } from "@/models";
 import { useToastStore } from "@/stores";
 const servicePath = "/product/product";
+const module = "Producto";
 export const productService = {
   async getProduct(product_id) {
     try {
@@ -22,12 +23,7 @@ export const productService = {
         );
       }
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "get_element_error",
-        error.message ? error.message : "Error al obtener user"
-      );
-      handleError(error);
+      handleError(error, "get_element_error", module);
     }
   },
   async getListProduct(filterParams = null) {
@@ -96,12 +92,7 @@ export const productService = {
       );
       return datas;
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "get_list_error",
-        error.message ? error.message : "Error al obtener los usuarios"
-      );
-      handleError(error);
+      handleError(error, "get_list_error", module);
     }
   },
 
@@ -115,14 +106,13 @@ export const productService = {
         response.data,
         ProductModel
       );
+      const useToast = useToastStore();
+      useToast.show("add_success", {
+        important_text: data_new.getTextModel(),
+      });
       return data_new;
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "add_error",
-        error.message ? error.message : "Error al agregar los usuarios"
-      );
-      handleError(error);
+      handleError(error, "add_error", module);
     }
   },
   async updateProduct(new_data) {
@@ -136,26 +126,29 @@ export const productService = {
         response.data,
         ProductModel
       );
+      const useToast = useToastStore();
+      useToast.show("edit_success", {
+        important_text: data_new.getTextModel(),
+      });
       return data_new;
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "edit_error",
-        error.message ? error.message : "Error al editar los usuarios"
-      );
-      handleError(error);
+      handleError(error, "edit_error", module);
     }
   },
   async deleteProduct(dataid) {
     try {
       const response = await axiosInstance.delete(`${servicePath}/${dataid}/`);
+      const useToast = useToastStore();
+      useToast.show("delete_success", {
+        important_text: `${module} eliminado Correctamente`,
+      });
       return response;
     } catch (error) {
-      handleError(error);
+      handleError(error, "delete_error", module);
     }
   },
   async changeStatusProduct(data) {
     const endpoint = `${servicePath}/${data.id.value}/`;
-    return BaseService.changeStatus(endpoint, data);
+    return BaseService.changeStatus(endpoint, data, module);
   },
 };

@@ -4,6 +4,7 @@ import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
 import { TicketModel } from "@/models";
 import { useToastStore } from "@/stores";
+
 const servicePath = "/ticket/ticket";
 const module = "Boleta de Pago";
 export const ticketService = {
@@ -137,9 +138,13 @@ export const ticketService = {
   async deleteTicket(dataid) {
     try {
       const response = await axiosInstance.delete(`${servicePath}/${dataid}/`);
+      const useToast = useToastStore();
+      useToast.show("delete_success", {
+        important_text: "Rol eliminado Correctamente",
+      });
       return response;
     } catch (error) {
-      handleError(error);
+      handleError(error, "delete_error", module);
     }
   },
   async changeStatusTicket(data) {

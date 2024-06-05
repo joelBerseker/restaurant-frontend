@@ -17,6 +17,7 @@ function init() {
 init();
 
 function validateLabel(_data) {
+  console.log(_data);
   element.value.validateLabel(_data);
 }
 function validate() {

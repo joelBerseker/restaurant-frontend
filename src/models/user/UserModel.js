@@ -7,7 +7,6 @@ export class UserModel extends Model {
     value: null,
     additional: {},
     validation: {},
-    validate: ["select"],
   };
 
   email = {
@@ -46,16 +45,12 @@ export class UserModel extends Model {
     id: "photo",
     name: "foto de perfil",
     value: null,
-    validation: {},
-    validate: ["file"],
   };
 
   dark_mode = {
     id: "dark_mode",
     name: "modo oscuro",
     value: false,
-    validation: {},
-    validate: [],
   };
   is_admin = {
     value: "",

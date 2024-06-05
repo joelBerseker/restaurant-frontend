@@ -41,7 +41,8 @@ async function getList(loading = true) {
 }
 
 async function deleteItem(_data) {
-  let confirm = await confirmDialogue("delete");
+  console.log(_data);
+  let confirm = await confirmDialogue("delete", _data.elementTextModel);
   if (confirm) {
     isLoading.value = true;
 

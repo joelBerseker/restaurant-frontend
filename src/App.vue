@@ -6,8 +6,8 @@ import AppContainer from "@/common/container/AppContainer.vue";
 import { provide, ref } from "vue";
 
 const confirmDialogueRef = ref(null);
-async function confirmDialogue(type) {
-  let confirm = await confirmDialogueRef.value.show(type);
+async function confirmDialogue(type, _importantText = null) {
+  let confirm = await confirmDialogueRef.value.show(type, _importantText);
   return confirm;
 }
 provide("confirmDialogue", confirmDialogue);

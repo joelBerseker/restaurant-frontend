@@ -7,17 +7,18 @@ import { storeToRefs } from "pinia";
 import { useToastStore } from "@/stores/systemStore";
 const useToast = useToastStore();
 
-const text = ref(null);
+const prevText = ref(null);
+const nextText = ref(null);
+const importantText = ref(null);
 const icon = ref("fa-solid fa-circle-check");
 const title = ref(null);
 const toastClass = ref(null);
-const list = ref([]);
-const aditional = ref(null);
+const listError = ref([]);
 
 const { count } = storeToRefs(useToast);
 
 watch(count, (newValue, oldValue) => {
-  show(useToast.text, useToast.aditional, useToast.list);
+  show(useToast.text, useToast.aditional);
 });
 
 const toastType = reactive([
@@ -40,16 +41,22 @@ const toastType = reactive([
   },
 ]);
 
-function show(_text, _additional = null, _list = []) {
+function show(_text, _additional = null) {
+  console.log(_additional);
   let type = toastText[_text].type;
 
-  text.value = toastText[_text].text;
+  prevText.value = toastText[_text].prevText;
+  nextText.value = toastText[_text].nextText;
+
   icon.value = toastType[type].icon;
   toastClass.value = toastType[type].toastClass;
   title.value = toastType[type].title;
 
-  list.value = _list;
-  aditional.value = _additional;
+  if (_additional !== null) {
+    importantText.value = _additional.important_text;
+  } else {
+    importantText.value = null;
+  }
 
   var myToastEl = document.getElementById("myToastEl");
   myToastEl.classList.remove("show");
@@ -92,14 +99,14 @@ function show(_text, _additional = null, _list = []) {
 
               <div class="text-toast">
                 <div>
-                  {{ text }}
+                  <span>{{ prevText }}</span>
+                  <span class="important-text">{{ importantText }}</span>
+                  <span>{{ nextText }}</span>
                 </div>
-                <div v-show="aditional !== null">
-                  {{ aditional }}
-                </div>
-                <div v-show="list.length > 0">
+
+                <div v-show="listError.length > 0">
                   <ul class="list-errors">
-                    <li v-for="(element, index) in list" :key="index">
+                    <li v-for="(element, index) in listError" :key="index">
                       {{ element }}
                     </li>
                   </ul>
@@ -114,6 +121,10 @@ function show(_text, _additional = null, _list = []) {
 </template>
 
 <style scoped>
+.important-text {
+  font-weight: 600;
+}
+
 .list-errors {
   margin: 0;
 }

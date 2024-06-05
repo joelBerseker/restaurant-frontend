@@ -21,5 +21,5 @@ export const handleError = (error, action, module) => {
   }
 
   errorManager.handleError(error);
-  throw error;
+  //throw error;
 };

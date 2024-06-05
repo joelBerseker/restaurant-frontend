@@ -27,6 +27,7 @@ const modal = reactive({
 });
 const mode = ref(null);
 const disabled = ref(false);
+const elementText = ref(null);
 
 function addMode() {
   mode.value = "add";
@@ -37,13 +38,17 @@ function addMode() {
   formRef.value.resetElement();
 }
 async function viewMode(_id = null) {
-  modal.isLoading = true;
   mode.value = "view";
   modal.titleBefore = "Visualizar";
   disabled.value = true;
   openModal();
-  if (_id !== null) await formRef.value.getElement(_id);
-  modal.isLoading = false;
+  if (_id !== null) {
+    modal.isLoading = true;
+    modal.subTitle = null;
+    formRef.value.resetElement();
+    await formRef.value.getElement(_id);
+    modal.isLoading = false;
+  }
 }
 function editMode() {
   mode.value = "edit";
@@ -57,8 +62,10 @@ function openModal() {
   modalRef.value.openModal();
 }
 
-function onAdd() {
-  formRef.value.addElement();
+async function onAdd() {
+  modal.isLoading = true;
+  await formRef.value.addElement();
+  modal.isLoading = false;
 }
 function onEdit() {
   editMode();
@@ -72,11 +79,15 @@ function onCancel() {
   viewMode();
   formRef.value.restoreElement();
 }
-function onDelete() {
-  formRef.value.deleteElement();
+async function onDelete() {
+  modal.isLoading = true;
+  await formRef.value.deleteElement();
+  modal.isLoading = false;
 }
-function onStatus() {
-  formRef.value.editStatusElement();
+async function onStatus() {
+  modal.isLoading = true;
+  await formRef.value.editStatusElement();
+  modal.isLoading = false;
 }
 
 function onGot(_data) {
@@ -98,6 +109,7 @@ function onDeleted() {
 function onUpdated(_data) {
   console.log(_data);
   modal.subTitle = _data.getText();
+  elementText.value = _data.getTextModel();
 }
 function onEditedStatus(_value) {
   statusValue.value = _value;
@@ -114,6 +126,7 @@ defineExpose({
     :titleModal="modal.title"
     :titleBeforeModal="modal.titleBefore"
     :subTitleModal="modal.subTitle"
+    :isLoading="modal.isLoading"
   >
     <RolFormComponent
       ref="formRef"
@@ -129,6 +142,7 @@ defineExpose({
       <FormButtons
         :mode="mode"
         :statusValue="statusValue"
+        :elementText="elementText"
         @onAdd="onAdd"
         @onEdit="onEdit"
         @onCancel="onCancel"

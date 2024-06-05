@@ -1,50 +1,86 @@
 <script setup>
-import SystemTableLayout from "@/common/layout/SystemTableLayout.vue";
 import TableConsult from "@/common/table/TableConsult.vue";
 import TableButtons from "@/common/table/TableButtons.vue";
-import Filter from "@/common/filter/Filter.vue";
 
 import { ref, reactive, onMounted, inject } from "vue";
+import { userService } from "@/services";
+import { subTitleGen } from "@/helpers";
+const tableRef = ref(null);
+
+const subTitle = ref(null);
 const table = reactive({
   columns: [
     {
       label: "ID",
       field: "id",
       sortable: true,
+      width: "1%",
     },
     {
-      label: "Nombre",
-      field: "name",
+      label: "Nombres",
+      field: "first_name",
+      sortable: true,
+      searchable: true,
+      sort: "asc",
+    },
+    {
+      label: "Apellidos",
+      field: "last_name",
       sortable: true,
       searchable: true,
     },
     {
-      label: "Nombre2",
-      field: "name2",
-      sortable: true,
-      searchable: true,
-    },
-    {
-      label: "Nombre3",
-      field: "name3",
+      label: "Correo Electronico",
+      field: "email",
       sortable: true,
       searchable: true,
     },
   ],
   filter: {
-    order: "desc",
-    orderBy: "name",
+    order: "asc",
+    orderBy: "first_name",
     status: "1",
   },
 });
+function refresh() {
+  tableRef.value.refresh();
+}
+function viewItem(_data) {
+  console.log(_data);
+}
+function addItem() {}
+function onGotList(_data) {
+  subTitle.value = subTitleGen.countElement(_data);
+}
+
+const switchSearchValue = ref(false);
+function switchSearch() {
+  switchSearchValue.value = tableRef.value.switchSearch();
+}
 </script>
 <template>
-  <g-section-1 name="user" :refresh="true">
-    <template #buttons> <TableButtons /> </template>
+  <g-section-1
+    name="user"
+    :subTitle="subTitle"
+    :refresh="true"
+    @onRefresh="refresh()"
+  >
+    <template #buttons>
+      <TableButtons
+        :switchSearchValue="switchSearchValue"
+        @onAdd="addItem"
+        @onSearch="switchSearch"
+      />
+    </template>
     <template #content>
       <TableConsult
+        ref="tableRef"
         :columns="table.columns"
         :filter="table.filter"
+        :deleteConsult="userService.deleteUser"
+        :getListConsult="userService.getListUser"
+        @onViewItem="viewItem"
+        @onGotList="onGotList"
       ></TableConsult>
     </template>
   </g-section-1>

@@ -1,24 +1,24 @@
 const confirmDialogueText = {
   delete: {
     title: "Eliminar Registro",
-    message: "¿Estas seguro que quieres eliminar el registro?",
+    nextMessage: " sera eliminado ¿Estas seguro que quieres continuar?",
     okButton: "Eliminar",
     typeButton: "danger",
   },
   activate: {
     title: "Activar Registro",
-    message: "¿Estas seguro que quieres activar el registro?",
+    nextMessage: " sera activado ¿Estas seguro que quieres continuar?",
     okButton: "Activar",
   },
   deactivate: {
     title: "Desactivar Registro",
-    message: "¿Estas seguro que quieres desactivar el registro?",
+    nextMessage: " sera desactivado ¿Estas seguro que quieres continuar?",
     okButton: "Desactivar",
     typeButton: "danger",
   },
   logout: {
     title: "Cerrar Sesión",
-    message: "¿Esta seguro que desea cerrar sesión?",
+    prevMessage: "¿Esta seguro que desea cerrar sesión?",
     okButton: "Aceptar",
   },
 };

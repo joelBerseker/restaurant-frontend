@@ -8,10 +8,7 @@ import { useRoute } from "vue-router";
 
 const props = defineProps({
   topbar: {
-    default: {
-      name: "user",
-      breadcrumb: [{ name: "table" }, { name: "user" }],
-    },
+    default: null,
   },
 });
 const switchSidebar = inject("switchSidebar");

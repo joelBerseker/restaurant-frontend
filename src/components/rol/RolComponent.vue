@@ -57,13 +57,7 @@ function switchSearch() {
 }
 </script>
 <template>
-  <RolElementModalComponent
-    ref="modalRef"
-    @onAdded="refresh"
-    @onDeleted="refresh"
-    @onEdited="refresh"
-    @onEditedStatus="refresh"
-  />
+  <RolElementModalComponent ref="modalRef" @onRefreshList="refresh" />
   <g-section-1
     name="rol"
     :subTitle="subTitle"

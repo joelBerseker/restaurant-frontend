@@ -76,4 +76,19 @@ export class UserModel extends Model {
       text: this.first_name.value,
     };
   }
+  getText() {
+    return (
+      this.id.value + " - " + this.first_name.value + " " + this.last_name.value
+    );
+  }
+  getTextModel() {
+    return (
+      "Usuario " +
+      this.id.value +
+      " - " +
+      this.first_name.value +
+      " " +
+      this.last_name.value
+    );
+  }
 }

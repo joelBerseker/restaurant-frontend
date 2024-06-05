@@ -1,60 +1,43 @@
 <script setup>
-import Modal from "@/common/Modal.vue";
-import RolFormComponent from "@/components/rol/RolFormComponent.vue";
+import UserFormComponent from "@/components/user/UserFormComponent.vue";
 import FormButtons from "@/common/form/FormButtons.vue";
-import { ref } from "vue";
+import { ref, inject } from "vue";
+import { useRouter } from "vue-router";
 
-const emit = defineEmits(["onRefreshList"]);
+const router = useRouter();
 
-const modalRef = ref(null);
 const formRef = ref(null);
 
 const statusValue = ref(null);
 
 /*INITIAL SETTINGS*/
-const title = ref("Rol");
-const titleBefore = ref(null);
+const title = ref(null);
 const subTitle = ref(null);
 const isLoading = ref(false);
 
-const idElement = ref(null);
+const idElement = inject("idElement", null);
 const mode = ref(null);
 const disabled = ref(false);
 const elementText = ref(null);
 
 function addMode() {
-  idElement.value = null;
   mode.value = "add";
-  titleBefore.value = "Agregar";
+  title.value = "userAdd";
   subTitle.value = null;
   disabled.value = false;
-  openModal();
-  formRef.value.resetElement();
 }
 async function viewMode(_id = null) {
   mode.value = "view";
-  titleBefore.value = "Visualizar";
+  title.value = "userDetail";
   disabled.value = true;
-  openModal();
-  if (_id !== null) {
-    idElement.value = _id;
-    isLoading.value = true;
-    subTitle.value = null;
-    formRef.value.resetElement();
-    await formRef.value.getElement(_id);
-    isLoading.value = false;
-  }
+  subTitle.value = null;
 }
 function editMode() {
   mode.value = "edit";
-  titleBefore.value = "Editar";
   disabled.value = false;
 }
-function closeModal() {
-  modalRef.value.closeModal();
-}
-function openModal() {
-  modalRef.value.openModal();
+function toList() {
+  router.push({ name: "user" });
 }
 
 /*BUTTONS*/
@@ -62,8 +45,7 @@ async function onAdd() {
   isLoading.value = true;
   let resp = await formRef.value.addElement();
   if (resp) {
-    closeModal();
-    emit("onRefreshList");
+    toList();
   }
   isLoading.value = false;
 }
@@ -75,7 +57,6 @@ async function onSave() {
   let resp = await formRef.value.editElement();
   if (resp) {
     viewMode();
-    emit("onRefreshList");
   }
   isLoading.value = false;
 }
@@ -87,8 +68,7 @@ async function onDelete() {
   isLoading.value = true;
   let resp = await formRef.value.deleteElement();
   if (resp) {
-    closeModal();
-    emit("onRefreshList");
+    toList();
   }
   isLoading.value = false;
 }
@@ -97,7 +77,6 @@ async function onStatus() {
   let resp = await formRef.value.editStatusElement();
   if (resp) {
     statusValue.value = resp;
-    emit("onRefreshList");
   }
   isLoading.value = false;
 }
@@ -107,26 +86,24 @@ function onUpdated(_data) {
   subTitle.value = _data.getText();
   elementText.value = _data.getTextModel();
 }
-
+function init() {
+  if (idElement) viewMode();
+  else addMode();
+}
+init();
 defineExpose({
   addMode,
   viewMode,
 });
 </script>
 <template>
-  <Modal
-    ref="modalRef"
-    :titleModal="title"
-    :titleBeforeModal="titleBefore"
-    :subTitleModal="subTitle"
-    :isLoading="isLoading"
+  <g-section-1
+    :name="title"
+    :subTitle="subTitle"
+    :refresh="true"
+    @onRefresh="refresh()"
   >
-    <RolFormComponent
-      ref="formRef"
-      :disabled="disabled"
-      @onUpdated="onUpdated"
-    />
-    <template #footer>
+    <template #buttons>
       <FormButtons
         :mode="mode"
         :statusValue="statusValue"
@@ -139,5 +116,12 @@ defineExpose({
         @onStatus="onStatus"
       />
     </template>
-  </Modal>
+    <template #content>
+      <UserFormComponent
+        ref="formRef"
+        :disabled="disabled"
+        @onUpdated="onUpdated"
+      />
+    </template>
+  </g-section-1>
 </template>

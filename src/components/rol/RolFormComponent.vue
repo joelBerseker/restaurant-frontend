@@ -7,47 +7,33 @@ const props = defineProps({
   disabled: { default: false },
 });
 
-const emit = defineEmits([
-  "onAdded",
-  "onDeleted",
-  "onEdited",
-  "onEditedStatus",
-  "onGot",
-]);
-
 const formRef = ref(null);
 
+/*CONSULTS*/
 async function getElement(_id) {
   let resp = await rolService.getRol(_id);
-  if (resp !== undefined) {
-    formRef.value.copy(resp);
-    emit("onGot", resp);
-  }
+  if (resp) formRef.value.copy(resp);
+  return resp;
 }
 async function addElement() {
   if (!formRef.value.validate()) return;
   let resp = await rolService.addRol(formRef.value.getElement());
-  if (resp !== undefined) emit("onAdded", resp);
-  console.log(resp);
+  return resp;
 }
 async function editElement() {
   if (!formRef.value.validate()) return;
   let resp = await rolService.updateRol(formRef.value.getElement());
-  if (resp !== undefined) {
-    formRef.value.copy(resp);
-    emit("onEdited", resp);
-  }
+  if (resp) formRef.value.copy(resp);
+  return resp;
 }
 async function deleteElement() {
   let resp = await rolService.deleteRol(formRef.value.getElement().id.value);
-  if (resp !== undefined) emit("onDeleted", resp);
+  return resp;
 }
 async function editStatusElement() {
   let resp = await rolService.changeStatusRol(formRef.value.getElement());
-  if (resp !== undefined) {
-    console.log(resp);
-    emit("onEditedStatus", formRef.value.getElement().status.value);
-  }
+  if (resp) return formRef.value.getElement().status.value;
+  return;
 }
 function restoreElement() {
   formRef.value.restore();

@@ -14,9 +14,21 @@ const navigationInfo = {
   },
   user: {
     module: 0,
-    name: "user",
+    name: "userList",
     icon: "fa-solid fa-user",
     title: "Usuarios",
+  },
+  userAdd: {
+    module: 0,
+    name: "userAdd",
+    icon: "fa-solid fa-plus",
+    title: "Agregar Usuario",
+  },
+  userDetail: {
+    module: 0,
+    name: "userDetail",
+    icon: "fa-solid fa-bars-staggered",
+    title: "Visualizar Usuario",
   },
   rol: {
     module: 0,

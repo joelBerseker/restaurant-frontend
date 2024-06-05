@@ -6,7 +6,7 @@ import { UserModel } from "@/models";
 import { useToastStore } from "@/stores";
 //const useToast = useToastStore();
 const servicePath = "/user/users";
-const module = "usuario";
+const module = "Usuario";
 export const userService = {
   async getUser(user_id) {
     try {
@@ -122,8 +122,9 @@ export const userService = {
   async deleteUser(dataid) {
     try {
       const response = await axiosInstance.delete(`${servicePath}/${dataid}/`);
+      const useToast = useToastStore();
       useToast.show("delete_success", {
-        important_text: `${module} eliminado Correctamente`,
+        important_text: module,
       });
       return response;
     } catch (error) {

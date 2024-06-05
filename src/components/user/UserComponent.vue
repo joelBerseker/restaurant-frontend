@@ -5,6 +5,10 @@ import TableButtons from "@/common/table/TableButtons.vue";
 import { ref, reactive, onMounted, inject } from "vue";
 import { userService } from "@/services";
 import { subTitleGen } from "@/helpers";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
 const tableRef = ref(null);
 
 const subTitle = ref(null);
@@ -47,8 +51,11 @@ function refresh() {
 }
 function viewItem(_data) {
   console.log(_data);
+  router.push({ name: "userDetail", params: { id: _data.id } });
 }
-function addItem() {}
+function addItem() {
+  router.push({ name: "userAdd" });
+}
 function onGotList(_data) {
   subTitle.value = subTitleGen.countElement(_data);
 }

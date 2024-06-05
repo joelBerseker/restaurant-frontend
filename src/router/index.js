@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { authService } from "@/services";
+import { userRouter } from "./userRouter";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -22,15 +23,7 @@ const router = createRouter({
             moduleid: 0,
           },
         },
-        {
-          path: "/user",
-          name: "user",
-          component: () => import("@/components/user/UserView.vue"),
-          meta: {
-            requiresAuth: false, // Esta ruta no requiere autenticación
-            moduleid: 0,
-          },
-        },
+        userRouter,
         {
           path: "/rol",
           name: "rol",

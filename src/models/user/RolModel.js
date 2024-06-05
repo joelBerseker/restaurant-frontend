@@ -32,4 +32,7 @@ export class RolModel extends Model {
   getText() {
     return this.id.value + " - " + this.name.value;
   }
+  getTextModel() {
+    return this.id.value + " - " + this.name.value;
+  }
 }

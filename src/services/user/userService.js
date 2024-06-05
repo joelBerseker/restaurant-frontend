@@ -6,6 +6,7 @@ import { UserModel } from "@/models";
 import { useToastStore } from "@/stores";
 //const useToast = useToastStore();
 const servicePath = "/user/users";
+const module = "usuario";
 export const userService = {
   async getUser(user_id) {
     try {
@@ -20,13 +21,7 @@ export const userService = {
         );
       }
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "get_element_error",
-        error.message ? error.message : "Error al obtener Usuario."
-      ); //
-      handleError(error);
-      throw new Error(`Ocurrió un error al obtener el elemento ${serviceName}`);
+      handleError(error, "get_element_error", module);
     }
   },
   async getListUser(filterParams = null) {
@@ -82,18 +77,12 @@ export const userService = {
       const response = await axiosInstance.get(
         `${servicePath}/?${filteredFilters}`
       );
-      const quotes = response.data.map((apiData) =>
+      const datas = response.data.map((apiData) =>
         dataTransform.transformApiData(apiData, UserModel)
       );
-      return quotes;
+      return datas;
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "get_list_error",
-        error.message ? error.message : "Error al obtener los Usuarios."
-      );
-      handleError(error);
-      //throw error; // Asegurarse de lanzar el error para manejarlo adecuadamente en el contexto superior
+      handleError(error, "get_list_error", module);
     }
   },
 
@@ -104,14 +93,13 @@ export const userService = {
         new_data.addData()
       );
       const data_new = dataTransform.transformApiData(response.data, UserModel);
+      const useToast = useToastStore();
+      useToast.show("add_success", {
+        important_text: data_new.getTextModel(),
+      });
       return data_new;
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "add_error",
-        error.message ? error.message : "Error al agregar los usuarios"
-      );
-      handleError(error);
+      handleError(error, "add_error", module);
     }
   },
   async updateUser(new_data) {
@@ -122,19 +110,21 @@ export const userService = {
         new_data.addData()
       );
       const data_new = dataTransform.transformApiData(response.data, UserModel);
+      const useToast = useToastStore();
+      useToast.show("edit_success", {
+        important_text: data_new.getTextModel(),
+      });
       return data_new;
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "edit_error",
-        error.message ? error.message : "Error al editar los usuarios"
-      );
-      handleError(error);
+      handleError(error, "edit_error", module);
     }
   },
   async deleteUser(dataid) {
     try {
       const response = await axiosInstance.delete(`${servicePath}/${dataid}/`);
+      useToast.show("delete_success", {
+        important_text: `${module} eliminado Correctamente`,
+      });
       return response;
     } catch (error) {
       const useToast = useToastStore();
@@ -147,6 +137,6 @@ export const userService = {
   },
   async changeStatusUser(data) {
     const endpoint = `${servicePath}/${data.id.value}/`;
-    return BaseService.changeStatus(endpoint, data);
+    return BaseService.changeStatus(endpoint, data, module);
   },
 };

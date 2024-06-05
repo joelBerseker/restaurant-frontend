@@ -94,10 +94,10 @@ export const ticketDetailService = {
       const response = await axiosInstance.get(
         `${servicePath}/?${filteredFilters}`
       );
-      const quotes = response.data.map((apiData) =>
+      const datas = response.data.map((apiData) =>
         dataTransform.transformApiData(apiData, TicketDetailModel)
       );
-      return quotes;
+      return datas;
     } catch (error) {
       const useToast = useToastStore();
       useToast.show(

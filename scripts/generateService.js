@@ -30,6 +30,8 @@ function lowerCaseFirstLetter(str) {
   return str.charAt(0).toLowerCase() + str.slice(1);
 }
 
+const servicePath = `/${subfolderName}/${serviceName.toLowerCase()}`;
+const module = serviceName.toLowerCase();
 const serviceContent = `
 import axiosInstance from "@/services/axios-instance";
 import { handleError } from "@/helpers";
@@ -38,7 +40,9 @@ import { BaseService } from "@/services/BaseService";
 import { ${serviceName}Model } from "@/models";
 import { useToastStore } from "@/stores";
 
-const servicePath = "/${subfolderName}/${serviceName.toLowerCase()}";
+const servicePath = "${servicePath}";
+const module = "${module}";
+
 export const ${lowerCaseFirstLetter(serviceName)}Service = {
   async get${serviceName}(${serviceName.toLowerCase()}_id) {
     try {
@@ -53,64 +57,73 @@ export const ${lowerCaseFirstLetter(serviceName)}Service = {
         );
       }
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        get_element_error",
-        error.message ? error.message : "Error al obtener user"
-      );
-      handleError(error);
-      throw new Error(\`Ocurrió un error al obtener el elemento \${serviceName}\`);
+      handleError(error, "get_element_error", module);
     }
   },
-  async getList${serviceName}(filterParams=null) {
-    const {
-      search,
-      searchBy,
-      status,
-      order,
-      orderBy,
-      specific_date,
-      end_date,
-      start_date,
-      interval,
-      year_date,
-      searches,
-      // Otros parámetros de filtro que puedas necesitar
-      table_number
-    } = filterParams;
+  async getList${serviceName}(filterParams = null) {
+    let filteredFilters = "";
+    if (filterParams != null) {
+      const {
+        search,
+        searchBy,
+        status,
+        order,
+        orderBy,
+        specific_date,
+        end_date,
+        start_date,
+        interval,
+        year_date,
+        searches,
+        // Otros parámetros de filtro que puedas necesitar
+      } = filterParams;
 
-    const filters = {
-      orderBy,
-      order,
-      status,
-      search,
-      end_date,
-      start_date,
-      interval,
-      specific_date,
-      year_date,
-      searches,
-      // Otros parámetros de filtro que puedas necesitar
-    };
+      const filters = {
+        orderBy,
+        order,
+        status,
+        search,
+        end_date,
+        start_date,
+        interval,
+        specific_date,
+        year_date,
+        // Otros parámetros de filtro que puedas necesitar
+      };
 
-    let filteredFilters = Object.entries(filters)
-      .filter(([key, value]) => value !== undefined && value !== null && value !== "")
-      .map(([key, value]) => \`\${key}=\${value}\`)
-      .join("&");
+      filteredFilters = Object.entries(filters)
+        .filter(
+          ([key, value]) =>
+            value !== undefined && value !== null && value !== ""
+        )
+        .map(([key, value]) => \`\${key}=\${encodeURIComponent(value)}\`)
+        .join("&");
 
-    if (search && searchBy) {
-      const searchByParam = \`searchBy=\${searchBy.join(",")}\`;
-      filteredFilters += searchByParam ? \`&\${searchByParam}\` : "";
+      if (search && searchBy) {
+        const searchByParam = \`searchBy=\${searchBy.join(",")}\`;
+        filteredFilters += searchByParam ? \`&\${searchByParam}\` : "";
+      }
+      if (searches && searches != undefined) {
+        searches.forEach((search, index) => {
+          if (search.value && search.by) {
+            filteredFilters += \`&search\${index + 1}=\${encodeURIComponent(
+              search.value
+            )}&searchBy\${index + 1}=\${encodeURIComponent(search.by)}\`;
+          }
+        });
+      }
     }
 
     try {
-      const response = await axiosInstance.get(\`\${servicePath}/?\${filteredFilters}\`);
-      const quotes = response.data.map((apiData) =>
+      const response = await axiosInstance.get(
+        \`\${servicePath}/?\${filteredFilters}\`
+      );
+      const ${serviceName.toLowerCase()} = response.data.map((apiData) =>
         dataTransform.transformApiData(apiData, ${serviceName}Model)
       );
-      return quotes;
+      return ${serviceName.toLowerCase()};
     } catch (error) {
-      handleError(error);
+      handleError(error, "get_list_error", module);
     }
   },
 
@@ -120,13 +133,10 @@ export const ${lowerCaseFirstLetter(serviceName)}Service = {
         \`\${servicePath}/\`,
         new_data.addData()
       );
-      const data_new = dataTransform.transformApiData(
-        response.data,
-        ${serviceName}Model
-      );
+      const data_new = dataTransform.transformApiData(response.data, ${serviceName}Model);
       return data_new;
     } catch (error) {
-      handleError(error);
+      handleError(error, "add_error", module);
     }
   },
   async update${serviceName}(new_data) {
@@ -136,13 +146,10 @@ export const ${lowerCaseFirstLetter(serviceName)}Service = {
         \`\${servicePath}/\${dataid}/\`,
         new_data.addData()
       );
-      const data_new = dataTransform.transformApiData(
-        response.data,
-        ${serviceName}Model
-      );
+      const data_new = dataTransform.transformApiData(response.data, ${serviceName}Model);
       return data_new;
     } catch (error) {
-      handleError(error);
+      handleError(error, "edit_error", module);
     }
   },
   async delete${serviceName}(dataid) {
@@ -150,7 +157,7 @@ export const ${lowerCaseFirstLetter(serviceName)}Service = {
       const response = await axiosInstance.delete(\`\${servicePath}/\${dataid}/\`);
       return response;
     } catch (error) {
-      handleError(error);
+      handleError(error, "delete_error", module);
     }
   },
   async changeStatus${serviceName}(data) {

@@ -4,7 +4,7 @@ import { handleError } from "@/helpers";
 import { useToastStore } from "@/stores";
 
 export const BaseService = {
-  async changeStatus(endpoint, data) {
+  async changeStatus(endpoint, data, module = null) {
     try {
       const response = await axiosInstance.patch(endpoint, data.changeStatus());
       const useToast = useToastStore();
@@ -12,7 +12,7 @@ export const BaseService = {
       return response;
     } catch (error) {
       const useToast = useToastStore();
-      useToast.show("status_error", "Error al cambiar estado");
+      handleError(error, "status_error", module);
       handleError(error);
     }
   },

@@ -5,6 +5,7 @@ import { BaseService } from "@/services/BaseService";
 import { TicketModel } from "@/models";
 import { useToastStore } from "@/stores";
 const servicePath = "/ticket/ticket";
+const module = "Boleta de Pago";
 export const ticketService = {
   async getTicket(ticket_id) {
     try {
@@ -19,12 +20,7 @@ export const ticketService = {
         );
       }
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "get_element_error",
-        error.message ? error.message : "Error al obtener user"
-      );
-      handleError(error);
+      handleError(error, "get_element_error", module);
     }
   },
   async getListTicket(filterParams = null) {
@@ -90,17 +86,12 @@ export const ticketService = {
       const response = await axiosInstance.get(
         `${servicePath}/?${filteredFilters}`
       );
-      const quotes = response.data.map((apiData) =>
+      const datas = response.data.map((apiData) =>
         dataTransform.transformApiData(apiData, TicketModel)
       );
-      return quotes;
+      return datas;
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "get_list_error",
-        error.message ? error.message : "Error al obtener los usuarios"
-      );
-      handleError(error);
+      handleError(error, "get_list_error", module);
     }
   },
 
@@ -114,14 +105,13 @@ export const ticketService = {
         response.data,
         TicketModel
       );
+      const useToast = useToastStore();
+      useToast.show("add_success", {
+        important_text: data_new.getTextModel(),
+      });
       return data_new;
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "add_error",
-        error.message ? error.message : "Error al agregar los usuarios"
-      );
-      handleError(error);
+      handleError(error, "add_error", module);
     }
   },
   async updateTicket(new_data) {
@@ -135,14 +125,13 @@ export const ticketService = {
         response.data,
         TicketModel
       );
+      const useToast = useToastStore();
+      useToast.show("edit_success", {
+        important_text: data_new.getTextModel(),
+      });
       return data_new;
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "edit_error",
-        error.message ? error.message : "Error al editar los usuarios"
-      );
-      handleError(error);
+      handleError(error, "edit_error", module);
     }
   },
   async deleteTicket(dataid) {

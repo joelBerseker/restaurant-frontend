@@ -4,9 +4,8 @@ import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
 import { RolModel } from "@/models";
 import { useToastStore } from "@/stores";
-import { formatearErrores } from "@/helpers/utilities";
-
 const servicePath = "/user/roles";
+const module = "Rol";
 export const rolService = {
   async getRol(rol_id) {
     try {
@@ -21,12 +20,7 @@ export const rolService = {
         );
       }
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "get_element_error",
-        error.message ? error.message : "Error al obtener el Rol"
-      );
-      handleError(error);
+      handleError(error, "get_element_error", module);
     }
   },
   async getListRol(filterParams = null) {
@@ -88,17 +82,12 @@ export const rolService = {
       const response = await axiosInstance.get(
         `${servicePath}/?${filteredFilters}`
       );
-      const quotes = response.data.map((apiData) =>
+      const data = response.data.map((apiData) =>
         dataTransform.transformApiData(apiData, RolModel)
       );
-      return quotes;
+      return data;
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "get_list_error",
-        error.message ? error.message : "Error al obtener los roles"
-      );
-      handleError(error);
+      handleError(error, "get_list_error", module);
     }
   },
 
@@ -110,23 +99,12 @@ export const rolService = {
       );
       const data_new = dataTransform.transformApiData(response.data, RolModel);
       const useToast = useToastStore();
-      useToast.show("add_success", "Rol agregado.");
+      useToast.show("add_success", {
+        important_text: data_new.getTextModel(),
+      });
       return data_new;
     } catch (error) {
-      if (error.response.status == 400) {
-        const value = error.response.data;
-        const useToast = useToastStore();
-        const mensaje = formatearErrores(value);
-        useToast.show("add_error", mensaje);
-      } else {
-        console.log(error.response.data);
-        const useToast = useToastStore();
-        useToast.show(
-          "add_error",
-          error.message ? error.message : "Error al agregar el Rol"
-        );
-      }
-      handleError(error);
+      handleError(error, "add_error", module);
     }
   },
   async updateRol(new_data) {
@@ -138,34 +116,28 @@ export const rolService = {
       );
       const data_new = dataTransform.transformApiData(response.data, RolModel);
       const useToast = useToastStore();
-      useToast.show("edit_success", "Rol editado.");
+      useToast.show("edit_success", {
+        important_text: data_new.getTextModel(),
+      });
       return data_new;
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "edit_error",
-        error.message ? error.message : "Error al editar el Rol"
-      );
-      handleError(error);
+      handleError(error, "edit_error", module);
     }
   },
   async deleteRol(dataid) {
     try {
       const response = await axiosInstance.delete(`${servicePath}/${dataid}/`);
       const useToast = useToastStore();
-      useToast.show("delete_success", "Rol editado.");
+      useToast.show("delete_success", {
+        important_text: "Rol eliminado Correctamente",
+      });
       return response;
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "delete_error",
-        error.message ? error.message : "Error al eliminar el Rol"
-      );
-      handleError(error);
+      handleError(error, "delete_error", module);
     }
   },
   async changeStatusRol(data) {
     const endpoint = `${servicePath}/${data.id.value}/`;
-    return BaseService.changeStatus(endpoint, data);
+    return BaseService.changeStatus(endpoint, data, module);
   },
 };

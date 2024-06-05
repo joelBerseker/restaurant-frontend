@@ -2,18 +2,21 @@ import axiosInstance from "@/services/axios-instance";
 import { handleError } from "@/helpers";
 import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
-import { ProductModel } from "@/models";
+import { CompanyModel } from "@/models";
 import { useToastStore } from "@/stores";
-const servicePath = "/product/product";
-export const productService = {
-  async getProduct(product_id) {
+
+const servicePath = "/company/company";
+const module = "company";
+
+export const companyService = {
+  async getCompany(company_id) {
     try {
-      const response = await axiosInstance.get(`${servicePath}/${product_id}/`);
+      const response = await axiosInstance.get(`${servicePath}/${company_id}/`);
 
       if (response && response.data) {
         const data = dataTransform.transformApiData(
           response.data,
-          ProductModel
+          CompanyModel
         );
         return data;
       } else {
@@ -22,15 +25,10 @@ export const productService = {
         );
       }
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "get_element_error",
-        error.message ? error.message : "Error al obtener user"
-      );
-      handleError(error);
+      handleError(error, "get_element_error", module);
     }
   },
-  async getListProduct(filterParams = null) {
+  async getListCompany(filterParams = null) {
     let filteredFilters = "";
     if (filterParams != null) {
       const {
@@ -46,7 +44,6 @@ export const productService = {
         year_date,
         searches,
         // Otros parámetros de filtro que puedas necesitar
-        id_typeproduct,
       } = filterParams;
 
       const filters = {
@@ -60,7 +57,6 @@ export const productService = {
         specific_date,
         year_date,
         // Otros parámetros de filtro que puedas necesitar
-        id_typeproduct,
       };
 
       filteredFilters = Object.entries(filters)
@@ -76,7 +72,6 @@ export const productService = {
         filteredFilters += searchByParam ? `&${searchByParam}` : "";
       }
       if (searches && searches != undefined) {
-        console.log("entre a searches");
         searches.forEach((search, index) => {
           if (search.value && search.by) {
             filteredFilters += `&search${index + 1}=${encodeURIComponent(
@@ -91,21 +86,16 @@ export const productService = {
       const response = await axiosInstance.get(
         `${servicePath}/?${filteredFilters}`
       );
-      const datas = response.data.map((apiData) =>
-        dataTransform.transformApiData(apiData, ProductModel)
+      const company = response.data.map((apiData) =>
+        dataTransform.transformApiData(apiData, CompanyModel)
       );
-      return datas;
+      return company;
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "get_list_error",
-        error.message ? error.message : "Error al obtener los usuarios"
-      );
-      handleError(error);
+      handleError(error, "get_list_error", module);
     }
   },
 
-  async addProduct(new_data) {
+  async addCompany(new_data) {
     try {
       const response = await axiosInstance.post(
         `${servicePath}/`,
@@ -113,19 +103,18 @@ export const productService = {
       );
       const data_new = dataTransform.transformApiData(
         response.data,
-        ProductModel
+        CompanyModel
       );
+      const useToast = useToastStore();
+      useToast.show("add_success", {
+        important_text: data_new.getTextModel(),
+      });
       return data_new;
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "add_error",
-        error.message ? error.message : "Error al agregar los usuarios"
-      );
-      handleError(error);
+      handleError(error, "add_error", module);
     }
   },
-  async updateProduct(new_data) {
+  async updateCompany(new_data) {
     let dataid = new_data.id.value;
     try {
       const response = await axiosInstance.put(
@@ -134,28 +123,31 @@ export const productService = {
       );
       const data_new = dataTransform.transformApiData(
         response.data,
-        ProductModel
+        CompanyModel
       );
+      const useToast = useToastStore();
+      useToast.show("edit_success", {
+        important_text: data_new.getTextModel(),
+      });
       return data_new;
     } catch (error) {
-      const useToast = useToastStore();
-      useToast.show(
-        "edit_error",
-        error.message ? error.message : "Error al editar los usuarios"
-      );
-      handleError(error);
+      handleError(error, "edit_error", module);
     }
   },
-  async deleteProduct(dataid) {
+  async deleteCompany(dataid) {
     try {
       const response = await axiosInstance.delete(`${servicePath}/${dataid}/`);
+      const useToast = useToastStore();
+      useToast.show("delete_success", {
+        important_text: "Rol eliminado Correctamente",
+      });
       return response;
     } catch (error) {
-      handleError(error);
+      handleError(error, "delete_error", module);
     }
   },
-  async changeStatusProduct(data) {
+  async changeStatusCompany(data) {
     const endpoint = `${servicePath}/${data.id.value}/`;
-    return BaseService.changeStatus(endpoint, data);
+    return BaseService.changeStatus(endpoint, data, module);
   },
 };

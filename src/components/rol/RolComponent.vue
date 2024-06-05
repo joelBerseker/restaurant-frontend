@@ -1,7 +1,7 @@
 <script setup>
 import TableConsult from "@/common/table/TableConsult.vue";
 import TableButtons from "@/common/table/TableButtons.vue";
-import RolItemModalComponent from "@/components/rol/RolItemModalComponent.vue";
+import RolElementModalComponent from "@/components/rol/RolElementModalComponent.vue";
 import { ref, reactive, onMounted, inject } from "vue";
 import { rolService } from "@/services";
 import { subTitleGen } from "@/helpers";
@@ -57,7 +57,7 @@ function switchSearch() {
 }
 </script>
 <template>
-  <RolItemModalComponent
+  <RolElementModalComponent
     ref="modalRef"
     @onAdded="refresh"
     @onDeleted="refresh"

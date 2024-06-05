@@ -52,7 +52,7 @@ provide("buttonBack", buttonBack);
       <SystemSidebar ref="sidebarRef" />
     </template>
     <template #topbar>
-      <SystemTopbar ref="topbarRef" />
+      <SystemTopbar ref="topbarRef" :topbar="topbar" />
     </template>
     <template #content>
       <router-view v-slot="{ Component, route }">

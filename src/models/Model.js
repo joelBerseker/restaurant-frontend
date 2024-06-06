@@ -47,14 +47,19 @@ export class Model {
   }
   validate() {
     let resp = true;
+    let listLabel = [];
     for (var key in this) {
       let element = this[key];
       if (element.validation === undefined) continue;
       if (element.consider === false) continue;
       this.validateLabel(element);
+      if (!element.validation.isValid) {
+        listLabel.push(element.name ? element.name : "Sin nombre");
+      }
       resp = resp && element.validation.isValid;
     }
-    return resp;
+    console.log(listLabel);
+    return { value: resp, list: listLabel };
   }
 
   copy(data) {

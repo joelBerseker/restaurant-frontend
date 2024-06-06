@@ -24,11 +24,13 @@ function validateLabel(_data) {
 }
 function validate() {
   let resp = element.value.validate();
-  if (!resp) {
-    useToast.show("validation_error");
+  if (!resp.value) {
+    useToast.show("validation_error", {
+      list_error: resp.list,
+    });
   }
 
-  return resp;
+  return resp.value;
 }
 function getElement() {
   return element.value;

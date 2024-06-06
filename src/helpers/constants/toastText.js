@@ -6,6 +6,7 @@ const toastText = {
   add_error: {
     prevText: "No se pudo agregar el registro de ",
     defaultText: ", si continúa sucediendo contacte con su proveedor.",
+    listErrorMessage: ", posibles errores:",
     type: 2,
   },
   edit_success: {
@@ -15,6 +16,8 @@ const toastText = {
   edit_error: {
     prevText: "No se pudo editar el registro de ",
     defaultText: ", si continúa sucediendo contacte con su proveedor.",
+    listErrorMessage: ", posibles errores:",
+
     type: 2,
   },
   delete_success: {
@@ -24,6 +27,8 @@ const toastText = {
   delete_error: {
     prevText: "No se pudo eliminar el registro de ",
     defaultText: ", si continúa sucediendo contacte con su proveedor.",
+    listErrorMessage: ", posibles errores:",
+
     type: 2,
   },
 
@@ -34,6 +39,8 @@ const toastText = {
   active_error: {
     prevText: "No se pudo activar el registro de ",
     defaultText: ", si continúa sucediendo contacte con su proveedor.",
+    listErrorMessage: ", posibles errores:",
+
     type: 2,
   },
   deactive_success: {
@@ -44,24 +51,28 @@ const toastText = {
   deactive_error: {
     prevText: "No se pudo desactivar el registro de ",
     defaultText: ", si continúa sucediendo contacte con su proveedor.",
+    listErrorMessage: ", posibles errores:",
+
     type: 2,
   },
 
   get_element_error: {
     prevText: "No se pudo obtener el registro de ",
     defaultText: ", si continúa sucediendo contacte con su proveedor.",
+    listErrorMessage: ", posibles errores:",
 
     type: 2,
   },
   get_list_error: {
     prevText: "No se pudo obtener los registros de ",
     defaultText: ", si continúa sucediendo contacte con su proveedor.",
-
+    listErrorMessage: ", posibles errores:",
     type: 2,
   },
   validation_error: {
-    prevText:
-      "Datos no válidos, revise si todos los campos se llenaron correctamente.",
+    prevText: "Datos no válidos",
+    listErrorMessage: ", revise si los siguientes campos son correctos:",
+
     type: 2,
   },
   login_error: {
@@ -70,8 +81,7 @@ const toastText = {
     type: 2,
   },
   refresh_token_error: {
-    prevText:
-      "Datos no válidos, revise si el correo y la contraseña son correctos.",
+    prevText: "No se pudo recuperar el usuario, vuelva a iniciar sesión",
     type: 2,
   },
   check_validation_filter: {

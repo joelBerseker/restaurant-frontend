@@ -48,16 +48,21 @@ function show(_text, _additional = null) {
     prevText: toastText[_text].prevText,
     nextText: toastText[_text].nextText,
     defaultText: toastText[_text].defaultText,
+    listErrorMessage: toastText[_text].listErrorMessage,
 
     icon: toastType[type].icon,
     toastClass: toastType[type].toastClass,
     title: toastType[type].title,
     listError: [],
+
     importantText: null,
     error: null,
   };
   if (_additional !== null) {
     if (_additional.list_error) _toast.listError = _additional.list_error;
+    if (_additional.list_error_message)
+      _toast.listErrorMessage = _additional.list_error_message;
+
     _toast.importantText = _additional.important_text;
 
     _toast.error = _additional.error;
@@ -162,7 +167,7 @@ function deleteToast(index) {
                     <span>{{ toast.nextText }}</span>
 
                     <span v-if="toast.listError.length > 0"
-                      >, posibles errores:
+                      >{{ toast.listErrorMessage }}
                     </span>
                     <span v-else>{{ toast.defaultText }}</span>
                   </div>
@@ -197,8 +202,7 @@ function deleteToast(index) {
 .list-errors {
   margin: 0;
 }
-.toast:hover .content-toast::before {
-}
+
 .stop-animation {
   animation: none !important;
 }

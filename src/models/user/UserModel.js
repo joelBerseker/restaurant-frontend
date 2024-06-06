@@ -35,7 +35,7 @@ export class UserModel extends Model {
 
   ruc = {
     id: "ruc",
-    name: "RUC",
+    //name: "RUC",
     value: null,
     validation: {},
     validate: ["length"],

@@ -30,10 +30,10 @@ async function login() {
     await sleep(300);
     router.push("/");
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     console.log("Restaurant Frontend: Error");
     loadingButton.value = false;
-    useToast.show("login_error");
+    //useToast.show("login_error");
   }
 }
 </script>

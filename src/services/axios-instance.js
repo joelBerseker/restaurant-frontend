@@ -28,7 +28,7 @@ axiosInstance.interceptors.response.use(
   },
   async (error) => {
     console.log("estoy acax3");
-    console.log(error);
+    //console.log(error);
     console.log("estoy acax4");
     const userStore = useUserStore();
 

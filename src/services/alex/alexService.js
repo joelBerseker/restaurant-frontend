@@ -1,22 +1,21 @@
+
 import axiosInstance from "@/services/axios-instance";
 import { handleError } from "@/helpers";
 import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
-import { ProductModel } from "@/models";
+import { AlexModel } from "@/models";
 import { useToastStore } from "@/stores";
-const servicePath = "/product/product";
-const module = "Producto";
 
-export const productService = {
-  async getProduct(product_id) {
+const servicePath = "/alex/alex";
+const module = "alex";
+
+export const alexService = {
+  async getAlex(alex_id) {
     try {
-      const response = await axiosInstance.get(`${servicePath}/${product_id}/`);
+      const response = await axiosInstance.get(`${servicePath}/${alex_id}/`);
 
       if (response && response.data) {
-        const data = dataTransform.transformApiData(
-          response.data,
-          ProductModel
-        );
+        const data = dataTransform.transformApiData(response.data, AlexModel);
         return data;
       } else {
         throw new Error(
@@ -27,7 +26,7 @@ export const productService = {
       handleError(error, "get_element_error", module);
     }
   },
-  async getListProduct(filterParams = null) {
+  async getListAlex(filterParams = null) {
     let filteredFilters = "";
     if (filterParams != null) {
       const {
@@ -43,7 +42,6 @@ export const productService = {
         year_date,
         searches,
         // Otros parámetros de filtro que puedas necesitar
-        id_typeproduct,
       } = filterParams;
 
       const filters = {
@@ -57,7 +55,6 @@ export const productService = {
         specific_date,
         year_date,
         // Otros parámetros de filtro que puedas necesitar
-        id_typeproduct,
       };
 
       filteredFilters = Object.entries(filters)
@@ -73,7 +70,6 @@ export const productService = {
         filteredFilters += searchByParam ? `&${searchByParam}` : "";
       }
       if (searches && searches != undefined) {
-        console.log("entre a searches");
         searches.forEach((search, index) => {
           if (search.value && search.by) {
             filteredFilters += `&search${index + 1}=${encodeURIComponent(
@@ -88,68 +84,50 @@ export const productService = {
       const response = await axiosInstance.get(
         `${servicePath}/?${filteredFilters}`
       );
-      const datas = response.data.map((apiData) =>
-        dataTransform.transformApiData(apiData, ProductModel)
+      const alex = response.data.map((apiData) =>
+        dataTransform.transformApiData(apiData, AlexModel)
       );
-      return datas;
+      return alex;
     } catch (error) {
       handleError(error, "get_list_error", module);
     }
   },
 
-  async addProduct(new_data) {
+  async addAlex(new_data) {
     try {
       const response = await axiosInstance.post(
         `${servicePath}/`,
         new_data.addData()
       );
-      const data_new = dataTransform.transformApiData(
-        response.data,
-        ProductModel
-      );
-      const useToast = useToastStore();
-      useToast.show("add_success", {
-        important_text: data_new.getTextModel(),
-      });
+      const data_new = dataTransform.transformApiData(response.data, AlexModel);
       return data_new;
     } catch (error) {
       handleError(error, "add_error", module);
     }
   },
-  async updateProduct(new_data) {
+  async updateAlex(new_data) {
     let dataid = new_data.id.value;
     try {
       const response = await axiosInstance.put(
         `${servicePath}/${dataid}/`,
         new_data.addData()
       );
-      const data_new = dataTransform.transformApiData(
-        response.data,
-        ProductModel
-      );
-      const useToast = useToastStore();
-      useToast.show("edit_success", {
-        important_text: data_new.getTextModel(),
-      });
+      const data_new = dataTransform.transformApiData(response.data, AlexModel);
       return data_new;
     } catch (error) {
       handleError(error, "edit_error", module);
     }
   },
-  async deleteProduct(dataid) {
+  async deleteAlex(dataid) {
     try {
       const response = await axiosInstance.delete(`${servicePath}/${dataid}/`);
-      const useToast = useToastStore();
-      useToast.show("delete_success", {
-        important_text: `${module} eliminado Correctamente`,
-      });
       return response;
     } catch (error) {
       handleError(error, "delete_error", module);
     }
   },
-  async changeStatusProduct(data) {
+  async changeStatusAlex(data) {
     const endpoint = `${servicePath}/${data.id.value}/`;
-    return BaseService.changeStatus(endpoint, data, module);
+    return BaseService.changeStatus(endpoint, data);
   },
 };

@@ -65,6 +65,11 @@ const toastText = {
       "Datos no válidos, revise si el correo y la contraseña son correctos.",
     type: 2,
   },
+  refresh_token_error: {
+    prevText:
+      "Datos no válidos, revise si el correo y la contraseña son correctos.",
+    type: 2,
+  },
   check_validation_filter: {
     prevText: "Debe existir al menos un elemento marcado.",
     type: 2,

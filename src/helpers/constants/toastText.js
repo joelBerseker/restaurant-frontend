@@ -5,7 +5,7 @@ const toastText = {
   },
   add_error: {
     prevText: "No se pudo agregar el registro de ",
-    nextText: ", si continúa sucediendo contacte con su proveedor.",
+    defaultText: ", si continúa sucediendo contacte con su proveedor.",
     type: 2,
   },
   edit_success: {
@@ -14,7 +14,7 @@ const toastText = {
   },
   edit_error: {
     prevText: "No se pudo editar el registro de ",
-    nextText: ", si continúa sucediendo contacte con su proveedor.",
+    defaultText: ", si continúa sucediendo contacte con su proveedor.",
     type: 2,
   },
   delete_success: {
@@ -23,7 +23,7 @@ const toastText = {
   },
   delete_error: {
     prevText: "No se pudo eliminar el registro de ",
-    nextText: ", si continúa sucediendo contacte con su proveedor.",
+    defaultText: ", si continúa sucediendo contacte con su proveedor.",
     type: 2,
   },
 
@@ -33,7 +33,7 @@ const toastText = {
   },
   active_error: {
     prevText: "No se pudo activar el registro de ",
-    nextText: ", si continúa sucediendo contacte con su proveedor.",
+    defaultText: ", si continúa sucediendo contacte con su proveedor.",
     type: 2,
   },
   deactive_success: {
@@ -43,19 +43,19 @@ const toastText = {
   },
   deactive_error: {
     prevText: "No se pudo desactivar el registro de ",
-    nextText: ", si continúa sucediendo contacte con su proveedor.",
+    defaultText: ", si continúa sucediendo contacte con su proveedor.",
     type: 2,
   },
 
   get_element_error: {
     prevText: "No se pudo obtener el registro de ",
-    nextText: ", si continúa sucediendo contacte con su proveedor.",
+    defaultText: ", si continúa sucediendo contacte con su proveedor.",
 
     type: 2,
   },
   get_list_error: {
     prevText: "No se pudo obtener los registros de ",
-    nextText: ", si continúa sucediendo contacte con su proveedor.",
+    defaultText: ", si continúa sucediendo contacte con su proveedor.",
 
     type: 2,
   },

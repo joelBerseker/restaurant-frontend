@@ -33,7 +33,7 @@ function viewItem(_data) {
 async function getList(loading = true) {
   isLoading.value = loading;
   let resp = await props.getListConsult(props.filter);
-  if (resp !== null) {
+  if (resp) {
     rows.value = resp.map((element) => element.getData());
     emit("onGotList", rows.value);
   }

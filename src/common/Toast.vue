@@ -39,29 +39,36 @@ const toastListRef = ref([]);
 const countToast = ref(0);
 
 function show(_text, _additional = null) {
-  console.log(_additional);
   let type = toastText[_text].type;
+
+  console.log(_additional);
 
   let _toast = {
     id: countToast.value,
     prevText: toastText[_text].prevText,
     nextText: toastText[_text].nextText,
+    defaultText: toastText[_text].defaultText,
+
     icon: toastType[type].icon,
     toastClass: toastType[type].toastClass,
     title: toastType[type].title,
     listError: [],
-    ani: false,
+    importantText: null,
+    error: null,
   };
-  countToast.value++;
+  if (_additional !== null) {
+    if (_additional.list_error) _toast.listError = _additional.list_error;
+    _toast.importantText = _additional.important_text;
 
+    _toast.error = _additional.error;
+  }
+  countToast.value++;
   if (listToast.value.length >= maxToast.value) {
     listToast.value.pop();
   }
   if (!hover.value) {
     reiniciarTimeout();
   }
-  console.log(listToast.value);
-
   listToast.value.unshift(_toast);
 }
 
@@ -69,7 +76,6 @@ const hover = ref(false);
 const timeoutID = ref(null);
 
 const miFuncion = () => {
-  console.log("El setTimeout ha terminado");
   listToast.value.pop();
   if (!hover.value && listToast.value.length > 0) {
     reiniciarTimeout();
@@ -77,8 +83,6 @@ const miFuncion = () => {
 };
 
 const iniciarTimeout = () => {
-  console.log("iniciado");
-
   if (listToast.value.length > 0) {
   }
 
@@ -86,8 +90,6 @@ const iniciarTimeout = () => {
 };
 
 const detenerTimeout = () => {
-  console.log("detenido");
-
   clearTimeout(timeoutID.value);
 };
 function onHover() {
@@ -99,12 +101,10 @@ function onLeave() {
   iniciarTimeout();
 }
 const reiniciarTimeout = () => {
-  console.log("reiniciar");
   clearTimeout(timeoutID.value);
   iniciarTimeout();
 };
 function deleteToast(index) {
-  console.log("delete" + index);
   listToast.value.splice(index, 1);
 }
 </script>
@@ -160,8 +160,15 @@ function deleteToast(index) {
                       toast.importantText
                     }}</span>
                     <span>{{ toast.nextText }}</span>
-                  </div>
 
+                    <span v-if="toast.listError.length > 0"
+                      >, posibles errores:
+                    </span>
+                    <span v-else>{{ toast.defaultText }}</span>
+                  </div>
+                  <div>
+                    <span class="important-text">{{ toast.error }}</span>
+                  </div>
                   <div v-show="toast.listError.length > 0">
                     <ul class="list-errors">
                       <li

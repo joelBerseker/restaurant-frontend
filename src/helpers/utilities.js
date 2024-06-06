@@ -499,11 +499,23 @@ function getActionBitacora(_action) {
   }
 }
 function formatearErrores(errors) {
+  console.log(errors);
+  let resp = [];
+  for (var key in errors) {
+    let errorElement = errors[key];
+    errorElement.forEach((element) => {
+      resp.push(element);
+    });
+  }
+  console.log(resp);
+  return resp;
+  /* ANTIGUO METODO
   return Object.entries(errors)
     .map(([campo, mensajes]) =>
       mensajes.map((mensaje) => `- ${mensaje}`).join("\n")
     )
     .join("\n");
+    */
 }
 export {
   isEmpty,

@@ -1,26 +1,21 @@
 <script setup>
 import { Toast } from "bootstrap";
-import { ref, reactive, watch } from "vue";
+import { ref, reactive, watch, onUpdated } from "vue";
 import { toastText } from "@/helpers/constants/toastText";
 import { storeToRefs } from "pinia";
 
 import { useToastStore } from "@/stores/systemStore";
 const useToast = useToastStore();
 
-const prevText = ref(null);
-const nextText = ref(null);
-const importantText = ref(null);
-const icon = ref("fa-solid fa-circle-check");
-const title = ref(null);
-const toastClass = ref(null);
-const listError = ref([]);
+const listToast = ref([]);
+
+const maxToast = ref(4);
 
 const { count } = storeToRefs(useToast);
 
 watch(count, (newValue, oldValue) => {
   show(useToast.text, useToast.aditional);
 });
-
 const toastType = reactive([
   {
     title: null,
@@ -40,83 +35,150 @@ const toastType = reactive([
     toastClass: "toast-danger",
   },
 ]);
+const toastListRef = ref([]);
+const countToast = ref(0);
 
 function show(_text, _additional = null) {
   console.log(_additional);
   let type = toastText[_text].type;
 
-  prevText.value = toastText[_text].prevText;
-  nextText.value = toastText[_text].nextText;
+  let _toast = {
+    id: countToast.value,
+    prevText: toastText[_text].prevText,
+    nextText: toastText[_text].nextText,
+    icon: toastType[type].icon,
+    toastClass: toastType[type].toastClass,
+    title: toastType[type].title,
+    listError: [],
+    ani: false,
+  };
+  countToast.value++;
 
-  icon.value = toastType[type].icon;
-  toastClass.value = toastType[type].toastClass;
-  title.value = toastType[type].title;
+  if (listToast.value.length >= maxToast.value) {
+    listToast.value.pop();
+  }
+  if (!hover.value) {
+    reiniciarTimeout();
+  }
+  console.log(listToast.value);
 
-  if (_additional !== null) {
-    importantText.value = _additional.important_text;
-  } else {
-    importantText.value = null;
+  listToast.value.unshift(_toast);
+}
+
+const hover = ref(false);
+const timeoutID = ref(null);
+
+const miFuncion = () => {
+  console.log("El setTimeout ha terminado");
+  listToast.value.pop();
+  if (!hover.value && listToast.value.length > 0) {
+    reiniciarTimeout();
+  }
+};
+
+const iniciarTimeout = () => {
+  console.log("iniciado");
+
+  if (listToast.value.length > 0) {
   }
 
-  var myToastEl = document.getElementById("myToastEl");
-  myToastEl.classList.remove("show");
-  var myToast = Toast.getOrCreateInstance(myToastEl);
-  myToast.show();
+  timeoutID.value = setTimeout(miFuncion, 5000); // 5000 milisegundos = 5 segundos
+};
+
+const detenerTimeout = () => {
+  console.log("detenido");
+
+  clearTimeout(timeoutID.value);
+};
+function onHover() {
+  hover.value = true;
+  detenerTimeout();
+}
+function onLeave() {
+  hover.value = false;
+  iniciarTimeout();
+}
+const reiniciarTimeout = () => {
+  console.log("reiniciar");
+  clearTimeout(timeoutID.value);
+  iniciarTimeout();
+};
+function deleteToast(index) {
+  console.log("delete" + index);
+  listToast.value.splice(index, 1);
 }
 </script>
 <template>
   <div
-    class="position-fixed top-0 end-0 m-3"
+    class="toast-container position-fixed top-0 end-0 m-3"
     style="z-index: 10000"
-    :class="[toastClass]"
+    @mouseenter="onHover"
+    @mouseleave="onLeave"
   >
-    <div
-      id="myToastEl"
-      class="toast hide"
-      role="alert"
-      aria-live="assertive"
-      aria-atomic="true"
-    >
-      <div class="content-toast">
-        <div class="row g-0">
-          <div class="col-3 icon-container">
-            <font-awesome-icon :icon="icon" />
-          </div>
-          <div class="col-9">
-            <div class="body-toast">
-              <div class="title-container mb-2">
-                <div class="title-toast">{{ title }}</div>
+    <TransitionGroup name="list">
+      <div
+        v-for="(toast, index) in listToast"
+        :key="toast.id"
+        :id="toast.id"
+        ref="toastListRef"
+        class="toast show"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+        data-bs-autohide="false"
+      >
+        <div
+          class="content-toast"
+          :key="index"
+          :class="[
+            index === listToast.length - 1 ? 'animation ' + index : '',
+            toast.toastClass,
+          ]"
+        >
+          <div class="row g-0">
+            <div class="col-3 icon-container">
+              <font-awesome-icon :icon="toast.icon" />
+            </div>
+            <div class="col-9">
+              <div class="body-toast">
+                <div class="title-container mb-2">
+                  <div class="title-toast">{{ toast.title }}</div>
 
-                <div>
-                  <g-button-x-min
-                    title="Cerrar"
-                    data-bs-dismiss="toast"
-                    aria-label="Close"
-                    class="button-close"
-                  />
+                  <div>
+                    <g-button-x-min
+                      title="Cerrar"
+                      class="button-close"
+                      @click="deleteToast(index)"
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div class="text-toast">
-                <div>
-                  <span>{{ prevText }}</span>
-                  <span class="important-text">{{ importantText }}</span>
-                  <span>{{ nextText }}</span>
-                </div>
+                <div class="text-toast">
+                  <div>
+                    <span>{{ toast.prevText }}</span>
+                    <span class="important-text">{{
+                      toast.importantText
+                    }}</span>
+                    <span>{{ toast.nextText }}</span>
+                  </div>
 
-                <div v-show="listError.length > 0">
-                  <ul class="list-errors">
-                    <li v-for="(element, index) in listError" :key="index">
-                      {{ element }}
-                    </li>
-                  </ul>
+                  <div v-show="toast.listError.length > 0">
+                    <ul class="list-errors">
+                      <li
+                        v-for="(element, index) in toast.listError"
+                        :key="index"
+                      >
+                        {{ element }}
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </TransitionGroup>
   </div>
 </template>
 
@@ -129,6 +191,8 @@ function show(_text, _additional = null) {
   margin: 0;
 }
 .toast:hover .content-toast::before {
+}
+.stop-animation {
   animation: none !important;
 }
 .body-toast {
@@ -180,8 +244,11 @@ function show(_text, _additional = null) {
   right: 0;
   background-color: blue;
 }
-.toast.show .content-toast::before {
+.toast.show .content-toast.animation::before {
   animation: progress 5s linear forwards;
+}
+.toast-container:hover .content-toast.animation::before {
+  animation: none !important;
 }
 .button-close {
   background-color: transparent !important;
@@ -192,14 +259,14 @@ function show(_text, _additional = null) {
   }
 }
 /*DANGER*/
-.toast-danger .content-toast::before {
+.toast-danger.content-toast::before {
   background-color: var(--color-d);
 }
 .toast-danger .icon-container,
 .toast-danger .title-toast {
   color: var(--color-d);
 }
-.toast-danger .content-toast {
+.toast-danger.content-toast {
   border-color: var(--color-d) !important;
 }
 .toast-danger .button-close:hover {
@@ -211,7 +278,7 @@ function show(_text, _additional = null) {
 }
 /*SUCCESS*/
 
-.toast-success .content-toast::before {
+.toast-success.content-toast::before {
   background-color: var(--color-s);
 }
 .toast-success .icon-container,
@@ -219,7 +286,7 @@ function show(_text, _additional = null) {
   color: var(--color-s);
 }
 
-.toast-success .content-toast {
+.toast-success.content-toast {
   border-color: var(--color-s) !important;
 }
 
@@ -229,5 +296,23 @@ function show(_text, _additional = null) {
 }
 .toast-success .button-close {
   color: var(--color-s);
+}
+
+.list-enter-active,
+.list-leave-active,
+.list-move {
+  transition: all 0.3s ease;
+}
+.list-leave-active {
+  position: absolute;
+}
+
+.list-enter-from {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
 }
 </style>

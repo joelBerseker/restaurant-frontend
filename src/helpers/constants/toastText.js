@@ -48,11 +48,15 @@ const toastText = {
   },
 
   get_element_error: {
-    text: "No se pudo obtener el registro, si continúa sucediendo contacte con su proveedor.",
+    prevText: "No se pudo obtener el registro de ",
+    nextText: ", si continúa sucediendo contacte con su proveedor.",
+
     type: 2,
   },
   get_list_error: {
-    text: "No se pudo obtener los registros, si continúa sucediendo contacte con su proveedor.",
+    prevText: "No se pudo obtener los registros de ",
+    nextText: ", si continúa sucediendo contacte con su proveedor.",
+
     type: 2,
   },
   validation_error: {

@@ -19,7 +19,7 @@ export class Model {
   }
   validateLabel(_data) {
     let resp = false;
-    console.log(_data);
+
     if (_data.required === false) {
       resp = validations.noRequired(_data);
       if (resp.isValid) {
@@ -37,7 +37,7 @@ export class Model {
     if (_data.validate !== undefined) {
       for (let i = 0; i < _data.validate.length; i++) {
         const element = _data.validate[i];
-        console.log(element);
+
         resp = validations[element](_data);
         if (!resp.isValid) break;
       }

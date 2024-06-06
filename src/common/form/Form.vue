@@ -1,5 +1,8 @@
 <script setup>
 import { onUpdated, ref } from "vue";
+import { useToastStore } from "@/stores";
+const useToast = useToastStore();
+
 const emit = defineEmits(["onUpdated"]);
 const props = defineProps({
   elementModel: { default: null },
@@ -17,12 +20,14 @@ function init() {
 init();
 
 function validateLabel(_data) {
-  console.log(_data);
   element.value.validateLabel(_data);
 }
 function validate() {
   let resp = element.value.validate();
-  console.log(resp);
+  if (!resp) {
+    useToast.show("validation_error");
+  }
+
   return resp;
 }
 function getElement() {

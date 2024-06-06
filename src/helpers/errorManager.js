@@ -1,7 +1,7 @@
 import { useToastStore, useErrorStore } from "@/stores"; // Ajusta la ruta según tu estructura de carpetas
 import { formatearErrores } from "@/helpers/utilities"; // Ajusta la ruta según tu estructura de archivos
 
-export const handleError = (error, action, module) => {
+export const handleError = (error, action, module = null) => {
   const useToast = useToastStore();
   const errorManager = useErrorStore();
 
@@ -13,7 +13,7 @@ export const handleError = (error, action, module) => {
       list_error: mensaje,
     });
   } else {
-    console.error("An unexpected error occurred:", error);
+    //console.error("An unexpected error occurred:", error);
     useToast.show(action, {
       important_text: module,
       error: error,

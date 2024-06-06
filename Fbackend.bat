@@ -1,0 +1,3 @@
+cd ..
+cd vehiculos-backend
+call venv\Scripts\activate & git pull & python manage.py makemigrations company & python manage.py makemigrations resource & python manage.py makemigrations user & python manage.py makemigrations product_type & python manage.py makemigrations product & python manage.py makemigrations table & python manage.py makemigrations ticket & python manage.py makemigrations ticket_detail  & python manage.py migrate & python manage.py runserver

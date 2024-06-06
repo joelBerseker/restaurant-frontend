@@ -68,7 +68,7 @@ export class UserModel extends Model {
   getDataOptions() {
     return {
       value: this.id.value,
-      text: this.first_name.value,
+      text: `${this.first_name.value} ${this.last_name.value}`,
     };
   }
   getText() {

@@ -98,6 +98,8 @@ defineExpose({
   padding: var(--py-1);
   position: relative;
   background-color: var(--color-w);
+  border-top-left-radius: var(--br-v2);
+  border-top-right-radius: var(--br-v2);
 }
 .loading-container {
   background-color: var(--color-w);

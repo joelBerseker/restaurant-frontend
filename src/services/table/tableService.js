@@ -4,7 +4,7 @@ import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
 import { TableModel } from "@/models";
 import { useToastStore } from "@/stores";
-const servicePath = "/table/table";
+const servicePath = "/table";
 const module = "Mesa";
 export const tableService = {
   async getTable(table_id) {

@@ -155,6 +155,10 @@ export const ${lowerCaseFirstLetter(serviceName)}Service = {
   async delete${serviceName}(dataid) {
     try {
       const response = await axiosInstance.delete(\`\${servicePath}/\${dataid}/\`);
+      const useToast = useToastStore();
+      useToast.show("delete_success", {
+        important_text: \`\${module} \`,
+      });
       return response;
     } catch (error) {
       handleError(error, "delete_error", module);

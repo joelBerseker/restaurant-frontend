@@ -5,6 +5,7 @@ import { ref, onMounted, inject } from "vue";
 
 const props = defineProps({
   disabled: { default: false },
+  mode: { default: null },
 });
 const idElement = inject("idElement", null);
 const formRef = ref(null);
@@ -115,6 +116,7 @@ defineExpose({
       />
     </g-section-2>
     <g-section-2
+      v-if="mode !== 'add'"
       title="Detalles de Empresa"
       subTitle="Empresa relacionada al usuario"
       contentClass="row gutter-form"

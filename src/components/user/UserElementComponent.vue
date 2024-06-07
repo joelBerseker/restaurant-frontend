@@ -115,6 +115,7 @@ defineExpose({
       <UserFormComponent
         ref="formRef"
         :disabled="disabled"
+        :mode="mode"
         @onUpdated="onUpdated"
       />
     </template>

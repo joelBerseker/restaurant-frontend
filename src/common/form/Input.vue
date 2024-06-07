@@ -32,7 +32,11 @@ const value = computed({
   },
   set(value) {
     let _value = value;
-    if (!isEmpty(_value) && props.type !== "textarea") {
+    if (
+      !isEmpty(_value) &&
+      props.type !== "textarea" &&
+      typeof _value === "string"
+    ) {
       if (props.lowercase) {
         _value = _value.toLowerCase();
       } else if (props.uppercase) {

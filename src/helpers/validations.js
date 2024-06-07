@@ -79,17 +79,20 @@ const validations = {
     return resp;
   },
 
-  length(_data) {
+  length(_data, from = null) {
     let text = _data.value;
     let min = _data.min;
     let max = _data.max;
 
     if (min === undefined) {
       min = globalSettings.text_min_size;
+      if (from === "number" || from === "decimal") min = 1;
     }
     if (max === undefined) {
       max = globalSettings.normal_text_max_size;
       if (_data.type === "textarea") max = globalSettings.large_text_max_size;
+      else if (from === "number") max = globalSettings.number_max_size;
+      else if (from === "decimal") max = globalSettings.number_decimal_max_size;
     }
     var resp = valid();
     var textLength = 0;
@@ -122,6 +125,15 @@ const validations = {
     if (text !== text2) {
       resp = noValid("Debe ser igual a " + label + "");
     }
+    return resp;
+  },
+  number(_data) {
+    let text = _data.value;
+    var resp = valid();
+    resp = this.length(_data, "number");
+    if (!resp.isValid) return resp;
+    if (!regularExpressions.onlyNumber.test(text))
+      resp = noValid("Solo se permite numeros");
     return resp;
   },
 };

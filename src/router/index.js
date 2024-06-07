@@ -1,6 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { authService } from "@/services";
 import { userRouter } from "./userRouter";
+
+import SystemView from "@/components/system/SystemView.vue";
+import HomeView from "@/components/home/HomeView.vue";
+
+import RolView from "@/components/rol/RolView.vue";
+import TableView from "@/components/table/TableView.vue";
+import AuthView from "@/components/auth/AuthView.vue";
+import LoginView from "@/components/auth/LoginView.vue";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -8,18 +17,17 @@ const router = createRouter({
       path: "/",
       name: "system",
       redirect: { name: "home" },
-
-      component: () => import("@/components/system/SystemView.vue"),
+      component: SystemView,
       meta: {
-        requiresAuth: true, // Esta ruta requiere autenticación
+        requiresAuth: true,
       },
       children: [
         {
           path: "/home",
           name: "home",
-          component: () => import("@/components/home/HomeView.vue"),
+          component: HomeView,
           meta: {
-            requiresAuth: false, // Esta ruta no requiere autenticación
+            requiresAuth: false,
             moduleid: 0,
           },
         },
@@ -27,18 +35,19 @@ const router = createRouter({
         {
           path: "/rol",
           name: "rol",
-          component: () => import("@/components/rol/RolView.vue"),
+          component: RolView,
           meta: {
-            requiresAuth: false, // Esta ruta no requiere autenticación
+            requiresAuth: false,
             moduleid: 0,
           },
         },
+        userRouter,
         {
           path: "/table",
           name: "table",
-          component: () => import("@/components/table/TableView.vue"),
+          component: TableView,
           meta: {
-            requiresAuth: false, // Esta ruta no requiere autenticación
+            requiresAuth: false,
             moduleid: 0,
           },
         },
@@ -47,18 +56,18 @@ const router = createRouter({
     {
       path: "/autentication",
       name: "auth",
-      component: () => import("@/components/auth/AuthView.vue"),
+      component: AuthView,
       meta: {
-        requiresAuth: false, // Esta ruta no requiere autenticación
+        requiresAuth: false,
         moduleid: 0,
       },
       children: [
         {
           path: "/login",
           name: "login",
-          component: () => import("@/components/auth/LoginView.vue"),
+          component: LoginView,
           meta: {
-            requiresAuth: false, // Esta ruta no requiere autenticación
+            requiresAuth: false,
             moduleid: 0,
           },
         },
@@ -87,7 +96,7 @@ router.beforeEach(async (to, from, next) => {
   } else {
     const module_id = to.meta.moduleid;
     useSystemUtil.isLoadingContentSystem(true);
-
+    //await sleep(1000);
     const hasPermission = true; /*await permissionsService.getPermises(
       module_id,
       Permission_data.View

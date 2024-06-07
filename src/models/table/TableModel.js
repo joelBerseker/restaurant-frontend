@@ -7,7 +7,6 @@ export class TableModel extends Model {
     id: "name",
     name: "Nombre",
     value: null,
-    required: false, // blank=True in Django
     validation: {},
     validate: ["length"],
   };
@@ -15,10 +14,12 @@ export class TableModel extends Model {
   number = {
     id: "number",
     name: "Sitios",
+
     value: null,
     required: false, // null=True, blank=True in Django
     validation: {},
     validate: ["number"],
+    default: "0",
   };
 
   description = {
@@ -37,5 +38,11 @@ export class TableModel extends Model {
       value: this.id.value,
       text: this.name.value,
     };
+  }
+  getText() {
+    return this.id.value + " - " + this.name.value;
+  }
+  getTextModel() {
+    return "Mesa " + this.id.value + " - " + this.name.value;
   }
 }

@@ -109,6 +109,10 @@ function iconCurrentSort(sort) {
   </table-container>
 </template>
 <style>
+.g-table td.number,
+.g-table th.number {
+  text-align: end;
+}
 .g-table th span {
   font-weight: 500;
 }

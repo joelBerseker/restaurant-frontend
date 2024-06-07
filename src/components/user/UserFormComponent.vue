@@ -152,7 +152,7 @@ defineExpose({
       </div>
     </g-section-3>
     <g-section-3
-      v-if="mode !== 'add'"
+      v-if="mode === 'view'"
       title="Detalles de Empresa"
       subTitle="Empresa relacionada al usuario"
       contentClass="row gutter-form"

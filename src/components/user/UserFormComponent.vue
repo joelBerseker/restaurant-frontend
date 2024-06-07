@@ -63,7 +63,7 @@ defineExpose({
     :elementModel="UserModel"
     v-slot="{ element, validateLabel }"
   >
-    <g-section-2 title="Información Personal" contentClass="row gutter-form">
+    <g-section-3 title="Información Personal" contentClass="row gutter-form">
       <g-input-val
         v-model="element.first_name"
         :label="element.first_name.name"
@@ -92,9 +92,9 @@ defineExpose({
         @validate="validateLabel"
         :disabled="disabled"
       />
-    </g-section-2>
+    </g-section-3>
 
-    <g-section-2
+    <g-section-3
       title="Detalles del Sistema"
       subTitle="Información relacionada con el sistema"
       contentClass="row gutter-form"
@@ -150,8 +150,8 @@ defineExpose({
           />
         </div>
       </div>
-    </g-section-2>
-    <g-section-2
+    </g-section-3>
+    <g-section-3
       v-if="mode !== 'add'"
       title="Detalles de Empresa"
       subTitle="Empresa relacionada al usuario"
@@ -171,6 +171,6 @@ defineExpose({
         :disabled="true"
         class="col-4"
       />
-    </g-section-2>
+    </g-section-3>
   </g-form>
 </template>

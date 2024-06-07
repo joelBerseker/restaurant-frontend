@@ -63,8 +63,7 @@ function change(_data) {
 .g-check.bottom .g-check-label {
   order: 0;
 }
-.g-check {
-}
+
 .form-check {
   min-height: auto;
   margin-bottom: 0;

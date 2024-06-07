@@ -15,6 +15,7 @@ import Collapse from "./common/Collapse.vue";
 
 import Section1 from "./common/section/Section1.vue";
 import Section2 from "./common/section/Section2.vue";
+import Section3 from "./common/section/Section3.vue";
 
 function registerComponents(app) {
   app.component("g-button-x-min", ButtonXMin);
@@ -30,6 +31,7 @@ function registerComponents(app) {
   app.component("g-collapse", Collapse);
   app.component("g-section-1", Section1);
   app.component("g-section-2", Section2);
+  app.component("g-section-3", Section3);
 
   app.component("g-button-select", ButtonSelect);
 }

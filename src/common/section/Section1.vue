@@ -65,7 +65,7 @@ function buttonCollapse() {
       <span class="title-text">
         <div>
           {{ navigationInfo[name].title }}
-          <div class="subTitle">{{ subTitle }}</div>
+          <div class="subTitle">{{ props.subTitle }}</div>
         </div>
       </span>
       <span v-if="refresh" class="title-refresh">

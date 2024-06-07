@@ -44,6 +44,7 @@ function copy(_data) {
 }
 function restore() {
   element.value.copy(elementBackup.value);
+  emit("onUpdated", element.value);
 }
 function reset() {
   element.value = new props.elementModel();

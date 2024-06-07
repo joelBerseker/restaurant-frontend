@@ -24,14 +24,13 @@ const elementText = ref(null);
 function addMode() {
   mode.value = "add";
   title.value = "userAdd";
-  subTitle.value = null;
+
   disabled.value = false;
 }
 async function viewMode(_id = null) {
   mode.value = "view";
   title.value = "userDetail";
   disabled.value = true;
-  subTitle.value = null;
 }
 function editMode() {
   mode.value = "edit";
@@ -82,7 +81,9 @@ async function onStatus() {
   isLoading.value = false;
 }
 function onUpdated(_data) {
-  console.log(_data);
+  console.log("onupdated");
+
+  console.log(_data.getText());
   statusValue.value = _data.status.value;
   subTitle.value = _data.getText();
   elementText.value = _data.getTextModel();

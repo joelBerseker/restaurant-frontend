@@ -14,5 +14,7 @@ async function init() {
 init();
 </script>
 <template>
-  <SystemContainer> <UserElementComponent /> </SystemContainer>
+  <SystemContainer v-slot="{ addPercentage }">
+    <UserElementComponent @onFirstLoad="addPercentage(100)" />
+  </SystemContainer>
 </template>

@@ -21,6 +21,17 @@ function closeSidebar() {
   </main>
 </template>
 <style>
+#system-main {
+  overflow: auto;
+  scrollbar-gutter: stable;
+}
+#system-main::-webkit-scrollbar {
+  width: 10px; /* Cambiar el ancho de la barra de desplazamiento */
+}
+#system-main::-webkit-scrollbar-thumb {
+  border-radius: 99rem;
+  background: rgb(190, 190, 190);
+}
 #system-content {
   height: 100%;
 }
@@ -106,8 +117,8 @@ function closeSidebar() {
 #system-main {
   transition: margin-left 0.3s;
   margin-left: 60px;
-  height: auto;
-  min-height: 100vh;
+
+  height: 100vh;
 
   background-size: cover;
 

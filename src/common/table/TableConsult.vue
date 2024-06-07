@@ -10,7 +10,12 @@ const props = defineProps({
   deleteConsult: { default: null },
   getListConsult: { default: null },
 });
-const emit = defineEmits(["onViewItem", "onDeleteItem", "onGotList"]);
+const emit = defineEmits([
+  "onViewItem",
+  "onDeleteItem",
+  "onGotList",
+  "onFirstLoad",
+]);
 const confirmDialogue = inject("confirmDialogue");
 
 const localColumns = ref([]);
@@ -52,7 +57,7 @@ async function deleteItem(_data) {
     await getList();
   }
 }
-function init() {
+async function init() {
   localColumns.value = [
     ...props.columns,
     {
@@ -69,7 +74,8 @@ function init() {
   ];
 
   fillRows();
-  getList(false);
+  await getList(false);
+  emit("onFirstLoad");
 }
 function refresh() {
   getList(true);

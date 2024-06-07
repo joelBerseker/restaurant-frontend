@@ -2,6 +2,7 @@
 import { UserModel } from "@/models";
 import { userService, rolService } from "@/services";
 import { ref, onMounted, inject } from "vue";
+const emit = defineEmits(["onFirstLoad"]);
 
 const props = defineProps({
   disabled: { default: false },
@@ -44,6 +45,7 @@ function resetElement() {
 }
 onMounted(async () => {
   if (idElement) await getElement(idElement);
+  emit("onFirstLoad");
 });
 defineExpose({
   getElement,

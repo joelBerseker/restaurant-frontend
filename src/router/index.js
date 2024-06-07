@@ -67,10 +67,13 @@ const router = createRouter({
   ],
 });
 
-import { useUserStore, useSystemStore } from "@/stores/"; // Asegúrate de proporcionar la ruta correcta a tu tienda
+import { useUserStore, useSystemUtilStore } from "@/stores/"; // Asegúrate de proporcionar la ruta correcta a tu tienda
+import { sleep } from "@/helpers";
 
 router.beforeEach(async (to, from, next) => {
-  const system = useSystemStore();
+  console.log("entre");
+
+  const useSystemUtil = useSystemUtilStore();
 
   const userStore = useUserStore();
   const isLoggedIn = userStore.isActive;
@@ -83,7 +86,7 @@ router.beforeEach(async (to, from, next) => {
     next("/");
   } else {
     const module_id = to.meta.moduleid;
-    system.isLoadingContentSystem(true);
+    useSystemUtil.isLoadingContentSystem(true);
 
     const hasPermission = true; /*await permissionsService.getPermises(
       module_id,
@@ -94,6 +97,7 @@ router.beforeEach(async (to, from, next) => {
     }
     if (hasPermission || module_id == 0) {
       next();
+      console.log("go");
     } else {
       // Si el usuario no tiene permisos, muestra un mensaje de alerta y redirige a la página de inicio
       alert("No tienes permiso para entrar");

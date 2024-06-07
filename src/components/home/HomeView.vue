@@ -14,7 +14,7 @@ const options = ref([
 ]);
 </script>
 <template>
-  <SystemContainer>
+  <SystemContainer :loaded="true">
     <g-form :elementModel="BasicModel" v-slot="{ element, validateLabel }">
       <g-input-val
         v-model="element.table_name"

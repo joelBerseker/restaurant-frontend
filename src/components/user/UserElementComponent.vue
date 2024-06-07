@@ -3,6 +3,7 @@ import UserFormComponent from "@/components/user/UserFormComponent.vue";
 import FormButtons from "@/common/form/FormButtons.vue";
 import { ref, inject } from "vue";
 import { useRouter } from "vue-router";
+const emit = defineEmits(["onFirstLoad"]);
 
 const router = useRouter();
 
@@ -86,6 +87,9 @@ function onUpdated(_data) {
   subTitle.value = _data.getText();
   elementText.value = _data.getTextModel();
 }
+function onFirstLoad() {
+  emit("onFirstLoad");
+}
 function init() {
   if (idElement) viewMode();
   else addMode();
@@ -117,6 +121,7 @@ defineExpose({
         :disabled="disabled"
         :mode="mode"
         @onUpdated="onUpdated"
+        @onFirstLoad="onFirstLoad"
       />
     </template>
   </g-section-1>

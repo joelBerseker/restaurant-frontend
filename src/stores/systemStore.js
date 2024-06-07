@@ -34,10 +34,12 @@ export const useSystemUtilStore = defineStore("system_util", {
   state: () => ({
     loading_app: true,
     loading_app_message: "Bienvenido, espere por favor.",
+    loading_content_system: true,
   }),
   getters: {
     loadingApp: (state) => state.loading_app,
     loadingAppMessage: (state) => state.loading_app_message,
+    loadingContentSystem: (state) => state.loading_content_system,
   },
   actions: {
     isLoadingApp(flag, message = "Bienvenido, espere por favor.") {
@@ -45,6 +47,9 @@ export const useSystemUtilStore = defineStore("system_util", {
       if (flag) {
         this.loading_app_message = message;
       }
+    },
+    isLoadingContentSystem(flag) {
+      this.loading_content_system = flag;
     },
     loadingRestart() {
       this.$reset();

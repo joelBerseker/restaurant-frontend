@@ -55,32 +55,22 @@ provide("buttonBack", buttonBack);
       <SystemTopbar ref="topbarRef" :topbar="topbar" />
     </template>
     <template #content>
-      <router-view v-slot="{ Component, route }">
-        <transition name="transition" mode="out-in">
-          <component
-            :is="Component"
-            @loaded="loadedContent()"
-            :key="route.path"
-          />
-        </transition>
-      </router-view>
+      <router-view> </router-view>
     </template>
   </SystemLayout>
 </template>
 <style scoped>
 .transition-enter-active,
 .transition-enter {
-  transition: all 0.2s ease;
+  transition: all 0.15s;
 }
 .transition-leave-active {
-  transition: all 0.2s ease;
+  transition: all 0.15s;
 }
 .transition-leave-to {
   transform: translateY(10px);
-  opacity: 0;
 }
 .transition-enter-from {
   transform: translateY(10px);
-  opacity: 0;
 }
 </style>

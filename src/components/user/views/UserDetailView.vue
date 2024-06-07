@@ -21,5 +21,7 @@ init();
 provide("idElement", idElement.value);
 </script>
 <template>
-  <SystemContainer> <UserElementComponent /> </SystemContainer>
+  <SystemContainer v-slot="{ addPercentage }">
+    <UserElementComponent @onFirstLoad="addPercentage(100)" />
+  </SystemContainer>
 </template>

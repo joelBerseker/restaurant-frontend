@@ -6,6 +6,7 @@ import { ref, reactive, onMounted, inject } from "vue";
 import { userService } from "@/services";
 import { subTitleGen } from "@/helpers";
 import { useRouter } from "vue-router";
+const emit = defineEmits(["onFirstLoad"]);
 
 const router = useRouter();
 
@@ -64,6 +65,9 @@ const switchSearchValue = ref(false);
 function switchSearch() {
   switchSearchValue.value = tableRef.value.switchSearch();
 }
+function onFirstLoad() {
+  emit("onFirstLoad");
+}
 </script>
 <template>
   <g-section-1
@@ -88,6 +92,7 @@ function switchSearch() {
         :getListConsult="userService.getListUser"
         @onViewItem="viewItem"
         @onGotList="onGotList"
+        @onFirstLoad="onFirstLoad"
       ></TableConsult>
     </template>
   </g-section-1>

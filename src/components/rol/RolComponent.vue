@@ -5,6 +5,8 @@ import RolElementModalComponent from "@/components/rol/RolElementModalComponent.
 import { ref, reactive, onMounted, inject } from "vue";
 import { rolService } from "@/services";
 import { subTitleGen } from "@/helpers";
+const emit = defineEmits(["onFirstLoad"]);
+
 const tableRef = ref(null);
 const modalRef = ref(null);
 
@@ -50,6 +52,9 @@ function addItem() {
 function onGotList(_data) {
   subTitle.value = subTitleGen.countElement(_data);
 }
+function onFirstLoad() {
+  emit("onFirstLoad");
+}
 
 const switchSearchValue = ref(false);
 function switchSearch() {
@@ -80,6 +85,7 @@ function switchSearch() {
         :getListConsult="rolService.getListRol"
         @onViewItem="viewItem"
         @onGotList="onGotList"
+        @onFirstLoad="onFirstLoad"
       ></TableConsult>
     </template>
   </g-section-1>

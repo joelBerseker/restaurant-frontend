@@ -99,23 +99,57 @@ defineExpose({
       subTitle="Información relacionada con el sistema"
       contentClass="row gutter-form"
     >
-      <g-select-consult-val
-        v-model="element.id_role"
-        :label="element.id_role.name"
-        :disabled="disabled"
-        @validate="validateLabel"
-        :consult="rolService.getListRol"
-        :filter="{ order: 'asc', orderBy: 'name', searchBy: ['name'] }"
-        class="col-4"
-      />
-      <g-input-check
-        v-model="element.dark_mode.value"
-        :label="element.dark_mode.name"
-        :disabled="disabled"
-        labelClass="imp-label"
-        :labelLeft="true"
-        class="col-4"
-      />
+      <div>
+        <div class="row gutter-form">
+          <g-select-consult-val
+            v-model="element.id_role"
+            :label="element.id_role.name"
+            :disabled="disabled"
+            @validate="validateLabel"
+            :consult="rolService.getListRol"
+            :filter="{ order: 'asc', orderBy: 'name', searchBy: ['name'] }"
+            class="col-4"
+          />
+          <g-input-check
+            v-model="element.dark_mode.value"
+            :label="element.dark_mode.name"
+            :disabled="disabled"
+            labelClass="imp-label"
+            checkPosition="bottom"
+            :switchMode="true"
+            class="col-4"
+          />
+        </div>
+      </div>
+      <div v-if="mode === 'add'">
+        <div class="row gutter-form">
+          <g-input-val
+            v-show="!element.generate_password.value"
+            v-model="element.password"
+            :label="element.password.name"
+            @validate="validateLabel"
+            :disabled="disabled"
+            class="col-4"
+          />
+          <g-input-val
+            v-show="!element.generate_password.value"
+            v-model="element.confirm_password"
+            :label="element.confirm_password.name"
+            @validate="validateLabel"
+            :disabled="disabled"
+            class="col-4"
+          />
+          <g-input-check
+            v-model="element.generate_password.value"
+            :label="element.generate_password.name"
+            :disabled="disabled"
+            labelClass="imp-label"
+            checkPosition="bottom"
+            :switchMode="true"
+            class="col-4"
+          />
+        </div>
+      </div>
     </g-section-2>
     <g-section-2
       v-if="mode !== 'add'"

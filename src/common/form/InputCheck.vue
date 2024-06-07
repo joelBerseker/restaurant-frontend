@@ -9,7 +9,7 @@ const props = defineProps({
   label: { default: null },
   helpText: { default: "" },
   showHelpText: { default: true },
-  labelLeft: { default: false },
+  checkPosition: { default: "left" },
   switchMode: { default: false },
   labelClass: { default: "" },
 });
@@ -28,7 +28,7 @@ function change(_data) {
 </script>
 <template>
   <div>
-    <div class="d-flex">
+    <div :class="['d-flex g-check', checkPosition]">
       <div class="order-1">
         <div :class="['form-check ', switchMode ? 'form-switch' : '']">
           <input
@@ -42,16 +42,28 @@ function change(_data) {
           />
         </div>
       </div>
-      <div :class="[labelLeft ? 'me-2 order-0' : 'ms-2 order-2']">
+      <div class="g-check-label">
         <label v-if="!isEmpty(label)" :class="labelClass"> {{ label }} </label>
       </div>
     </div>
   </div>
 </template>
 <style scoped>
-.g-check {
+.g-check.left .g-check-label {
   margin-left: 0.5rem;
+  order: 2;
+}
+.g-check.right .g-check-label {
   margin-right: 0.5rem;
+  order: 0;
+}
+.g-check.bottom {
+  flex-direction: column;
+}
+.g-check.bottom .g-check-label {
+  order: 0;
+}
+.g-check {
 }
 .form-check {
   min-height: auto;
@@ -61,5 +73,6 @@ function change(_data) {
 }
 .form-check .form-check-input {
   margin-left: 0;
+  margin-top: 0.32rem;
 }
 </style>

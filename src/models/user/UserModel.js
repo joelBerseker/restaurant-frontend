@@ -57,6 +57,33 @@ export class UserModel extends Model {
     name: "modo oscuro",
     value: false,
   };
+  password = {
+    id: "password",
+    name: "Contraseña",
+    value: null,
+
+    min: 8,
+    max: 20,
+
+    validation: {},
+    validate: ["length"],
+    alsoValidate: ["confirm_password"],
+  };
+  confirm_password = {
+    id: "confirm_password",
+    name: "Confirmar Contraseña",
+    value: null,
+
+    equalsTo: this.password,
+
+    validation: {},
+    validate: ["equals"],
+  };
+  generate_password = {
+    id: "generate_password",
+    name: "Generar Contraseña",
+    value: true,
+  };
   is_admin = {
     value: "",
   };
@@ -73,6 +100,20 @@ export class UserModel extends Model {
       rol: this.id_role.value,
       is_p: this.is_admin.value,
     };
+  }
+  beforeValidate() {
+    if (this.generate_password.value) {
+      this.password.noValidate = true;
+      this.confirm_password.noValidate = true;
+    } else {
+      this.password.noValidate = false;
+      this.confirm_password.noValidate = false;
+    }
+  }
+  beforeAddData() {
+    if (this.generate_password.value) {
+      this.password.value = this.first_name.value + this.last_name.value;
+    }
   }
   getDataOptions() {
     return {

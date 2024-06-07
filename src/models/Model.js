@@ -17,7 +17,7 @@ export class Model {
     resetLabelValue(key);
     resetLabelValidation(key);
   }
-  validateLabel(_data) {
+  validateLabel(_data, validateMultiple = true) {
     let resp = false;
 
     if (_data.required === false) {
@@ -33,8 +33,12 @@ export class Model {
         return;
       }
     }
-
-    if (_data.validate !== undefined) {
+    if (_data.alsoValidate && validateMultiple) {
+      _data.alsoValidate.forEach((element) => {
+        this.validateLabel(this[element], false);
+      });
+    }
+    if (_data.validate) {
       for (let i = 0; i < _data.validate.length; i++) {
         const element = _data.validate[i];
 
@@ -42,17 +46,21 @@ export class Model {
         if (!resp.isValid) break;
       }
     }
-
+    console.log(_data.name);
     _data.validation = resp;
   }
+  beforeValidate() {}
+
   validate() {
+    this.beforeValidate();
+
     let resp = true;
     let listLabel = [];
     for (var key in this) {
       let element = this[key];
       if (element.validation === undefined) continue;
-      if (element.consider === false) continue;
-      this.validateLabel(element);
+      if (element.noValidate) continue;
+      this.validateLabel(element, false);
       if (!element.validation.isValid) {
         listLabel.push(element.name ? element.name : "Sin nombre");
       }
@@ -108,8 +116,9 @@ export class Model {
     if (this.status.value == 3) return "eliminado";
     return "Gaseoso";
   }
-
+  beforeAddData() {}
   addData() {
+    this.beforeAddData();
     let resp = {};
     for (var key in this) {
       let element = this[key];

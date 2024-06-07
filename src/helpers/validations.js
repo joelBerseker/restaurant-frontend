@@ -112,5 +112,17 @@ const validations = {
       resp = noValid("Por favor ingrese un email valido");
     return resp;
   },
+  equals(_data) {
+    let text = _data.value;
+    let text2 = _data.equalsTo.value;
+    let label = _data.equalsTo.name;
+
+    var resp = valid();
+
+    if (text !== text2) {
+      resp = noValid("Debe ser igual a " + label + "");
+    }
+    return resp;
+  },
 };
 export { validations, valid, noValid, validating };

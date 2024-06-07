@@ -91,7 +91,7 @@ defineExpose({
     :noChangeValue="noChangeValue"
     :nullOption="nullOption"
     :nullText="nullText"
-    @click="click()"
+    @clickButton="click()"
   >
     <template v-slot:header-list>
       <div v-if="showFilter" class="search-select">

@@ -14,6 +14,7 @@ const props = defineProps({
   viewMode: { default: true },
   showHelpText: { default: true },
   uppercase: { default: true },
+  lowercase: { default: false },
   disabled: { default: false },
   loading: { default: false },
   type: { default: "text" },
@@ -31,8 +32,12 @@ const value = computed({
   },
   set(value) {
     let _value = value;
-    if (!isEmpty(_value) && props.type !== "textarea" && props.uppercase) {
-      _value = _value.toUpperCase();
+    if (!isEmpty(_value) && props.type !== "textarea") {
+      if (props.lowercase) {
+        _value = _value.toLowerCase();
+      } else if (props.uppercase) {
+        _value = _value.toUpperCase();
+      }
     }
     emit("update:modelValue", _value);
   },

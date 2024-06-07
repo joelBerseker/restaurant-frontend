@@ -9,10 +9,10 @@ const props = defineProps({
 
   modelValue: { default: null },
   options: { default: [] },
-  viewText: { default: null },
-  viewAditional: { default: null },
 
-  emptyText: { default: null },
+  valueText: { default: null },
+  valueTextAdditional: { default: null },
+
   viewMode: { default: true },
   textOptions: { default: "text" },
   valueOptions: { default: "value" },
@@ -38,9 +38,9 @@ const selectRef = ref(null);
 const emit = defineEmits([
   "update:modelValue",
   "change",
-  "changeComplete",
+  "changeGetComplete",
   "clear",
-  "noChangeValue",
+  "clickButton",
 ]);
 
 const value = computed({
@@ -52,6 +52,7 @@ const value = computed({
     emit("change", value);
   },
 });
+const valueComplete = ref(null);
 const activeOptions = computed(() => {
   let resp = [];
   props.options.forEach((element) => {
@@ -62,59 +63,62 @@ const activeOptions = computed(() => {
   return resp;
 });
 const selectValue = computed(() => {
-  if (props.viewText !== null && props.disabled) {
-    if (props.display !== null) {
-      return { text: props.display(props.viewText) };
-    }
+  let _valueText = null;
+  let _valueTextAditional = null;
 
-    return {
-      text: props.viewText,
-      aditional: isEmpty(props.viewAditional) ? undefined : props.viewAditional,
-    };
-  }
-  if (isEmpty(value.value)) {
-    if (props.emptyText !== null) return { text: props.emptyText };
-    return { text: props.nullText };
+  let resp = {
+    text: "No encontrado",
+    aditional: null,
+  };
+  if (typeof props.valueText === "object" && props.valueText !== null) {
+    _valueText = props.valueText.text;
+    _valueTextAditional = props.valueText.aditional;
   } else {
+    _valueText = props.valueText;
+  }
+
+  if (!props.disabled) {
+    if (isEmpty(value.value)) {
+      resp.text = props.nullText;
+      return resp;
+    }
     let search = props.options.find(
       (x) => x[props.valueOptions] === value.value
     );
-    if (search !== undefined) return search;
-    if (!isEmpty(props.viewText)) {
-      if (props.display !== null) {
-        return { text: props.display(props.viewText) };
-      }
-      return {
-        text: props.viewText,
-        aditional: isEmpty(props.viewAditional)
-          ? undefined
-          : props.viewAditional,
-      };
-    }
-    return { text: "No encontrado" };
+    if (search) return search;
   }
+
+  if (!isEmpty(_valueText)) {
+    resp.text = _valueText;
+    resp.aditional = _valueTextAditional;
+    if (props.display) {
+      resp.text = props.display(resp.text);
+    }
+    return resp;
+  }
+  return resp;
 });
 function clear() {
-  if (props.noChangeValue) {
-    emit("noChangeValue", null);
-    return;
+  if (!props.noChangeValue) {
+    value.value = null;
+    emit("clear", null);
   }
-  value.value = null;
-  emit("clear", null);
+  emit("changeGetComplete", null);
 }
 function changeValue(_item) {
-  if (props.noChangeValue) {
-    emit("noChangeValue", {
-      value: _item[props.valueOptions],
-      valueComplete: _item,
-    });
-    return;
+  if (!props.noChangeValue) {
+    value.value = _item[props.valueOptions];
   }
-  value.value = _item[props.valueOptions];
-  emit("changeComplete", _item);
+  emit("changeGetComplete", {
+    value: _item[props.valueOptions],
+    valueComplete: _item,
+  });
 }
 function selectItem(_item) {
   changeValue(_item);
+}
+function clickButton(_item) {
+  emit("clickButton");
 }
 function tabAction(_item) {
   selectItem(_item);
@@ -165,6 +169,7 @@ function tabAction(_item) {
         aria-expanded="false"
         data-bs-toggle="dropdown"
         data-bs-popper-config='{"strategy":"fixed"}'
+        @click="clickButton"
       >
         <span class="dropdown-text">
           <div v-if="!isEmpty(selectValue.text)">{{ selectValue.text }}</div>

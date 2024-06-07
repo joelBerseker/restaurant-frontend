@@ -4,9 +4,14 @@ export class UserModel extends Model {
   id_role = {
     id: "id_role",
     name: "rol",
+    type: "select",
+
     value: null,
     additional: {},
     validation: {},
+    getValueText() {
+      return this.additional.name;
+    },
   };
 
   email = {
@@ -14,7 +19,7 @@ export class UserModel extends Model {
     name: "correo electrónico",
     value: null,
     validation: {},
-    validate: ["length"],
+    validate: ["length", "email"],
   };
 
   first_name = {
@@ -54,6 +59,10 @@ export class UserModel extends Model {
   };
   is_admin = {
     value: "",
+  };
+  company_id = {
+    value: "",
+    additional: {},
   };
   saveUser() {
     return {

@@ -58,7 +58,7 @@ export class Model {
       }
       resp = resp && element.validation.isValid;
     }
-    console.log(listLabel);
+
     return { value: resp, list: listLabel };
   }
 
@@ -66,32 +66,31 @@ export class Model {
     for (var key in data) {
       if (this[key].copy !== false)
         this[key].value = JSON.parse(JSON.stringify(data[key].value));
-      if (data[key].validation != undefined) {
+      if (this[key].additional)
+        this[key].additional = JSON.parse(JSON.stringify(data[key].additional));
+      if (data[key].validation) {
         this[key].validation = {};
       }
-      if (data[key].file !== undefined) {
+      if (data[key].file) {
         this[key].file = data[key].file;
       }
-      if (data[key].view_text !== undefined) {
+      if (data[key].view_text) {
         this[key].view_text = data[key].view_text;
       }
-      if (data[key].view_aditional !== undefined) {
+      if (data[key].view_aditional) {
         this[key].view_aditional = data[key].view_aditional;
       }
     }
   }
-  initUnique() {
+  initValueText() {
     for (var key in this) {
-      if (this[key].unique !== undefined) {
-        this[key].unique = this[key].value;
-      }
-      if (this[key].getViewText !== undefined) {
-        this[key].getViewText();
+      if (this[key].getValueText) {
+        this[key].valueText = this[key].getValueText();
       }
     }
   }
   init() {
-    this.initUnique();
+    this.initValueText();
   }
   changeStatus() {
     let status_new = 1;

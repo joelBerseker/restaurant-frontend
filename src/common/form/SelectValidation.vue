@@ -6,7 +6,6 @@ const props = defineProps({
   options: { default: [] },
   label: { default: null },
   viewMode: { default: true },
-  emptyText: { default: null },
   disabled: { default: false },
   loading: { default: false },
   display: { default: null },
@@ -26,12 +25,7 @@ const props = defineProps({
 
 const selectRef = ref(null);
 
-const emit = defineEmits([
-  "change",
-  "changeComplete",
-  "noChangeValue",
-  "validate",
-]);
+const emit = defineEmits(["change", "validate"]);
 
 const value = computed({
   get() {
@@ -43,15 +37,9 @@ function change(_data) {
   emit("validate", value.value);
   emit("change", _data);
 }
-function changeComplete(_data) {
-  emit("changeComplete", _data);
-}
+
 function clear() {
   value.value.validation = {};
-  changeComplete(null);
-}
-function noChangeValueAction(_value) {
-  emit("noChangeValue", _value);
 }
 </script>
 <template>
@@ -59,9 +47,7 @@ function noChangeValueAction(_value) {
     ref="selectRef"
     v-model="value.value"
     :options="options"
-    :viewText="value.view_text"
-    :viewAditional="value.view_aditional"
-    :emptyText="emptyText"
+    :valueText="value.valueText"
     :viewMode="viewMode"
     :disabled="disabled"
     :loading="loading"
@@ -73,9 +59,7 @@ function noChangeValueAction(_value) {
     :showHelpText="showHelpText"
     :clearButton="clearButton"
     @change="change"
-    @changeComplete="changeComplete"
     @clear="clear()"
-    @noChangeValue="noChangeValueAction"
     :display="display"
     :loadingSelect="loadingSelect"
     :showAditionalInSelect="showAditionalInSelect"

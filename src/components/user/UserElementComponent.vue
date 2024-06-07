@@ -97,12 +97,7 @@ defineExpose({
 });
 </script>
 <template>
-  <g-section-1
-    :name="title"
-    :subTitle="subTitle"
-    :refresh="true"
-    @onRefresh="refresh()"
-  >
+  <g-section-1 :name="title" :subTitle="subTitle">
     <template #buttons>
       <FormButtons
         :mode="mode"

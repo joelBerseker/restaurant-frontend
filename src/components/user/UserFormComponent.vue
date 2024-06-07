@@ -60,47 +60,79 @@ defineExpose({
     :elementModel="UserModel"
     v-slot="{ element, validateLabel }"
   >
-    <g-input-val
-      v-model="element.first_name"
-      :label="element.first_name.name"
-      @validate="validateLabel"
-      :disabled="disabled"
-      class="col-4"
-    />
+    <g-section-2 title="Información Personal" contentClass="row gutter-form">
+      <g-input-val
+        v-model="element.first_name"
+        :label="element.first_name.name"
+        @validate="validateLabel"
+        :disabled="disabled"
+        class="col-4"
+      />
+      <g-input-val
+        v-model="element.last_name"
+        :label="element.last_name.name"
+        @validate="validateLabel"
+        :disabled="disabled"
+        class="col-4"
+      />
+      <g-input-val
+        v-model="element.email"
+        :label="element.email.name"
+        @validate="validateLabel"
+        :disabled="disabled"
+        class="col-4"
+        :lowercase="true"
+      />
+      <g-input-val
+        v-model="element.ruc"
+        :label="element.ruc.name"
+        @validate="validateLabel"
+        :disabled="disabled"
+      />
+    </g-section-2>
 
-    <g-input-val
-      v-model="element.last_name"
-      :label="element.last_name.name"
-      @validate="validateLabel"
-      :disabled="disabled"
-      class="col-4"
-    />
-    <g-input-val
-      v-model="element.email"
-      :label="element.email.name"
-      @validate="validateLabel"
-      :disabled="disabled"
-      class="col-4"
-    />
-    <g-input-val
-      v-model="element.ruc"
-      :label="element.ruc.name"
-      @validate="validateLabel"
-      :disabled="disabled"
-    />
-    <g-input-check
-      v-model="element.dark_mode.value"
-      :label="element.dark_mode.name"
-      :disabled="disabled"
-      labelClass="imp-label"
-      :labelLeft="true"
-    />
-    <g-select-consult-val
-      v-model="element.id_role"
-      :disabled="disabled"
-      @validate="validateLabel"
-      :consult="rolService.getListRol"
-      :filter="{ order: 'asc', orderBy: 'name', searchBy: ['name'] }"
-    />
+    <g-section-2
+      title="Detalles del Sistema"
+      subTitle="Información relacionada con el sistema"
+      contentClass="row gutter-form"
+    >
+      <g-select-consult-val
+        v-model="element.id_role"
+        :label="element.id_role.name"
+        :disabled="disabled"
+        @validate="validateLabel"
+        :consult="rolService.getListRol"
+        :filter="{ order: 'asc', orderBy: 'name', searchBy: ['name'] }"
+        class="col-4"
+      />
+      <g-input-check
+        v-model="element.dark_mode.value"
+        :label="element.dark_mode.name"
+        :disabled="disabled"
+        labelClass="imp-label"
+        :labelLeft="true"
+        class="col-4"
+      />
+    </g-section-2>
+    <g-section-2
+      title="Detalles de Empresa"
+      subTitle="Empresa relacionada al usuario"
+      contentClass="row gutter-form"
+    >
+      <g-input
+        v-model="element.company_id.additional.name"
+        label="Nombre"
+        @validate="validateLabel"
+        :disabled="true"
+        class="col-4"
+      />
+      <g-input
+        v-model="element.company_id.additional.address"
+        label="Dirección"
+        @validate="validateLabel"
+        :disabled="true"
+        class="col-4"
+      />
+    </g-section-2>
   </g-form>
 </template>

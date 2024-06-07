@@ -56,6 +56,7 @@ defineExpose({
     ref="formRef"
     :elementModel="RolModel"
     v-slot="{ element, validateLabel }"
+    class="row gutter-form"
   >
     <g-input-val
       v-model="element.name"

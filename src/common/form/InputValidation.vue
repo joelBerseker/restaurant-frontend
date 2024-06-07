@@ -8,6 +8,8 @@ const props = defineProps({
   display: { default: null },
   viewMode: { default: true },
   uppercase: { default: true },
+  lowercase: { default: false },
+
   showHelpText: { default: true },
   disabled: { default: false },
   loading: { default: false },
@@ -49,6 +51,7 @@ function clear() {
     :loading="loading"
     :label="label"
     :uppercase="uppercase"
+    :lowercase="lowercase"
     :labelClass="labelClass"
     :helpText="helpText"
     :showHelpText="showHelpText"

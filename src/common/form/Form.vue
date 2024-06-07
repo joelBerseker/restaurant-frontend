@@ -37,6 +37,8 @@ function getElement() {
 }
 function copy(_data) {
   element.value.copy(_data);
+  element.value.init();
+
   elementBackup.value.copy(element.value);
   emit("onUpdated", element.value);
 }
@@ -56,7 +58,7 @@ defineExpose({
 });
 </script>
 <template>
-  <form @submit.prevent class="row g-3">
+  <form @submit.prevent>
     <slot :element="element" :validateLabel="validateLabel"></slot>
   </form>
 </template>

@@ -7,3 +7,7 @@ label {
 .imp-label {
   color: var(--color-1-v3);
 }
+.gutter-form {
+  --bs-gutter-y: 1rem;
+  --bs-gutter-x: 2rem;
+}

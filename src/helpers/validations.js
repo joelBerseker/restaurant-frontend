@@ -53,7 +53,23 @@ const validations = {
   required(_data) {
     let text = _data.value;
     var resp = valid();
-    if (isEmpty(text)) resp = noValid("Ingrese un valor");
+    if (isEmpty(text)) {
+      let _txtInvalid = "Ingrese un valor";
+      switch (_data.type) {
+        case "select":
+          _txtInvalid = "Seleccione una opción";
+          break;
+        case "file":
+          _txtInvalid = "Ingrese un archivo";
+          break;
+        case "date":
+          _txtInvalid = "Seleccione una fecha";
+          break;
+        default:
+          break;
+      }
+      resp = noValid(_txtInvalid);
+    }
     return resp;
   },
   noRequired(_data) {
@@ -73,8 +89,8 @@ const validations = {
     }
     if (max === undefined) {
       max = globalSettings.normal_text_max_size;
+      if (_data.type === "textarea") max = globalSettings.large_text_max_size;
     }
-    console.log("LENGTH");
     var resp = valid();
     var textLength = 0;
     if (!isEmpty(text)) textLength = text.length;
@@ -86,6 +102,14 @@ const validations = {
       resp = noValid("Debe contener maximo " + max + " caracteres");
       if (min === max) resp = noValid("Debe contener " + min + " caracteres");
     }
+    return resp;
+  },
+  email(_data) {
+    let text = _data.value;
+
+    var resp = valid();
+    if (!regularExpressions.onlyEmail.test(text))
+      resp = noValid("Por favor ingrese un email valido");
     return resp;
   },
 };

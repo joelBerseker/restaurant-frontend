@@ -126,7 +126,7 @@ export const reservationService = {
       const config = {
         method: "PATCH",
         url: `${servicePath}/${new_data.id.value}/`,
-        data: article.addData(),
+        data: new_data.addData(),
         headers: {
           "Content-Type": "multipart/form-data",
         },

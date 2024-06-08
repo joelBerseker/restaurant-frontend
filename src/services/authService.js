@@ -38,12 +38,14 @@ export const authService = {
         userStore.logout();
         location.reload(); //
       } else {
-        userStore.logout();
-        //location.reload(); //
+        //
+        await userStore.logout();
         handleError(
           Error("Ocurrió un error al obtener el token"),
           "refresh_token_error"
         );
+
+        //location.reload();
         throw error;
       }
     }

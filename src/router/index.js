@@ -27,7 +27,7 @@ const router = createRouter({
           name: "home",
           component: HomeView,
           meta: {
-            requiresAuth: false,
+            requiresAuth: true,
             moduleid: 0,
           },
         },
@@ -37,7 +37,7 @@ const router = createRouter({
           name: "rol",
           component: RolView,
           meta: {
-            requiresAuth: false,
+            requiresAuth: true,
             moduleid: 0,
           },
         },
@@ -47,7 +47,7 @@ const router = createRouter({
           name: "table",
           component: TableView,
           meta: {
-            requiresAuth: false,
+            requiresAuth: true,
             moduleid: 0,
           },
         },

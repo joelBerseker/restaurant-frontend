@@ -4,7 +4,7 @@ import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
 import { ProductModel } from "@/models";
 import { useToastStore } from "@/stores";
-const servicePath = "/product/product";
+const servicePath = "/product";
 const module = "Producto";
 
 export const productService = {

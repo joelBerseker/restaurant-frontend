@@ -4,7 +4,7 @@ import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
 import { TypeProductModel } from "@/models";
 import { useToastStore } from "@/stores";
-const servicePath = "/product/typeproduct";
+const servicePath = "/product_type";
 const module = "Tipo de Producto";
 export const typeProductService = {
   async getTypeProduct(typeproduct_id) {

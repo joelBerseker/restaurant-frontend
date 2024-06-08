@@ -39,7 +39,7 @@ function change(_data) {
 }
 
 function clear() {
-  value.value.validation = {};
+  emit("validate", value.value);
 }
 </script>
 <template>

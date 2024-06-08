@@ -52,6 +52,7 @@ const regularExpressions = {
 const validations = {
   required(_data) {
     let text = _data.value;
+    if (_data.type === "image" || _data.type === "file ") text = _data.file;
     var resp = valid();
     if (isEmpty(text)) {
       let _txtInvalid = "Ingrese un valor";
@@ -61,6 +62,9 @@ const validations = {
           break;
         case "file":
           _txtInvalid = "Ingrese un archivo";
+          break;
+        case "image":
+          _txtInvalid = "Ingrese una imagen";
           break;
         case "date":
           _txtInvalid = "Seleccione una fecha";
@@ -73,9 +77,18 @@ const validations = {
     return resp;
   },
   noRequired(_data) {
-    let text = _data.value;
     var resp = noValid();
-    if (isEmpty(text)) resp = noRequired();
+
+    let text = _data.value;
+    if (_data.type === "image" || _data.type === "file ") {
+      text = _data.file;
+      resp = valid();
+    }
+
+    if (isEmpty(text)) {
+      console.log("no required");
+      resp = noRequired();
+    }
     return resp;
   },
 

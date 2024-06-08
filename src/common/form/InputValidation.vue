@@ -32,7 +32,7 @@ function input() {
   emit("change", value.value.value);
 }
 function clear() {
-  value.value.validation = {};
+  emit("validate", value.value);
   emit("change", value.value.value);
 }
 </script>

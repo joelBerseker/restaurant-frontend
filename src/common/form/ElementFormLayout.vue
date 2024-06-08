@@ -170,14 +170,20 @@ function clear() {
   color: var(--color-w);
   font-size: 12px;
 }
-.textarea > div > main > div > .loading {
+.g-form-element.textarea > div > main > div > .loading,
+.g-form-element.image > div > main > div > .loading {
   top: 0.4rem;
   transform: translateY(0);
 }
-.textarea > div > main > div > .validation-icon,
-.textarea > div > main > div > .close {
+.g-form-element.textarea > div > main > div > .validation-icon,
+.g-form-element.textarea > div > main > div > .close,
+.g-form-element.image > div > main > div > .validation-icon,
+.g-form-element.image > div > main > div > .close {
   top: 0.35rem;
   transform: translateY(0);
+}
+.g-form-element.image > div > main > .g-form-wrapper {
+  width: fit-content;
 }
 /*NO VALID */
 .no-valid > div > footer > .validation-message {

@@ -63,44 +63,67 @@ defineExpose({
     :elementModel="UserModel"
     v-slot="{ element, validateLabel }"
   >
-    <g-section-3 title="Información Personal" contentClass="row gutter-form">
-      <g-input-val
-        v-model="element.first_name"
-        :label="element.first_name.name"
-        @validate="validateLabel"
-        :disabled="disabled"
-        class="col-4"
-      />
-      <g-input-val
-        v-model="element.last_name"
-        :label="element.last_name.name"
-        @validate="validateLabel"
-        :disabled="disabled"
-        class="col-4"
-      />
-      <g-input-val
-        v-model="element.email"
-        :label="element.email.name"
-        @validate="validateLabel"
-        :disabled="disabled"
-        class="col-4"
-        :lowercase="true"
-      />
-      <g-input-val
-        v-model="element.ruc"
-        :label="element.ruc.name"
-        @validate="validateLabel"
-        :disabled="disabled"
-      />
-    </g-section-3>
+    <hr class="section-2-line" />
+    <div class="row gutter-form">
+      <div class="col-8">
+        <g-section-2
+          title="Información Personal"
+          contentClass=""
+          class="w-100"
+          :topLine="false"
+        >
+          <div class="row gutter-form">
+            <g-input-val
+              v-model="element.first_name"
+              :label="element.first_name.name"
+              @validate="validateLabel"
+              :disabled="disabled"
+              class="col-6"
+            />
+            <g-input-val
+              v-model="element.last_name"
+              :label="element.last_name.name"
+              @validate="validateLabel"
+              :disabled="disabled"
+              class="col-6"
+            />
 
-    <g-section-3
+            <g-input-val
+              v-model="element.ruc"
+              :label="element.ruc.name"
+              @validate="validateLabel"
+              :disabled="disabled"
+              class="col-6"
+            />
+          </div>
+        </g-section-2>
+      </div>
+      <div class="col-4">
+        <div class="img-data">
+          <g-input-image-val
+            imageClass="user-img"
+            v-model="element.photo"
+            :disabled="disabled"
+            @validate="validateLabel"
+          />
+        </div>
+      </div>
+    </div>
+    <g-section-2
       title="Detalles del Sistema"
       subTitle="Información relacionada con el sistema"
       contentClass="row gutter-form"
     >
       <div>
         <div class="row gutter-form">
+          <g-input-val
+            v-model="element.email"
+            :label="element.email.name"
+            @validate="validateLabel"
+            :disabled="disabled"
+            class="col-4"
+            :lowercase="true"
+          />
           <g-select-consult-val
             v-model="element.id_role"
             :label="element.id_role.name"
@@ -150,12 +173,13 @@ defineExpose({
           />
         </div>
       </div>
-    </g-section-3>
+    </g-section-2>
     <g-section-3
       v-if="mode === 'view'"
       title="Detalles de Empresa"
       subTitle="Empresa relacionada al usuario"
       contentClass="row gutter-form"
+      :mt="true"
     >
       <g-input
         v-model="element.company_id.additional.name"
@@ -174,3 +198,12 @@ defineExpose({
     </g-section-3>
   </g-form>
 </template>
+<style scoped>
+.data-img-container {
+  display: flex;
+  position: relative;
+}
+.img-data {
+  margin-left: 1.5rem;
+}
+</style>

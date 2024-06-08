@@ -24,6 +24,9 @@ const props = defineProps({
   mbTitle: {
     default: true,
   },
+  topLine: {
+    default: true,
+  },
 });
 const sticking = ref(false);
 const collapseRef = ref(null);
@@ -40,6 +43,7 @@ function buttonCollapse() {
 </script>
 <template>
   <div :class="{ mbTitle }" class="container-section">
+    <hr v-if="topLine" class="section-2-line" />
     <div class="title-container" ref="titleRef" :class="{ sticking }">
       <div class="title-wrap">
         <span class="title-icon">
@@ -82,9 +86,16 @@ function buttonCollapse() {
     </div>
   </div>
 </template>
+<style>
+.section-2-line {
+  color: var(--color-1-v3);
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+</style>
 <style scoped>
 .mbTitle {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 .container-section {
 }

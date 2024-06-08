@@ -122,8 +122,13 @@ export class Model {
     let resp = {};
     for (var key in this) {
       let element = this[key];
-      resp[key] = isEmpty(element.value) ? element.default : element.value;
+      if (element.type === "image" || element.type === "file ") {
+        if (element.file) resp[key] = element.file;
+      } else {
+        resp[key] = isEmpty(element.value) ? element.default : element.value;
+      }
     }
+    console.log(resp);
     return resp;
   }
   getData() {

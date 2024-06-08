@@ -49,7 +49,11 @@ export class UserModel extends Model {
   photo = {
     id: "photo",
     name: "foto de perfil",
+    type: "image",
     value: null,
+    file: null,
+    required: false,
+    validation: {},
   };
 
   dark_mode = {

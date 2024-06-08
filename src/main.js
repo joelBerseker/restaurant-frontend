@@ -6,7 +6,7 @@ import "./assets/main.css";
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import { registerComponents } from "@/registerComponents";
-
+import VueApexCharts from "vue3-apexcharts";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 
 import App from "./App.vue";
@@ -37,6 +37,8 @@ const customFilter = ({ key }) => {
 pinia.use(piniaPluginPersistedstate, {
   filter: customFilter,
 });
+
+app.use(VueApexCharts);
 
 app.use(pinia);
 app.use(router);

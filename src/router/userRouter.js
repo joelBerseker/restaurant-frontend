@@ -9,7 +9,7 @@ export const userRouter = {
   component: UserView,
   redirect: { name: "userList" },
   meta: {
-    requiresAuth: false,
+    requiresAuth: true,
     moduleid: 0,
   },
   children: [
@@ -18,7 +18,7 @@ export const userRouter = {
       name: "userList",
       component: UserListView,
       meta: {
-        requiresAuth: false,
+        requiresAuth: true,
         moduleid: 0,
       },
     },
@@ -27,7 +27,7 @@ export const userRouter = {
       name: "userAdd",
       component: UserAddView,
       meta: {
-        requiresAuth: false,
+        requiresAuth: true,
         moduleid: 0,
       },
     },
@@ -36,7 +36,7 @@ export const userRouter = {
       name: "userDetail",
       component: UserDetailView,
       meta: {
-        requiresAuth: false,
+        requiresAuth: true,
         moduleid: 0,
       },
     },

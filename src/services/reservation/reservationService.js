@@ -2,20 +2,23 @@ import axiosInstance from "@/services/axios-instance";
 import { handleError } from "@/helpers";
 import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
-import { ProductModel } from "@/models";
+import { ReservationModel } from "@/models";
 import { useToastStore } from "@/stores";
-const servicePath = "/product";
-const module = "Producto";
 
-export const productService = {
-  async getProduct(product_id) {
+const servicePath = "/reservation";
+const module = "reservation";
+
+export const reservationService = {
+  async getReservation(reservation_id) {
     try {
-      const response = await axiosInstance.get(`${servicePath}/${product_id}/`);
+      const response = await axiosInstance.get(
+        `${servicePath}/${reservation_id}/`
+      );
 
       if (response && response.data) {
         const data = dataTransform.transformApiData(
           response.data,
-          ProductModel
+          ReservationModel
         );
         return data;
       } else {
@@ -27,7 +30,7 @@ export const productService = {
       handleError(error, "get_element_error", module);
     }
   },
-  async getListProduct(filterParams = null) {
+  async getListReservation(filterParams = null) {
     let filteredFilters = "";
     if (filterParams != null) {
       const {
@@ -43,7 +46,6 @@ export const productService = {
         year_date,
         searches,
         // Otros parámetros de filtro que puedas necesitar
-        id_typeproduct,
       } = filterParams;
 
       const filters = {
@@ -57,7 +59,6 @@ export const productService = {
         specific_date,
         year_date,
         // Otros parámetros de filtro que puedas necesitar
-        id_typeproduct,
       };
 
       filteredFilters = Object.entries(filters)
@@ -73,7 +74,6 @@ export const productService = {
         filteredFilters += searchByParam ? `&${searchByParam}` : "";
       }
       if (searches && searches != undefined) {
-        console.log("entre a searches");
         searches.forEach((search, index) => {
           if (search.value && search.by) {
             filteredFilters += `&search${index + 1}=${encodeURIComponent(
@@ -88,24 +88,29 @@ export const productService = {
       const response = await axiosInstance.get(
         `${servicePath}/?${filteredFilters}`
       );
-      const datas = response.data.map((apiData) =>
-        dataTransform.transformApiData(apiData, ProductModel)
+      const reservation = response.data.map((apiData) =>
+        dataTransform.transformApiData(apiData, ReservationModel)
       );
-      return datas;
+
+      return reservation;
     } catch (error) {
       handleError(error, "get_list_error", module);
     }
   },
-
-  async addProduct(new_data) {
+  async addReservation(new_article) {
     try {
-      const response = await axiosInstance.post(
-        `${servicePath}/`,
-        new_data.addData()
-      );
+      const config = {
+        method: "POST",
+        url: `${servicePath}/`,
+        data: new_article.addData(),
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      const response = await axiosInstance(config);
       const data_new = dataTransform.transformApiData(
         response.data,
-        ProductModel
+        ArticleModel
       );
       const useToast = useToastStore();
       useToast.show("add_success", {
@@ -116,16 +121,20 @@ export const productService = {
       handleError(error, "add_error", module);
     }
   },
-  async updateProduct(new_data) {
-    let dataid = new_data.id.value;
+  async updateReservation(new_data) {
     try {
-      const response = await axiosInstance.put(
-        `${servicePath}/${dataid}/`,
-        new_data.addData()
-      );
+      const config = {
+        method: "PATCH",
+        url: `${servicePath}/${new_data.id.value}/`,
+        data: new_data.addData(),
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      const response = await axiosInstance(config);
       const data_new = dataTransform.transformApiData(
         response.data,
-        ProductModel
+        ReservationModel
       );
       const useToast = useToastStore();
       useToast.show("edit_success", {
@@ -136,7 +145,7 @@ export const productService = {
       handleError(error, "edit_error", module);
     }
   },
-  async deleteProduct(dataid) {
+  async deleteReservation(dataid) {
     try {
       const response = await axiosInstance.delete(`${servicePath}/${dataid}/`);
       const useToast = useToastStore();
@@ -148,8 +157,8 @@ export const productService = {
       handleError(error, "delete_error", module);
     }
   },
-  async changeStatusProduct(data) {
+  async changeStatusReservation(data) {
     const endpoint = `${servicePath}/${data.id.value}/`;
-    return BaseService.changeStatus(endpoint, data, module);
+    return BaseService.changeStatus(endpoint, data);
   },
 };

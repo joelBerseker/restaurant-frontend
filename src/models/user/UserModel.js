@@ -42,8 +42,10 @@ export class UserModel extends Model {
     id: "ruc",
     name: "RUC",
     value: null,
+    max: 12,
+    min: 8,
     validation: {},
-    validate: ["length"],
+    validate: ["number"],
   };
 
   photo = {

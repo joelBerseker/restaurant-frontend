@@ -2,18 +2,24 @@ import axiosInstance from "@/services/axios-instance";
 import { handleError } from "@/helpers";
 import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
-import { UserModel } from "@/models";
+import { ReservationModel } from "@/models";
 import { useToastStore } from "@/stores";
-//const useToast = useToastStore();
-const servicePath = "/user/users";
-const module = "Usuario";
-export const userService = {
-  async getUser(user_id) {
+
+const servicePath = "/reservation";
+const module = "reservation";
+
+export const reservationService = {
+  async getReservation(reservation_id) {
     try {
-      const response = await axiosInstance.get(`${servicePath}/${user_id}/`);
+      const response = await axiosInstance.get(
+        `${servicePath}/${reservation_id}/`
+      );
 
       if (response && response.data) {
-        const data = dataTransform.transformApiData(response.data, UserModel);
+        const data = dataTransform.transformApiData(
+          response.data,
+          ReservationModel
+        );
         return data;
       } else {
         throw new Error(
@@ -24,10 +30,9 @@ export const userService = {
       handleError(error, "get_element_error", module);
     }
   },
-  async getListUser(filterParams = null) {
+  async getListReservation(filterParams = null) {
     let filteredFilters = "";
-
-    if (filterParams) {
+    if (filterParams != null) {
       const {
         search,
         searchBy,
@@ -41,7 +46,6 @@ export const userService = {
         year_date,
         searches,
         // Otros parámetros de filtro que puedas necesitar
-        id_role,
       } = filterParams;
 
       const filters = {
@@ -54,9 +58,7 @@ export const userService = {
         interval,
         specific_date,
         year_date,
-        searches,
         // Otros parámetros de filtro que puedas necesitar
-        id_role,
       };
 
       filteredFilters = Object.entries(filters)
@@ -71,33 +73,45 @@ export const userService = {
         const searchByParam = `searchBy=${searchBy.join(",")}`;
         filteredFilters += searchByParam ? `&${searchByParam}` : "";
       }
+      if (searches && searches != undefined) {
+        searches.forEach((search, index) => {
+          if (search.value && search.by) {
+            filteredFilters += `&search${index + 1}=${encodeURIComponent(
+              search.value
+            )}&searchBy${index + 1}=${encodeURIComponent(search.by)}`;
+          }
+        });
+      }
     }
 
     try {
       const response = await axiosInstance.get(
         `${servicePath}/?${filteredFilters}`
       );
-      const datas = response.data.map((apiData) =>
-        dataTransform.transformApiData(apiData, UserModel)
+      const reservation = response.data.map((apiData) =>
+        dataTransform.transformApiData(apiData, ReservationModel)
       );
-      return datas;
+
+      return reservation;
     } catch (error) {
       handleError(error, "get_list_error", module);
     }
   },
-
-  async addUser(new_data) {
+  async addReservation(new_article) {
     try {
       const config = {
         method: "POST",
         url: `${servicePath}/`,
-        data: new_data.addData(),
+        data: new_article.addData(),
         headers: {
           "Content-Type": "multipart/form-data",
         },
       };
       const response = await axiosInstance(config);
-      const data_new = dataTransform.transformApiData(response.data, UserModel);
+      const data_new = dataTransform.transformApiData(
+        response.data,
+        ArticleModel
+      );
       const useToast = useToastStore();
       useToast.show("add_success", {
         important_text: data_new.getTextModel(),
@@ -107,7 +121,7 @@ export const userService = {
       handleError(error, "add_error", module);
     }
   },
-  async updateUser(new_data) {
+  async updateReservation(new_data) {
     try {
       const config = {
         method: "PATCH",
@@ -118,7 +132,10 @@ export const userService = {
         },
       };
       const response = await axiosInstance(config);
-      const data_new = dataTransform.transformApiData(response.data, UserModel);
+      const data_new = dataTransform.transformApiData(
+        response.data,
+        ReservationModel
+      );
       const useToast = useToastStore();
       useToast.show("edit_success", {
         important_text: data_new.getTextModel(),
@@ -128,20 +145,20 @@ export const userService = {
       handleError(error, "edit_error", module);
     }
   },
-  async deleteUser(dataid) {
+  async deleteReservation(dataid) {
     try {
       const response = await axiosInstance.delete(`${servicePath}/${dataid}/`);
       const useToast = useToastStore();
       useToast.show("delete_success", {
-        important_text: module,
+        important_text: `${module} eliminado Correctamente`,
       });
       return response;
     } catch (error) {
       handleError(error, "delete_error", module);
     }
   },
-  async changeStatusUser(data) {
+  async changeStatusReservation(data) {
     const endpoint = `${servicePath}/${data.id.value}/`;
-    return BaseService.changeStatus(endpoint, data, module);
+    return BaseService.changeStatus(endpoint, data);
   },
 };

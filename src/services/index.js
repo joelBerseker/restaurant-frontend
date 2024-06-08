@@ -4,5 +4,6 @@ export * from "./product";
 export * from "./table";
 export * from "./ticket";
 export * from "./company";
+export * from "./reservation";
 export * from "./transform";
 export * from "./user";

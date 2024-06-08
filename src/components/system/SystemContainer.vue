@@ -13,7 +13,6 @@ const emit = defineEmits(["loaded", "isLoading"]);
 const loadingPercentage = ref(0);
 function addPercentage(_percentage) {
   loadingPercentage.value += _percentage;
-  console.log(loadingPercentage.value);
 }
 const loadingLocal = computed(() => {
   if (loadingPercentage.value >= 100) {
@@ -27,7 +26,6 @@ watch(loadingLocal, async (_new, _old) => {
   if (!_new) {
     // emit("loaded");
     useSystemUtil.isLoadingContentSystem(false);
-    console.log("cargo");
   }
 });
 function init() {

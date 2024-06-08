@@ -96,7 +96,7 @@ router.beforeEach(async (to, from, next) => {
   } else {
     const module_id = to.meta.moduleid;
     useSystemUtil.isLoadingContentSystem(true);
-    //await sleep(1000);
+
     const hasPermission = true; /*await permissionsService.getPermises(
       module_id,
       Permission_data.View
@@ -106,7 +106,6 @@ router.beforeEach(async (to, from, next) => {
     }
     if (hasPermission || module_id == 0) {
       next();
-      console.log("go");
     } else {
       // Si el usuario no tiene permisos, muestra un mensaje de alerta y redirige a la página de inicio
       alert("No tienes permiso para entrar");

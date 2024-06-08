@@ -22,12 +22,7 @@ const localColumns = ref([]);
 const filterRef = ref(null);
 const collapseRef = ref(null);
 const rows = ref([]);
-function fillRows() {
-  rows.value = [];
-  for (let i = 0; i < 30; i++) {
-    rows.value.push({ id: i, name: "asdadasda" });
-  }
-}
+
 const isLoading = ref(false);
 function sort(_data) {
   filterRef.value.sort(_data);
@@ -73,7 +68,6 @@ async function init() {
     },
   ];
 
-  fillRows();
   await getList(false);
   emit("onFirstLoad");
 }

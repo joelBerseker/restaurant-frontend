@@ -64,9 +64,16 @@ function clear() {
     </div>
     <div v-show="!(viewMode && disabled)" class="g-form-container">
       <main class="g-form-container-aditional">
-        <div class="g-form-wrapper">
+        <div
+          :class="[
+            'g-form-wrapper',
+            loading || showClearButton || showValidationIcon
+              ? 'show-extra'
+              : '',
+          ]"
+        >
           <slot name="form"></slot>
-          <div v-show="loading" class="loading">
+          <div v-show="loading" class="form-loading">
             <span
               class="spinner-border spinner-border-sm"
               role="status"
@@ -75,7 +82,7 @@ function clear() {
             </span>
           </div>
 
-          <div v-show="!loading && showClearButton" class="close">
+          <div v-show="!loading && showClearButton" class="form-close">
             <g-button-x-min @click="clear()" title="Limpiar" />
           </div>
 
@@ -98,7 +105,7 @@ function clear() {
           {{ validation.message }}
         </div>
         <div v-if="!isEmpty(helpText) && showHelpText" class="g-message">
-          <font-awesome-icon icon="fa-solid fa-circle-info" />
+          <font-awesome-icon icon="fa-regular fa-circle-question" />
           {{ helpText }}
         </div>
       </footer>
@@ -106,22 +113,25 @@ function clear() {
   </div>
 </template>
 <style>
+.g-form-container .g-image-container {
+  border-color: var(--color-b-v4) !important;
+}
 .g-input:focus,
 .g-select:focus {
-  box-shadow: 0px -3px 0px 0px rgba(87, 87, 87, 0.25) inset;
+  box-shadow: 0px -4px 0px 0px rgba(128, 128, 128, 0.25) inset;
   border-color: var(--g-wb500);
 }
-.valid > div > main > div > :is(.g-input, .g-select) {
+.valid > div > main > div > :is(.g-input, .g-select, .g-image-container) {
   border-color: var(--color-s) !important;
 }
 .valid > div > main > div > :is(.g-input:focus, .g-select:focus) {
-  box-shadow: 0px -3px 0px 0px rgba(var(--color-s-rgb), 0.25) inset;
+  box-shadow: 0px -4px 0px 0px rgba(var(--color-s-rgb), 0.25) inset;
 }
-.no-valid > div > main > div > :is(.g-input, .g-select) {
-  border-bottom-color: var(--color-d) !important;
+.no-valid > div > main > div > :is(.g-input, .g-select, .g-image-container) {
+  border-color: var(--color-d) !important;
 }
 .no-valid > div > main > div > :is(.g-input:focus, .g-select:focus) {
-  box-shadow: 0px -3px 0px 0px rgba(var(--color-d-rgb), 0.25) inset;
+  box-shadow: 0px -4px 0px 0px rgba(var(--color-d-rgb), 0.25) inset;
 }
 </style>
 <style scoped>
@@ -136,30 +146,30 @@ function clear() {
 .g-message,
 .validation-message {
   font-size: 13px !important;
-  color: var(--g-wb500);
+  color: var(--color-b-v3);
 }
 .g-form-wrapper {
   position: relative;
 }
-.loading {
-  color: var(--g-wb800);
+.form-loading {
+  color: var(--color-b-v2);
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  right: 0.6rem;
+  right: 0.25rem;
 }
-.close {
+.form-close {
   color: var(--g-wb050);
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  right: 0.6rem;
+  right: 0.25rem;
 }
 .validation-icon {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  right: 0.6rem;
+  right: 0.25rem;
   border-radius: 999rem;
   height: 20px;
   width: 20px;
@@ -170,15 +180,24 @@ function clear() {
   color: var(--color-w);
   font-size: 12px;
 }
-.g-form-element.textarea > div > main > div > .loading,
-.g-form-element.image > div > main > div > .loading {
+.g-form-element.filter > div > main > div > .form-loading,
+.g-form-element.filter > div > main > div > .form-close {
+  right: 0.9rem;
+}
+.g-form-element.textarea
+  .g-form-element.textarea
+  > div
+  > main
+  > div
+  > .form-loading,
+.g-form-element.image > div > main > div > .form-loading {
   top: 0.4rem;
   transform: translateY(0);
 }
 .g-form-element.textarea > div > main > div > .validation-icon,
-.g-form-element.textarea > div > main > div > .close,
+.g-form-element.textarea > div > main > div > .form-close,
 .g-form-element.image > div > main > div > .validation-icon,
-.g-form-element.image > div > main > div > .close {
+.g-form-element.image > div > main > div > .form-close {
   top: 0.35rem;
   transform: translateY(0);
 }

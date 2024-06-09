@@ -35,6 +35,16 @@ function clear() {
   emit("validate", value.value);
   emit("change", value.value.value);
 }
+const localPlaceHolder = computed(() => {
+  if (value.value.default) return value.value.default;
+  if (value.value.placeholder) {
+    console.log(value.value.placeholder);
+    return value.placeholder;
+  }
+  let resp = "Ingrese un valor";
+
+  return resp;
+});
 </script>
 <template>
   <g-input
@@ -42,7 +52,7 @@ function clear() {
     v-model="value.value"
     :id="value.id"
     :type="value.type"
-    :placeholder="value.default"
+    :placeholder="localPlaceHolder"
     :viewMode="viewMode"
     :disabled="disabled"
     :display="display"

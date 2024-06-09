@@ -38,7 +38,6 @@ const value = computed({
   },
   set(value) {
     emit("update:modelValue", value);
-    emit("change", value);
   },
 });
 function clear() {
@@ -60,6 +59,7 @@ function changeFile(e) {
   } else {
     const file = e.target.files[0];
     value.value = file;
+    emit("change", value.value);
 
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -117,7 +117,7 @@ defineExpose({
       >
         <div class="cover-input">
           <div class="break-word text-cover">
-            {{ value === null ? "Seleccione una imagen" : value.name }}
+            {{ value === null ? "Seleccionar imagen" : value.name }}
           </div>
         </div>
         <input
@@ -169,6 +169,7 @@ defineExpose({
   overflow: hidden !important;
   line-height: 1.3;
   font-size: 13px;
+  margin-bottom: 0.1rem;
 }
 .form-image {
   position: absolute;

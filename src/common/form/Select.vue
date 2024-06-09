@@ -230,9 +230,17 @@ function tabAction(_item) {
   </ElementFormLayout>
 </template>
 <style>
+.form-select {
+  background-position: right 0.25rem center;
+  padding-right: 1.5rem;
+}
+.g-form-wrapper.show-extra .form-select {
+  padding-right: 2.8rem;
+  background-position: right 1.7rem center;
+}
 .form-select:disabled {
   --bs-form-select-bg-img: none;
-  padding-right: 0.5rem;
+  padding-right: 0.25rem;
 }
 .text-aditional {
   display: block;

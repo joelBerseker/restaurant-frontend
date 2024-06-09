@@ -7,7 +7,7 @@ function valid(text = "") {
     isValid: true,
     message: text,
     icon: "fa-solid fa-check",
-    icon_text: "fa-solid fa-circle-exclamation",
+    icon_text: "fa-regular fa-circle-question",
     validationClass: "valid",
   };
 }
@@ -17,7 +17,7 @@ function noValid(text = "") {
     message: text,
     icon: "fa-solid fa-exclamation",
 
-    icon_text: "fa-solid fa-circle-exclamation",
+    icon_text: "fa-regular fa-circle-question",
     validationClass: "no-valid",
   };
 }
@@ -25,7 +25,7 @@ function validating() {
   return {
     isValid: false,
     message: "Validando...",
-    icon_text: "fa-solid fa-circle-info",
+    icon_text: "fa-regular fa-circle-question",
     validationClass: "normal",
   };
 }
@@ -33,7 +33,7 @@ function noRequired() {
   return {
     isValid: true,
     message: "No requerido",
-    icon_text: "fa-solid fa-circle-info",
+    icon_text: "fa-regular fa-circle-question",
     validationClass: "normal",
   };
 }

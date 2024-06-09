@@ -28,7 +28,7 @@ const props = defineProps({
 
   width: auto;
 
-  border-radius: var(--br-v2);
+  border-radius: 999rem;
 }
 .no-img-wrapper {
   display: flex;

@@ -105,6 +105,7 @@ defineExpose({
       <g-input
         v-model="searchInput"
         inputClass="filter-input"
+        class="filter"
         placeholder="¿Que estas buscando?"
         @input="search()"
         @clear="search()"
@@ -165,12 +166,13 @@ defineExpose({
 }
 .filter-input {
   padding-left: 1.4rem;
-  padding-right: 0.7rem;
+  padding-right: 1.1rem;
 }
 .filter-settings {
   border-radius: 0rem !important;
 }
 .filter-search {
   margin-left: -0.75rem;
+  background-color: var(--color-w-v3);
 }
 </style>

@@ -1,4 +1,5 @@
 import { Model } from "@/models/";
+import { required } from "yargs";
 
 export class ProductModel extends Model {
   name = {
@@ -48,6 +49,7 @@ export class ProductModel extends Model {
     id: "discount",
     name: "Descuento",
     value: null,
+    required: false,
     validation: {},
     validate: ["number"],
   };

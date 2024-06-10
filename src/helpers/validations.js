@@ -7,7 +7,7 @@ function valid(text = "") {
     isValid: true,
     message: text,
     icon: "fa-solid fa-check",
-    icon_text: "fa-solid fa-circle-exclamation",
+    icon_text: "fa-regular fa-circle-question",
     validationClass: "valid",
   };
 }
@@ -17,7 +17,7 @@ function noValid(text = "") {
     message: text,
     icon: "fa-solid fa-exclamation",
 
-    icon_text: "fa-solid fa-circle-exclamation",
+    icon_text: "fa-regular fa-circle-question",
     validationClass: "no-valid",
   };
 }
@@ -25,7 +25,7 @@ function validating() {
   return {
     isValid: false,
     message: "Validando...",
-    icon_text: "fa-solid fa-circle-info",
+    icon_text: "fa-regular fa-circle-question",
     validationClass: "normal",
   };
 }
@@ -33,7 +33,7 @@ function noRequired() {
   return {
     isValid: true,
     message: "No requerido",
-    icon_text: "fa-solid fa-circle-info",
+    icon_text: "fa-regular fa-circle-question",
     validationClass: "normal",
   };
 }
@@ -52,6 +52,7 @@ const regularExpressions = {
 const validations = {
   required(_data) {
     let text = _data.value;
+    if (_data.type === "image" || _data.type === "file ") text = _data.file;
     var resp = valid();
     if (isEmpty(text)) {
       let _txtInvalid = "Ingrese un valor";
@@ -61,6 +62,9 @@ const validations = {
           break;
         case "file":
           _txtInvalid = "Ingrese un archivo";
+          break;
+        case "image":
+          _txtInvalid = "Ingrese una imagen";
           break;
         case "date":
           _txtInvalid = "Seleccione una fecha";
@@ -73,9 +77,18 @@ const validations = {
     return resp;
   },
   noRequired(_data) {
-    let text = _data.value;
     var resp = noValid();
-    if (isEmpty(text)) resp = noRequired();
+
+    let text = _data.value;
+    if (_data.type === "image" || _data.type === "file ") {
+      text = _data.file;
+      resp = valid();
+    }
+
+    if (isEmpty(text)) {
+      console.log("no required");
+      resp = noRequired();
+    }
     return resp;
   },
 

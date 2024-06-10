@@ -24,6 +24,9 @@ const props = defineProps({
   mbTitle: {
     default: true,
   },
+  mtTitle: {
+    default: true,
+  },
 });
 const sticking = ref(false);
 const collapseRef = ref(null);
@@ -39,7 +42,7 @@ function buttonCollapse() {
 }
 </script>
 <template>
-  <div :class="{ mbTitle }" class="container-section">
+  <div :class="{ mbTitle, mtTitle }" class="container-section">
     <div class="title-container" ref="titleRef" :class="{ sticking }">
       <div class="title-wrap">
         <span class="title-text">
@@ -81,12 +84,15 @@ function buttonCollapse() {
 </template>
 <style scoped>
 .mbTitle {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+}
+.mtTitle {
+  margin-top: 2rem;
 }
 .container-section {
   background-color: var(--color-w-v3);
   border-radius: var(--br-v2);
-  padding: 1rem calc(31px + 0.25rem - 0.4rem);
+  padding: 1.5rem calc(31px + 0.25rem - 0.4rem);
 }
 .content-container {
   margin-top: 1rem;

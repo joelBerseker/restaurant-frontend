@@ -1,5 +1,4 @@
 import { Model } from "@/models/";
-import { required } from "yargs";
 
 export class ProductModel extends Model {
   name = {

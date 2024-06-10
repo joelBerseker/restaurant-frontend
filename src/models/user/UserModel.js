@@ -5,7 +5,7 @@ export class UserModel extends Model {
     id: "id_role",
     name: "rol",
     type: "select",
-
+    navigation: "rol",
     value: null,
     additional: {},
     validation: {},

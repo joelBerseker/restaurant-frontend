@@ -1,9 +1,9 @@
 <script setup>
 import TableConsult from "@/common/table/TableConsult.vue";
 import TableButtons from "@/common/table/TableButtons.vue";
-import RolElementModalComponent from "@/components/rol/RolElementModalComponent.vue";
+import TypeProductElementModalComponent from "@/components/typeProduct/TypeProductElementModalComponent.vue";
 import { ref, reactive, onMounted, inject } from "vue";
-import { rolService } from "@/services";
+import { typeProductService } from "@/services";
 import { subTitleGen } from "@/helpers";
 const emit = defineEmits(["onFirstLoad"]);
 
@@ -62,7 +62,7 @@ function switchSearch() {
 }
 </script>
 <template>
-  <RolElementModalComponent ref="modalRef" @onRefreshList="refresh" />
+  <TypeProductElementModalComponent ref="modalRef" @onRefreshList="refresh" />
   <g-section-1 :subTitle="subTitle" :refresh="true" @onRefresh="refresh()">
     <template #buttons>
       <TableButtons
@@ -76,8 +76,8 @@ function switchSearch() {
         ref="tableRef"
         :columns="table.columns"
         :filter="table.filter"
-        :deleteConsult="rolService.deleteRol"
-        :getListConsult="rolService.getListRol"
+        :deleteConsult="typeProductService.deleteTypeProduct"
+        :getListConsult="typeProductService.getListTypeProduct"
         @onViewItem="viewItem"
         @onGotList="onGotList"
         @onFirstLoad="onFirstLoad"

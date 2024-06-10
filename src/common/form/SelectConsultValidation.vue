@@ -1,7 +1,5 @@
 <script setup>
-import { ref, inject, reactive, computed } from "vue";
-
-import { sleepInput, isEmpty, navigationInfo } from "@/helpers";
+import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -49,11 +47,18 @@ async function refresh() {
 }
 const searchInput = ref(null);
 
+const dataRoute = computed(() => {
+  if (value.value.navigation) {
+    const _route = router.resolve({
+      name: value.value.navigation,
+    });
+    return _route;
+  }
+  return null;
+});
+
 function toList() {
-  const routeData = router.resolve({
-    name: navigationInfo[value.value.navigation].name,
-  });
-  window.open(routeData.href, "_blank");
+  window.open(dataRoute.value.href, "_blank");
 }
 function clearInput() {
   props.filter.search = "";
@@ -132,7 +137,7 @@ defineExpose({
         <div class="g-text" @click.stop="toList()">
           Administrar
           <span class="g-name">
-            {{ navigationInfo[value.navigation].title }}
+            {{ dataRoute.meta.title }}
           </span>
         </div>
       </div>

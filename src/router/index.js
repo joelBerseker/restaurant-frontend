@@ -29,6 +29,8 @@ const router = createRouter({
           meta: {
             requiresAuth: true,
             moduleid: 0,
+            icon: "fa-solid fa-house",
+            title: "Inicio",
           },
         },
         userRouter,
@@ -39,6 +41,8 @@ const router = createRouter({
           meta: {
             requiresAuth: true,
             moduleid: 0,
+            icon: "fa-solid fa-users-gear",
+            title: "Roles",
           },
         },
         userRouter,
@@ -49,6 +53,8 @@ const router = createRouter({
           meta: {
             requiresAuth: true,
             moduleid: 0,
+            icon: "fa-solid fa-border-all",
+            title: "Mesas",
           },
         },
       ],

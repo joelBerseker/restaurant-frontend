@@ -20,6 +20,8 @@ export const userRouter = {
       meta: {
         requiresAuth: true,
         moduleid: 0,
+        icon: "fa-solid fa-user",
+        title: "Usuarios",
       },
     },
     {
@@ -29,6 +31,8 @@ export const userRouter = {
       meta: {
         requiresAuth: true,
         moduleid: 0,
+        icon: "fa-solid fa-plus",
+        title: "Agregar Usuario",
       },
     },
     {
@@ -38,6 +42,8 @@ export const userRouter = {
       meta: {
         requiresAuth: true,
         moduleid: 0,
+        icon: "fa-solid fa-bars-staggered",
+        title: "Visualizar Usuario",
       },
     },
   ],

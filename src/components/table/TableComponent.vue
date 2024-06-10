@@ -69,12 +69,7 @@ function switchSearch() {
 </script>
 <template>
   <TableElementModalComponent ref="modalRef" @onRefreshList="refresh" />
-  <g-section-1
-    name="table"
-    :subTitle="subTitle"
-    :refresh="true"
-    @onRefresh="refresh()"
-  >
+  <g-section-1 :subTitle="subTitle" :refresh="true" @onRefresh="refresh()">
     <template #buttons>
       <TableButtons
         :switchSearchValue="switchSearchValue"

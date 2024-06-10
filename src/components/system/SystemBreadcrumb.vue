@@ -1,6 +1,13 @@
 <script setup>
-import { navigationInfo } from "@/helpers";
-import { isEmpty } from "@/helpers/utilities";
+import { useRouter } from "vue-router";
+import { computed } from "vue";
+
+const router = useRouter();
+
+const currentRoute = computed(() => {
+  return router.currentRoute.value.meta;
+});
+
 const props = defineProps({
   navigation: {
     default: null,
@@ -21,52 +28,44 @@ const props = defineProps({
               :key="index"
               class="breadcrumb-item d-flex"
             >
-              <span v-if="element != undefined" class="d-flex no-wrap">
+              <span class="d-flex no-wrap">
                 <RouterLink
                   :to="{
-                    name: navigationInfo[element.name].name,
+                    name: element.name,
                     params: element.params,
                   }"
                   class="topbar-link d-flex"
+                  v-slot="{ route }"
                 >
                   <span>
-                    <font-awesome-icon
-                      :icon="navigationInfo[element.name].icon"
-                    />
+                    <font-awesome-icon :icon="route.meta.icon" />
                   </span>
-
-                  &nbsp;<span v-if="element.title === undefined">{{
-                    isEmpty(navigationInfo[element.name].title_short)
-                      ? navigationInfo[element.name].title
-                      : navigationInfo[element.name].title_short
-                  }}</span>
-                  <span v-else>
+                  &nbsp;<span v-if="element.title">
                     {{ element.title }}
+                  </span>
+                  <span v-else>
+                    {{
+                      route.meta.title_short
+                        ? route.meta.title_short
+                        : route.meta.title
+                    }}
                   </span>
                 </RouterLink>
               </span>
             </li>
             <li class="breadcrumb-item d-flex no-wrap">
-              <span
-                v-if="navigation.name != null"
-                aria-current="page"
-                class="d-flex no-wrap"
-              >
+              <span aria-current="page" class="d-flex no-wrap">
                 <span>
-                  <font-awesome-icon
-                    :icon="navigationInfo[navigation.name].icon"
-                  />
+                  <font-awesome-icon :icon="currentRoute.icon" />
                 </span>
-
-                &nbsp;{{
-                  isEmpty(navigationInfo[navigation.name].title_short)
-                    ? navigationInfo[navigation.name].title
-                    : navigationInfo[navigation.name].title_short
-                }}
-              </span>
-              <span v-else aria-current="page" class="d-flex no-wrap">
-                <i :class="navigation.icon"></i>
-                &nbsp;{{ navigation.title }}
+                &nbsp;
+                <span>
+                  {{
+                    currentRoute.title_short
+                      ? currentRoute.title_short
+                      : currentRoute.title
+                  }}
+                </span>
               </span>
             </li>
           </ol>

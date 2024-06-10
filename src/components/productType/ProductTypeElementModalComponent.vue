@@ -1,40 +1,60 @@
 <script setup>
-import UserFormComponent from "@/components/user/UserFormComponent.vue";
+import Modal from "@/common/Modal.vue";
+import TypeProductFormComponent from "@/components/typeProduct/TypeProductFormComponent.vue";
 import FormButtons from "@/common/form/FormButtons.vue";
-import { ref, inject } from "vue";
-import { useRouter } from "vue-router";
-const emit = defineEmits(["onFirstLoad"]);
+import { ref } from "vue";
 
-const router = useRouter();
+const emit = defineEmits(["onRefreshList"]);
 
+const modalRef = ref(null);
 const formRef = ref(null);
 
 const statusValue = ref(null);
 
 /*INITIAL SETTINGS*/
-
+const title = ref("TypeProduct");
+const titleBefore = ref(null);
 const subTitle = ref(null);
 const isLoading = ref(false);
 
-const idElement = inject("idElement", null);
+const idElement = ref(null);
 const mode = ref(null);
 const disabled = ref(false);
 const elementText = ref(null);
 
 function addMode() {
+  idElement.value = null;
   mode.value = "add";
+  titleBefore.value = "Agregar";
+  subTitle.value = null;
   disabled.value = false;
+  openModal();
+  formRef.value.resetElement();
 }
 async function viewMode(_id = null) {
   mode.value = "view";
+  titleBefore.value = "Visualizar";
   disabled.value = true;
+  openModal();
+  if (_id !== null) {
+    idElement.value = _id;
+    isLoading.value = true;
+    subTitle.value = null;
+    formRef.value.resetElement();
+    await formRef.value.getElement(_id);
+    isLoading.value = false;
+  }
 }
 function editMode() {
   mode.value = "edit";
+  titleBefore.value = "Editar";
   disabled.value = false;
 }
-function toList() {
-  router.push({ name: "user" });
+function closeModal() {
+  modalRef.value.closeModal();
+}
+function openModal() {
+  modalRef.value.openModal();
 }
 
 /*BUTTONS*/
@@ -42,7 +62,8 @@ async function onAdd() {
   isLoading.value = true;
   let resp = await formRef.value.addElement();
   if (resp) {
-    toList();
+    closeModal();
+    emit("onRefreshList");
   }
   isLoading.value = false;
 }
@@ -54,6 +75,7 @@ async function onSave() {
   let resp = await formRef.value.editElement();
   if (resp) {
     viewMode();
+    emit("onRefreshList");
   }
   isLoading.value = false;
 }
@@ -65,7 +87,8 @@ async function onDelete() {
   isLoading.value = true;
   let resp = await formRef.value.deleteElement();
   if (resp) {
-    toList();
+    closeModal();
+    emit("onRefreshList");
   }
   isLoading.value = false;
 }
@@ -74,33 +97,36 @@ async function onStatus() {
   let resp = await formRef.value.editStatusElement();
   if (resp) {
     statusValue.value = resp;
+    emit("onRefreshList");
   }
   isLoading.value = false;
 }
 function onUpdated(_data) {
-  console.log("onupdated");
-
-  console.log(_data.getText());
+  console.log(_data);
   statusValue.value = _data.status.value;
   subTitle.value = _data.getText();
   elementText.value = _data.getTextModel();
 }
-function onFirstLoad() {
-  emit("onFirstLoad");
-}
-function init() {
-  if (idElement) viewMode();
-  else addMode();
-}
-init();
+
 defineExpose({
   addMode,
   viewMode,
 });
 </script>
 <template>
-  <g-section-1 :subTitle="subTitle">
-    <template #buttons>
+  <Modal
+    ref="modalRef"
+    :titleModal="title"
+    :titleBeforeModal="titleBefore"
+    :subTitleModal="subTitle"
+    :isLoading="isLoading"
+  >
+    <TypeProductFormComponent
+      ref="formRef"
+      :disabled="disabled"
+      @onUpdated="onUpdated"
+    />
+    <template #footer>
       <FormButtons
         :mode="mode"
         :statusValue="statusValue"
@@ -113,14 +139,5 @@ defineExpose({
         @onStatus="onStatus"
       />
     </template>
-    <template #content>
-      <UserFormComponent
-        ref="formRef"
-        :disabled="disabled"
-        :mode="mode"
-        @onUpdated="onUpdated"
-        @onFirstLoad="onFirstLoad"
-      />
-    </template>
-  </g-section-1>
+  </Modal>
 </template>

@@ -1,15 +1,8 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 
-import { navigationInfo } from "@/helpers";
-
 const showSidebar = ref(true);
-let list = [
-  { ...navigationInfo.home },
-  { ...navigationInfo.user },
-  { ...navigationInfo.table },
-  { ...navigationInfo.rol },
-];
+let list = ["home", "userList", "table", "rol"];
 
 async function getPermise(module_id) {
   let status = await permissionsService.getPermises(
@@ -109,17 +102,20 @@ defineExpose({
         <div class="d-flex">
           <div class="container-link">
             <RouterLink
-              :to="{ name: item.name }"
+              :to="{ name: item }"
               class="sidebar-item"
               active-class="sidebar-item-active"
               exact-active-class="disbled-click"
+              v-slot="{ route }"
             >
               <span>
-                <font-awesome-icon :icon="item.icon" />
+                <font-awesome-icon :icon="route.meta.icon" />
               </span>
               <span class="text-sidebar-item">
                 {{
-                  item.title_short === undefined ? item.title : item.title_short
+                  route.meta.title_short
+                    ? route.meta.title_short
+                    : route.meta.title
                 }}
               </span>
             </RouterLink>

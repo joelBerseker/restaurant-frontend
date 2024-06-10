@@ -3,7 +3,6 @@ import { inject, computed } from "vue";
 import { useUserStore } from "@/stores/userStore";
 import { useRouter } from "vue-router";
 import SystemBreadcrumb from "@/components/system/SystemBreadcrumb.vue";
-import { navigationInfo } from "@/helpers";
 import { useRoute } from "vue-router";
 
 const props = defineProps({
@@ -22,12 +21,10 @@ function buttonLogout() {
 }
 function buttonBack() {
   if (props.topbar.breadcrumb.length > 0) {
-    let nameDir =
-      props.topbar.breadcrumb[props.topbar.breadcrumb.length - 1].name;
+    let lastDir = props.topbar.breadcrumb[props.topbar.breadcrumb.length - 1];
     router.push({
-      name: navigationInfo[nameDir].name,
-      params:
-        props.topbar.breadcrumb[props.topbar.breadcrumb.length - 1].params,
+      name: lastDir.name,
+      params: lastDir.params,
     });
   }
 }

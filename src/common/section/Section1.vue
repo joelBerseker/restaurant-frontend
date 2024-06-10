@@ -1,7 +1,8 @@
 <script setup>
 import { ref, inject, onMounted, onUnmounted } from "vue";
-import { navigationInfo, sleep } from "@/helpers";
-import { faL } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "vue-router";
+const router = useRouter();
+
 const buttonBack = inject("buttonBack");
 const emit = defineEmits(["onRefresh"]);
 const props = defineProps({
@@ -30,6 +31,9 @@ const collapseOpen = ref(false);
 const statusBefStick = ref(false);
 
 const titleRef = ref(null);
+
+const currentRoute = router.currentRoute.value.meta;
+
 /*
 const observer = new IntersectionObserver(
   async ([entry]) => {
@@ -64,7 +68,7 @@ function buttonCollapse() {
       </span>
       <span class="title-text">
         <div>
-          {{ navigationInfo[name].title }}
+          {{ currentRoute.title }}
           <div class="subTitle">{{ props.subTitle }}</div>
         </div>
       </span>

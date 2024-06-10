@@ -70,12 +70,7 @@ function onFirstLoad() {
 }
 </script>
 <template>
-  <g-section-1
-    name="user"
-    :subTitle="subTitle"
-    :refresh="true"
-    @onRefresh="refresh()"
-  >
+  <g-section-1 :subTitle="subTitle" :refresh="true" @onRefresh="refresh()">
     <template #buttons>
       <TableButtons
         :switchSearchValue="switchSearchValue"

@@ -5,7 +5,6 @@ import { ref, inject, reactive } from "vue";
 const setTopbar = inject("setTopbar");
 
 const topbar = ref({
-  name: "user",
   breadcrumb: [{ name: "home" }],
 });
 async function init() {

@@ -37,7 +37,9 @@ export class TicketDetailModel extends Model {
     validate: ["length"],
     default: "Sin descripción",
   };
-
+  initModel(data) {
+    this.ticket_id.value = data;
+  }
   getDataOptions() {
     return {
       value: this.id.value,

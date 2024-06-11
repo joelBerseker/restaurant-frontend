@@ -98,10 +98,15 @@ export const typeProductService = {
 
   async addTypeProduct(new_data) {
     try {
-      const response = await axiosInstance.post(
-        `${servicePath}/`,
-        new_data.addData()
-      );
+      const config = {
+        method: "POST",
+        url: `${servicePath}/`,
+        data: new_data.addData(),
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      const response = await axiosInstance(config);
       const data_new = dataTransform.transformApiData(
         response.data,
         TypeProductModel
@@ -116,12 +121,16 @@ export const typeProductService = {
     }
   },
   async updateTypeProduct(new_data) {
-    let dataid = new_data.id.value;
     try {
-      const response = await axiosInstance.put(
-        `${servicePath}/${dataid}/`,
-        new_data.addData()
-      );
+      const config = {
+        method: "PATCH",
+        url: `${servicePath}/${new_data.id.value}/`,
+        data: new_data.addData(),
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      const response = await axiosInstance(config);
       const data_new = dataTransform.transformApiData(
         response.data,
         TypeProductModel

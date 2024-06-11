@@ -21,6 +21,16 @@ const props = defineProps({
   </div>
 </template>
 <style>
+.type-product-img {
+  height: 140px;
+  display: block;
+  aspect-ratio: 1;
+
+  width: auto;
+
+  border-radius: var(--br-v2);
+}
+
 .user-img {
   height: 140px;
   display: block;

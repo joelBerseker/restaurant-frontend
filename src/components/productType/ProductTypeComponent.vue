@@ -1,7 +1,7 @@
 <script setup>
 import TableConsult from "@/common/table/TableConsult.vue";
 import TableButtons from "@/common/table/TableButtons.vue";
-import TypeProductElementModalComponent from "@/components/typeProduct/TypeProductElementModalComponent.vue";
+import ProductTypeElementModalComponent from "@/components/productType/ProductTypeElementModalComponent.vue";
 import { ref, reactive, onMounted, inject } from "vue";
 import { typeProductService } from "@/services";
 import { subTitleGen } from "@/helpers";
@@ -62,7 +62,7 @@ function switchSearch() {
 }
 </script>
 <template>
-  <TypeProductElementModalComponent ref="modalRef" @onRefreshList="refresh" />
+  <ProductTypeElementModalComponent ref="modalRef" @onRefreshList="refresh" />
   <g-section-1 :subTitle="subTitle" :refresh="true" @onRefresh="refresh()">
     <template #buttons>
       <TableButtons

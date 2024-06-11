@@ -168,8 +168,8 @@ defineExpose({
   width: 100%;
   overflow: hidden !important;
   line-height: 1.3;
-  font-size: 13px;
-  margin-bottom: 0.1rem;
+
+  margin-bottom: 0.05rem;
 }
 .form-image {
   position: absolute;

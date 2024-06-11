@@ -66,6 +66,14 @@ defineExpose({
     v-slot="{ element, validateLabel }"
     class="row gutter-form"
   >
+    <div class="img-data">
+      <g-input-image-val
+        imageClass="type-product-img"
+        v-model="element.product_image"
+        :disabled="disabled"
+        @validate="validateLabel"
+      />
+    </div>
     <g-input-val
       v-model="element.name"
       :label="element.name.name"
@@ -81,3 +89,9 @@ defineExpose({
     />
   </g-form>
 </template>
+<style scoped>
+.img-data {
+  display: flex;
+  justify-content: center;
+}
+</style>

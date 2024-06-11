@@ -14,6 +14,8 @@ export class TypeProductModel extends Model {
     name: "Descripción",
     type: "textarea",
     value: null,
+
+    required: false,
     default: "Sin descripción",
     validation: {},
     validate: ["length"],
@@ -22,10 +24,12 @@ export class TypeProductModel extends Model {
   product_image = {
     id: "product_image",
     name: "Imagen del Producto",
+    type: "image",
+
     value: null,
-    required: false, // blank=True in Django
+    file: null,
+    required: false,
     validation: {},
-    validate: ["file"],
   };
 
   getDataOptions() {
@@ -33,5 +37,11 @@ export class TypeProductModel extends Model {
       value: this.id.value,
       text: this.name.value,
     };
+  }
+  getText() {
+    return this.id.value + " - " + this.name.value;
+  }
+  getTextModel() {
+    return "Tipo de Producto " + this.id.value + " - " + this.name.value;
   }
 }

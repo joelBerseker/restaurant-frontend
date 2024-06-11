@@ -1,11 +1,11 @@
 <script setup>
 import SystemContainer from "@/components/system/SystemContainer.vue";
-import TypeProductComponent from "@/components/typeProduct/TypeProductComponent.vue";
+import ProductTypeComponent from "@/components/productType/ProductTypeComponent.vue";
 import { ref, inject, reactive } from "vue";
 const setTopbar = inject("setTopbar");
 
 const topbar = ref({
-  name: "typeProduct",
+  name: "productType",
   breadcrumb: [{ name: "home" }],
 });
 async function init() {
@@ -15,6 +15,6 @@ init();
 </script>
 <template>
   <SystemContainer v-slot="{ addPercentage }">
-    <TypeProductComponent @onFirstLoad="addPercentage(100)" />
+    <ProductTypeComponent @onFirstLoad="addPercentage(100)" />
   </SystemContainer>
 </template>

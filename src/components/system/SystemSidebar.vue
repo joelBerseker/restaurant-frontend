@@ -2,7 +2,7 @@
 import { ref, onMounted, onUnmounted } from "vue";
 
 const showSidebar = ref(true);
-let list = ["home", "userList", "table", "rol"];
+let list = ["home", "userList", "table", "rol", "productType"];
 
 async function getPermise(module_id) {
   let status = await permissionsService.getPermises(
@@ -108,7 +108,7 @@ defineExpose({
               exact-active-class="disbled-click"
               v-slot="{ route }"
             >
-              <span>
+              <span class="sidebar-item-icon">
                 <font-awesome-icon :icon="route.meta.icon" />
               </span>
               <span class="text-sidebar-item">
@@ -166,6 +166,9 @@ defineExpose({
   </nav>
 </template>
 <style scoped>
+.sidebar-item-icon {
+  width: 2rem;
+}
 .normal-img-container {
   display: flex;
 

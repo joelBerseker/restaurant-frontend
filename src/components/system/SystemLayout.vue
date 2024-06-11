@@ -63,23 +63,22 @@ function closeSidebar() {
 }
 
 #system-sidebar .text-sidebar-item {
-  visibility: hidden;
   opacity: 0;
   transition: 0s;
   width: 0px;
   height: 0px;
   display: inline-block;
-  margin-left: 0rem;
 }
 #system-sidebar.open .text-sidebar-item {
-  visibility: visible;
-  transition: 0.3s;
+  transition: opacity 0.3s ease;
   opacity: 1;
   width: auto;
   height: auto;
-  margin-left: 0.8rem;
+  transition-delay: 0.15s;
 }
-
+.text-sidebar-item {
+  text-wrap: nowrap;
+}
 @media screen and (max-width: 1199px) {
   #system-main.open-sidebar {
     margin-left: 60px !important;

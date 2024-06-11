@@ -7,6 +7,9 @@ import HomeView from "@/components/home/HomeView.vue";
 
 import RolView from "@/components/rol/RolView.vue";
 import TableView from "@/components/table/TableView.vue";
+
+import ProductTypeView from "@/components/productType/ProductTypeView.vue";
+
 import AuthView from "@/components/auth/AuthView.vue";
 import LoginView from "@/components/auth/LoginView.vue";
 
@@ -55,6 +58,17 @@ const router = createRouter({
             moduleid: 0,
             icon: "fa-solid fa-border-all",
             title: "Mesas",
+          },
+        },
+        {
+          path: "/product_type",
+          name: "productType",
+          component: ProductTypeView,
+          meta: {
+            requiresAuth: true,
+            moduleid: 0,
+            icon: "fa-solid fa-tags",
+            title: "Tipo de Producto",
           },
         },
       ],

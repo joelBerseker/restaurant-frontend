@@ -1,6 +1,6 @@
 <script setup>
 import Modal from "@/common/Modal.vue";
-import TypeProductFormComponent from "@/components/typeProduct/TypeProductFormComponent.vue";
+import ProductTypeFormComponent from "@/components/productType/ProductTypeFormComponent.vue";
 import FormButtons from "@/common/form/FormButtons.vue";
 import { ref } from "vue";
 
@@ -12,7 +12,7 @@ const formRef = ref(null);
 const statusValue = ref(null);
 
 /*INITIAL SETTINGS*/
-const title = ref("TypeProduct");
+const title = ref("Tipo de Producto");
 const titleBefore = ref(null);
 const subTitle = ref(null);
 const isLoading = ref(false);
@@ -121,7 +121,7 @@ defineExpose({
     :subTitleModal="subTitle"
     :isLoading="isLoading"
   >
-    <TypeProductFormComponent
+    <ProductTypeFormComponent
       ref="formRef"
       :disabled="disabled"
       @onUpdated="onUpdated"

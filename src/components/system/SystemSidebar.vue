@@ -2,7 +2,7 @@
 import { ref, onMounted, onUnmounted } from "vue";
 
 const showSidebar = ref(true);
-let list = ["home", "userList", "table", "rol", "productType"];
+let list = ["home", "userList", "table", "rol", "productList", "productType"];
 
 async function getPermise(module_id) {
   let status = await permissionsService.getPermises(

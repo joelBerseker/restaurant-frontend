@@ -149,5 +149,16 @@ const validations = {
       resp = noValid("Solo se permite numeros");
     return resp;
   },
+  decimal(_data) {
+    let text = _data.value;
+    var resp = valid();
+    var resp = valid();
+    resp = this.length(_data, "decimal");
+
+    if (!resp.isValid) return resp;
+    if (!regularExpressions.onlyPrice.test(text))
+      resp = noValid("Solo se permite numeros, ejemplo: [1.00 o 1]");
+    return resp;
+  },
 };
 export { validations, valid, noValid, validating };

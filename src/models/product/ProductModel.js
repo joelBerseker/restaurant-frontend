@@ -15,6 +15,8 @@ export class ProductModel extends Model {
     type: "textarea",
     value: null,
     default: "Sin descripción",
+    required: false,
+
     validation: {},
     validate: ["length"],
   };
@@ -25,15 +27,19 @@ export class ProductModel extends Model {
     value: null,
     additional: {},
     validation: {},
-    validate: ["select"],
+    getValueText() {
+      return this.additional.name;
+    },
   };
 
   product_type_image = {
     id: "product_type_image",
     name: "Imagen del Tipo de Producto",
+    type: "image",
     value: null,
+    file: null,
+    required: false,
     validation: {},
-    validate: ["file"],
   };
 
   price = {
@@ -41,7 +47,9 @@ export class ProductModel extends Model {
     name: "Precio",
     value: null,
     validation: {},
-    validate: ["number"],
+    default: "0.00",
+    required: false,
+    validate: ["decimal"],
   };
 
   discount = {
@@ -50,6 +58,8 @@ export class ProductModel extends Model {
     value: null,
     required: false,
     validation: {},
+    default: "0",
+    required: false,
     validate: ["number"],
   };
 

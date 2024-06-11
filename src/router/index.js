@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { authService } from "@/services";
 import { userRouter } from "./userRouter";
+import { productRouter } from "./productRouter";
 
 import SystemView from "@/components/system/SystemView.vue";
 import HomeView from "@/components/home/HomeView.vue";
@@ -37,6 +38,7 @@ const router = createRouter({
           },
         },
         userRouter,
+        productRouter,
         {
           path: "/rol",
           name: "rol",

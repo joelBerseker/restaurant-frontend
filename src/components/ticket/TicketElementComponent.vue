@@ -1,5 +1,7 @@
 <script setup>
-import UserFormComponent from "@/components/user/UserFormComponent.vue";
+import TicketFormComponent from "@/components/ticket/TicketFormComponent.vue";
+import TicketDetailFormComponent from "@/components/ticket/TicketDetailFormComponent.vue";
+
 import FormButtons from "@/common/form/FormButtons.vue";
 import LoadingContainer from "@/common/container/LoadingContainer.vue";
 import { ref, inject } from "vue";
@@ -35,7 +37,7 @@ function editMode() {
   disabled.value = false;
 }
 function toList() {
-  router.push({ name: "user" });
+  router.push({ name: "ticket" });
 }
 
 /*BUTTONS*/
@@ -116,13 +118,14 @@ defineExpose({
         />
       </template>
       <template #content>
-        <UserFormComponent
+        <TicketFormComponent
           ref="formRef"
           :disabled="disabled"
           :mode="mode"
           @onUpdated="onUpdated"
           @onFirstLoad="onFirstLoad"
         />
+        <TicketDetailFormComponent />
       </template>
     </g-section-1>
   </LoadingContainer>

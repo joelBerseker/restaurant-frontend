@@ -51,10 +51,10 @@ const regularExpressions = {
 };
 const validations = {
   required(_data) {
-    let text = _data.value;
-    if (_data.type === "image" || _data.type === "file ") text = _data.file;
+    let _value = _data.value;
+    if (_data.type === "image" || _data.type === "file ") _value = _data.file;
     var resp = valid();
-    if (isEmpty(text)) {
+    if (isEmpty(_value)) {
       let _txtInvalid = "Ingrese un valor";
       switch (_data.type) {
         case "select":
@@ -77,86 +77,94 @@ const validations = {
     return resp;
   },
   noRequired(_data) {
-    var resp = noValid();
-
-    let text = _data.value;
+    var resp = null;
+    let _value = null;
     if (_data.type === "image" || _data.type === "file ") {
-      text = _data.file;
-      resp = valid();
+      _value = _data.file;
+    } else {
+      _value = _data.value;
     }
+    console.log(_data);
+    if (_data.validate) resp = noValid();
+    else resp = valid();
 
-    if (isEmpty(text)) {
-      console.log("no required");
+    if (isEmpty(_value)) {
       resp = noRequired();
     }
     return resp;
   },
 
-  length(_data, from = null) {
-    let text = _data.value;
+  length(_data) {
+    console.log("legt");
+    let _value = _data.value;
+    let _type = _data.type;
     let min = _data.min;
     let max = _data.max;
 
     if (min === undefined) {
       min = globalSettings.text_min_size;
-      if (from === "number" || from === "decimal") min = 1;
+      if (_type === "number" || _type === "decimal") min = 1;
     }
     if (max === undefined) {
-      max = globalSettings.normal_text_max_size;
-      if (_data.type === "textarea") max = globalSettings.large_text_max_size;
-      else if (from === "number") max = globalSettings.number_max_size;
-      else if (from === "decimal") max = globalSettings.number_decimal_max_size;
+      switch (_type) {
+        case "textarea":
+          max = globalSettings.large_text_max_size;
+          break;
+        case "number":
+          max = globalSettings.number_max_size;
+          break;
+        case "decimal":
+          max = globalSettings.number_decimal_max_size;
+          break;
+        default:
+          max = globalSettings.normal_text_max_size;
+          break;
+      }
     }
     var resp = valid();
-    var textLength = 0;
-    if (!isEmpty(text)) textLength = text.length;
+    var _valueLength = 0;
+    if (!isEmpty(_value)) _valueLength = _value.length;
 
-    if (textLength < min) {
+    if (_valueLength < min) {
       resp = noValid("Debe contener minimo " + min + " caracteres");
       if (min === max) resp = noValid("Debe contener " + min + " caracteres");
-    } else if (textLength > max) {
+    } else if (_valueLength > max) {
       resp = noValid("Debe contener maximo " + max + " caracteres");
       if (min === max) resp = noValid("Debe contener " + min + " caracteres");
     }
     return resp;
   },
   email(_data) {
-    let text = _data.value;
+    let _value = _data.value;
 
     var resp = valid();
-    if (!regularExpressions.onlyEmail.test(text))
+    if (!regularExpressions.onlyEmail.test(_value))
       resp = noValid("Por favor ingrese un email valido");
     return resp;
   },
   equals(_data) {
-    let text = _data.value;
-    let text2 = _data.equalsTo.value;
+    let _value = _data.value;
+    let _value2 = _data.equalsTo.value;
     let label = _data.equalsTo.name;
 
     var resp = valid();
 
-    if (text !== text2) {
+    if (_value !== _value2) {
       resp = noValid("Debe ser igual a " + label + "");
     }
     return resp;
   },
   number(_data) {
-    let text = _data.value;
+    let _value = _data.value;
     var resp = valid();
-    resp = this.length(_data, "number");
-    if (!resp.isValid) return resp;
-    if (!regularExpressions.onlyNumber.test(text))
+    if (!regularExpressions.onlyNumber.test(_value))
       resp = noValid("Solo se permite numeros");
     return resp;
   },
   decimal(_data) {
-    let text = _data.value;
+    let _value = _data.value;
     var resp = valid();
-    var resp = valid();
-    resp = this.length(_data, "decimal");
-
-    if (!resp.isValid) return resp;
-    if (!regularExpressions.onlyPrice.test(text))
+    if (!regularExpressions.onlyPrice.test(_value))
       resp = noValid("Solo se permite numeros, ejemplo: [1.00 o 1]");
     return resp;
   },

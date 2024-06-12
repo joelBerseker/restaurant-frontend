@@ -88,7 +88,7 @@ function buttonCollapse() {
 </template>
 <style>
 .section-2-line {
-  color: var(--color-1-v3);
+  color: var(--color-b-v4);
   margin-top: 0;
   margin-bottom: 1.5rem;
 }

@@ -57,7 +57,7 @@ export default defineComponent({
   --bs-spinner-width: 1.2rem;
   --bs-spinner-height: 1.2rem;
   --bs-spinner-border-width: 0.2em;
-  color: var(--g-wb700);
+  color: var(--color-b-v3);
 }
 .loading-item {
   display: flex;
@@ -69,9 +69,9 @@ export default defineComponent({
   width: 100%;
   height: 100%;
   background-color: rgba(255, 255, 255, 1);
-
+  padding: 0.5rem;
   display: flex;
-  align-items: center;
+
   justify-content: center;
 }
 .basic-table-container {
@@ -81,7 +81,9 @@ export default defineComponent({
   background-color: transparent !important;
   border-radius: var(--g-br1);
 }
-
+.loading-transparent {
+  background-color: rgba(255, 255, 255, 0.5);
+}
 .t-content-enter-active,
 .t-content-enter {
   transition: all 0.1s ease;

@@ -26,6 +26,7 @@ const props = defineProps({
 });
 const emit = defineEmits(["update:modelValue", "input", "clear"]);
 const inputRef = ref(null);
+const localType = ref("text");
 const value = computed({
   get() {
     return props.modelValue;
@@ -99,7 +100,12 @@ const formatInBlurOptions = reactive({
     value.value = number.toFixed(2);
   },
 });
-
+function init() {
+  if (props.type !== "number" && props.type !== "decimal") {
+    localType.value = props.type;
+  }
+}
+init();
 defineExpose({
   focus,
 });
@@ -153,7 +159,7 @@ defineExpose({
         ref="inputRef"
         v-model.trim="value"
         autocomplete="off"
-        :type="type"
+        :type="localType"
         :id="id"
         :class="['g-input form-control form-control-sm', inputClass]"
         :disabled="disabled"

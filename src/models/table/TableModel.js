@@ -14,11 +14,11 @@ export class TableModel extends Model {
   number = {
     id: "number",
     name: "Sitios",
-
+    type: "number",
     value: null,
     required: false, // null=True, blank=True in Django
     validation: {},
-    validate: ["number"],
+    validate: ["length", "number"],
     default: "0",
   };
 

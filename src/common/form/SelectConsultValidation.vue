@@ -17,11 +17,56 @@ const props = defineProps({
   nullOption: { default: false },
   nullText: { default: "Seleccione una opción" },
   formatOptions: { default: "getDataOptions" },
+  ousideData: { default: null },
 });
 
-const list = ref([]);
-const obtained = ref(false);
-const loading = ref(false);
+const listLocal = ref([]);
+const obtainedLocal = ref(false);
+const loadingLocal = ref(false);
+
+const list = computed({
+  get() {
+    if (props.ousideData) return props.ousideData.list;
+    else return listLocal.value;
+  },
+  set(value) {
+    if (props.ousideData) props.ousideData.list = value;
+    else listLocal.value = value;
+  },
+});
+
+const obtained = computed({
+  get() {
+    if (props.ousideData) return props.ousideData.obtained;
+    else return obtainedLocal.value;
+  },
+  set(value) {
+    if (props.ousideData) props.ousideData.obtained = value;
+    else obtainedLocal.value = value;
+  },
+});
+const loading = computed({
+  get() {
+    if (props.ousideData) return props.ousideData.loading;
+    else return loadingLocal.value;
+  },
+  set(value) {
+    if (props.ousideData) props.ousideData.loading = value;
+    else loadingLocal.value = value;
+  },
+});
+const searchInputLocal = ref(null);
+
+const searchInput = computed({
+  get() {
+    if (props.ousideData) return props.ousideData.searchInput;
+    else return searchInputLocal.value;
+  },
+  set(value) {
+    if (props.ousideData) props.ousideData.searchInput = value;
+    else searchInputLocal.value = value;
+  },
+});
 
 const value = computed({
   get() {
@@ -45,7 +90,6 @@ async function refresh() {
   await getList();
   obtained.value = true;
 }
-const searchInput = ref(null);
 
 const dataRoute = computed(() => {
   if (value.value.navigation) {

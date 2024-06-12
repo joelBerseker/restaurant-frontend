@@ -5,17 +5,15 @@ export class TicketDetailModel extends Model {
     id: "ticket_id",
     name: "Ticket",
     value: null,
-    aditional: {},
-    validation: {},
-    validate: ["select"],
   };
 
   quantity = {
     id: "quantity",
     name: "Cantidad",
+    type: "number",
     value: null,
     validation: {},
-    validate: ["number"],
+    validate: ["length", "number"],
   };
 
   product_id = {
@@ -24,7 +22,6 @@ export class TicketDetailModel extends Model {
     value: null,
     aditional: {},
     validation: {},
-    validate: ["select"],
   };
 
   description = {
@@ -32,7 +29,7 @@ export class TicketDetailModel extends Model {
     name: "Descripción",
     value: null,
     required: false, // null=True, blank=True in Django
-    type: "textarea",
+
     validation: {},
     validate: ["length"],
     default: "Sin descripción",

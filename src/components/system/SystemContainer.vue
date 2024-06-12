@@ -94,6 +94,7 @@ defineExpose({
 }
 .sys-wrapper {
   padding: var(--py-1);
+  padding-bottom: calc(var(--py-1) * 2);
   position: relative;
   background-color: var(--color-w);
   border-top-left-radius: var(--br-v2);

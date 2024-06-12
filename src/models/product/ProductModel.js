@@ -45,22 +45,25 @@ export class ProductModel extends Model {
   price = {
     id: "price",
     name: "Precio",
+    type: "decimal",
     value: null,
     validation: {},
     default: "0.00",
     required: false,
-    validate: ["decimal"],
+    validate: ["length", "decimal"],
   };
 
   discount = {
     id: "discount",
     name: "Descuento",
+    type: "number",
+
     value: null,
     required: false,
     validation: {},
     default: "0",
     required: false,
-    validate: ["number"],
+    validate: ["length", "number"],
   };
 
   getDataOptions() {

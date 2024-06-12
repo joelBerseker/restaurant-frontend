@@ -517,6 +517,18 @@ function formatearErrores(errors) {
     .join("\n");
     */
 }
+function copyObject(_value) {
+  let newValue = {};
+  for (var key in _value) {
+    if (_value[key] === undefined) {
+      newValue[key] = undefined;
+    } else {
+      newValue[key] = JSON.parse(JSON.stringify(_value[key]));
+    }
+  }
+
+  return newValue;
+}
 export {
   isEmpty,
   sleep,
@@ -538,4 +550,5 @@ export {
   getActionBitacora,
   subTitleGen,
   formatearErrores,
+  copyObject,
 };

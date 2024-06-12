@@ -1,31 +1,20 @@
 import { defineStore } from "pinia";
-
+import { copyObject } from "@/helpers";
 export const useSystemStore = defineStore("system", {
   state: () => ({
-    loading_system: true,
-    loading_content_system: true,
-    filter: {},
-    notification: "",
-    mayus: true,
-    permises: {},
+    filter_cache: {},
   }),
   getters: {
-    loadingSystem: (state) => state.loading_system,
-    loadingContentSystem: (state) => state.loading_content_system,
-    getNotification: (state) => state.notification,
+    filterCache: (state) => state.filter_cache,
   },
   actions: {
-    isLoadingSystem(flag) {
-      this.loading_system = flag;
+    addFilterCache(_name, _value) {
+      let newValue = {};
+      newValue = copyObject(_value);
+      this.filter_cache[_name] = newValue;
     },
-    isLoadingContentSystem(flag) {
-      this.loading_content_system = flag;
-    },
-    newNotifation(new_notify) {
-      this.notification = new_notify;
-    },
-    loadingRestart() {
-      this.$reset();
+    deleteFilterCache(_name) {
+      delete this.filter_cache[_name];
     },
   },
   persist: true,

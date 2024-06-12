@@ -39,7 +39,7 @@ const table = reactive({
       searchable: true,
     },
   ],
-  filter: {
+  defaultFilter: {
     order: "asc",
     orderBy: "name",
     status: "1",
@@ -81,12 +81,14 @@ function switchSearch() {
       <TableConsult
         ref="tableRef"
         :columns="table.columns"
-        :filter="table.filter"
+        filterCacheName="table"
+        :defaultFilter="table.defaultFilter"
         :deleteConsult="tableService.deleteTable"
         :getListConsult="tableService.getListTable"
         @onViewItem="viewItem"
         @onGotList="onGotList"
         @onFirstLoad="onFirstLoad"
+        @onFilterCache="switchSearchValue = true"
       ></TableConsult>
     </template>
   </g-section-1>

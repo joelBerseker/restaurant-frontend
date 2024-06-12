@@ -1,14 +1,10 @@
 <script setup>
-import { ref, reactive, computed, inject } from "vue";
-import { sleepInput } from "@/helpers/utilities";
-import { useToastStore } from "@/stores";
-const useToast = useToastStore();
+import { ref, reactive, computed } from "vue";
 
 const props = defineProps({
   columns: { default: [] },
-  filter: {
-    default: {},
-  },
+  filter: { default: {} },
+  defaultFilter: { default: {} },
 });
 
 const emit = defineEmits(["search"]);
@@ -33,7 +29,6 @@ const iconButton = computed(() => {
   }
   return resp;
 });
-const filterBackup = ref({});
 const filterOptions = reactive({
   orderBy: {
     value: "id",
@@ -42,8 +37,8 @@ const filterOptions = reactive({
   order: {
     value: "asc",
     options: [
-      { value: "asc", text: "Asc", icon: "fa-solid fa-arrow-up-z-a" },
-      { value: "desc", text: "Desc", icon: "fa-solid fa-arrow-down-a-z" },
+      { value: "asc", text: "Asc", icon: "fa-solid fa-arrow-up-a-z" },
+      { value: "desc", text: "Desc", icon: "fa-solid fa-arrow-down-z-a" },
     ],
   },
 });
@@ -52,16 +47,10 @@ function search() {
   props.filter.order = filterOptions.order.value;
   emit("search");
 }
-function copyFilter() {
-  filterBackup.value.orderBy = props.filter.orderBy;
-  filterBackup.value.order = props.filter.order;
-}
-function restoreFilter() {
-  props.filter.orderBy = filterBackup.value.orderBy;
-  props.filter.order = filterBackup.value.order;
-}
 
 function initFilter() {
+  changeSort(props.filter);
+
   filterOptions.orderBy.options = [];
   for (let i = 0; i < props.columns.length; i++) {
     const element = props.columns[i];
@@ -70,9 +59,15 @@ function initFilter() {
       let elementOrderBy = { value: element.field, text: element.label };
       filterOptions.orderBy.options.push(elementOrderBy);
     }
+    if (element.field === filterOptions.orderBy.value) {
+      element.sort = filterOptions.order.value;
+    } else {
+      element.sort = undefined;
+    }
   }
-  changeSort(props.filter);
 }
+
+//para cuando viene de la tabla
 function sort(_data) {
   changeSort(_data);
   search();
@@ -95,13 +90,10 @@ function changeColumns() {
   });
 }
 function reset() {
-  restoreFilter();
-  changeSort(filterBackup.value);
+  changeSort(props.defaultFilter);
   changeColumns();
-  initFilter();
 }
 function init() {
-  copyFilter();
   initFilter();
 }
 init();

@@ -5,13 +5,14 @@ import { useUserStore } from "@/stores/userStore";
 
 const props = defineProps({
   filter: { default: {} },
+  defaultFilter: { default: {} },
 });
 //  const permises = inject("permises");
 const userStore = useUserStore();
 
 const emit = defineEmits(["search"]);
 const statusOptions = reactive({
-  value: "1",
+  value: "0",
   options: status.options,
 });
 function search() {
@@ -42,9 +43,21 @@ const statusOptionsPermises = computed(() => {
   return status.options;
 });
 function reset() {
-  props.filter.status = "1";
-  statusOptions.value = "1";
+  if (props.defaultFilter.status) {
+    statusOptions.value = props.defaultFilter.status;
+  } else {
+    statusOptions.value = "0";
+  }
 }
+function init() {
+  console.log(props.filter.status);
+  if (props.filter.status !== undefined) {
+    statusOptions.value = props.filter.status;
+    console.log("#asdasd");
+  }
+  console.log(statusOptions.value);
+}
+init();
 defineExpose({
   reset,
 });

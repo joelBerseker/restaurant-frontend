@@ -2,9 +2,13 @@
 import { ref, onMounted } from "vue";
 import { Collapse } from "bootstrap";
 
+const props = defineProps({
+  startOpen: { default: false },
+});
+
 const collapseRef = ref(null);
 const collapse = ref(null);
-const status = ref(false);
+const status = ref(props.startOpen);
 const switching = ref(false);
 
 function closeCollapse() {
@@ -25,6 +29,7 @@ function swichCollapse() {
   }
   return status.value;
 }
+
 onMounted(() => {
   collapse.value = new Collapse(collapseRef.value, {
     toggle: false,
@@ -37,7 +42,7 @@ defineExpose({
 });
 </script>
 <template>
-  <div class="collapse" ref="collapseRef">
+  <div class="collapse" :class="startOpen ? 'show' : ''" ref="collapseRef">
     <slot></slot>
   </div>
 </template>

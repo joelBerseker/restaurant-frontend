@@ -1,25 +1,34 @@
 <script setup>
 import Table from "@/common/table/Table.vue";
 import Filter from "@/common/filter/Filter.vue";
-import { status } from "@/helpers";
-import { ref, inject } from "vue";
+import { copyObject, status } from "@/helpers";
+import { ref, inject, onMounted } from "vue";
+import { useSystemStore } from "@/stores/systemStore";
+
+const useSystem = useSystemStore();
 
 const props = defineProps({
   columns: { default: [] },
-  filter: { default: {} },
+  defaultFilter: { default: {} },
   deleteConsult: { default: null },
   getListConsult: { default: null },
+  filterCacheName: { default: null },
 });
 const emit = defineEmits([
   "onViewItem",
   "onDeleteItem",
   "onGotList",
   "onFirstLoad",
+  "onFilterCache",
 ]);
 const confirmDialogue = inject("confirmDialogue");
 
 const localColumns = ref([]);
+const startOpenCollapse = ref(false);
+
 const filterRef = ref(null);
+const filter = ref(null);
+
 const collapseRef = ref(null);
 const rows = ref([]);
 
@@ -32,27 +41,41 @@ function viewItem(_data) {
 }
 async function getList(loading = true) {
   isLoading.value = loading;
-  let resp = await props.getListConsult(props.filter);
+  console.log(filter.value);
+  console.log(props.defaultFilter);
+
+  let resp = await props.getListConsult(filter.value);
   if (resp) {
     rows.value = resp.map((element) => element.getData());
     emit("onGotList", rows.value);
   }
   isLoading.value = false;
 }
+function verifyFilterCache() {
+  if (props.filterCacheName) {
+    let _filter = useSystem.filterCache[props.filterCacheName];
+    if (_filter) {
+      startOpenCollapse.value = true;
+      emit("onFilterCache");
+      filter.value = copyObject(_filter);
 
+      return;
+    }
+  }
+  filter.value = copyObject(props.defaultFilter);
+}
 async function deleteItem(_data) {
-  console.log(_data);
   let confirm = await confirmDialogue("delete", _data.elementTextModel);
   if (confirm) {
     isLoading.value = true;
 
-    console.log(_data);
     await props.deleteConsult(_data.id);
     isLoading.value = false;
     await getList();
   }
 }
 async function init() {
+  verifyFilterCache();
   localColumns.value = [
     ...props.columns,
     {
@@ -71,25 +94,29 @@ async function init() {
   await getList(false);
   emit("onFirstLoad");
 }
-function refresh() {
+function refresh(filter = null) {
   getList(true);
 }
 function switchSearch() {
   return collapseRef.value.swichCollapse();
 }
+
 init();
+
 defineExpose({
   refresh,
   switchSearch,
 });
 </script>
 <template>
-  <g-collapse ref="collapseRef">
+  <g-collapse ref="collapseRef" :startOpen="startOpenCollapse">
     <div class="pb-4">
       <Filter
         ref="filterRef"
         :columns="localColumns"
-        :filter="filter"
+        v-model="filter"
+        :defaultFilter="defaultFilter"
+        :filterCacheName="filterCacheName"
         @filterSearch="refresh"
       />
     </div>

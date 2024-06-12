@@ -4,7 +4,7 @@ import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
 import { TicketDetailModel } from "@/models";
 import { useToastStore } from "@/stores";
-const servicePath = "/ticket/ticketdetail";
+const servicePath = "/ticket_detail";
 const module = "Detalle";
 export const ticketDetailService = {
   async getTicketDetail(ticketdetail_id) {
@@ -117,6 +117,24 @@ export const ticketDetailService = {
         error.message ? error.message : "Error al agregar los usuarios"
       );
       handleError(error, "add_error", module);
+    }
+  },
+  async addTicketList(details) {
+    const formattedQV = details.map((q_v) => q_v.addData());
+    try {
+      const config = {
+        method: "POST",
+        url: `${servicePath}/`,
+        data: JSON.stringify(formattedQV),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      // Usa la función con el alias para configurar el encabezado "Content-Type"
+      const response = await axiosInstance(config);
+      return response;
+    } catch (error) {
+      throw error;
     }
   },
   async updateTicketDetail(new_data) {

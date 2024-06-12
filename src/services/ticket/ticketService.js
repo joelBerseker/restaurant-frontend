@@ -1,11 +1,11 @@
 import axiosInstance from "@/services/axios-instance";
 import { handleError } from "@/helpers";
-import { dataTransform } from "@/services";
+import { dataTransform, ticketDetailService } from "@/services";
 import { BaseService } from "@/services/BaseService";
 import { TicketModel } from "@/models";
 import { useToastStore } from "@/stores";
 
-const servicePath = "/ticket/ticket";
+const servicePath = "/ticket";
 const module = "Boleta de Pago";
 export const ticketService = {
   async getTicket(ticket_id) {
@@ -96,7 +96,7 @@ export const ticketService = {
     }
   },
 
-  async addTicket(new_data) {
+  async addTicket(new_data, detail = null) {
     try {
       const response = await axiosInstance.post(
         `${servicePath}/`,
@@ -106,6 +106,13 @@ export const ticketService = {
         response.data,
         TicketModel
       );
+      if (detail) {
+        detail.forEach((element) => {
+          element.initModel(data_new.id);
+        });
+        ticketDetailService.addTicketDetail(detail);
+      }
+
       const useToast = useToastStore();
       useToast.show("add_success", {
         important_text: data_new.getTextModel(),

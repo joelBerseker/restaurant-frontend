@@ -108,7 +108,7 @@ export const ticketService = {
       );
       if (detail) {
         detail.forEach((element) => {
-          element.initModel(data_new.id);
+          element.initModel(data_new.id.value);
         });
         ticketDetailService.addTicketList(detail);
       }

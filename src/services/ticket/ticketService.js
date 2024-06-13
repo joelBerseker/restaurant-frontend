@@ -110,7 +110,7 @@ export const ticketService = {
         detail.forEach((element) => {
           element.initModel(data_new.id);
         });
-        ticketDetailService.addTicketDetail(detail);
+        ticketDetailService.addTicketList(detail);
       }
 
       const useToast = useToastStore();

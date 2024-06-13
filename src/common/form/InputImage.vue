@@ -150,7 +150,7 @@ defineExpose({
 </style>
 <style scoped>
 .cover-input {
-  background-color: rgba(240, 240, 240, 0.7);
+  background-color: rgba(63, 62, 62, 0.5);
   position: absolute;
   top: 0;
   width: 100%;
@@ -168,8 +168,9 @@ defineExpose({
   width: 100%;
   overflow: hidden !important;
   line-height: 1.3;
-
+  font-size: 13px;
   margin-bottom: 0.05rem;
+  color: var(--color-w-v2);
 }
 .form-image {
   position: absolute;

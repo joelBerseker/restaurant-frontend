@@ -87,7 +87,7 @@ function buttonCollapse() {
   margin-bottom: 1.5rem;
 }
 .mtTitle {
-  margin-top: 2rem;
+  margin-top: 2.5rem;
 }
 .container-section {
   background-color: var(--color-w-v3);

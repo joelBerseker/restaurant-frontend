@@ -8,35 +8,34 @@ import {
 } from "@/services";
 import { ref, onMounted, inject, reactive } from "vue";
 import TableForm from "@/common/table/TableForm.vue";
+import TableFormButtons from "@/common/table/TableFormButtons.vue";
+import { subTitleGen } from "@/helpers";
+
 const emit = defineEmits(["onFirstLoad"]);
 
 const props = defineProps({
   disabled: { default: false },
   mode: { default: null },
 });
+const localMode = ref("add");
 const idElement = inject("idElement", null);
 const formRef = ref(null);
 const tableFormRef = ref(null);
+const subTitle = ref(null);
 
 const tableForm = reactive({
   columns: [
     {
       label: "Producto",
       field: "product_id",
-      sortable: true,
-      searchable: true,
     },
     {
       label: "Cantidad",
       field: "quantity",
-      sortable: true,
-      searchable: true,
     },
     {
       label: "Descripción",
       field: "description",
-      sortable: true,
-      searchable: true,
     },
   ],
   defaultFilter: {
@@ -46,17 +45,12 @@ const tableForm = reactive({
   },
 });
 /*CONSULTS*/
-async function getElement(_id) {
+async function getList(_id) {
   let resp = await ticketService.getTicket(_id);
   if (resp) formRef.value.copy(resp);
   return resp;
 }
-async function addElement() {
-  if (!formRef.value.validate()) return;
-  let resp = await ticketService.addTicket(formRef.value.getElement());
-  return resp;
-}
-async function editElement() {
+async function editList() {
   if (!formRef.value.validate()) return;
   let resp = await ticketService.updateTicket(formRef.value.getElement());
   if (resp) formRef.value.copy(resp);
@@ -68,20 +62,15 @@ async function deleteElement() {
   );
   return resp;
 }
-async function editStatusElement() {
-  let resp = await ticketService.changeStatusTicket(formRef.value.getElement());
-  if (resp) return formRef.value.getElement().status.value;
-  return;
-}
-function restoreElement() {
+
+function restoreList() {
   formRef.value.restore();
 }
-function resetElement() {
+function resetList() {
   formRef.value.reset();
 }
-function aaaaaaa(params) {
-  tableFormRef.value.additem();
-  console.log(products.list.value);
+function validateList() {
+  return tableFormRef.value.validate();
 }
 const products = reactive({
   list: [],
@@ -93,18 +82,34 @@ const products = reactive({
     searchBy: ["name"],
   },
 });
+function onEdit() {
+  localMode.value = "edit";
+}
+function onCancel() {
+  localMode.value = "view";
+}
+function onAdd() {
+  tableFormRef.value.additem();
+}
+function onUpdated(_data) {
+  subTitle.value = subTitleGen.countElement(_data);
+}
+function getListValue() {
+  return tableFormRef.value.getListValue();
+}
 onMounted(async () => {
-  if (idElement) await getElement(idElement);
+  if (idElement) {
+    localMode.value = "view";
+    await getList(idElement);
+  }
   emit("onFirstLoad");
 });
 defineExpose({
-  getElement,
-  addElement,
-  editElement,
-  deleteElement,
-  restoreElement,
-  resetElement,
-  editStatusElement,
+  restoreList,
+  resetList,
+  getListValue,
+
+  validateList,
 });
 </script>
 <template>
@@ -113,18 +118,26 @@ defineExpose({
     :elementModel="TicketModel"
     v-slot="{ element, validateLabel }"
   >
-    <g-section-2 title="Detalle">
-      <g-button text="ssss" @click="aaaaaaa()"></g-button>
+    <g-section-2 title="Lista de productos" :subTitle="subTitle">
+      <template #buttons>
+        <TableFormButtons
+          :mode="localMode"
+          @onEdit="onEdit"
+          @onCancel="onCancel"
+          @onAdd="onAdd"
+        />
+      </template>
       <TableForm
         ref="tableFormRef"
         :elementModel="TicketDetailModel"
         :columns="tableForm.columns"
+        @onUpdated="onUpdated"
       >
         <template v-slot:product_id="{ row, index, validateLabel }">
           <g-select-consult-val
             v-model="row.product_id"
             :disabled="disabled"
-            @validate="validateLabel"
+            @validate="validateLabel($event, index)"
             :consult="productService.getListProduct"
             :filter="products.filter"
             :ousideData="products"
@@ -133,14 +146,14 @@ defineExpose({
         <template v-slot:quantity="{ row, index, validateLabel }">
           <g-input-val
             v-model="row.quantity"
-            @validate="validateLabel"
+            @validate="validateLabel($event, index)"
             :disabled="disabled"
           />
         </template>
         <template v-slot:description="{ row, index }">
           <g-input-val
             v-model="row.description"
-            @validate="validateLabel"
+            @validate="validateLabel($event, index)"
             :disabled="disabled"
           />
         </template>

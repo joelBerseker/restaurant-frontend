@@ -203,7 +203,4 @@ defineExpose({
   display: flex;
   position: relative;
 }
-.img-data {
-  margin-left: 1.5rem;
-}
 </style>

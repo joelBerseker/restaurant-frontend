@@ -1,7 +1,9 @@
 <script setup>
-import { useSlots, ref, computed } from "vue";
-
+import { useSlots, ref, computed, inject } from "vue";
+import { useToastStore } from "@/stores";
 import TableContainer from "@/common/container/TableContainer.vue";
+const useToast = useToastStore();
+const confirmDialogue = inject("confirmDialogue");
 
 const props = defineProps({
   columns: { default: [] },
@@ -12,7 +14,13 @@ const props = defineProps({
   elementModel: { default: null },
   viewMode: { default: false },
 });
-const emit = defineEmits(["rowClicked", "sort", "deleteItem", "addItem"]);
+const emit = defineEmits([
+  "rowClicked",
+  "sort",
+  "deleteItem",
+  "addItem",
+  "onUpdated",
+]);
 
 const list = ref([]);
 const slots = useSlots();
@@ -64,20 +72,50 @@ function additem() {
   list.value.push(new props.elementModel());
 
   emit("addItem");
+  emit("onUpdated", list.value);
 }
 async function deleteItem(index) {
   let confirm = await confirmDialogue("delete");
   if (!confirm) return;
-  let itemDeleted = list.values[index];
+  let itemDeleted = list.value[index];
   list.value.splice(index, 1);
   console.log(itemDeleted);
   emit("deleteItem", index, itemDeleted);
+  emit("onUpdated", list.value);
 }
-function validateLabel(_data) {
-  console.log("validate");
+function validateLabel(_data, index) {
+  console.log({ _data });
+  console.log({ index });
+  list.value[index].validateLabel(_data);
+}
+function validate() {
+  let list_error = [];
+  let resp = true;
+
+  for (let i = 0; i < list.value.length; i++) {
+    const element = list.value[i];
+    let respEl = element.validate();
+    if (!respEl.value) {
+      list_error.push("Fila " + (i + 1));
+    }
+    resp = resp && respEl.value;
+  }
+  console.log(resp);
+  if (!resp) {
+    useToast.show("validation_list_error", {
+      list_error: list_error,
+    });
+  }
+
+  return resp;
+}
+function getListValue() {
+  return list.value;
 }
 defineExpose({
   additem,
+  validate,
+  getListValue,
 });
 </script>
 <template>
@@ -105,6 +143,7 @@ defineExpose({
               <font-awesome-icon :icon="iconCurrentSort(col.sort)" />
             </span>
           </th>
+          <th v-if="!viewMode" style="width: 1%"></th>
         </tr>
       </thead>
       <tbody>
@@ -120,6 +159,15 @@ defineExpose({
               :index="index"
               :validateLabel="validateLabel"
             ></slot>
+          </td>
+          <td v-if="!viewMode">
+            <g-button
+              icon="fa-solid fa-trash-can"
+              @click.stop="deleteItem(index)"
+              type="transparent-1"
+              class="btn-row-table"
+              title="Eliminar"
+            />
           </td>
         </tr>
       </tbody>

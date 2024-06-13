@@ -6,11 +6,13 @@ import FormButtons from "@/common/form/FormButtons.vue";
 import LoadingContainer from "@/common/container/LoadingContainer.vue";
 import { ref, inject } from "vue";
 import { useRouter } from "vue-router";
+import { sleep } from "@/helpers";
 const emit = defineEmits(["onFirstLoad"]);
 
 const router = useRouter();
 
 const formRef = ref(null);
+const listFormRef = ref(null);
 
 const statusValue = ref(null);
 
@@ -42,8 +44,17 @@ function toList() {
 
 /*BUTTONS*/
 async function onAdd() {
+  let _valElement = formRef.value.validateElement();
+  await sleep(0);
+  let _valList = listFormRef.value.validateList();
+
+  console.log({ _valElement });
+  console.log({ _valList });
+
+  if (!_valElement || !_valList) return;
   isLoading.value = true;
-  let resp = await formRef.value.addElement();
+  console.log("validado");
+  let resp = await formRef.value.addElement(listFormRef.value.getListValue());
   if (resp) {
     toList();
   }
@@ -125,7 +136,7 @@ defineExpose({
           @onUpdated="onUpdated"
           @onFirstLoad="onFirstLoad"
         />
-        <TicketDetailFormComponent />
+        <TicketDetailFormComponent ref="listFormRef" />
       </template>
     </g-section-1>
   </LoadingContainer>

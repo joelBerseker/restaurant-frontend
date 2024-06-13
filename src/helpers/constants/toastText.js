@@ -75,6 +75,12 @@ const toastText = {
 
     type: 2,
   },
+  validation_list_error: {
+    prevText: "Datos no válidos",
+    listErrorMessage: ", revise si las siguientes filas son correctas:",
+
+    type: 2,
+  },
   login_error: {
     prevText:
       "Datos no válidos, revise si el correo y la contraseña son correctos.",

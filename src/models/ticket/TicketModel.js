@@ -37,6 +37,22 @@ export class TicketModel extends Model {
     validation: {},
     validate: ["length", "decimal"],
   };
+  priceFinal = {
+    id: "priceFinal",
+    name: "Precio Final",
+    type: "decimal",
+    value: null,
+    default: "0.00",
+    required: false,
+    validation: {},
+    validate: ["length", "decimal"],
+  };
+  check_discount = {
+    id: "check_discount",
+    name: "Tiene Descuento",
+    type: "boolean",
+    value: null,
+  };
 
   user_id = {
     id: "user_id",
@@ -61,7 +77,7 @@ export class TicketModel extends Model {
   getDataOptions() {
     return {
       value: this.id.value,
-      text: this.ticket_name.value,
+      text: `${this.code.value} - s/ ${this.priceFinal.value}`,
     };
   }
 }

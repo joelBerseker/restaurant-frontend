@@ -6,3 +6,4 @@ export * from "./reservation";
 export * from "./table";
 export * from "./ticket";
 export * from "./user";
+export * from "./menu";

@@ -7,3 +7,4 @@ export * from "./company";
 export * from "./reservation";
 export * from "./transform";
 export * from "./user";
+export * from "./menu";

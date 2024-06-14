@@ -14,6 +14,7 @@ export class MenuModel extends Model {
     id: "starters",
     name: "Entradas",
     value: [],
+    additional: {},
     required: false, // blank=True in Django
     validation: {},
     validate: ["select"],
@@ -23,6 +24,7 @@ export class MenuModel extends Model {
     id: "main_courses",
     name: "Platos principales",
     value: [],
+    additional: {},
     required: false, // blank=True in Django
     validation: {},
     validate: ["select"],

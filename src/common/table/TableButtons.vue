@@ -21,22 +21,16 @@ function add() {
       icon="fa-solid fa-magnifying-glass"
       text="Buscar"
       @click="search()"
-      title="Recargar"
       :collapse="switchSearchValue"
+      :separationLine="true"
     />
     <g-button
       type="transparent-1"
       icon="fa-solid fa-print"
       text="Imprimir"
       @click="print()"
-      title="Recargar"
     />
-    <g-button
-      icon="fa-solid fa-plus"
-      text="Agregar"
-      @click="add()"
-      title="Recargar"
-    />
+    <g-button icon="fa-solid fa-plus" text="Agregar" @click="add()" />
   </div>
 </template>
 <style scoped>

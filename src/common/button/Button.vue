@@ -11,6 +11,7 @@ const props = defineProps({
   iconPosition: { default: "left" },
   title: { default: null },
   collapse: { default: false },
+  separationLine: { default: false },
 });
 
 const iconClass = ref("");
@@ -59,9 +60,26 @@ init();
       >
       </span>
     </div>
+    <div v-if="separationLine" class="line-separation"></div>
   </button>
 </template>
 <style>
+.line-separation {
+  width: 1px;
+  background-color: var(--color-border);
+  height: 60%;
+  position: absolute;
+  top: 20%;
+  right: 0;
+}
+.pulse-animation {
+  animation: pulse 0.7s 0.5s ease 2;
+}
+@keyframes pulse {
+  50% {
+    background-color: rgb(202, 202, 202);
+  }
+}
 .button-container {
   display: flex;
 }
@@ -142,13 +160,13 @@ init();
   padding-bottom: calc(0.25rem);
   padding-left: calc(0.75rem);
   padding-right: calc(0.75rem);
-  border: 1px solid var(--color-b-v4);
+  border: 1px solid var(--color-border);
 }
 .g-btn-search:hover,
 .g-btn-search:active,
 .g-btn-search:focus-visible,
 .g-btn-search.show {
-  border: 1px solid var(--color-b-v4);
+  border: 1px solid var(--color-border);
 }
 
 .g-btn-secondary {
@@ -170,5 +188,13 @@ init();
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   font-size: 12px;
+}
+.g-btn-link-min-2 {
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  font-size: 12px;
+  background-color: white !important;
 }
 </style>

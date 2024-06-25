@@ -10,6 +10,7 @@ let list = [
   "productList",
   "productType",
   "ticketList",
+  "test",
 ];
 
 async function getPermise(module_id) {

@@ -24,16 +24,23 @@ const showClearButton = computed(() => {
     !props.loading &&
     !isEmpty(props.value) &&
     !props.disabled &&
-    props.clearButton &&
-    isHover.value
+    props.clearButton
   ) {
     resp = true;
+    if (
+      props.validation !== null &&
+      props.validation.isValid !== undefined &&
+      !isHover.value
+    ) {
+      resp = false;
+    }
   }
   return resp;
 });
 const showValidationIcon = computed(() => {
   let resp = false;
   if (
+    !props.loading &&
     props.validation !== null &&
     props.validation.isValid !== undefined &&
     !showClearButton.value
@@ -81,12 +88,10 @@ function clear() {
             >
             </span>
           </div>
-
-          <div v-show="!loading && showClearButton" class="form-close">
+          <div v-show="showClearButton" class="form-close">
             <g-button-x-min @click="clear()" title="Limpiar" />
           </div>
-
-          <div v-show="!loading && showValidationIcon" class="validation-icon">
+          <div v-show="showValidationIcon" class="validation-icon">
             <font-awesome-icon
               v-if="validation !== null && !isEmpty(validation.icon)"
               :icon="validation.icon"
@@ -113,25 +118,22 @@ function clear() {
   </div>
 </template>
 <style>
-.g-form-container .g-image-container {
-  border-color: var(--color-b-v4) !important;
-}
 .g-input:focus,
 .g-select:focus {
-  box-shadow: 0px -4px 0px 0px rgba(128, 128, 128, 0.25) inset;
+  box-shadow: 0px -3px 0px 0px rgba(68, 68, 68, 0.25) inset;
   border-color: var(--g-wb500);
 }
 .valid > div > main > div > :is(.g-input, .g-select, .g-image-container) {
   border-color: var(--color-s) !important;
 }
 .valid > div > main > div > :is(.g-input:focus, .g-select:focus) {
-  box-shadow: 0px -4px 0px 0px rgba(var(--color-s-rgb), 0.25) inset;
+  box-shadow: 0px -3px 0px 0px rgba(var(--color-s-rgb), 0.25) inset;
 }
 .no-valid > div > main > div > :is(.g-input, .g-select, .g-image-container) {
   border-color: var(--color-d) !important;
 }
 .no-valid > div > main > div > :is(.g-input:focus, .g-select:focus) {
-  box-shadow: 0px -4px 0px 0px rgba(var(--color-d-rgb), 0.25) inset;
+  box-shadow: 0px -3px 0px 0px rgba(var(--color-d-rgb), 0.25) inset;
 }
 </style>
 <style scoped>
@@ -156,20 +158,20 @@ function clear() {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  right: 0.25rem;
+  right: 0;
 }
 .form-close {
   color: var(--g-wb050);
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  right: 0.25rem;
+  right: 0;
 }
 .validation-icon {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  right: 0.25rem;
+  right: 0;
   border-radius: 999rem;
   height: 20px;
   width: 20px;
@@ -180,9 +182,9 @@ function clear() {
   color: var(--color-w);
   font-size: 12px;
 }
-.g-form-element.filter > div > main > div > .form-loading,
-.g-form-element.filter > div > main > div > .form-close {
-  right: 0.9rem;
+.g-form-element.input-button-left > div > main > div > .form-loading,
+.g-form-element.input-button-left > div > main > div > .form-close {
+  right: 1rem;
 }
 .g-form-element.textarea
   .g-form-element.textarea

@@ -152,6 +152,7 @@ defineExpose({
     <div v-show="showClearButton" class="clear-filter">
       <g-button
         icon="fa-solid fa-xmark"
+        class="pulse-animation"
         type="link-min"
         text="Limpiar Filtro"
         @click="clearFilter()"
@@ -161,10 +162,13 @@ defineExpose({
 </template>
 <style scoped>
 .filter-container {
-  background-color: var(--color-w-v3);
+  background-color: var(--color-c1);
   padding: 1rem;
-  padding-bottom: 1.4rem;
-  border-radius: var(--br-v2);
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+
+  padding-bottom: 1.6rem;
+  border-radius: var(--br);
   position: relative;
 }
 .filters-container {
@@ -176,6 +180,6 @@ defineExpose({
 .clear-filter {
   position: absolute;
   bottom: 0rem;
-  right: 0rem;
+  right: 0.5rem;
 }
 </style>

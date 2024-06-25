@@ -19,6 +19,7 @@
     <div v-show="rowsLength > 0" class="table-wrapper">
       <slot></slot>
     </div>
+
     <div class="empty-container" v-show="rowsLength <= 0">
       <div class="empty-text">
         No se encontraron registros.
@@ -45,7 +46,7 @@ const props = defineProps({
   font-size: 20px;
 }
 .empty-container {
-  background-color: var(--color-w-v3);
+  background-color: var(--color-c1);
   padding: 1rem 0;
   text-align: center;
   width: 100%;
@@ -73,7 +74,7 @@ const props = defineProps({
   background-color: rgba(255, 255, 255, 0.7);
 
   display: flex;
-  align-items: center;
+  padding: 1rem;
   justify-content: center;
 }
 .table-wrapper {

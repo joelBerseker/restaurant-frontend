@@ -154,8 +154,8 @@ defineExpose({
               :disabled="filter === null"
               :viewMode="false"
               :awaitInput="true"
-              class="w-100 filter"
-              inputClass="filter-input"
+              class="w-100 input-button-left"
+              inputClass="input-search-icon"
             />
             <div class="search-icon">
               <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
@@ -164,7 +164,7 @@ defineExpose({
 
           <g-button
             icon="fa-solid fa-rotate-right"
-            class="filter-refresh"
+            class="button-refresh button-input-right"
             type="search"
             title="Recargar"
             @click.stop="getList()"
@@ -188,12 +188,7 @@ defineExpose({
     </template>
   </g-select-val>
 </template>
-<style>
-.filter-input {
-  padding-left: 1.4rem;
-  padding-right: 1.1rem;
-}
-</style>
+
 <style scoped>
 .text-navigation {
   padding-right: 1rem;
@@ -227,14 +222,12 @@ defineExpose({
   position: absolute;
   top: 0;
   width: 2.5rem;
-
   height: 100%;
   color: var(--color-b-v3);
   padding-top: 0.3rem;
   font-size: 14px;
 }
-.filter-refresh {
-  margin-left: -0.75rem;
+.button-refresh {
   background-color: var(--color-w);
 }
 </style>

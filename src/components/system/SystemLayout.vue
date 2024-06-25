@@ -99,7 +99,7 @@ function closeSidebar() {
 </style>
 <style scoped>
 .system {
-  background-color: var(--color-w-v2);
+  background-color: var(--color-c3);
 }
 #system-sidebar {
   overflow: hidden;

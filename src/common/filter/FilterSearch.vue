@@ -96,8 +96,8 @@ defineExpose({
     <div class="w-100 search-icon-container">
       <g-input
         v-model="filterOptions.searchInput"
-        inputClass="filter-input"
-        class="filter"
+        inputClass="input-search-icon  "
+        class="input-button-left"
         placeholder="¿Que estas buscando?"
         @input="search()"
         @clear="search()"
@@ -108,7 +108,7 @@ defineExpose({
       </div>
     </div>
     <g-button
-      class="filter-search"
+      class="filter-search button-input-right"
       type="search"
       data-bs-toggle="dropdown"
       aria-expanded="false"
@@ -143,7 +143,7 @@ defineExpose({
     </div>
   </div>
 </template>
-<style>
+<style scoped>
 .search-icon-container {
   position: relative;
 }
@@ -151,21 +151,15 @@ defineExpose({
   position: absolute;
   top: 0;
   width: 2.5rem;
-
   height: 100%;
   color: var(--color-b-v3);
   padding-top: 0.3rem;
   font-size: 14px;
 }
-.filter-input {
-  padding-left: 1.4rem;
-  padding-right: 1.1rem;
-}
 .filter-settings {
   border-radius: 0rem !important;
 }
 .filter-search {
-  margin-left: -0.75rem;
-  background-color: var(--color-w-v3);
+  background-color: var(--color-c1);
 }
 </style>

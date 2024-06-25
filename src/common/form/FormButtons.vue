@@ -57,6 +57,7 @@ function onSave() {
         icon="fa-solid fa-trash-can"
         text="Eliminar"
         @click="onDelete()"
+        :separationLine="true"
       />
       <g-button
         v-if="statusData !== null"

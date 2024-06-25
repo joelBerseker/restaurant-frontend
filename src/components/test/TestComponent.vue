@@ -6,7 +6,7 @@ import TestStatusElementComponent from "@/components/test/TestStatusElementCompo
 
 import { RolModel, TableModel } from "@/models";
 import { rolService, tableService } from "@/services";
-import { sleep } from "@/helpers";
+import { isEmpty, sleep } from "@/helpers";
 
 /*INICIO CAMBIAR SEGUN LO REQUERIDO*/
 const modelTest = ref(TableModel);
@@ -22,8 +22,8 @@ const consults = reactive({
 
 const status = reactive({
   add: 0,
-  getList: 1,
-  get: 2,
+  getList: 0,
+  get: 0,
   edit: 0,
   delete: 0,
 });
@@ -162,19 +162,91 @@ async function deleteTry() {
     return false;
   }
 }
+const inputName = ref(null);
+const inputClass = ref(null);
+const inputService = ref(null);
+
+const defaultClass = ref("");
+const defaultService = ref("");
+
+function generateClass() {
+  import(`@/models/index.js`)
+    .then((module) => {
+      let _className = isEmpty(inputClass.value)
+        ? defaultClass.value
+        : inputClass.value;
+      let importedClass = module[_className];
+      let instance = new importedClass();
+      console.log(instance);
+    })
+    .catch((err) => {
+      console.error(`Error al importar la clase: ${err}`);
+    });
+  import(`@/services/index.js`)
+    .then((module) => {
+      let _serviceName = isEmpty(inputService.value)
+        ? defaultService.value
+        : inputService.value;
+
+      let importedService = module[_serviceName];
+
+      console.log(importedService);
+    })
+    .catch((err) => {
+      console.error(`Error al importar la clase: ${err}`);
+    });
+}
+function onInputKeyWord() {
+  if (isEmpty(inputName.value)) return;
+
+  defaultClass.value = capitalize(inputName.value) + "Model";
+  defaultService.value = inputName.value + "Service";
+}
+function capitalize(_text) {
+  return _text.charAt(0).toUpperCase() + _text.slice(1);
+}
 </script>
 <template>
   <g-section-1 :refresh="true" @onRefresh="refresh()" subTitle="BETA v1.00">
     <template #buttons>
-      <g-button
-        text="Probar"
-        icon="fa-solid fa-gears"
-        @click="startTry()"
-      ></g-button>
+      <g-button text="Probar" icon="fa-solid fa-gears" @click="startTry()" />
     </template>
     <template #content>
       <div class="row g-4">
-        <div class="col-12">
+        <div class="col-5">
+          <g-section-4 title="Ingreso de clases" contentClass="row gutter-form">
+            <g-input
+              class="col-12"
+              label="Palabra clave"
+              v-model="inputName"
+              :uppercase="false"
+              @input="onInputKeyWord()"
+            />
+            <g-input
+              class="col-6"
+              label="Clase"
+              v-model="inputClass"
+              :placeholder="defaultClass"
+              :uppercase="false"
+            />
+            <g-input
+              class="col-6"
+              label="Servicio"
+              v-model="inputService"
+              :placeholder="defaultService"
+              :uppercase="false"
+            />
+
+            <div>
+              <g-button
+                text="Generar clase y servicio"
+                icon="fa-solid fa-power-off"
+                @click="generateClass()"
+              />
+            </div>
+          </g-section-4>
+        </div>
+        <div class="col-7">
           <g-section-4 title="Estado de Consultas">
             <div class="status-elements">
               <TestStatusElementComponent

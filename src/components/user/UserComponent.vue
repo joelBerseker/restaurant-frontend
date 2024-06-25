@@ -90,6 +90,7 @@ function onFirstLoad() {
         @onGotList="onGotList"
         @onFirstLoad="onFirstLoad"
         @onFilterCache="switchSearchValue = true"
+        iconDetail="fa-solid fa-arrow-right"
       ></TableConsult>
     </template>
   </g-section-1>

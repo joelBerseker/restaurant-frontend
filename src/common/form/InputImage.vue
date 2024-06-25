@@ -22,6 +22,7 @@ const props = defineProps({
   contentClass: { default: "" },
   imageEmptyClass: { default: null },
   validation: { default: null },
+  iconEmpty: { default: undefined },
 });
 const emit = defineEmits(["update:modelValue", "change", "clear"]);
 
@@ -108,12 +109,14 @@ defineExpose({
         :src="src"
         :imageClass="imageClass"
         :imageEmptyClass="imageEmptyClass"
+        :iconEmpty="iconEmpty"
     /></template>
     <template v-slot:form>
       <g-image
         :src="srcFinal"
         :imageClass="imageClass"
         :imageEmptyClass="imageEmptyClass"
+        :iconEmpty="iconEmpty"
       >
         <div class="cover-input">
           <div class="break-word text-cover">
@@ -150,7 +153,7 @@ defineExpose({
 </style>
 <style scoped>
 .cover-input {
-  background-color: rgba(63, 62, 62, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
   position: absolute;
   top: 0;
   width: 100%;
@@ -170,7 +173,7 @@ defineExpose({
   line-height: 1.3;
   font-size: 13px;
   margin-bottom: 0.05rem;
-  color: var(--color-w-v2);
+  color: var(--color-b-v2);
 }
 .form-image {
   position: absolute;

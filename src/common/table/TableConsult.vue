@@ -13,6 +13,7 @@ const props = defineProps({
   deleteConsult: { default: null },
   getListConsult: { default: null },
   filterCacheName: { default: null },
+  iconDetail: { default: "fa-solid fa-arrow-up-right-from-square" },
 });
 const emit = defineEmits([
   "onViewItem",
@@ -140,7 +141,7 @@ defineExpose({
           title="Eliminar"
         />
         <g-button
-          icon="fa-solid fa-arrow-up-right-from-square"
+          :icon="iconDetail"
           @click.stop="viewItem(row)"
           type="transparent-1"
           class="btn-row-table"

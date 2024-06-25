@@ -231,16 +231,16 @@ function tabAction(_item) {
 </template>
 <style>
 .form-select {
-  background-position: right 0.25rem center;
+  background-position: right 0rem center;
   padding-right: 1.5rem;
 }
 .g-form-wrapper.show-extra .form-select {
-  padding-right: 2.8rem;
-  background-position: right 1.7rem center;
+  padding-right: 2.5rem;
+  background-position: right 1.4rem center;
 }
 .form-select:disabled {
   --bs-form-select-bg-img: none;
-  padding-right: 0.25rem;
+  padding-right: 0rem;
 }
 .text-aditional {
   display: block;

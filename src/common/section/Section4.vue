@@ -40,6 +40,8 @@ function buttonCollapse() {
 </script>
 <template>
   <div :class="{ mbTitle }" class="container-section">
+    <slot name="contentAboveTitle"></slot>
+
     <div class="title-container" ref="titleRef" :class="{ sticking }">
       <div class="title-wrap">
         <span class="title-text">
@@ -85,7 +87,8 @@ function buttonCollapse() {
 }
 
 .container-section {
-  background-color: var(--color-c3);
+  background-color: var(--color-c1);
+
   border-radius: var(--br);
   padding: 1.5rem calc(31px + 0.25rem - 0.4rem);
 }

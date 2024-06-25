@@ -4,7 +4,7 @@ import { useSystemUtilStore } from "@/stores/";
 
 const useSystemUtil = useSystemUtilStore();
 const props = defineProps({
-  classContent: { default: "" },
+  contentClass: { default: "" },
   loaded: { default: false },
 });
 
@@ -47,7 +47,7 @@ defineExpose({
   <div
     :class="[
       'sys-container',
-      classContent,
+      contentClass,
       showScreenLoading ? 'loading-size' : '',
     ]"
   >
@@ -86,22 +86,32 @@ defineExpose({
   overflow: hidden;
 }
 .sys-container {
-  background-color: var(--color-w);
+  background-color: var(--color-c2);
+
   height: 100%;
-  box-shadow: -1px -5px 27px -7px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px -7px 5px 0px rgba(0, 0, 0, 0.05);
   border-top-left-radius: var(--br-v2);
   border-top-right-radius: var(--br-v2);
+  border: 1px solid var(--color-border2);
+}
+.sys-container.darker-bg,
+.sys-container.darker-bg .sys-wrapper,
+.sys-container.darker-bg .loading-container {
+  background-color: var(--color-c2);
 }
 .sys-wrapper {
   padding: var(--py-1);
   padding-bottom: calc(var(--py-1) * 2);
   position: relative;
-  background-color: var(--color-w);
+
+  background-color: var(--color-c2);
+
   border-top-left-radius: var(--br-v2);
   border-top-right-radius: var(--br-v2);
 }
 .loading-container {
-  background-color: var(--color-w);
+  background-color: var(--color-c2);
+
   padding: 2rem;
   position: absolute;
   width: 100%;

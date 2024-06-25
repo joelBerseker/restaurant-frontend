@@ -181,9 +181,9 @@ defineExpose({
 .input-group-text,
 .form-select {
   border-radius: 0;
-  border-color: var(--color-b-v4) !important;
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
+  border-color: var(--color-border) !important;
+  padding-left: 0rem;
+  padding-right: 0rem;
   border-left: none;
   border-right: none;
   border-top: none;
@@ -193,7 +193,7 @@ defineExpose({
   font-size: 14px;
 }
 .g-form-wrapper.show-extra .form-control-sm {
-  padding-right: 1.8rem;
+  padding-right: 1.5rem;
 }
 .g-form-wrapper.show-extra .form-control-sm.filter-input {
   padding-right: 2.4rem;

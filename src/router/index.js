@@ -14,6 +14,8 @@ import ProductTypeView from "@/components/productType/ProductTypeView.vue";
 import AuthView from "@/components/auth/AuthView.vue";
 import LoginView from "@/components/auth/LoginView.vue";
 
+import TestView from "@/components/test/TestView.vue";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -40,7 +42,17 @@ const router = createRouter({
         userRouter,
         productRouter,
         ticketRouter,
-
+        {
+          path: "/test",
+          name: "test",
+          component: TestView,
+          meta: {
+            requiresAuth: true,
+            moduleid: 0,
+            icon: "fa-solid fa-flask-vial",
+            title: "Pruebas",
+          },
+        },
         {
           path: "/rol",
           name: "rol",

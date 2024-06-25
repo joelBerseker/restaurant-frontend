@@ -102,6 +102,13 @@ defineExpose({
   </div>
 </template>
 <style scoped>
+.modal-body::-webkit-scrollbar {
+  width: 10px; /* Cambiar el ancho de la barra de desplazamiento */
+}
+.modal-body::-webkit-scrollbar-thumb {
+  border-radius: 99rem;
+  background: rgb(190, 190, 190);
+}
 .title-principal {
   font-size: 20px;
   font-weight: 500;
@@ -151,7 +158,7 @@ defineExpose({
 }
 .modal-header {
   border-bottom: none;
-  padding: 1rem;
+  padding: 1rem 1.2rem;
 }
 .modal-header p,
 .modal-header p span {
@@ -159,21 +166,18 @@ defineExpose({
   font-size: 17px;
 }
 .modal-body {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.2rem;
 }
 .modal-footer {
   border-top: none;
-  padding: 1rem;
-  margin: calc(-0.25rem / 2);
+  padding: 1rem 1.2rem;
+  margin: 0 !important;
 }
 .modal-backdrop {
   display: none !important;
 }
 .modal-footer > * {
   margin: 0rem;
-}
-.modal-footer .btn {
-  margin: calc(0.25rem / 2);
 }
 
 .t-loading-enter-active,

@@ -22,6 +22,7 @@ const props = defineProps({
   editableFile: { default: true },
   imageClass: { default: "g-default-image" },
   imageEmptyClass: { default: null },
+  iconEmpty: { default: undefined },
 
   contentClass: { default: "" },
 });
@@ -80,6 +81,7 @@ function saveFile() {
     :contentClass="contentClass"
     :imageEmptyClass="imageEmptyClass"
     :validation="value.validation"
+    :iconEmpty="iconEmpty"
   >
     <template v-if="showButton" v-slot:aditional>
       <div class="float-button">

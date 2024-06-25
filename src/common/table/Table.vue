@@ -85,7 +85,7 @@ function iconCurrentSort(sort) {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(row, index) in rows" @click="rowClicked(row, index)">
+        <tr v-for="(row, index) in rows" @dblclick="rowClicked(row, index)">
           <td
             v-for="(col, index2) in activeColumns"
             :class="[col.rowClass, col.columnClass]"
@@ -135,10 +135,16 @@ function iconCurrentSort(sort) {
   padding-bottom: calc(0.6rem - 0.25rem - 1px) !important;
 }
 .g-table tbody tr {
-  background-color: rgb(255, 255, 255);
+  background-color: var(--color-c1);
 }
 .g-table tbody tr:nth-last-child(odd) {
-  background-color: var(--color-w-v3);
+  background-color: var(--color-c1);
+}
+.g-table tbody tr {
+  border-bottom: 2px solid var(--color-border2);
+}
+.g-table tbody tr:last-child {
+  border-bottom: none;
 }
 .g-table tr td {
   transition: 0.3s;

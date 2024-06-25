@@ -23,6 +23,8 @@ const emit = defineEmits([
 ]);
 
 const list = ref([]);
+const listBackup = ref([]);
+
 const slots = useSlots();
 
 const activeColumns = computed(() => {
@@ -112,10 +114,38 @@ function validate() {
 function getListValue() {
   return list.value;
 }
+
+function copy(_data) {
+  list.value = [];
+  listBackup.value = [];
+
+  console.log(_data);
+  for (let i = 0; i < _data.length; i++) {
+    const element = _data[i];
+    let _item = new props.elementModel();
+    let _itemBackup = new props.elementModel();
+    console.log(element);
+    _item.copy(element);
+    _item.init();
+
+    _itemBackup.copy(_item);
+
+    list.value.push(_item);
+    listBackup.value.push(_itemBackup);
+  }
+
+  emit("onUpdated", list.value);
+}
+function restore() {
+  element.value.copy(elementBackup.value);
+  emit("onUpdated", element.value);
+}
 defineExpose({
   additem,
   validate,
   getListValue,
+  copy,
+  restore,
 });
 </script>
 <template>
@@ -174,63 +204,5 @@ defineExpose({
     </table>
   </table-container>
 </template>
-<style>
-.g-table td.number,
-.g-table th.number {
-  text-align: end;
-}
-.g-table th span {
-  font-weight: 500;
-}
-.g-table th {
-  background-color: var(--color-2);
-  color: var(--color-w);
-  font-size: 12px;
-  text-transform: uppercase;
-}
-
-.g-table td,
-.g-table th {
-  padding-top: 0.6rem;
-  padding-bottom: 0.6rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-.th-buttons {
-  padding-top: calc(0.6rem - 0.25rem - 1px) !important;
-  padding-bottom: calc(0.6rem - 0.25rem - 1px) !important;
-}
-.g-table tbody tr {
-  background-color: rgb(255, 255, 255);
-}
-.g-table tbody tr:nth-last-child(odd) {
-  background-color: var(--color-w-v3);
-}
-.g-table tr td {
-  transition: 0.3s;
-}
-.g-table tr:hover td {
-  color: var(--color-1-v3);
-}
-.table-min td,
-.table-min th {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-
-.table-min .bt-buttons {
-  padding-top: calc(0.5rem - 0.25rem - 1px);
-  padding-bottom: calc(0.5rem - 0.25rem - 1px);
-}
-</style>
-<style scoped>
-.sortable-column {
-  cursor: pointer;
-  width: fit-content;
-  transition: 0.3s;
-  text-wrap: nowrap;
-}
-.sort-column {
-  color: var(--color-1-v2);
-}
-</style>
+<style></style>
+<style scoped></style>

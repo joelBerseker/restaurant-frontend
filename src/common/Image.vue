@@ -3,6 +3,7 @@ const props = defineProps({
   src: { default: null },
   imageClass: { default: "g-default-image" },
   imageEmptyClass: { default: null },
+  iconEmpty: { default: "fa-solid fa-image" },
 });
 </script>
 <template>
@@ -15,7 +16,7 @@ const props = defineProps({
     <slot></slot>
 
     <div v-if="src === null" class="no-img-wrapper">
-      <font-awesome-icon icon="fa-solid fa-image" />
+      <font-awesome-icon :icon="iconEmpty" />
     </div>
     <img v-else :src="src" alt="Imagen" class="g-image" height="20px" />
   </div>
@@ -32,13 +33,33 @@ const props = defineProps({
 }
 
 .user-img {
-  height: 140px;
+  height: 130px;
   display: block;
   aspect-ratio: 1;
 
   width: auto;
 
   border-radius: 999rem;
+}
+.user-img.g-image-container {
+  background-color: var(--color-c2);
+}
+.user-emp-img {
+  width: 100%;
+  max-width: 200px;
+  display: block;
+  aspect-ratio: 2/1.5;
+
+  border-radius: var(--br);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.user-emp-img .g-image {
+  object-fit: fill !important;
+
+  width: auto !important;
+  height: 80% !important;
 }
 .no-img-wrapper {
   display: flex;
@@ -50,7 +71,7 @@ const props = defineProps({
   color: var(--color-b-v3);
 }
 .no-img-wrapper > svg {
-  height: 40px;
+  height: 32px;
 }
 .profile-img-min {
   width: 125px;
@@ -84,8 +105,7 @@ const props = defineProps({
 .g-image-container {
   position: relative;
   overflow: hidden;
-  border: 1px solid var(--color-w-v3);
-  background-color: var(--color-w-v3);
+  border: 1px solid var(--color-border);
 }
 .g-image {
   width: 100%;

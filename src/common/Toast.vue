@@ -89,9 +89,9 @@ const miFuncion = () => {
 
 const iniciarTimeout = () => {
   if (listToast.value.length > 0) {
+    console.log("start");
+    timeoutID.value = setTimeout(miFuncion, 5000); // 5000 milisegundos = 5 segundos
   }
-
-  timeoutID.value = setTimeout(miFuncion, 5000); // 5000 milisegundos = 5 segundos
 };
 
 const detenerTimeout = () => {
@@ -112,14 +112,29 @@ const reiniciarTimeout = () => {
 function deleteToast(index) {
   listToast.value.splice(index, 1);
 }
+function clearAll() {
+  listToast.value = [];
+}
 </script>
 <template>
   <div
-    class="toast-container position-fixed top-0 end-0 m-3"
+    class="toast-container position-fixed top-0 end-0"
     style="z-index: 10000"
     @mouseenter="onHover"
     @mouseleave="onLeave"
   >
+    <div class="clear-all">
+      <div>
+        <g-button
+          v-show="listToast.length > 0"
+          icon="fa-solid fa-xmark"
+          type="link-min-2"
+          text="Cerrar todos"
+          @click="clearAll()"
+        />
+      </div>
+    </div>
+
     <TransitionGroup name="list">
       <div
         v-for="(toast, index) in listToast"
@@ -174,7 +189,7 @@ function deleteToast(index) {
                   <div>
                     <span class="important-text">{{ toast.error }}</span>
                   </div>
-                  <div v-show="toast.listError.length > 0">
+                  <div v-show="toast.listError.length > 0" class="mt-1">
                     <ul class="list-errors">
                       <li
                         v-for="(element, index) in toast.listError"
@@ -197,6 +212,7 @@ function deleteToast(index) {
 <style scoped>
 .important-text {
   font-weight: 600;
+  text-transform: uppercase;
 }
 
 .list-errors {
@@ -232,18 +248,20 @@ function deleteToast(index) {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 36px;
+  font-size: 32px;
 }
 .toast {
   border: none;
   overflow: hidden;
   background-color: var(--color-w);
   color: var(--color-b);
+  border-radius: var(--br);
 }
 .content-toast {
   border-left: 5px solid var(--color-b);
   position: relative;
   padding-bottom: 3px;
+  border-radius: inherit;
 }
 
 .content-toast::before {
@@ -315,15 +333,28 @@ function deleteToast(index) {
   transition: all 0.3s ease;
 }
 .list-leave-active {
-  position: absolute;
 }
 
 .list-enter-from {
   opacity: 0;
-  transform: translateY(-30px);
+  transform: translateX(30px);
 }
 .list-leave-to {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateX(30px);
+}
+.toast-container {
+  pointer-events: all;
+  margin-right: 1rem;
+  margin-top: 0.5rem;
+}
+.clear-all {
+  height: 1.8rem;
+  display: flex;
+  justify-content: right;
+  margin-bottom: 0 !important;
+}
+.toast-container > :not(:last-child) {
+  margin-bottom: 1rem;
 }
 </style>

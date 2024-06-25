@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, onMounted, inject } from "vue";
+import { ref, reactive, onMounted, inject, computed } from "vue";
 import TestElementComponent from "@/components/test/TestElementComponent.vue";
 import TestListComponent from "@/components/test/TestListComponent.vue";
 import TestStatusElementComponent from "@/components/test/TestStatusElementComponent.vue";
@@ -163,24 +163,47 @@ async function deleteTry() {
   }
 }
 const inputName = ref(null);
+
 const inputClass = ref(null);
 const inputService = ref(null);
 
 const defaultClass = ref("");
 const defaultService = ref("");
 
-function generateClass() {
-  import(`@/models/index.js`)
-    .then((module) => {
+const okClass = ref(false);
+const okService = ref(false);
+
+const errorClass = ref(null);
+const errorService = ref(null);
+
+const inputNameCorrect = computed(() => {
+  if (okClass.value && okService.value) {
+    return inputName.value;
+  }
+  return null;
+});
+
+async function generateClass() {
+  await import(`@/models/index.js`)
+    .then(async (module) => {
       let _className = isEmpty(inputClass.value)
         ? defaultClass.value
         : inputClass.value;
       let importedClass = module[_className];
       let instance = new importedClass();
+
+      modelTest.value = importedClass;
+      await sleep(0);
+      elementRef.value.initModel();
       console.log(instance);
+      okClass.value = true;
+      errorClass.value = null;
     })
     .catch((err) => {
-      console.error(`Error al importar la clase: ${err}`);
+      console.error(`Error al importar la clase`);
+      errorClass.value = "No se encontro la clase";
+
+      okClass.value = false;
     });
   import(`@/services/index.js`)
     .then((module) => {
@@ -191,9 +214,20 @@ function generateClass() {
       let importedService = module[_serviceName];
 
       console.log(importedService);
+      console.log("add" + capitalize(inputName.value));
+      consults.add = importedService["add" + capitalize(inputName.value)];
+      consults.getList =
+        importedService["getList" + capitalize(inputName.value)];
+      consults.get = importedService["get" + capitalize(inputName.value)];
+      consults.edit = importedService["update" + capitalize(inputName.value)];
+      consults.delete = importedService["delete" + capitalize(inputName.value)];
+      okService.value = true;
+      errorService.value = null;
     })
     .catch((err) => {
-      console.error(`Error al importar la clase: ${err}`);
+      console.error(`Error al importar el servicio`);
+      okService.value = false;
+      errorService.value = "No se encontro el servicio";
     });
 }
 function onInputKeyWord() {
@@ -207,12 +241,9 @@ function capitalize(_text) {
 }
 </script>
 <template>
-  <g-section-1 :refresh="true" @onRefresh="refresh()" subTitle="BETA v1.00">
-    <template #buttons>
-      <g-button text="Probar" icon="fa-solid fa-gears" @click="startTry()" />
-    </template>
+  <g-section-1 :refresh="true" @onRefresh="refresh()" subTitle="BETA v2.00">
     <template #content>
-      <div class="row g-4">
+      <div class="row g-4 container-content">
         <div class="col-5">
           <g-section-4 title="Ingreso de clases" contentClass="row gutter-form">
             <g-input
@@ -244,10 +275,24 @@ function capitalize(_text) {
                 @click="generateClass()"
               />
             </div>
+            <div class="errors">
+              <div v-show="errorClass">
+                <font-awesome-icon icon="fa-regular fa-circle-question" />
+                {{ errorClass }}
+              </div>
+              <div v-show="errorService">
+                <font-awesome-icon icon="fa-regular fa-circle-question" />
+                {{ errorService }}
+              </div>
+            </div>
           </g-section-4>
         </div>
-        <div class="col-7">
-          <g-section-4 title="Estado de Consultas">
+        <div v-show="inputNameCorrect" class="col-7">
+          <g-section-4
+            title="Estado de Consultas"
+            :subTitle="inputNameCorrect"
+            class="h-100"
+          >
             <div class="status-elements">
               <TestStatusElementComponent
                 :status="status.add"
@@ -281,22 +326,43 @@ function capitalize(_text) {
                 :arrow="false"
               />
             </div>
+            <div class="mt-4">
+              <g-button
+                text="Probar"
+                icon="fa-solid fa-gears"
+                @click="startTry()"
+              />
+            </div>
           </g-section-4>
         </div>
-        <div class="col-5">
-          <TestElementComponent ref="elementRef" :modelTest="modelTest" />
+        <div v-show="inputNameCorrect" class="col-5">
+          <TestElementComponent
+            ref="elementRef"
+            :modelTest="modelTest"
+            :subTitle="inputNameCorrect"
+          />
         </div>
-        <div class="col-7">
-          <TestListComponent ref="listRef" :getListConsult="consults.getList" />
+        <div v-show="inputNameCorrect" class="col-7">
+          <TestListComponent
+            ref="listRef"
+            :getListConsult="consults.getList"
+            :subTitle="inputNameCorrect"
+          />
         </div>
       </div>
     </template>
   </g-section-1>
 </template>
 <style scoped>
+.errors {
+  color: var(--color-d);
+  font-size: 13px !important;
+}
 .status-elements {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem 0.5rem;
+}
+.container-content {
 }
 </style>

@@ -56,6 +56,7 @@ defineExpose({
   getElement,
   copy,
   restore,
+  init,
 });
 </script>
 <template>

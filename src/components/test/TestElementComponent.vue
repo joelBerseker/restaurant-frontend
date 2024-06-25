@@ -9,7 +9,7 @@ function init() {
   listKey.value = [];
   if (props.modelTest) {
     let _model = new props.modelTest();
-
+    console.log(_model);
     for (var key in _model) {
       if (key !== "status" && key !== "id") {
         listKey.value.push(key);
@@ -27,10 +27,15 @@ function getElement() {
 function copy(_data) {
   return formRef.value.copy(_data);
 }
+function initModel() {
+  init();
+  return formRef.value.init();
+}
 defineExpose({
   validate,
   getElement,
   copy,
+  initModel,
 });
 init();
 </script>

@@ -79,8 +79,9 @@ export class Model {
       if (data[key].validation) {
         this[key].validation = {};
       }
-      if (data[key].file) {
+      if (data[key].file !== undefined) {
         this[key].file = data[key].file;
+        console.log(this[key].file);
       }
       if (data[key].view_text) {
         this[key].view_text = data[key].view_text;

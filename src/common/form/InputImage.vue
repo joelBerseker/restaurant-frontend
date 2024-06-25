@@ -73,15 +73,16 @@ function changeFile(e) {
 const keyInput = ref(1);
 
 watch(
-  () => props.disabled,
+  () => value.value,
   (_new, _old) => {
-    if (_new) {
+    if (isEmpty(_new)) {
       keyInput.value++;
       srcLocal.value = null;
       value.value = null;
     }
   }
 );
+
 function focus() {
   inputRef.value.focus();
 }

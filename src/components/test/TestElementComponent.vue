@@ -86,7 +86,7 @@ init();
           <g-input-check
             v-model="element[key].value"
             :label="element[key].name"
-            :disabled="disabled"
+            :disabled="false"
             labelClass="imp-label"
             checkPosition="bottom"
             :switchMode="true"

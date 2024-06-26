@@ -13,7 +13,7 @@ export class TableModel extends Model {
 
   number = {
     id: "number",
-    name: "Sitios",
+    name: "Numero de Asientos",
     type: "number",
     value: null,
     required: false, // null=True, blank=True in Django

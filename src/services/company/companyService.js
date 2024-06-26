@@ -5,7 +5,7 @@ import { BaseService } from "@/services/BaseService";
 import { CompanyModel } from "@/models";
 import { useToastStore } from "@/stores";
 
-const servicePath = "/company/company";
+const servicePath = "/company";
 const module = "company";
 
 export const companyService = {
@@ -146,6 +146,7 @@ export const companyService = {
       handleError(error, "delete_error", module);
     }
   },
+  async downloadModel(filterParams) {},
   async changeStatusCompany(data) {
     const endpoint = `${servicePath}/${data.id.value}/`;
     return BaseService.changeStatus(endpoint, data, module);

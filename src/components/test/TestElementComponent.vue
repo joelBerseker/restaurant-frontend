@@ -1,5 +1,6 @@
 <script setup>
 import { ref, reactive, onMounted, inject } from "vue";
+const emit = defineEmits(["generateCode"]);
 
 const props = defineProps({
   modelTest: { default: null },
@@ -30,6 +31,25 @@ function copy(_data) {
 function initModel() {
   init();
   return formRef.value.init();
+}
+function generateCode() {
+  let resp = "";
+  let _model = new props.modelTest();
+
+  listKey.value.forEach((key) => {
+    resp +=
+      "<g-input-file-val\n" +
+      '\t:label="element.' +
+      key +
+      '.name"\n' +
+      '\tv-model="element.' +
+      key +
+      '"\n' +
+      '\t:disabled="false"\n' +
+      '\t@validate="validateLabel"\n' +
+      "/>\n";
+  });
+  emit("generateCode", resp);
 }
 defineExpose({
   validate,
@@ -82,5 +102,12 @@ init();
         </div>
       </div>
     </g-form>
+    <div class="mt-4">
+      <g-button
+        text="Generar código"
+        icon="fa-solid fa-gears"
+        @click="generateCode()"
+      />
+    </div>
   </g-section-4>
 </template>

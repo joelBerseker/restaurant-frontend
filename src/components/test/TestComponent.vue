@@ -239,9 +239,24 @@ function onInputKeyWord() {
 function capitalize(_text) {
   return _text.charAt(0).toUpperCase() + _text.slice(1);
 }
+const generateCode = ref(null);
+function generateCodeFunc(_data) {
+  console.log(_data);
+  generateCode.value = _data;
+}
+async function copyClipboard() {
+  let texto = generateCode.value;
+
+  try {
+    await navigator.clipboard.writeText(texto);
+    console.log("Contenido copiado al portapapeles");
+  } catch (err) {
+    console.error("Error al copiar: ", err);
+  }
+}
 </script>
 <template>
-  <g-section-1 :refresh="true" @onRefresh="refresh()" subTitle="v1.00">
+  <g-section-1 :refresh="true" @onRefresh="refresh()" subTitle="v1.10">
     <template #content>
       <div class="row g-4 container-content">
         <div class="col-5">
@@ -340,6 +355,7 @@ function capitalize(_text) {
             ref="elementRef"
             :modelTest="modelTest"
             :subTitle="inputNameCorrect"
+            @generateCode="generateCodeFunc"
           />
         </div>
         <div v-show="inputNameCorrect" class="col-7">
@@ -348,6 +364,20 @@ function capitalize(_text) {
             :getListConsult="consults.getList"
             :subTitle="inputNameCorrect"
           />
+        </div>
+        <div v-show="inputNameCorrect && generateCode" class="col-12">
+          <g-section-4
+            title="Codigo generado"
+            :subTitle="inputNameCorrect"
+            class="h-100"
+          >
+            <template #buttons>
+              <g-button icon="fa-solid fa-clone" @click="copyClipboard()" />
+            </template>
+            <pre
+              class="pre-code"
+            ><code id="copyText">{{generateCode}}</code></pre>
+          </g-section-4>
         </div>
       </div>
     </template>

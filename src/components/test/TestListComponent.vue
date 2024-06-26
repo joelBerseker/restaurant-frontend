@@ -47,10 +47,16 @@ defineExpose({
       :rows="rows"
       :columns="columns"
       :isLoading="isLoading"
+      class="table-cont"
     >
       <template #data="{ row }">
-        {{ row }}
+        <pre class="pre-code"><code>{{ row }}</code></pre>
       </template>
     </Table>
   </g-section-4>
 </template>
+<style scoped>
+.table-cont {
+  max-height: 250px;
+}
+</style>

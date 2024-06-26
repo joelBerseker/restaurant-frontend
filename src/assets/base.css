@@ -124,3 +124,6 @@ hr {
 .input-search-icon {
   padding-left: 1.4rem !important;
 }
+.pre-code {
+  margin-bottom: 0;
+}

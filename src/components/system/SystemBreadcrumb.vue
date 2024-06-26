@@ -1,11 +1,18 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { computed } from "vue";
-
 const router = useRouter();
 
 const currentRoute = computed(() => {
-  return router.currentRoute.value.meta;
+  let resp = null;
+  if (props.navigation.current) {
+    const resolved = router.resolve({ name: props.navigation.current.name });
+    resp = resolved.meta;
+  } else {
+    resp = router.currentRoute.value.meta;
+  }
+
+  return resp;
 });
 
 const props = defineProps({

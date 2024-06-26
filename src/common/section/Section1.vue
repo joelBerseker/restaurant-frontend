@@ -32,8 +32,16 @@ const statusBefStick = ref(false);
 
 const titleRef = ref(null);
 
-const currentRoute = router.currentRoute.value.meta;
-
+const currentRoute = ref(null);
+function init() {
+  if (props.title) {
+    const resolved = router.resolve({ name: props.title });
+    currentRoute.value = resolved.meta;
+  } else {
+    currentRoute.value = router.currentRoute.value.meta;
+  }
+}
+init();
 /*
 const observer = new IntersectionObserver(
   async ([entry]) => {

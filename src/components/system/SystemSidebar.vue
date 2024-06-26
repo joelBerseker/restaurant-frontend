@@ -330,8 +330,4 @@ defineExpose({
 .t-sidebar-item-enter-from {
   opacity: 0;
 }
-.disbled-click {
-  pointer-events: none;
-  cursor: default;
-}
 </style>

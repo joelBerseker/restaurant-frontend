@@ -127,3 +127,7 @@ hr {
 .pre-code {
   margin-bottom: 0;
 }
+.disbled-click {
+  pointer-events: none;
+  cursor: default;
+}

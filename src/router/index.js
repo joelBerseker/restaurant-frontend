@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import { authService } from "@/services";
 import { userRouter } from "./userRouter";
 import { productRouter } from "./productRouter";
+import { testRouter } from "./testRouter";
 
 import SystemView from "@/components/system/SystemView.vue";
 import HomeView from "@/components/home/HomeView.vue";
@@ -14,7 +15,7 @@ import ProductTypeView from "@/components/productType/ProductTypeView.vue";
 import AuthView from "@/components/auth/AuthView.vue";
 import LoginView from "@/components/auth/LoginView.vue";
 
-import TestView from "@/components/test/TestView.vue";
+import TestView from "@/components/test/views/TestView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -42,17 +43,7 @@ const router = createRouter({
         userRouter,
         productRouter,
         ticketRouter,
-        {
-          path: "/test",
-          name: "test",
-          component: TestView,
-          meta: {
-            requiresAuth: true,
-            moduleid: 0,
-            icon: "fa-solid fa-flask-vial",
-            title: "Pruebas",
-          },
-        },
+        testRouter,
         {
           path: "/rol",
           name: "rol",
@@ -132,6 +123,11 @@ router.beforeEach(async (to, from, next) => {
     next("/");
   } else {
     const module_id = to.meta.moduleid;
+
+    if (to.meta.type === "tab") {
+      next();
+      return;
+    }
     useSystemUtil.isLoadingContentSystem(true);
 
     const hasPermission = true; /*await permissionsService.getPermises(

@@ -5,7 +5,7 @@ import { BaseService } from "@/services/BaseService";
 import { CompanyModel } from "@/models";
 import { useToastStore } from "@/stores";
 
-const servicePath = "/company/company";
+const servicePath = "/company";
 const module = "company";
 
 export const companyService = {

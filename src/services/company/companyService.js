@@ -146,6 +146,7 @@ export const companyService = {
       handleError(error, "delete_error", module);
     }
   },
+  async downloadModel(filterParams) {},
   async changeStatusCompany(data) {
     const endpoint = `${servicePath}/${data.id.value}/`;
     return BaseService.changeStatus(endpoint, data, module);

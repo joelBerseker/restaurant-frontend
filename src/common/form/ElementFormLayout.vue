@@ -123,13 +123,21 @@ function clear() {
   box-shadow: 0px -3px 0px 0px rgba(68, 68, 68, 0.25) inset;
   border-color: var(--g-wb500);
 }
-.valid > div > main > div > :is(.g-input, .g-select, .g-image-container) {
+.valid
+  > div
+  > main
+  > div
+  > :is(.g-input, .g-select, .g-image-container, .g-file-input) {
   border-color: var(--color-s) !important;
 }
-.valid > div > main > div > :is(.g-input:focus, .g-select:focus) {
+.valid > div > main > div > :is(.g-input:focus, .g-select:focus, ) {
   box-shadow: 0px -3px 0px 0px rgba(var(--color-s-rgb), 0.25) inset;
 }
-.no-valid > div > main > div > :is(.g-input, .g-select, .g-image-container) {
+.no-valid
+  > div
+  > main
+  > div
+  > :is(.g-input, .g-select, .g-image-container, .g-file-input) {
   border-color: var(--color-d) !important;
 }
 .no-valid > div > main > div > :is(.g-input:focus, .g-select:focus) {
@@ -185,6 +193,21 @@ function clear() {
 .g-form-element.input-button-left > div > main > div > .form-loading,
 .g-form-element.input-button-left > div > main > div > .form-close {
   right: 1rem;
+}
+.g-form-element.image > div > main > div > .form-loading,
+.g-form-element.image > div > main > div > .form-close,
+.g-form-element.image > div > main > div > .validation-icon {
+  right: 0.4rem;
+}
+.g-form-element.image > div > main > div > .form-loading,
+.g-form-element.image > div > main > div > .form-close,
+.g-form-element.image > div > main > div > .validation-icon {
+  right: 0.4rem;
+}
+.g-form-element.file > div > main > div > .form-loading,
+.g-form-element.file > div > main > div > .form-close,
+.g-form-element.file > div > main > div > .validation-icon {
+  right: 0.65rem;
 }
 .g-form-element.textarea
   .g-form-element.textarea

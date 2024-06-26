@@ -241,7 +241,7 @@ function capitalize(_text) {
 }
 </script>
 <template>
-  <g-section-1 :refresh="true" @onRefresh="refresh()" subTitle="BETA v2.00">
+  <g-section-1 :refresh="true" @onRefresh="refresh()" subTitle="v1.00">
     <template #content>
       <div class="row g-4 container-content">
         <div class="col-5">

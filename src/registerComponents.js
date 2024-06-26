@@ -8,6 +8,9 @@ import InputValidation from "./common/form/InputValidation.vue";
 import InputImage from "./common/form/InputImage.vue";
 import InputImageValidation from "./common/form/InputImageValidation.vue";
 
+import InputFile from "./common/form/InputFile.vue";
+import InputFileValidation from "./common/form/InputFileValidation.vue";
+
 import Select from "./common/form/Select.vue";
 import SelectConsultValidation from "./common/form/SelectConsultValidation.vue";
 import SelectValidation from "./common/form/SelectValidation.vue";
@@ -32,6 +35,9 @@ function registerComponents(app) {
 
   app.component("g-input-image", InputImage);
   app.component("g-input-image-val", InputImageValidation);
+
+  app.component("g-input-file", InputFile);
+  app.component("g-input-file-val", InputFileValidation);
 
   app.component("g-select", Select);
   app.component("g-select-val", SelectValidation);

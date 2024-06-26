@@ -86,6 +86,14 @@ watch(
 function focus() {
   inputRef.value.focus();
 }
+function sliceText(text) {
+  if (isEmpty(text)) {
+    return text;
+  }
+  var link = text;
+  var linkSlice = link.substring(link.lastIndexOf("/") + 1, link.length);
+  return linkSlice;
+}
 defineExpose({
   focus,
 });
@@ -103,47 +111,54 @@ defineExpose({
     :viewMode="viewMode"
     @clear="clear"
     :validation="validation"
-    type="image"
+    type="file"
   >
     <template v-slot:view>
-      <g-image
-        :src="src"
-        :imageClass="imageClass"
-        :imageEmptyClass="imageEmptyClass"
-        :iconEmpty="iconEmpty"
-    /></template>
-    <template v-slot:form>
-      <g-image
-        :src="srcFinal"
-        :imageClass="imageClass"
-        :imageEmptyClass="imageEmptyClass"
-        :iconEmpty="iconEmpty"
-      >
-        <div class="cover-input">
-          <div :class="['break-word text-cover', value ? '' : 'empty-text']">
-            {{ value === null ? "Seleccionar imagen" : value.name }}
-          </div>
+      <span v-if="isEmpty(src)" class="status-element no-defined-status">
+        No definido
+      </span>
+
+      <span v-else>
+        <div class="text-dots">
+          <a :href="src" target="_blank">{{ sliceText(src) }}</a>
         </div>
+      </span>
+    </template>
+    <template v-slot:form>
+      <div class="g-file-input">
+        <div class="break-word text-cover">
+          <span v-if="value === null" class="empty-text">
+            <font-awesome-icon icon="fa-solid fa-file" class="me-1" />
+            Seleccionar archivo
+          </span>
+          <span v-else>
+            <font-awesome-icon icon="fa-solid fa-file" class="me-1" />
+            Seleccionar archivo: {{ value.name }}
+          </span>
+        </div>
+
         <input
           ref="inputRef"
           :key="keyInput"
           @change="changeFile"
           :id="id"
           :class="[
-            'g-input form-control form-control-sm form-image',
+            'g-input form-control form-control-sm form-image form-file',
             inputClass,
           ]"
           :disabled="disabled"
           type="file"
           :multiple="props.multiple"
-          accept="image/png, image/gif, image/jpeg"
         />
-      </g-image>
+      </div>
       <slot name="aditional"></slot>
     </template>
   </ElementFormLayout>
 </template>
 <style>
+.g-form-wrapper.show-extra .form-file {
+  padding-right: 2.5rem;
+}
 .image-content {
   width: fit-content !important;
 }
@@ -153,31 +168,26 @@ defineExpose({
 }
 </style>
 <style scoped>
-.cover-input {
+.g-file-input {
   background-color: rgba(255, 255, 255, 0.5);
-  position: absolute;
-  top: 0;
+
   width: 100%;
   height: 100%;
-  left: 0;
-  color: var(--g-wb900);
-  display: flex;
-  align-items: end;
-  justify-content: center;
-  text-align: center;
-  padding: 0.5rem;
+
+  border: 1px solid var(--color-border);
+  border-radius: var(--br-v3);
+  padding: 0.5rem 0.75rem;
+}
+.empty-text {
+  color: var(--color-b-v3);
 }
 .text-cover {
   display: block;
   width: 100%;
   overflow: hidden !important;
-  line-height: 1.3;
 
   margin-bottom: 0.05rem;
   color: var(--color-b-v2);
-}
-.empty-text {
-  color: var(--color-b-v3);
 }
 .form-image {
   position: absolute;

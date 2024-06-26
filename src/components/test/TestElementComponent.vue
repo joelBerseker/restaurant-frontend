@@ -48,12 +48,38 @@ init();
       class="row gutter-form"
     >
       <div v-for="(key, index) in listKey" :key="index">
-        <g-input-val
-          v-model="element[key]"
-          :label="element[key].name"
-          @validate="validateLabel"
-          :disabled="false"
-        />
+        <div
+          v-if="element[key].type === 'file' || element[key].type === 'image'"
+        >
+          <g-input-file-val
+            :label="element[key].name"
+            v-model="element[key]"
+            :disabled="false"
+            @validate="validateLabel"
+          />
+        </div>
+        <div
+          v-else-if="
+            element[key].value === true || element[key].value === false
+          "
+        >
+          <g-input-check
+            v-model="element[key].value"
+            :label="element[key].name"
+            :disabled="disabled"
+            labelClass="imp-label"
+            checkPosition="bottom"
+            :switchMode="true"
+          />
+        </div>
+        <div v-else>
+          <g-input-val
+            v-model="element[key]"
+            :label="element[key].name"
+            @validate="validateLabel"
+            :disabled="false"
+          />
+        </div>
       </div>
     </g-form>
   </g-section-4>

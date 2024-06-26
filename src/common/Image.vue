@@ -33,7 +33,7 @@ const props = defineProps({
 }
 
 .user-img {
-  height: 130px;
+  height: 140px;
   display: block;
   aspect-ratio: 1;
 

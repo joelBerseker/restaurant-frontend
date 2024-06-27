@@ -2,9 +2,10 @@ import axiosInstance from "@/services/axios-instance";
 import { handleError } from "@/helpers";
 import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
-import { TicketDetailModel } from "@/models";
+import { MenuModel, ProductModel, TicketDetailModel } from "@/models";
 import { useToastStore } from "@/stores";
-const servicePath = "/ticket_detail";
+const servicePath = "/ticket_detail/detail";
+const servicePathOption = "/ticket_detail/option";
 const module = "Detalle";
 export const ticketDetailService = {
   async getTicketDetail(ticketdetail_id) {
@@ -94,6 +95,81 @@ export const ticketDetailService = {
         dataTransform.transformApiData(apiData, TicketDetailModel)
       );
       return datas;
+    } catch (error) {
+      handleError(error, "get_list_error", module);
+    }
+  },
+  async getListoption(filterParams = null) {
+    let filteredFilters = "";
+    if (filterParams != null) {
+      const {
+        search,
+        searchBy,
+        status,
+        order,
+        orderBy,
+        specific_date,
+        end_date,
+        start_date,
+        interval,
+        year_date,
+        searches,
+        // Otros parámetros de filtro que puedas necesitar
+        name,
+        price,
+        description,
+      } = filterParams;
+
+      const filters = {
+        orderBy,
+        order,
+        status,
+        search,
+        end_date,
+        start_date,
+        interval,
+        specific_date,
+        year_date,
+        // Otros parámetros de filtro que puedas necesitar
+        name,
+        price,
+        description,
+      };
+
+      filteredFilters = Object.entries(filters)
+        .filter(
+          ([key, value]) =>
+            value !== undefined && value !== null && value !== ""
+        )
+        .map(([key, value]) => `${key}=${value}`)
+        .join("&");
+
+      if (search && searchBy) {
+        const searchByParam = `searchBy=${searchBy.join(",")}`;
+        filteredFilters += searchByParam ? `&${searchByParam}` : "";
+      }
+      if (searches && searches != undefined) {
+        console.log("entre a searches");
+        searches.forEach((search, index) => {
+          if (search.value && search.by) {
+            filteredFilters += `&search${index + 1}=${encodeURIComponent(
+              search.value
+            )}&searchBy${index + 1}=${encodeURIComponent(search.by)}`;
+          }
+        });
+      }
+    }
+    try {
+      const response = await axiosInstance.get(
+        `${servicePath}/?${filteredFilters}`
+      );
+      const data_menus = response.data.menus.map((apiData) =>
+        dataTransform.transformApiData(apiData, MenuModel)
+      );
+      const data_products = response.data.products.map((apiData) =>
+        dataTransform.transformApiData(apiData, ProductModel)
+      );
+      return { menu: data_menus, product: data_products };
     } catch (error) {
       handleError(error, "get_list_error", module);
     }

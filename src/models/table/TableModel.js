@@ -9,6 +9,8 @@ export class TableModel extends Model {
     value: null,
     validation: {},
     validate: ["length"],
+
+    default_test: "Mesa de Prueba",
   };
 
   number = {
@@ -20,6 +22,7 @@ export class TableModel extends Model {
     validation: {},
     validate: ["length", "number"],
     default: "0",
+    default_test: "3",
   };
 
   description = {
@@ -31,6 +34,7 @@ export class TableModel extends Model {
     validation: {},
     validate: ["length"],
     default: "Sin descripción",
+    default_test: "Sin descripción",
   };
 
   getDataOptions() {

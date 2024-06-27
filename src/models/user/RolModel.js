@@ -17,7 +17,7 @@ export class RolModel extends Model {
 
     value: null,
     default: "Sin descripción",
-
+    default_test: "desc",
     required: false,
     validation: {},
     validate: ["length"],

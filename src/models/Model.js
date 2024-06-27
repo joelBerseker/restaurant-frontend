@@ -92,10 +92,10 @@ export class Model {
     }
   }
 
-  copyDefaultTest(data) {
-    for (var key in data) {
-      if (this[key].defaultTest) {
-        this[key].value = data[key].defaultTest;
+  copyDefaultTest() {
+    for (var key in this) {
+      if (this[key].default_test) {
+        this[key].value = this[key].default_test;
       }
     }
   }

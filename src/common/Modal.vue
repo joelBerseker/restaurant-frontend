@@ -11,9 +11,10 @@ const props = defineProps({
   closeButton: { default: true },
   size: { default: "" },
   isLoading: { default: false },
+  isFirstLoading: { default: false },
 });
 const slots = useSlots();
-const emit = defineEmits(["modal:close"]);
+const emit = defineEmits(["modal:close", "onMountedModal"]);
 const modalRef = ref(null);
 const modal = ref(null);
 
@@ -26,6 +27,7 @@ function openModal() {
 
 onMounted(() => {
   modal.value = new Modal(modalRef.value);
+  emit("onMountedModal");
 });
 
 defineExpose({
@@ -78,6 +80,7 @@ defineExpose({
         </header>
 
         <main class="modal-body">
+          <div class="first-loading" v-show="isFirstLoading && isLoading"></div>
           <slot></slot>
         </main>
         <div v-show="slots.footer === undefined" class="mt-2"></div>
@@ -102,6 +105,15 @@ defineExpose({
   </div>
 </template>
 <style scoped>
+.first-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-w);
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
 .modal-body::-webkit-scrollbar {
   width: 10px; /* Cambiar el ancho de la barra de desplazamiento */
 }
@@ -142,6 +154,7 @@ defineExpose({
   align-items: center;
   justify-content: center;
   display: flex;
+  z-index: 2;
 }
 .modal {
   background: rgba(0, 0, 0, 0.7);
@@ -167,6 +180,7 @@ defineExpose({
 }
 .modal-body {
   padding: 0.5rem 1.2rem;
+  position: relative;
 }
 .modal-footer {
   border-top: none;

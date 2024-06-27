@@ -16,12 +16,10 @@ async function getElement(_id) {
   return resp;
 }
 async function addElement() {
-  if (!formRef.value.validate()) return;
   let resp = await rolService.addRol(formRef.value.getElement());
   return resp;
 }
 async function editElement() {
-  if (!formRef.value.validate()) return;
   let resp = await rolService.updateRol(formRef.value.getElement());
   if (resp) formRef.value.copy(resp);
   return resp;
@@ -41,6 +39,9 @@ function restoreElement() {
 function resetElement() {
   formRef.value.reset();
 }
+function validateElement() {
+  return formRef.value.validate();
+}
 defineExpose({
   getElement,
   addElement,
@@ -49,6 +50,7 @@ defineExpose({
   restoreElement,
   resetElement,
   editStatusElement,
+  validateElement,
 });
 </script>
 <template>

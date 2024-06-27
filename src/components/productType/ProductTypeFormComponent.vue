@@ -16,14 +16,12 @@ async function getElement(_id) {
   return resp;
 }
 async function addElement() {
-  if (!formRef.value.validate()) return;
   let resp = await typeProductService.addTypeProduct(
     formRef.value.getElement()
   );
   return resp;
 }
 async function editElement() {
-  if (!formRef.value.validate()) return;
   let resp = await typeProductService.updateTypeProduct(
     formRef.value.getElement()
   );
@@ -43,6 +41,9 @@ async function editStatusElement() {
   if (resp) return formRef.value.getElement().status.value;
   return;
 }
+function validateElement() {
+  return formRef.value.validate();
+}
 function restoreElement() {
   formRef.value.restore();
 }
@@ -57,6 +58,7 @@ defineExpose({
   restoreElement,
   resetElement,
   editStatusElement,
+  validateElement,
 });
 </script>
 <template>

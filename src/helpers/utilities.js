@@ -5,7 +5,7 @@ function isEmpty(text) {
   }
   return resp;
 }
-const subTitleGen = {
+const formatSubTitle = {
   countElement(_list) {
     if (_list === null) return null;
     let resp = "";
@@ -548,7 +548,7 @@ export {
   dateDiffInDays,
   getModuleBitacora,
   getActionBitacora,
-  subTitleGen,
+  formatSubTitle,
   formatearErrores,
   copyObject,
 };

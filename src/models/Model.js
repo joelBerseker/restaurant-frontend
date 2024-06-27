@@ -99,6 +99,7 @@ export class Model {
     }
   }
   init() {
+    console.log(this);
     this.initValueText();
   }
   changeStatus() {

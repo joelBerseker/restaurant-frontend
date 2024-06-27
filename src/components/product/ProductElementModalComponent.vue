@@ -3,6 +3,9 @@ import Modal from "@/common/Modal.vue";
 import ProductFormModalComponent from "@/components/product/ProductFormModalComponent.vue";
 import FormButtons from "@/common/form/FormButtons.vue";
 import { ref } from "vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
 
 const emit = defineEmits(["onRefreshList"]);
 
@@ -16,6 +19,7 @@ const title = ref("Producto");
 const titleBefore = ref(null);
 const subTitle = ref(null);
 const isLoading = ref(false);
+const isFirstLoading = ref(false);
 
 const idElement = ref(null);
 const mode = ref(null);
@@ -37,11 +41,12 @@ async function viewMode(_id = null) {
   disabled.value = true;
   openModal();
   if (_id !== null) {
+    isFirstLoading.value = true;
     idElement.value = _id;
     isLoading.value = true;
     subTitle.value = null;
-    formRef.value.resetElement();
     await formRef.value.getElement(_id);
+    isFirstLoading.value = false;
     isLoading.value = false;
   }
 }
@@ -56,9 +61,12 @@ function closeModal() {
 function openModal() {
   modalRef.value.openModal();
 }
-
+function haveId() {
+  if (route.params.id) viewMode(route.params.id);
+}
 /*BUTTONS*/
 async function onAdd() {
+  if (!formRef.value.validateElement()) return;
   isLoading.value = true;
   let resp = await formRef.value.addElement();
   if (resp) {
@@ -71,6 +79,7 @@ function onEdit() {
   editMode();
 }
 async function onSave() {
+  if (!formRef.value.validateElement()) return;
   isLoading.value = true;
   let resp = await formRef.value.editElement();
   if (resp) {
@@ -102,7 +111,6 @@ async function onStatus() {
   isLoading.value = false;
 }
 function onUpdated(_data) {
-  console.log(_data);
   statusValue.value = _data.status.value;
   subTitle.value = _data.getText();
   elementText.value = _data.getTextModel();
@@ -120,6 +128,7 @@ defineExpose({
     :titleBeforeModal="titleBefore"
     :subTitleModal="subTitle"
     :isLoading="isLoading"
+    @onMountedModal="haveId"
   >
     <ProductFormModalComponent
       ref="formRef"

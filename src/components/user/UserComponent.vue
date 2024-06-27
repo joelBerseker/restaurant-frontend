@@ -4,7 +4,7 @@ import TableButtons from "@/common/table/TableButtons.vue";
 
 import { ref, reactive, onMounted, inject } from "vue";
 import { userService } from "@/services";
-import { subTitleGen } from "@/helpers";
+import { formatSubTitle } from "@/helpers";
 import { useRouter } from "vue-router";
 const emit = defineEmits(["onFirstLoad"]);
 
@@ -57,8 +57,8 @@ function viewItem(_data) {
 function addItem() {
   router.push({ name: "userAdd" });
 }
-function onGotList(_data) {
-  subTitle.value = subTitleGen.countElement(_data);
+function onUpdate(_data) {
+  subTitle.value = formatSubTitle.countElement(_data);
 }
 
 const switchSearchValue = ref(false);
@@ -87,7 +87,7 @@ function onFirstLoad() {
         :deleteConsult="userService.deleteUser"
         :getListConsult="userService.getListUser"
         @onViewItem="viewItem"
-        @onGotList="onGotList"
+        @onUpdate="onUpdate"
         @onFirstLoad="onFirstLoad"
         @onFilterCache="switchSearchValue = true"
         iconDetail="fa-solid fa-arrow-right"

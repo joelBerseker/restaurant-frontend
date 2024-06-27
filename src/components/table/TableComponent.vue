@@ -4,7 +4,7 @@ import TableButtons from "@/common/table/TableButtons.vue";
 import TableElementModalComponent from "@/components/table/TableElementModalComponent.vue";
 import { ref, reactive, onMounted, inject } from "vue";
 import { tableService } from "@/services";
-import { subTitleGen } from "@/helpers";
+import { formatSubTitle } from "@/helpers";
 const emit = defineEmits(["onFirstLoad"]);
 
 const tableRef = ref(null);
@@ -55,8 +55,8 @@ function viewItem(_data) {
 function addItem() {
   modalRef.value.addMode();
 }
-function onGotList(_data) {
-  subTitle.value = subTitleGen.countElement(_data);
+function onUpdate(_data) {
+  subTitle.value = formatSubTitle.countElement(_data);
 }
 function onFirstLoad() {
   emit("onFirstLoad");
@@ -86,7 +86,7 @@ function switchSearch() {
         :deleteConsult="tableService.deleteTable"
         :getListConsult="tableService.getListTable"
         @onViewItem="viewItem"
-        @onGotList="onGotList"
+        @onUpdate="onUpdate"
         @onFirstLoad="onFirstLoad"
         @onFilterCache="switchSearchValue = true"
       ></TableConsult>

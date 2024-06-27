@@ -22,7 +22,6 @@ async function addElement(_list) {
   return resp;
 }
 async function editElement() {
-  if (!formRef.value.validate()) return;
   let resp = await ticketService.updateTicket(formRef.value.getElement());
   if (resp) formRef.value.copy(resp);
   return resp;
@@ -68,35 +67,31 @@ defineExpose({
     :elementModel="TicketModel"
     v-slot="{ element, validateLabel }"
   >
-    <g-section-2 title="Información General" contentClass="row gutter-form">
+    <g-section-4 title="Información General" contentClass="row gutter-form">
       <g-input-val
         v-model="element.code"
         :label="element.code.name"
         @validate="validateLabel"
         :disabled="true"
         :viewMode="disabled"
-        class="col-4"
       />
       <g-input-val
         v-model="element.ruc"
         :label="element.ruc.name"
         @validate="validateLabel"
         :disabled="disabled"
-        class="col-4"
       />
       <g-input-val
         v-model="element.discount"
         :label="element.discount.name"
         @validate="validateLabel"
         :disabled="disabled"
-        class="col-4"
       />
       <g-input-val
         v-model="element.priceTotal"
         :label="element.priceTotal.name"
         @validate="validateLabel"
         :disabled="disabled"
-        class="col-4"
       />
       <g-select-consult-val
         v-model="element.user_id"
@@ -109,7 +104,6 @@ defineExpose({
           orderBy: 'first_name',
           searchBy: ['first_name'],
         }"
-        class="col-4"
       />
       <g-select-consult-val
         v-model="element.table_id"
@@ -118,8 +112,7 @@ defineExpose({
         @validate="validateLabel"
         :consult="tableService.getListTable"
         :filter="{ order: 'asc', orderBy: 'name', searchBy: ['name'] }"
-        class="col-4"
       />
-    </g-section-2>
+    </g-section-4>
   </g-form>
 </template>

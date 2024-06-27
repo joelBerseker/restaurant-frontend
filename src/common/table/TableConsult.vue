@@ -18,7 +18,7 @@ const props = defineProps({
 const emit = defineEmits([
   "onViewItem",
   "onDeleteItem",
-  "onGotList",
+  "onUpdate",
   "onFirstLoad",
   "onFilterCache",
 ]);
@@ -48,7 +48,7 @@ async function getList(loading = true) {
   let resp = await props.getListConsult(filter.value);
   if (resp) {
     rows.value = resp.map((element) => element.getData());
-    emit("onGotList", rows.value);
+    emit("onUpdate", rows.value);
   }
   isLoading.value = false;
 }

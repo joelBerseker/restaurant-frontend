@@ -9,7 +9,7 @@ import {
 import { ref, onMounted, inject, reactive } from "vue";
 import TableForm from "@/common/table/TableForm.vue";
 import TableFormButtons from "@/common/table/TableFormButtons.vue";
-import { subTitleGen } from "@/helpers";
+import { formatSubTitle } from "@/helpers";
 
 const emit = defineEmits(["onFirstLoad"]);
 
@@ -101,7 +101,7 @@ function onAdd() {
   tableFormRef.value.additem();
 }
 function onUpdated(_data) {
-  subTitle.value = subTitleGen.countElement(_data);
+  subTitle.value = formatSubTitle.countElement(_data);
 }
 function getListValue() {
   return tableFormRef.value.getListValue();
@@ -124,7 +124,7 @@ defineExpose({
 });
 </script>
 <template>
-  <g-section-2 title="Lista de productos" :subTitle="subTitle">
+  <g-section-4 title="Lista de productos" :subTitle="subTitle">
     <template #buttons>
       <TableFormButtons
         :mode="localMode"
@@ -165,5 +165,5 @@ defineExpose({
         />
       </template>
     </TableForm>
-  </g-section-2>
+  </g-section-4>
 </template>

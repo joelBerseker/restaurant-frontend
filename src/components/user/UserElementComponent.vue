@@ -40,6 +40,7 @@ function toList() {
 
 /*BUTTONS*/
 async function onAdd() {
+  if (!formRef.value.validateElement()) return;
   isLoading.value = true;
   let resp = await formRef.value.addElement();
   if (resp) {
@@ -51,6 +52,7 @@ function onEdit() {
   editMode();
 }
 async function onSave() {
+  if (!formRef.value.validateElement()) return;
   isLoading.value = true;
   let resp = await formRef.value.editElement();
   if (resp) {
@@ -79,9 +81,6 @@ async function onStatus() {
   isLoading.value = false;
 }
 function onUpdated(_data) {
-  console.log("onupdated");
-
-  console.log(_data.getText());
   statusValue.value = _data.status.value;
   subTitle.value = _data.getText();
   elementText.value = _data.getTextModel();

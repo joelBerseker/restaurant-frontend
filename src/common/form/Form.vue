@@ -1,9 +1,9 @@
 <script setup>
-import { onUpdated, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useToastStore } from "@/stores";
 const useToast = useToastStore();
 
-const emit = defineEmits(["onUpdated"]);
+const emit = defineEmits(["onUpdated", "onMountedForm"]);
 const props = defineProps({
   elementModel: { default: null },
 });
@@ -50,6 +50,9 @@ function reset() {
   element.value = new props.elementModel();
   elementBackup.value = new props.elementModel();
 }
+onMounted(() => {
+  emit("onMountedForm");
+});
 defineExpose({
   reset,
   validate,

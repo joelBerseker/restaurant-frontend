@@ -64,6 +64,7 @@ function onEdit() {
   editMode();
 }
 async function onSave() {
+  if (!formRef.value.validateElement()) return;
   isLoading.value = true;
   let resp = await formRef.value.editElement();
   if (resp) {
@@ -129,14 +130,20 @@ defineExpose({
         />
       </template>
       <template #content>
-        <TicketFormComponent
-          ref="formRef"
-          :disabled="disabled"
-          :mode="mode"
-          @onUpdated="onUpdated"
-          @onFirstLoad="onFirstLoad"
-        />
-        <TicketDetailFormComponent ref="listFormRef" />
+        <div class="row gutter-sec">
+          <div class="col-4">
+            <TicketFormComponent
+              ref="formRef"
+              :disabled="disabled"
+              :mode="mode"
+              @onUpdated="onUpdated"
+              @onFirstLoad="onFirstLoad"
+            />
+          </div>
+          <div class="col-8">
+            <TicketDetailFormComponent ref="listFormRef" />
+          </div>
+        </div>
       </template>
     </g-section-1>
   </LoadingContainer>

@@ -26,7 +26,7 @@ function add() {
     />
     <g-button
       type="transparent-1"
-      icon="fa-solid fa-file-excel"
+      icon="fa-solid fa-download"
       text="Descargar"
       @click="print()"
     />

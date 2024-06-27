@@ -32,7 +32,7 @@ const router = createRouter({
         ticketRouter,
         testRouter,
         {
-          path: "/rol",
+          path: "/rol/:id?",
           name: "rol",
           component: () => import("@/components/rol/RolView.vue"),
           meta: {
@@ -44,7 +44,7 @@ const router = createRouter({
         },
         userRouter,
         {
-          path: "/table",
+          path: "/table/:id?",
           name: "table",
           component: () => import("@/components/table/TableView.vue"),
           meta: {
@@ -55,7 +55,7 @@ const router = createRouter({
           },
         },
         {
-          path: "/product_type",
+          path: "/product_type/:id?",
           name: "productType",
           component: () =>
             import("@/components/productType/ProductTypeView.vue"),

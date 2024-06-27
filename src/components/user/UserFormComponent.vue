@@ -18,12 +18,10 @@ async function getElement(_id) {
   return resp;
 }
 async function addElement() {
-  if (!formRef.value.validate()) return;
   let resp = await userService.addUser(formRef.value.getElement());
   return resp;
 }
 async function editElement() {
-  if (!formRef.value.validate()) return;
   let resp = await userService.updateUser(formRef.value.getElement());
   if (resp) formRef.value.copy(resp);
   return resp;
@@ -43,6 +41,9 @@ function restoreElement() {
 function resetElement() {
   formRef.value.reset();
 }
+function validateElement() {
+  return formRef.value.validate();
+}
 onMounted(async () => {
   if (idElement) await getElement(idElement);
   emit("onFirstLoad");
@@ -55,6 +56,7 @@ defineExpose({
   restoreElement,
   resetElement,
   editStatusElement,
+  validateElement,
 });
 </script>
 <template>

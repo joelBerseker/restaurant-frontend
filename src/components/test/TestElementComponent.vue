@@ -81,6 +81,9 @@ const idElement = ref(null);
 function getIdInput() {
   return idElement.value;
 }
+function copyTest() {
+  formRef.value.copyDefulttTest();
+}
 defineExpose({
   validate,
   getElement,
@@ -102,6 +105,11 @@ init();
           type="secondary"
         />
         <g-button icon="fa-solid fa-broom" @click="reset()" type="secondary" />
+        <g-button
+          icon="fa-solid fa-clone"
+          @click="copyTest()"
+          type="secondary"
+        />
       </template>
       <g-form
         ref="formRef"
@@ -128,8 +136,11 @@ init();
           </div>
         </div>
         <div v-for="(key, index) in listKey" :key="index">
+          <div v-if="!element[key].name"></div>
           <div
-            v-if="element[key].type === 'file' || element[key].type === 'image'"
+            v-else-if="
+              element[key].type === 'file' || element[key].type === 'image'
+            "
           >
             <g-input-file-val
               :label="element[key].name"
@@ -158,6 +169,7 @@ init();
               :label="element[key].name"
               @validate="validateLabel"
               :disabled="false"
+              :uppercase="false"
             />
           </div>
         </div>

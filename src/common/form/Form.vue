@@ -42,6 +42,9 @@ function copy(_data) {
   elementBackup.value.copy(element.value);
   emit("onUpdated", element.value);
 }
+function copyDefulttTest() {
+  element.value.copyDefaultTest();
+}
 function restore() {
   element.value.copy(elementBackup.value);
   emit("onUpdated", element.value);
@@ -60,6 +63,7 @@ defineExpose({
   copy,
   restore,
   init,
+  copyDefulttTest,
 });
 </script>
 <template>

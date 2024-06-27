@@ -91,6 +91,15 @@ export class Model {
       }
     }
   }
+
+  copyDefaultTest(data) {
+    for (var key in data) {
+      if (this[key].defaultTest) {
+        this[key].value = data[key].defaultTest;
+      }
+    }
+  }
+
   initValueText() {
     for (var key in this) {
       if (this[key].getValueText) {

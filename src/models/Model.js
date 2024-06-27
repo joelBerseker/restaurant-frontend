@@ -124,6 +124,9 @@ export class Model {
     let resp = {};
     for (var key in this) {
       let element = this[key];
+      if (element.omit) {
+        continue;
+      }
       if (element.type === "image" || element.type === "file ") {
         if (element.file) resp[key] = element.file;
       } else {

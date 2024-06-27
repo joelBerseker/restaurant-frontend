@@ -117,6 +117,9 @@ export class UserModel extends Model {
     }
   }
   beforeAddData() {
+    if (this.id.value) {
+      this.password.omit = true;
+    }
     if (this.generate_password.value) {
       this.password.value = this.first_name.value + this.last_name.value;
     }

@@ -4,19 +4,6 @@ import { userRouter } from "./userRouter";
 import { productRouter } from "./productRouter";
 import { testRouter } from "./testRouter";
 
-import SystemView from "@/components/system/SystemView.vue";
-import HomeView from "@/components/home/HomeView.vue";
-
-import RolView from "@/components/rol/RolView.vue";
-import TableView from "@/components/table/TableView.vue";
-
-import ProductTypeView from "@/components/productType/ProductTypeView.vue";
-
-import AuthView from "@/components/auth/AuthView.vue";
-import LoginView from "@/components/auth/LoginView.vue";
-
-import TestView from "@/components/test/views/TestView.vue";
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -24,7 +11,7 @@ const router = createRouter({
       path: "/",
       name: "system",
       redirect: { name: "home" },
-      component: SystemView,
+      component: () => import("@/components/system/SystemView.vue"),
       meta: {
         requiresAuth: true,
       },
@@ -32,7 +19,7 @@ const router = createRouter({
         {
           path: "/home",
           name: "home",
-          component: HomeView,
+          component: () => import("@/components/home/HomeView.vue"),
           meta: {
             requiresAuth: true,
             moduleid: 0,
@@ -47,7 +34,7 @@ const router = createRouter({
         {
           path: "/rol",
           name: "rol",
-          component: RolView,
+          component: () => import("@/components/rol/RolView.vue"),
           meta: {
             requiresAuth: true,
             moduleid: 0,
@@ -59,7 +46,7 @@ const router = createRouter({
         {
           path: "/table",
           name: "table",
-          component: TableView,
+          component: () => import("@/components/table/TableView.vue"),
           meta: {
             requiresAuth: true,
             moduleid: 0,
@@ -70,7 +57,8 @@ const router = createRouter({
         {
           path: "/product_type",
           name: "productType",
-          component: ProductTypeView,
+          component: () =>
+            import("@/components/productType/ProductTypeView.vue"),
           meta: {
             requiresAuth: true,
             moduleid: 0,
@@ -83,7 +71,7 @@ const router = createRouter({
     {
       path: "/autentication",
       name: "auth",
-      component: AuthView,
+      component: () => import("@/components/auth/AuthView.vue"),
       meta: {
         requiresAuth: false,
         moduleid: 0,
@@ -92,7 +80,7 @@ const router = createRouter({
         {
           path: "/login",
           name: "login",
-          component: LoginView,
+          component: () => import("@/components/auth/LoginView.vue"),
           meta: {
             requiresAuth: false,
             moduleid: 0,

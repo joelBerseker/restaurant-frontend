@@ -1,12 +1,7 @@
-import TicketView from "@/components/ticket/views/TicketView.vue";
-import TicketListView from "@/components/ticket/views/TicketListView.vue";
-import TicketAddView from "@/components/ticket/views/TicketAddView.vue";
-import TicketDetailView from "@/components/ticket/views/TicketDetailView.vue";
-
 export const ticketRouter = {
   path: "/ticket",
   name: "ticket",
-  component: TicketView,
+  component: () => import("@/components/ticket/views/TicketView.vue"),
   redirect: { name: "ticketList" },
   meta: {
     requiresAuth: true,
@@ -16,7 +11,7 @@ export const ticketRouter = {
     {
       path: "",
       name: "ticketList",
-      component: TicketListView,
+      component: () => import("@/components/ticket/views/TicketListView.vue"),
       meta: {
         requiresAuth: true,
         moduleid: 0,
@@ -27,7 +22,7 @@ export const ticketRouter = {
     {
       path: "/ticket/add",
       name: "ticketAdd",
-      component: TicketAddView,
+      component: () => import("@/components/ticket/views/TicketAddView.vue"),
       meta: {
         requiresAuth: true,
         moduleid: 0,
@@ -38,7 +33,7 @@ export const ticketRouter = {
     {
       path: "/ticket/detail/:id",
       name: "ticketDetail",
-      component: TicketDetailView,
+      component: () => import("@/components/ticket/views/TicketDetailView.vue"),
       meta: {
         requiresAuth: true,
         moduleid: 0,

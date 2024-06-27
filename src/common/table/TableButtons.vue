@@ -26,8 +26,8 @@ function add() {
     />
     <g-button
       type="transparent-1"
-      icon="fa-solid fa-print"
-      text="Imprimir"
+      icon="fa-solid fa-file-excel"
+      text="Descargar"
       @click="print()"
     />
     <g-button icon="fa-solid fa-plus" text="Agregar" @click="add()" />

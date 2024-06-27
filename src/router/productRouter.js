@@ -1,11 +1,7 @@
-import ProductView from "@/components/product/views/ProductView.vue";
-import ProductListView from "@/components/product/views/ProductListView.vue";
-import ProductDetailView from "@/components/product/views/ProductDetailView.vue";
-
 export const productRouter = {
   path: "/product",
   name: "product",
-  component: ProductView,
+  component: () => import("@/components/product/views/ProductView.vue"),
   redirect: { name: "productList" },
   meta: {
     requiresAuth: true,
@@ -15,7 +11,7 @@ export const productRouter = {
     {
       path: "",
       name: "productList",
-      component: ProductListView,
+      component: () => import("@/components/product/views/ProductListView.vue"),
       meta: {
         requiresAuth: true,
         moduleid: 0,
@@ -26,7 +22,8 @@ export const productRouter = {
     {
       path: "/product/detail/:id",
       name: "productDetail",
-      component: ProductDetailView,
+      component: () =>
+        import("@/components/product/views/ProductDetailView.vue"),
       meta: {
         requiresAuth: true,
         moduleid: 0,

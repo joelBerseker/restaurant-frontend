@@ -1,12 +1,7 @@
-import UserView from "@/components/user/views/UserView.vue";
-import UserListView from "@/components/user/views/UserListView.vue";
-import UserAddView from "@/components/user/views/UserAddView.vue";
-import UserDetailView from "@/components/user/views/UserDetailView.vue";
-
 export const userRouter = {
   path: "/user",
   name: "user",
-  component: UserView,
+  component: () => import("@/components/user/views/UserView.vue"),
   redirect: { name: "userList" },
   meta: {
     requiresAuth: true,
@@ -16,7 +11,7 @@ export const userRouter = {
     {
       path: "",
       name: "userList",
-      component: UserListView,
+      component: () => import("@/components/user/views/UserListView.vue"),
       meta: {
         requiresAuth: true,
         moduleid: 0,
@@ -27,7 +22,7 @@ export const userRouter = {
     {
       path: "/user/add",
       name: "userAdd",
-      component: UserAddView,
+      component: () => import("@/components/user/views/UserAddView.vue"),
       meta: {
         requiresAuth: true,
         moduleid: 0,
@@ -38,7 +33,7 @@ export const userRouter = {
     {
       path: "/user/detail/:id",
       name: "userDetail",
-      component: UserDetailView,
+      component: () => import("@/components/user/views/UserDetailView.vue"),
       meta: {
         requiresAuth: true,
         moduleid: 0,

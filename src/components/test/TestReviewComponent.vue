@@ -130,6 +130,8 @@ async function addTry(_get = false) {
       text: "Ejecución",
       type: 1,
     });
+
+    lastAdded.value = resp.id.value;
     status.add = 1;
     loading.add = false;
     elementRef.value.setIsLoading(false);
@@ -193,6 +195,8 @@ async function getListTry() {
     return false;
   }
 }
+
+const lastAdded = ref(null);
 async function getElementTry(_id = null) {
   let idElement = null;
   issues.get = [];
@@ -215,7 +219,7 @@ async function getElementTry(_id = null) {
   } else if (elementRef.value.getIdInput()) {
     idElement = elementRef.value.getIdInput();
   } else {
-    idElement = listRef.value.getFirstId();
+    idElement = lastAdded.value;
   }
   if (!idElement) {
     issues.get.push({

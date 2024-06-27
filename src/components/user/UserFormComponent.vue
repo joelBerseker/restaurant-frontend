@@ -163,6 +163,7 @@ defineExpose({
                 :label="element.password.name"
                 @validate="validateLabel"
                 :disabled="disabled"
+                :uppercase="false"
               />
               <g-input-val
                 v-show="!element.generate_password.value"
@@ -170,6 +171,7 @@ defineExpose({
                 :label="element.confirm_password.name"
                 @validate="validateLabel"
                 :disabled="disabled"
+                :uppercase="false"
               />
             </div>
           </div>

@@ -19,7 +19,7 @@
     <div v-show="rowsLength > 0" class="table-wrapper">
       <slot></slot>
     </div>
-
+    <div v-show="border" class="border-container"></div>
     <div class="empty-container" v-show="rowsLength <= 0">
       <div class="empty-text">
         No se encontraron registros.
@@ -35,10 +35,21 @@ const props = defineProps({
   isLoading: { default: false },
   tableContainerClass: { default: "" },
   rowsLength: { default: 0 },
+  border: { default: false },
 });
 </script>
 
 <style scoped>
+.border-container {
+  border-radius: inherit;
+  border: 1px solid var(--color-border2);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
 .loading .empty-text {
   opacity: 0;
 }

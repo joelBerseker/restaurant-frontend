@@ -3,6 +3,7 @@ label {
   font-size: 12px;
   text-transform: uppercase;
   font-weight: 500;
+  color: var(--color-b-v3);
 }
 .imp-label {
   color: var(--color-1-v3);

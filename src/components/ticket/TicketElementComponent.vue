@@ -141,7 +141,7 @@ defineExpose({
             />
           </div>
           <div class="col-8">
-            <TicketDetailFormComponent ref="listFormRef" />
+            <TicketDetailFormComponent ref="listFormRef" :mode="mode" />
           </div>
         </div>
       </template>

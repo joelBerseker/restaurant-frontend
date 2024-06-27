@@ -138,8 +138,10 @@ export class Model {
       }
       if (element.type === "image" || element.type === "file ") {
         if (element.file) resp[key] = element.file;
-      } else {
+      } else if (element.default) {
         resp[key] = isEmpty(element.value) ? element.default : element.value;
+      } else {
+        resp[key] = element.value;
       }
     }
     console.log(resp);

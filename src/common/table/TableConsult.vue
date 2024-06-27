@@ -137,14 +137,12 @@ defineExpose({
           icon="fa-solid fa-trash-can"
           @click.stop="deleteItem(row)"
           type="transparent-1"
-          class="btn-row-table"
           title="Eliminar"
         />
         <g-button
           :icon="iconDetail"
           @click.stop="viewItem(row)"
           type="transparent-1"
-          class="btn-row-table"
           title="Detalles"
         />
       </div>

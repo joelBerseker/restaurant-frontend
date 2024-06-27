@@ -27,6 +27,9 @@ export class TicketDetailModel extends Model {
   price = {
     id: "price",
     name: "Precio Total",
+    type: "decimal",
+
+    default: "0.00",
     value: null,
     validation: {},
     validate: ["decimal"],
@@ -36,6 +39,8 @@ export class TicketDetailModel extends Model {
   quantity = {
     id: "quantity",
     name: "Cantidad",
+    type: "number",
+    default: "0",
     value: null,
     required: false, // null=True, blank=True in Django
     validation: {},
@@ -43,10 +48,10 @@ export class TicketDetailModel extends Model {
   };
 
   description = {
+    type: "textarea",
     id: "description",
     name: "Descripción",
     value: null,
-    default: "Sin descripción",
     required: false, // null=True, blank=True in Django
     validation: {},
     validate: ["length"],
@@ -60,5 +65,23 @@ export class TicketDetailModel extends Model {
       value: this.id.value,
       text: this.ticketdetail_name.value,
     };
+  }
+  getDataTable() {
+    return [
+      {
+        label: this.product_id.name,
+        field: this.product_id.id,
+      },
+      {
+        label: this.quantity.name,
+        field: this.quantity.id,
+        columnClass: "number",
+      },
+      {
+        label: this.price.name,
+        field: this.price.id,
+        columnClass: "number",
+      },
+    ];
   }
 }

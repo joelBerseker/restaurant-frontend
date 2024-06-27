@@ -143,7 +143,10 @@ init();
 }
 
 .btn:disabled {
-  background-color: var(--color-w-v3) !important;
+  background-color: var(--color-w-v4) !important;
+  border-color: var(--color-w-v4) !important;
+
+  color: var(--color-b-v3) !important;
 }
 
 .g-btn-primary {
@@ -174,6 +177,10 @@ init();
 }
 
 .g-btn-transparent-1 {
+  background-color: transparent !important;
+  color: var(--color-b-v2) !important;
+}
+.g-btn-transparent-1:disabled {
   background-color: transparent !important;
 }
 .status-button.active {

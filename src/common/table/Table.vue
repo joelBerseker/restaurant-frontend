@@ -9,6 +9,7 @@ const props = defineProps({
   tableContainerClass: { default: "g-table-container" },
   noHeader: { default: false },
   isLoading: { default: false },
+  rowAdditionalSpace: { default: false },
 });
 const emit = defineEmits(["rowClicked", "sort"]);
 
@@ -84,8 +85,8 @@ function iconCurrentSort(sort) {
           </th>
         </tr>
       </thead>
-      <tbody>
-        <tr v-for="(row, index) in rows" @dblclick="rowClicked(row, index)">
+      <tbody v-for="(row, index) in rows" @dblclick="rowClicked(row, index)">
+        <tr>
           <td
             v-for="(col, index2) in activeColumns"
             :class="[col.rowClass, col.columnClass]"
@@ -102,6 +103,11 @@ function iconCurrentSort(sort) {
             <span v-else>
               <slot :name="col.field" :row="row" :index="index"></slot>
             </span>
+          </td>
+        </tr>
+        <tr v-if="rowAdditionalSpace">
+          <td :colspan="activeColumns.length" class="additional-space">
+            <slot name="additionalSpace" :row="row" :index="index"></slot>
           </td>
         </tr>
       </tbody>
@@ -122,7 +128,9 @@ function iconCurrentSort(sort) {
   font-size: 12px;
   text-transform: uppercase;
 }
-
+.g-table td {
+  vertical-align: top;
+}
 .g-table td,
 .g-table th {
   padding-top: 0.6rem;
@@ -140,17 +148,15 @@ function iconCurrentSort(sort) {
 .g-table tbody tr:nth-last-child(odd) {
   background-color: var(--color-c1);
 }
-.g-table tbody tr {
-  border-bottom: 2px solid var(--color-border2);
+.g-table tbody tr:first-child {
+  border-top: 1px solid var(--color-border2);
 }
-.g-table tbody tr:last-child {
-  border-bottom: none;
-}
+
 .g-table tr td {
   transition: 0.3s;
 }
-.g-table tr:hover td {
-  color: var(--color-1-v3);
+.g-table tbody:hover td {
+  background-color: var(--color-w-v2);
 }
 .table-min td,
 .table-min th {
@@ -164,6 +170,13 @@ function iconCurrentSort(sort) {
 }
 </style>
 <style scoped>
+.additional-space {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.additional-space > * {
+  padding-bottom: 0.6rem;
+}
 .sortable-column {
   cursor: pointer;
   width: fit-content;

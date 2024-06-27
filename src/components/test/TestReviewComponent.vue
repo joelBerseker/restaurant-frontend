@@ -17,6 +17,23 @@ const consults = reactive({
   get: tableService["get" + commonNameService.value],
   edit: tableService["update" + commonNameService.value],
   delete: tableService["delete" + commonNameService.value],
+
+  verifyExistence() {
+    for (var key in this) {
+      if (key === "verifyExistence") continue;
+      if (this[key]) {
+        issues[key].push({
+          text: "Existencia",
+          type: 1,
+        });
+      } else {
+        issues[key].push({
+          text: "Existencia",
+          type: 2,
+        });
+      }
+    }
+  },
 });
 /*FIN CAMBIAR SEGUN LO REQUERIDO*/
 
@@ -26,6 +43,13 @@ const status = reactive({
   get: 0,
   edit: 0,
   delete: 0,
+  clear() {
+    this.add = 0;
+    this.getList = 0;
+    this.get = 0;
+    this.edit = 0;
+    this.delete = 0;
+  },
 });
 const loading = reactive({
   add: false,
@@ -33,6 +57,23 @@ const loading = reactive({
   get: false,
   edit: false,
   delete: false,
+});
+const issues = reactive({
+  add: [
+    { text: "success", type: 2 },
+    { text: "success", type: 1 },
+  ],
+  getList: [],
+  get: [],
+  edit: [],
+  delete: [],
+  clear() {
+    this.add = [];
+    this.getList = [];
+    this.get = [];
+    this.edit = [];
+    this.delete = [];
+  },
 });
 
 const elementRef = ref(null);
@@ -44,121 +85,289 @@ async function startTry() {
   status.get = 0;
   status.edit = 0;
   status.delete = 0;
-  if (!(await addTry())) return;
-  if (!(await getListTry())) return;
-  if (!(await getElementTry())) return;
-  if (!(await editTry())) return;
-  if (!(await deleteTry())) return;
+  await addTry();
+  await getListTry();
+  await getElementTry();
+  await editTry();
+  await deleteTry();
 }
-async function addTry() {
-  if (!elementRef.value.validate()) {
-    status.add = 2;
+async function addTry(_get = false) {
+  issues.add = [];
 
-    return false;
-  }
   if (!consults.add) {
-    console.error("No se encontro la funcion add");
+    issues.add.push({
+      text: "Existencia",
+      type: 2,
+    });
     status.add = 2;
     return false;
+  } else {
+    issues.add.push({
+      text: "Existencia",
+      type: 1,
+    });
+  }
+  if (!elementRef.value.validate()) {
+    issues.add.push({
+      text: "Validación",
+      type: 2,
+    });
+    status.add = 2;
+    return false;
+  } else {
+    issues.add.push({
+      text: "Validación",
+      type: 1,
+    });
   }
   loading.add = true;
+  elementRef.value.setIsLoading(true);
+
   await sleep(200);
   const resp = await consults.add(elementRef.value.getElement());
   if (resp) {
+    issues.add.push({
+      text: "Ejecución",
+      type: 1,
+    });
     status.add = 1;
     loading.add = false;
+    elementRef.value.setIsLoading(false);
+
+    if (_get) {
+      getListTry();
+    }
     return true;
   } else {
+    issues.add.push({
+      text: "Ejecución",
+      type: 2,
+    });
     status.add = 2;
     loading.add = false;
+    elementRef.value.setIsLoading(false);
+
     return false;
   }
 }
 async function getListTry() {
+  issues.getList = [];
+
+  if (!consults.getList) {
+    issues.getList.push({
+      text: "Existencia",
+      type: 2,
+    });
+    status.getList = 2;
+    return false;
+  } else {
+    issues.getList.push({
+      text: "Existencia",
+      type: 1,
+    });
+  }
   loading.getList = true;
+  listRef.value.setIsLoading(true);
   await sleep(200);
 
   const resp = await listRef.value.getList();
   if (resp) {
+    issues.getList.push({
+      text: "Ejecución",
+      type: 1,
+    });
     status.getList = 1;
     loading.getList = false;
+    listRef.value.setIsLoading(false);
+
     return true;
   } else {
+    issues.getList.push({
+      text: "Ejecución",
+      type: 2,
+    });
     status.getList = 2;
     loading.getList = false;
+    listRef.value.setIsLoading(false);
+
     return false;
   }
 }
-async function getElementTry() {
-  const firstId = listRef.value.getFirstId();
-  if (!firstId) {
-    status.get = 2;
-    return false;
-  }
+async function getElementTry(_id = null) {
+  let idElement = null;
+  issues.get = [];
+
   if (!consults.get) {
-    console.error("No se encontro la funcion get");
+    issues.get.push({
+      text: "Existencia",
+      type: 2,
+    });
     status.get = 2;
     return false;
+  } else {
+    issues.get.push({
+      text: "Existencia",
+      type: 1,
+    });
+  }
+  if (_id) {
+    idElement = _id;
+  } else if (elementRef.value.getIdInput()) {
+    idElement = elementRef.value.getIdInput();
+  } else {
+    idElement = listRef.value.getFirstId();
+  }
+  if (!idElement) {
+    issues.get.push({
+      text: "Existe ID",
+      type: 2,
+    });
+    status.get = 2;
+    return false;
+  } else {
+    issues.get.push({
+      text: "Existe ID",
+      type: 1,
+    });
   }
 
   loading.get = true;
+  elementRef.value.setIsLoading(true);
+
   await sleep(200);
 
-  const resp = await consults.get(firstId);
+  const resp = await consults.get(idElement);
   if (resp) {
     elementRef.value.copy(resp);
     status.get = 1;
     loading.get = false;
+    elementRef.value.setIsLoading(false);
+
+    issues.get.push({
+      text: "Ejecución",
+      type: 1,
+    });
     return true;
   } else {
+    issues.get.push({
+      text: "Ejecución",
+      type: 2,
+    });
     status.get = 2;
     loading.get = false;
-    return false;
-  }
-}
-async function editTry() {
-  if (!elementRef.value.validate()) {
-    status.edit = 2;
+    elementRef.value.setIsLoading(false);
 
     return false;
   }
+}
+async function editTry(_get = false) {
+  issues.edit = [];
+
   if (!consults.edit) {
-    console.error("No se encontro la funcion edit");
+    issues.edit.push({
+      text: "Existencia",
+      type: 2,
+    });
     status.edit = 2;
     return false;
+  } else {
+    issues.edit.push({
+      text: "Existencia",
+      type: 1,
+    });
   }
+  if (!elementRef.value.validate()) {
+    status.edit = 2;
+    issues.edit.push({
+      text: "Validación",
+      type: 2,
+    });
+    return false;
+  } else {
+    issues.edit.push({
+      text: "Validación",
+      type: 1,
+    });
+  }
+
   loading.edit = true;
+  elementRef.value.setIsLoading(true);
+
   await sleep(200);
 
   const resp = await consults.edit(elementRef.value.getElement());
   if (resp) {
+    elementRef.value.copy(resp);
+
+    issues.edit.push({
+      text: "Ejecución",
+      type: 1,
+    });
+    if (_get) {
+      getListTry();
+    }
     status.edit = 1;
     loading.edit = false;
+    elementRef.value.setIsLoading(false);
+
     return true;
   } else {
+    issues.edit.push({
+      text: "Ejecución",
+      type: 2,
+    });
     status.edit = 2;
     loading.edit = false;
+    elementRef.value.setIsLoading(false);
+
     return false;
   }
 }
-async function deleteTry() {
+async function deleteTry(_get = true) {
+  issues.delete = [];
+
   if (!consults.delete) {
-    console.error("No se encontro la funcion delete");
+    issues.delete.push({
+      text: "Existencia",
+      type: 2,
+    });
     status.delete = 2;
     return false;
+  } else {
+    issues.delete.push({
+      text: "Existencia",
+      type: 1,
+    });
   }
   loading.delete = true;
+  elementRef.value.setIsLoading(true);
+
   await sleep(200);
 
   const resp = await consults.delete(elementRef.value.getElement().id.value);
   if (resp) {
-    listRef.value.getList();
+    if (_get) {
+      getListTry();
+    }
+    elementRef.value.reset();
     status.delete = 1;
     loading.delete = false;
+    elementRef.value.setIsLoading(false);
+
+    issues.delete.push({
+      text: "Ejecución",
+      type: 1,
+    });
     return true;
   } else {
     status.delete = 2;
     loading.delete = false;
+    elementRef.value.setIsLoading(false);
+
+    issues.delete.push({
+      text: "Ejecución",
+      type: 2,
+    });
     return false;
   }
 }
@@ -184,6 +393,7 @@ const inputNameCorrect = computed(() => {
 });
 
 async function generateClass() {
+  status.clear();
   await import(`@/models/index.js`)
     .then(async (module) => {
       let _className = isEmpty(inputClass.value)
@@ -223,6 +433,8 @@ async function generateClass() {
       consults.delete = importedService["delete" + capitalize(inputName.value)];
       okService.value = true;
       errorService.value = null;
+      issues.clear();
+      consults.verifyExistence();
     })
     .catch((err) => {
       console.error(`Error al importar el servicio`);
@@ -302,7 +514,7 @@ async function copyClipboard() {
     </div>
     <div v-show="inputNameCorrect" class="col-7">
       <g-section-4
-        title="Estado de Consultas"
+        title="Estado de Servicio"
         :subTitle="inputNameCorrect"
         class="h-100"
       >
@@ -310,30 +522,35 @@ async function copyClipboard() {
           <TestStatusElementComponent
             :status="status.add"
             :loading="loading.add"
+            :issues="issues.add"
             text="Agregar"
             icon="fa-solid fa-plus"
           />
           <TestStatusElementComponent
             :status="status.getList"
             :loading="loading.getList"
+            :issues="issues.getList"
             text="Obtener Lista"
             icon="fa-solid fa-bars-staggered"
           />
           <TestStatusElementComponent
             :status="status.get"
             :loading="loading.get"
+            :issues="issues.get"
             text="Obtener Elemento"
-            icon="fa-regular fa-square"
+            icon="fa-solid fa-arrow-down"
           />
           <TestStatusElementComponent
             :status="status.edit"
             :loading="loading.edit"
+            :issues="issues.edit"
             text="Editar"
             icon="fa-solid fa-pen-to-square"
           />
           <TestStatusElementComponent
             :status="status.delete"
             :loading="loading.delete"
+            :issues="issues.delete"
             text="Eliminar"
             icon="fa-solid fa-trash"
             :arrow="false"
@@ -341,7 +558,7 @@ async function copyClipboard() {
         </div>
         <div class="mt-4">
           <g-button
-            text="Probar"
+            text="Probar Todos"
             icon="fa-solid fa-gears"
             @click="startTry()"
           />
@@ -354,6 +571,10 @@ async function copyClipboard() {
         :modelTest="modelTest"
         :subTitle="inputNameCorrect"
         @generateCode="generateCodeFunc"
+        @addEl="addTry"
+        @editEl="editTry"
+        @deleteEl="deleteTry"
+        @getEl="getElementTry"
       />
     </div>
     <div v-show="inputNameCorrect" class="col-7">
@@ -361,6 +582,8 @@ async function copyClipboard() {
         ref="listRef"
         :getListConsult="consults.getList"
         :subTitle="inputNameCorrect"
+        @getEl="getElementTry"
+        @getLi="getListTry"
       />
     </div>
     <div v-show="inputNameCorrect && generateCode" class="col-12">
@@ -385,8 +608,7 @@ async function copyClipboard() {
 .status-elements {
   display: flex;
   flex-wrap: wrap;
+
   gap: 1rem 0.5rem;
-}
-.container-content {
 }
 </style>

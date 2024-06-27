@@ -4,7 +4,7 @@ import Tab from "@/common/tab/Tab.vue";
 const tabs = reactive([{ name: "testReview" }, { name: "testGenerate" }]);
 </script>
 <template>
-  <g-section-1 title="test" subTitle="v1.10">
+  <g-section-1 title="test" subTitle="v2.00">
     <template #content>
       <Tab :tabs="tabs"></Tab>
     </template>

@@ -5,6 +5,7 @@ const props = defineProps({
   icon: { default: "fa-solid fa-plus" },
   text: { default: "Agregar" },
   arrow: { default: true },
+  issues: { default: [] },
 });
 function getClassStatus() {
   if (props.status === 1) {
@@ -19,6 +20,22 @@ function getClassStatus() {
 <template>
   <div :class="['status-element', getClassStatus()]">
     <font-awesome-icon :icon="icon" /> {{ text }}
+    <div class="status-issues mt-1">
+      <div
+        v-for="(element, index) in issues"
+        :key="index"
+        :class="[element.type === 1 ? 'success' : 'danger']"
+      >
+        <font-awesome-icon
+          :icon="
+            element.type === 1
+              ? 'fa-solid fa-circle-check'
+              : 'fa-solid fa-circle-exclamation'
+          "
+        />
+        {{ element.text }}
+      </div>
+    </div>
     <div v-show="loading" class="loading-cont">
       <span
         class="spinner-border spinner-border-sm"
@@ -29,10 +46,19 @@ function getClassStatus() {
     </div>
   </div>
   <div v-if="arrow" class="status-icon">
-    <font-awesome-icon :icon="['fas', 'arrow-right']" />
+    <font-awesome-icon icon="fa-solid fa-arrow-right" />
   </div>
 </template>
 <style scoped>
+.status-issues {
+  font-size: 13px !important;
+}
+.status-issues .danger {
+  color: var(--color-d);
+}
+.status-issues .success {
+  color: var(--color-s);
+}
 .status-icon {
   display: flex;
   justify-content: center;

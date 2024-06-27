@@ -95,25 +95,6 @@ export const companyService = {
     }
   },
 
-  async addCompany(new_data) {
-    try {
-      const response = await axiosInstance.post(
-        `${servicePath}/`,
-        new_data.addData()
-      );
-      const data_new = dataTransform.transformApiData(
-        response.data,
-        CompanyModel
-      );
-      const useToast = useToastStore();
-      useToast.show("add_success", {
-        important_text: data_new.getTextModel(),
-      });
-      return data_new;
-    } catch (error) {
-      handleError(error, "add_error", module);
-    }
-  },
   async updateCompany(new_data) {
     let dataid = new_data.id.value;
     try {

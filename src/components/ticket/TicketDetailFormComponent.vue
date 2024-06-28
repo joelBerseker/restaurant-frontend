@@ -18,6 +18,7 @@ const props = defineProps({
 });
 const localMode = ref("add");
 const disabled = ref(false);
+const isLoading = ref(false);
 
 const idElement = inject("idElement", null);
 const tableFormRef = ref(null);
@@ -36,12 +37,15 @@ const tableForm = reactive({
 });
 /*CONSULTS*/
 async function getList() {
+  isLoading.value = true;
   tableFormRef.value.changeDisabled(false);
 
   let resp = await ticketDetailService.getListTicketDetail(
     tableForm.defaultFilter
   );
   if (resp) tableFormRef.value.copy(resp);
+  isLoading.value = false;
+
   return resp;
 }
 async function addElement(_data) {
@@ -134,6 +138,7 @@ defineExpose({
     <TableForm
       ref="tableFormRef"
       :mode="mode"
+      :isLoading="isLoading"
       :elementModel="TicketDetailModel"
       :columns="tableForm.columns"
       @onUpdated="onUpdated"

@@ -41,9 +41,11 @@ const localPlaceHolder = computed(() => {
     console.log(value.value.placeholder);
     return value.placeholder;
   }
-  let resp = "Ingrese un valor";
 
-  return resp;
+  if (value.value.required === false) return "No requerido";
+  else {
+    return "* Requerido";
+  }
 });
 </script>
 <template>

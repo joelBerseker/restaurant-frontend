@@ -84,13 +84,12 @@ function valdiateElement(_data) {
 }
 async function newElement(_data) {
   if (!valdiateElement(_data)) return;
-  disabled.value = false;
+
   emit("onNewElement", _data);
 }
 async function saveElement(_data) {
   if (!valdiateElement(_data)) return;
 
-  disabled.value = false;
   emit("onSaveElement", _data);
 }
 function validateLabel(_data, index) {

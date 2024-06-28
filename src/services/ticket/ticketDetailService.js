@@ -165,7 +165,7 @@ export const ticketDetailService = {
       const data_products = response.data.products.map((apiData) =>
         dataTransform.transformApiData(apiData, ProductModel)
       );
-      return { menu: data_menus, product: data_products };
+      return [...data_menus, ...data_products];
     } catch (error) {
       handleError(error, "get_list_error", module);
     }

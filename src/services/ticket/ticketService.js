@@ -147,7 +147,7 @@ export const ticketService = {
       const response = await axiosInstance.delete(`${servicePath}/${dataid}/`);
       const useToast = useToastStore();
       useToast.show("delete_success", {
-        important_text: "Rol eliminado Correctamente",
+        important_text: module,
       });
       return response;
     } catch (error) {

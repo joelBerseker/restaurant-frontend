@@ -115,9 +115,7 @@ export const ticketDetailService = {
         year_date,
         searches,
         // Otros parámetros de filtro que puedas necesitar
-        name,
-        price,
-        description,
+        is_publish,
       } = filterParams;
 
       const filters = {
@@ -131,9 +129,7 @@ export const ticketDetailService = {
         specific_date,
         year_date,
         // Otros parámetros de filtro que puedas necesitar
-        name,
-        price,
-        description,
+        is_publish,
       };
 
       filteredFilters = Object.entries(filters)

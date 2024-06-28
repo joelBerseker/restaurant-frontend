@@ -262,7 +262,7 @@ defineExpose({
             :disabled="disabled"
           />
         </div>
-        <div v-else>
+        <div v-else class="btns-container">
           <g-button
             icon="fa-solid fa-arrow-left"
             @click.stop="cancel(index)"

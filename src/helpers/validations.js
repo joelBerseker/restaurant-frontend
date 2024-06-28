@@ -37,6 +37,12 @@ function noRequired() {
     validationClass: "normal",
   };
 }
+function getValue(_data) {
+  if (isEmpty(_data.value) && _data.default) {
+    return _data.default;
+  }
+  return _data.value;
+}
 const regularExpressions = {
   onlyNumber: /^[0-9]*$/,
   onlyPhone: /^[0-9+]*$/,
@@ -51,9 +57,11 @@ const regularExpressions = {
 };
 const validations = {
   required(_data) {
-    let _value = _data.value;
+    let _value = getValue(_data);
+
     if (_data.type === "image" || _data.type === "file ") _value = _data.file;
     var resp = valid();
+
     if (isEmpty(_value)) {
       let _txtInvalid = "Ingrese un valor";
       switch (_data.type) {
@@ -96,7 +104,8 @@ const validations = {
 
   length(_data) {
     console.log("legt");
-    let _value = _data.value;
+    let _value = getValue(_data);
+
     let _type = _data.type;
     let min = _data.min;
     let max = _data.max;
@@ -135,7 +144,7 @@ const validations = {
     return resp;
   },
   email(_data) {
-    let _value = _data.value;
+    let _value = getValue(_data);
 
     var resp = valid();
     if (!regularExpressions.onlyEmail.test(_value))
@@ -143,7 +152,7 @@ const validations = {
     return resp;
   },
   equals(_data) {
-    let _value = _data.value;
+    let _value = getValue(_data);
     let _value2 = _data.equalsTo.value;
     let label = _data.equalsTo.name;
 
@@ -154,15 +163,27 @@ const validations = {
     }
     return resp;
   },
+
+  greaterThan(_data) {
+    let _value = getValue(_data);
+    let _value2 = _data.greaterThan;
+
+    var resp = valid();
+
+    if (_value <= _value2) {
+      resp = noValid("Debe ser mayor a " + _value2);
+    }
+    return resp;
+  },
   number(_data) {
-    let _value = _data.value;
+    let _value = getValue(_data);
     var resp = valid();
     if (!regularExpressions.onlyNumber.test(_value))
       resp = noValid("Solo se permite numeros");
     return resp;
   },
   decimal(_data) {
-    let _value = _data.value;
+    let _value = getValue(_data);
     var resp = valid();
     if (!regularExpressions.onlyPrice.test(_value))
       resp = noValid("Solo se permite numeros, ejemplo: [1.00 o 1]");

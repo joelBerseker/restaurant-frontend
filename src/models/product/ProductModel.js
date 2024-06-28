@@ -69,8 +69,8 @@ export class ProductModel extends Model {
   getDataOptions() {
     return {
       value: this.id.value,
-      text: `${this.name.value} - s/${this.price.value}`,
-      additional: `${this.description}`,
+      text: this.name.value,
+      additional: ` s/${this.price.value} - ${this.description.value}`,
     };
   }
 }

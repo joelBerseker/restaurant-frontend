@@ -186,6 +186,7 @@ defineExpose({
   getListValue,
   copy,
   changeDisabled,
+  list,
 });
 </script>
 <template>
@@ -195,6 +196,10 @@ defineExpose({
     :columns="localColumns"
     :isLoading="isLoading"
   >
+    <template #spaceBelow="{ activeColumns }">
+      <slot name="spaceBelow" :activeColumns="activeColumns"></slot>
+    </template>
+
     <template #additionalSpace="{ row, index }">
       <slot
         name="additionalSpace"

@@ -111,6 +111,7 @@ function iconCurrentSort(sort) {
           </td>
         </tr>
       </tbody>
+      <slot name="spaceBelow" :activeColumns="activeColumns"></slot>
     </table>
   </table-container>
 </template>

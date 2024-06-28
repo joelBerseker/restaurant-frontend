@@ -1,5 +1,6 @@
 <script setup>
-import { ref, inject, onMounted, onUnmounted } from "vue";
+import { ref, inject, onMounted, onUnmounted, useSlots } from "vue";
+const slots = useSlots();
 
 const emit = defineEmits(["onRefresh"]);
 const props = defineProps({
@@ -30,6 +31,7 @@ const collapseRef = ref(null);
 const collapseOpen = ref(false);
 
 const titleRef = ref(null);
+console.log(slots);
 
 function onRefresh() {
   emit("onRefresh");
@@ -79,9 +81,15 @@ function buttonCollapse() {
         <slot></slot>
       </div>
     </div>
+    <div v-show="slots.bottomButtons" class="btns-bottom">
+      <slot name="bottomButtons"></slot>
+    </div>
   </div>
 </template>
 <style scoped>
+.btns-bottom {
+  margin-top: 1.5rem;
+}
 .mbTitle {
   margin-bottom: 1.5rem;
 }

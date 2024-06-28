@@ -72,8 +72,13 @@ async function inputAwait() {
 }
 
 function blur() {
-  if (props.formatInBlur === null) return;
-  formatInBlurOptions.init(props.formatInBlur);
+  if (props.type === "decimal") {
+    let number = Number(value.value);
+    if (isNaN(number)) return;
+    if (value.value === null) return;
+    value.value = number.toFixed(2);
+  }
+
   emit("input");
 }
 function clear() {
@@ -86,20 +91,7 @@ function displayText() {
     return props.display(value.value);
   }
 }
-const formatInBlurOptions = reactive({
-  init(_data) {
-    if (_data === null) return;
-    if (this[_data] !== undefined) {
-      this[_data](value.value);
-    }
-  },
-  price() {
-    let number = Number(value.value);
-    if (isNaN(number)) return;
-    if (value.value === null) return;
-    value.value = number.toFixed(2);
-  },
-});
+
 function init() {
   if (props.type !== "number" && props.type !== "decimal") {
     localType.value = props.type;

@@ -6,6 +6,7 @@ import { ref, reactive, onMounted, inject } from "vue";
 import { ticketService } from "@/services";
 import { formatSubTitle } from "@/helpers";
 import { useRouter } from "vue-router";
+import { TicketModel } from "@/models";
 const emit = defineEmits(["onFirstLoad"]);
 
 const router = useRouter();
@@ -13,34 +14,11 @@ const router = useRouter();
 const tableRef = ref(null);
 
 const subTitle = ref(null);
+
+const elementModel = ref(new TicketModel());
+
 const table = reactive({
-  columns: [
-    {
-      label: "ID",
-      field: "id",
-      sortable: true,
-      width: "1%",
-    },
-    {
-      label: "RUC",
-      field: "ruc",
-      sortable: true,
-      searchable: true,
-      sort: "asc",
-    },
-    {
-      label: "Descuento",
-      field: "discount",
-      sortable: true,
-      searchable: true,
-    },
-    {
-      label: "Precio Total",
-      field: "priceTotal",
-      sortable: true,
-      searchable: true,
-    },
-  ],
+  columns: elementModel.value.getDataTable(),
   defaultFilter: {
     order: "asc",
     orderBy: "id",

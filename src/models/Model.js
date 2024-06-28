@@ -9,6 +9,13 @@ export class Model {
     const val = this[key];
     val.value = null;
   }
+  getLabelValue(key) {
+    const val = this[key];
+    if (isEmpty(val.value) && val.default) {
+      return val.default;
+    }
+    return val.value;
+  }
   resetLabelValidation(key) {
     const val = this[key];
     val.validation = {};
@@ -150,7 +157,11 @@ export class Model {
   getData() {
     let resp = {};
     for (var key in this) {
-      resp[key] = this[key].value;
+      if (this[key].getValueText) {
+        resp[key] = this[key].getValueText();
+      } else {
+        resp[key] = this[key].value;
+      }
     }
     resp.elementText = this.getText();
     resp.elementTextModel = this.getTextModel();

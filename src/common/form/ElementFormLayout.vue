@@ -157,6 +157,7 @@ function clear() {
 .validation-message {
   font-size: 13px !important;
   color: var(--color-b-v3);
+  text-align: start;
 }
 .g-form-wrapper {
   position: relative;

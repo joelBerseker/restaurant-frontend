@@ -6,6 +6,8 @@ const props = defineProps({
   mode: { default: null },
   statusValue: { default: null },
   elementText: { default: null },
+  showDelete: { default: true },
+  showEdit: { default: true },
 });
 
 const statusData = computed(() => {
@@ -48,18 +50,21 @@ function onSave() {
 </script>
 <template>
   <div class="buttons-container">
-    <span v-if="mode === 'add'">
+    <span v-if="mode === 'add'" class="buttons-container">
       <g-button icon="fa-solid fa-check" text="Guardar" @click="onAdd()" />
     </span>
-    <span v-else-if="mode === 'view'">
+    <span v-else-if="mode === 'view' || !showEdit" class="buttons-container">
       <g-button
+        class="delete-button"
         type="transparent-1"
         icon="fa-solid fa-trash-can"
         text="Eliminar"
         @click="onDelete()"
         :separationLine="true"
+        v-if="showDelete"
       />
       <g-button
+        class="status-button"
         v-if="statusData !== null"
         type="transparent-1"
         :class="['status-button', statusData.color]"
@@ -68,24 +73,39 @@ function onSave() {
         @click="onStatus()"
       />
       <g-button
+        class="edit-button"
         icon="fa-solid fa-pen-to-square"
         text="Editar"
         @click="onEdit()"
+        v-if="showEdit"
       />
     </span>
-    <span v-else>
+    <span v-else class="buttons-container">
       <g-button
+        class="cancel-button"
         type="transparent-1"
         icon="fa-solid fa-xmark"
         text="Cancelar"
         @click="onCancel()"
       />
-      <g-button icon="fa-solid fa-check" text="Guardar" @click="onSave()" />
+      <g-button
+        class="save-button"
+        icon="fa-solid fa-check"
+        text="Guardar"
+        @click="onSave()"
+      />
     </span>
   </div>
 </template>
 <style scoped>
 .buttons-container {
   display: flex;
+}
+
+.start-left .cancel-button {
+  order: 2;
+}
+.start-left .save-button {
+  order: 1;
 }
 </style>

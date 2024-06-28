@@ -53,6 +53,9 @@ function reset() {
   element.value = new props.elementModel();
   elementBackup.value = new props.elementModel();
 }
+function getLabelValue(key) {
+  return element.value.getLabelValue(key);
+}
 onMounted(() => {
   emit("onMountedForm");
 });
@@ -64,6 +67,7 @@ defineExpose({
   restore,
   init,
   copyDefulttTest,
+  getLabelValue,
 });
 </script>
 <template>

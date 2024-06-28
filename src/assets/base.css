@@ -131,3 +131,8 @@ hr {
   pointer-events: none;
   cursor: default;
 }
+.help-text {
+  font-size: 13px !important;
+  color: var(--color-b-v3);
+  text-align: start;
+}

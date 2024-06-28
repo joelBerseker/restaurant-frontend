@@ -100,6 +100,9 @@ function onUpdated(_data) {
   subTitle.value = _data.getText();
   elementText.value = _data.getTextModel();
 }
+function onChangeTotal(_value) {
+  formRef.value.changeTotal(_value);
+}
 function onFirstLoad() {
   emit("onFirstLoad");
 }
@@ -122,11 +125,11 @@ defineExpose({
           :statusValue="statusValue"
           :elementText="elementText"
           @onAdd="onAdd"
-          @onEdit="onEdit"
           @onCancel="onCancel"
           @onSave="onSave"
           @onDelete="onDelete"
           @onStatus="onStatus"
+          :showEdit="false"
         />
       </template>
       <template #content>
@@ -138,10 +141,17 @@ defineExpose({
               :mode="mode"
               @onUpdated="onUpdated"
               @onFirstLoad="onFirstLoad"
+              @onEdit="onEdit"
+              @onCancel="onCancel"
+              @onSave="onSave"
             />
           </div>
           <div class="col-8">
-            <TicketDetailFormComponent ref="listFormRef" :mode="mode" />
+            <TicketDetailFormComponent
+              ref="listFormRef"
+              :mode="mode"
+              @onChangeTotal="onChangeTotal"
+            />
           </div>
         </div>
       </template>

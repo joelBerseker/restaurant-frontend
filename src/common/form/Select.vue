@@ -68,11 +68,11 @@ const selectValue = computed(() => {
 
   let resp = {
     text: "No encontrado",
-    aditional: null,
+    additional: null,
   };
   if (typeof props.valueText === "object" && props.valueText !== null) {
     _valueText = props.valueText.text;
-    _valueTextAditional = props.valueText.aditional;
+    _valueTextAditional = props.valueText.additional;
   } else {
     _valueText = props.valueText;
   }
@@ -90,7 +90,7 @@ const selectValue = computed(() => {
 
   if (!isEmpty(_valueText)) {
     resp.text = _valueText;
-    resp.aditional = _valueTextAditional;
+    resp.additional = _valueTextAditional;
     if (props.display) {
       resp.text = props.display(resp.text);
     }
@@ -151,10 +151,10 @@ function tabAction(_item) {
         <span v-else>
           {{ selectValue.text }}
           <div
-            v-if="selectValue.aditional !== undefined && showAditionalInSelect"
-            class="aditional-data"
+            v-if="selectValue.additional !== undefined && showAditionalInSelect"
+            class="additional-data"
           >
-            <span class="text-aditional">{{ selectValue.aditional }}</span>
+            <span class="text-additional">{{ selectValue.additional }}</span>
           </div>
         </span>
       </div>
@@ -176,10 +176,10 @@ function tabAction(_item) {
           <div v-else>&nbsp;</div>
 
           <div
-            v-if="selectValue.aditional !== undefined && showAditionalInSelect"
-            class="aditional-data-input"
+            v-if="selectValue.additional !== undefined && showAditionalInSelect"
+            class="additional-data-input"
           >
-            {{ selectValue.aditional }}
+            {{ selectValue.additional }}
           </div>
         </span>
       </button>
@@ -209,10 +209,10 @@ function tabAction(_item) {
               >
                 {{ item[props.textOptions] }}
                 <div
-                  v-if="item.aditional !== undefined"
-                  class="aditional-data-input"
+                  v-if="item.additional !== undefined"
+                  class="additional-data-input"
                 >
-                  {{ item.aditional }}
+                  {{ item.additional }}
                 </div>
               </button>
             </li>
@@ -242,20 +242,19 @@ function tabAction(_item) {
   --bs-form-select-bg-img: none;
   padding-right: 0rem;
 }
-.text-aditional {
+.text-additional {
   display: block;
 }
-.aditional-data-input {
-  text-transform: capitalize;
+.additional-data-input {
   font-size: 13px;
   font-weight: 500;
-  color: var(--g-wb500);
+  color: var(--color-b-v3);
 }
-.aditional-data {
-  text-transform: capitalize;
+.additional-data {
   font-size: 13px;
   font-weight: 500;
-  color: var(--g-wb500);
+  color: var(--color-b-v3);
+
   display: flex;
 }
 .dropdown-item {

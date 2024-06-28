@@ -6,12 +6,12 @@ import {
   tableService,
   productService,
 } from "@/services";
-import { ref, onMounted, inject, reactive } from "vue";
+import { ref, onMounted, inject, reactive, watch, computed } from "vue";
 import TableForm from "@/common/table/TableForm.vue";
 import TableFormButtons from "@/common/table/TableFormButtons.vue";
 import { formatSubTitle, isEmpty } from "@/helpers";
 
-const emit = defineEmits(["onFirstLoad"]);
+const emit = defineEmits(["onFirstLoad", "onChangeTotal"]);
 
 const props = defineProps({
   mode: { default: null },
@@ -57,7 +57,10 @@ async function addElement(_data) {
   return resp;
 }
 async function editElement(_data) {
-  let resp = await ticketDetailService.updateTicketDetail(_data);
+  let resp = await ticketDetailService.updateTicketDetail(
+    _data,
+    totalCalc.value
+  );
   if (resp) {
     getList();
   }
@@ -114,6 +117,35 @@ onMounted(async () => {
   emit("onFirstLoad");
 });
 
+const listElements = computed(() => {
+  console.log(tableFormRef.value);
+
+  if (tableFormRef.value !== null) {
+    return tableFormRef.value.list;
+  }
+
+  return [];
+});
+watch(
+  () => listElements.value,
+  (_new, _old) => {
+    let sum = 0;
+    for (let index = 0; index < _new.length; index++) {
+      const element = _new[index];
+      let num = Number(element.price.value);
+      if (isNaN(num)) {
+        sum = 0;
+        break;
+      }
+      sum += num;
+    }
+    totalCalc.value = sum.toFixed(2);
+    emit("onChangeTotal", totalCalc.value);
+  },
+  { deep: true }
+);
+const totalCalc = ref("0.00");
+
 defineExpose({
   resetList,
   getListValue,
@@ -158,6 +190,7 @@ defineExpose({
           :consult="productService.getListProduct"
           :filter="products.filter"
           :ousideData="products"
+          :showAditionalInSelect="false"
         />
       </template>
       <template v-slot:quantity="{ row, index, disabledRow, validateLabel }">
@@ -185,6 +218,17 @@ defineExpose({
             :disabled="disabledRow"
           />
         </div>
+      </template>
+      <template #spaceBelow="{ activeColumns }">
+        <tbody>
+          <tr>
+            <td colspan="2" class="text-end">
+              <label class="imp-label">Precio Total:</label>
+            </td>
+            <td class="text-end">{{ totalCalc }}</td>
+            <td v-if="(activeColumns.length = 4)"></td>
+          </tr>
+        </tbody>
       </template>
     </TableForm>
   </g-section-4>

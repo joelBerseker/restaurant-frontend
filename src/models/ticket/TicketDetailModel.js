@@ -76,10 +76,13 @@ export class TicketDetailModel extends Model {
         label: this.quantity.name,
         field: this.quantity.id,
         columnClass: "number",
+        width: "25%",
       },
       {
         label: this.price.name,
         field: this.price.id,
+        width: "25%",
+
         columnClass: "number",
       },
     ];

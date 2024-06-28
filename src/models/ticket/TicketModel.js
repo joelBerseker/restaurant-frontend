@@ -2,6 +2,7 @@ import { Model } from "@/models/";
 
 export class TicketModel extends Model {
   code = {
+    omit: true,
     id: "code",
     name: "Código",
     value: null,
@@ -22,7 +23,7 @@ export class TicketModel extends Model {
     type: "number",
     value: null,
     default: "0",
-    required: false, // blank=True in Django
+
     validation: {},
     validate: ["length", "number"],
   };
@@ -33,7 +34,7 @@ export class TicketModel extends Model {
     type: "decimal",
     value: null,
     default: "0.00",
-    required: false,
+
     validation: {},
     validate: ["length", "decimal"],
   };
@@ -43,9 +44,10 @@ export class TicketModel extends Model {
     type: "decimal",
     value: null,
     default: "0.00",
-    required: false,
+
     validation: {},
-    validate: ["length", "decimal"],
+    greaterThan: "0.00",
+    validate: ["length", "decimal", "greaterThan"],
   };
   check_discount = {
     id: "check_discount",
@@ -55,13 +57,16 @@ export class TicketModel extends Model {
   };
 
   user_id = {
+    omit: true,
     id: "user_id",
-    name: "Usuario",
+    name: "Encargado",
     type: "select",
     value: null,
-    aditional: {},
-
-    validation: {},
+    additional: {},
+    getValueText() {
+      if (!this.additional) return;
+      return this.additional.first_name + " " + this.additional.last_name;
+    },
   };
 
   table_id = {
@@ -79,5 +84,52 @@ export class TicketModel extends Model {
       value: this.id.value,
       text: `${this.code.value} - s/ ${this.priceFinal.value}`,
     };
+  }
+  getDataTable() {
+    return [
+      {
+        label: "ID",
+        field: "id",
+        sortable: true,
+        width: "1%",
+      },
+      {
+        label: this.user_id.name,
+        field: this.user_id.id,
+        sortable: true,
+        searchable: true,
+      },
+      {
+        label: this.ruc.name,
+        field: this.ruc.id,
+        sortable: true,
+        searchable: true,
+      },
+
+      {
+        label: this.priceTotal.name,
+        field: this.priceTotal.id,
+        sortable: true,
+        searchable: true,
+        columnClass: "number",
+        width: "1%",
+      },
+      {
+        label: this.discount.name,
+        field: this.discount.id,
+        sortable: true,
+        searchable: true,
+        columnClass: "number",
+        width: "1%",
+      },
+      {
+        label: this.priceFinal.name,
+        field: this.priceFinal.id,
+        sortable: true,
+        searchable: true,
+        columnClass: "number",
+        width: "1%",
+      },
+    ];
   }
 }

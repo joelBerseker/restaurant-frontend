@@ -209,12 +209,15 @@ export const ticketDetailService = {
       throw error;
     }
   },
-  async updateTicketDetail(new_data) {
+  async updateTicketDetail(new_data, total = 10) {
     let dataid = new_data.id.value;
     try {
-      const response = await axiosInstance.put(
+      let sendData = new_data.addData();
+      sendData.new_total = total;
+      console.log(sendData);
+      const response = await axiosInstance.patch(
         `${servicePath}/${dataid}/`,
-        new_data.addData()
+        sendData
       );
       const data_new = dataTransform.transformApiData(
         response.data,

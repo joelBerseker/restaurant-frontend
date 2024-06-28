@@ -94,6 +94,12 @@ export class TicketModel extends Model {
         width: "1%",
       },
       {
+        label: this.code.name,
+        field: this.code.id,
+        sortable: true,
+        searchable: true,
+      },
+      {
         label: this.user_id.name,
         field: this.user_id.id,
         sortable: true,

@@ -50,9 +50,6 @@ function validateElement() {
   return formRef.value.validate();
 }
 function changeTotal(_value) {
-  console.log("estoy en fomr");
-
-  console.log(discount);
   formRef.value.getElement().priceTotal.value = _value;
 
   changeDiscount();

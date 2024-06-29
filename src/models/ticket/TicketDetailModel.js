@@ -26,25 +26,36 @@ export class TicketDetailModel extends Model {
 
   price = {
     id: "price",
+    name: "Precio",
+    type: "decimal",
+
+    default: "0.00",
+    value: null,
+    validation: {},
+    validate: ["length", "decimal"],
+  };
+
+  price_total = {
+    id: "price_total",
     name: "Precio Total",
     type: "decimal",
 
     default: "0.00",
     value: null,
     validation: {},
-    validate: ["decimal"],
-    required: false, // null=True, blank=True in Django
+    validate: ["length", "decimal"],
   };
 
   quantity = {
     id: "quantity",
     name: "Cantidad",
     type: "number",
-    default: "0",
+    default: "1",
     value: null,
-    required: false, // null=True, blank=True in Django
     validation: {},
-    validate: ["number"],
+    greaterThan: "0",
+
+    validate: ["length", "number", "greaterThan"],
   };
 
   description = {
@@ -73,15 +84,22 @@ export class TicketDetailModel extends Model {
         field: this.product_id.id,
       },
       {
+        label: this.price.name,
+        field: this.price.id,
+        width: "20%",
+
+        columnClass: "number",
+      },
+      {
         label: this.quantity.name,
         field: this.quantity.id,
         columnClass: "number",
-        width: "25%",
+        width: "20%",
       },
       {
-        label: this.price.name,
-        field: this.price.id,
-        width: "25%",
+        label: this.price_total.name,
+        field: this.price_total.id,
+        width: "20%",
 
         columnClass: "number",
       },

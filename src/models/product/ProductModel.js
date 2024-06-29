@@ -70,7 +70,8 @@ export class ProductModel extends Model {
     return {
       value: this.id.value,
       text: this.name.value,
-      additional: ` s/${this.price.value} - ${this.description.value}`,
+      additional: ` S/. ${this.price.value} - ${this.description.value}`,
+      price: this.price.value,
     };
   }
 }

@@ -31,7 +31,6 @@ const collapseRef = ref(null);
 const collapseOpen = ref(false);
 
 const titleRef = ref(null);
-console.log(slots);
 
 function onRefresh() {
   emit("onRefresh");

@@ -211,5 +211,9 @@ defineExpose({
   color: var(--color-b-v3) !important;
   opacity: 1; /* Firefox */
 }
+.g-input:disabled {
+  border-color: rgb(238, 238, 238) !important;
+  color: var(--color-b-v3) !important;
+}
 </style>
 <style scoped></style>

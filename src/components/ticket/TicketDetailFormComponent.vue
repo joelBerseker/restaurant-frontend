@@ -108,7 +108,6 @@ function onChangeDisabled(_value) {
   showRefresh.value = !_value;
 }
 onMounted(async () => {
-  console.log(idElement);
   if (idElement) {
     localMode.value = "view";
     disabled.value = true;
@@ -118,8 +117,6 @@ onMounted(async () => {
 });
 
 const listElements = computed(() => {
-  console.log(tableFormRef.value);
-
   if (tableFormRef.value !== null) {
     return tableFormRef.value.list;
   }
@@ -129,10 +126,12 @@ const listElements = computed(() => {
 watch(
   () => listElements.value,
   (_new, _old) => {
+    console.log("hola");
+    console.log(_new);
     let sum = 0;
     for (let index = 0; index < _new.length; index++) {
       const element = _new[index];
-      let num = Number(element.price.value);
+      let num = Number(element.price_total.value);
       if (isNaN(num)) {
         sum = 0;
         break;
@@ -146,6 +145,24 @@ watch(
 );
 const totalCalc = ref("0.00");
 
+function changeProduct(_data, _row) {
+  console.log(_data);
+  _row.setLabelValue("price", _data.valueComplete.price);
+  calcTotalElement(_row);
+}
+function calcTotalElement(_row) {
+  let price = _row.getLabelValue("price");
+  let quantity = _row.getLabelValue("quantity");
+
+  let priceNum = Number(price);
+  let quantityNum = Number(quantity);
+
+  let total = 0;
+  if (!isNaN(priceNum) && !isNaN(quantityNum)) {
+    total = priceNum * quantityNum;
+  }
+  _row.setLabelValue("price_total", total.toFixed(2));
+}
 defineExpose({
   resetList,
   getListValue,
@@ -191,6 +208,7 @@ defineExpose({
           :filter="products.filter"
           :ousideData="products"
           :showAditionalInSelect="false"
+          @changeGetComplete="changeProduct($event, row)"
         />
       </template>
       <template v-slot:quantity="{ row, index, disabledRow, validateLabel }">
@@ -198,13 +216,23 @@ defineExpose({
           v-model="row.quantity"
           @validate="validateLabel($event, index)"
           :disabled="disabledRow"
+          @input="calcTotalElement(row)"
         />
       </template>
       <template v-slot:price="{ row, disabledRow, index, validateLabel }">
         <g-input-val
           v-model="row.price"
           @validate="validateLabel($event, index)"
-          :disabled="disabledRow"
+          :disabled="true"
+          :viewMode="disabledRow"
+        />
+      </template>
+      <template v-slot:price_total="{ row, disabledRow, index, validateLabel }">
+        <g-input-val
+          v-model="row.price_total"
+          @validate="validateLabel($event, index)"
+          :disabled="true"
+          :viewMode="disabledRow"
         />
       </template>
       <template
@@ -222,11 +250,11 @@ defineExpose({
       <template #spaceBelow="{ activeColumns }">
         <tbody>
           <tr>
-            <td colspan="2" class="text-end">
+            <td colspan="3" class="text-end">
               <label class="imp-label">Precio Total:</label>
             </td>
             <td class="text-end">{{ totalCalc }}</td>
-            <td v-if="(activeColumns.length = 4)"></td>
+            <td v-if="(activeColumns.length = 5)"></td>
           </tr>
         </tbody>
       </template>

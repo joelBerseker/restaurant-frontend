@@ -95,11 +95,8 @@ export class Model {
         this[key].file = data[key].file;
         console.log(this[key].file);
       }
-      if (data[key].view_text) {
-        this[key].view_text = data[key].view_text;
-      }
-      if (data[key].view_aditional) {
-        this[key].view_aditional = data[key].view_aditional;
+      if (data[key].valueText) {
+        this[key].valueText = JSON.parse(JSON.stringify(data[key].valueText));
       }
     }
   }
@@ -122,6 +119,7 @@ export class Model {
   init() {
     console.log(this);
     this.initValueText();
+    console.log(this);
   }
   changeStatus() {
     let status_new = 1;

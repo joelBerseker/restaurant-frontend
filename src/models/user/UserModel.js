@@ -10,6 +10,8 @@ export class UserModel extends Model {
     additional: {},
     validation: {},
     getValueText() {
+      if (!this.additional) return;
+
       return this.additional.name;
     },
   };

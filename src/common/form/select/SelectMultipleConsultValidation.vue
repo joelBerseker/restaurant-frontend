@@ -1,5 +1,5 @@
 <script setup>
-import { computed, inject, ref, onUpdated } from "vue";
+import { computed, inject, ref, onUpdated, watch } from "vue";
 
 import { isEmpty } from "@/helpers";
 import { useToastStore } from "@/stores";
@@ -78,6 +78,14 @@ function changeSelect(_data) {}
 function reset() {
   selectList.value = [];
 }
+watch(
+  () => value.value.valueText,
+  (_new, _old) => {
+    console.log(_new);
+    selectList.value = JSON.parse(JSON.stringify(value.value.valueText));
+  },
+  { deep: true }
+);
 defineExpose({
   getListConsultCache,
   reset,
@@ -95,8 +103,15 @@ defineExpose({
     :validation="value.validation"
   >
     <template v-slot:view>
-      <ul class="fix-padding-ul">
-        <li v-for="(element, index) in value.value">{{ element }}</li>
+      <ul class="fix-padding-ul list-selected-view">
+        <li v-for="(element, index) in selectList">
+          <div>
+            {{ element.text }}
+          </div>
+          <div class="additional-element">
+            {{ element.additional }}
+          </div>
+        </li>
       </ul>
     </template>
     <template v-slot:form>
@@ -168,5 +183,11 @@ defineExpose({
   flex-direction: column;
   gap: 0.75rem;
   margin-top: 0.75rem;
+}
+
+.list-selected-view {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 </style>

@@ -67,17 +67,16 @@ defineExpose({
     v-slot="{ element, validateLabel }"
   >
     <div class="row gutter-sec container-content">
-      <div class="col-12 col-sm-10 col-md-6 col-lg-5 col-xl-4 d-flex">
+      <div class="col-12 col-sm-10 col-md-6 col-lg-5 col-xl-4">
         <g-section-4
           title="Información del Menu"
           contentClass="row gutter-form"
-          class="w-100 content-menu"
           :topLine="false"
         >
           <g-input-val
             :label="element.name.name"
             v-model="element.name"
-            :disabled="false"
+            :disabled="disabled"
             @validate="validateLabel"
           />
 
@@ -85,13 +84,13 @@ defineExpose({
             :label="element.day.name"
             v-model="element.day"
             :options="days.options"
-            :disabled="false"
+            :disabled="disabled"
             @validate="validateLabel"
           />
           <g-input-val
             :label="element.price.name"
             v-model="element.price"
-            :disabled="false"
+            :disabled="disabled"
             @validate="validateLabel"
           />
           <g-input-check
@@ -99,7 +98,7 @@ defineExpose({
             v-model="element.is_publish.value"
             :switchMode="true"
             labelClass="imp-label"
-            :disabled="false"
+            :disabled="disabled"
             @validate="validateLabel"
           />
         </g-section-4>
@@ -118,7 +117,7 @@ defineExpose({
               orderBy: 'name',
               searchBy: ['name'],
             }"
-            :disabled="false"
+            :disabled="disabled"
             @validate="validateLabel"
           />
         </g-section-4>
@@ -131,7 +130,7 @@ defineExpose({
               orderBy: 'name',
               searchBy: ['name'],
             }"
-            :disabled="false"
+            :disabled="disabled"
             @validate="validateLabel"
           />
         </g-section-4>

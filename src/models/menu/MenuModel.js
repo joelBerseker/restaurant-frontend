@@ -22,6 +22,18 @@ export class MenuModel extends Model {
     additional: {},
 
     validation: {},
+    getValueText() {
+      if (!this.additional) return [];
+      let resp = [];
+      for (let i = 0; i < this.additional.length; i++) {
+        const element = this.additional[i];
+        resp.push({
+          text: element.name,
+          additional: "S/. " + element.price + " - " + element.description,
+        });
+      }
+      return resp;
+    },
   };
 
   main_courses = {
@@ -34,9 +46,20 @@ export class MenuModel extends Model {
       validation: {},
     },
     value: [],
-    additional: {},
-
+    additional: [],
     validation: {},
+    getValueText() {
+      if (!this.additional) return [];
+      let resp = [];
+      for (let i = 0; i < this.additional.length; i++) {
+        const element = this.additional[i];
+        resp.push({
+          text: element.name,
+          additional: "S/. " + element.price + " - " + element.description,
+        });
+      }
+      return resp;
+    },
   };
 
   day = {

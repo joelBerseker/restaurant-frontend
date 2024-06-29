@@ -1,6 +1,6 @@
 <script setup>
 import TicketFormComponent from "@/components/ticket/TicketFormComponent.vue";
-import TicketDetailFormComponent from "@/components/ticket/TicketDetailFormComponent.vue";
+import TicketDetailFormComponent from "@/components/ticket/TicketFormDetailComponent.vue";
 
 import FormButtons from "@/common/form/FormButtons.vue";
 import LoadingContainer from "@/common/container/LoadingContainer.vue";

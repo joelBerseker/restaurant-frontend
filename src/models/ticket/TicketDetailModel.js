@@ -18,6 +18,7 @@ export class TicketDetailModel extends Model {
     additional: {},
 
     getValueText() {
+      if (!this.additional) return;
       return this.additional.name;
     },
     value: null,

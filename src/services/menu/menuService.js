@@ -5,7 +5,7 @@ import { BaseService } from "@/services/BaseService";
 import { MenuModel } from "@/models";
 import { useToastStore } from "@/stores";
 
-const servicePath = "/menu/menu";
+const servicePath = "/menu";
 const module = "menu";
 
 export const menuService = {

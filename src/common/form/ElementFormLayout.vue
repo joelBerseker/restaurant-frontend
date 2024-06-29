@@ -123,24 +123,25 @@ function clear() {
   box-shadow: 0px -3px 0px 0px rgba(68, 68, 68, 0.25) inset;
   border-color: var(--g-wb500);
 }
-.valid
-  > div
-  > main
-  > div
-  > :is(.g-input, .g-select, .g-image-container, .g-file-input) {
+
+.valid > div > main > div > .g-input,
+.valid > div > main > div > div > .g-select,
+.valid > div > main > div > .g-image-container,
+.valid > div > main > div > .g-file-input {
   border-color: var(--color-s) !important;
 }
-.valid > div > main > div > :is(.g-input:focus, .g-select:focus, ) {
+.valid > div > main > div > .g-input:focus,
+.valid > div > main > div > div > .g-select:focus {
   box-shadow: 0px -3px 0px 0px rgba(var(--color-s-rgb), 0.25) inset;
 }
-.no-valid
-  > div
-  > main
-  > div
-  > :is(.g-input, .g-select, .g-image-container, .g-file-input) {
+.no-valid > div > main > div > .g-input,
+.no-valid > div > main > div > div > .g-select,
+.no-valid > div > main > div > .g-image-container,
+.no-valid > div > main > div > .g-file-input {
   border-color: var(--color-d) !important;
 }
-.no-valid > div > main > div > :is(.g-input:focus, .g-select:focus) {
+.no-valid > div > main > div > .g-input:focus,
+.no-valid > div > main > div > div > .g-select:focus {
   box-shadow: 0px -3px 0px 0px rgba(var(--color-d-rgb), 0.25) inset;
 }
 </style>

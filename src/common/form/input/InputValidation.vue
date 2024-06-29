@@ -44,7 +44,7 @@ const localPlaceHolder = computed(() => {
 
   if (value.value.required === false) return "No requerido";
   else {
-    return "* Requerido";
+    return "Requerido*";
   }
 });
 </script>

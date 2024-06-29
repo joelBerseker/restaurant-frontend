@@ -55,4 +55,21 @@ const confirmation = {
   },
 };
 
-export { status, confirmation };
+const days = {
+  options: [
+    { value: 0, text: "Todos los dias" },
+    { value: 1, text: "Lunes" },
+    { value: 2, text: "Martes" },
+    { value: 3, text: "Miercoles" },
+    { value: 4, text: "Jueves" },
+    { value: 5, text: "Viernes" },
+    { value: 6, text: "Sabado" },
+    { value: 7, text: "Domingo" },
+  ],
+  get(value) {
+    if (isEmpty(value)) return value;
+    return this.options[value].text;
+  },
+};
+
+export { status, confirmation, days };

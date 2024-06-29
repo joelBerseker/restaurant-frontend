@@ -10,6 +10,7 @@ let list = [
   "productList",
   "productType",
   "ticketList",
+  "menuList",
   "test",
 ];
 

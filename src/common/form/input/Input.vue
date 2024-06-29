@@ -77,9 +77,8 @@ function blur() {
     if (isNaN(number)) return;
     if (value.value === null) return;
     value.value = number.toFixed(2);
+    emit("input");
   }
-
-  emit("input");
 }
 function clear() {
   value.value = null;

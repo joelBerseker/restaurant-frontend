@@ -32,6 +32,8 @@ const props = defineProps({
   nullText: { default: "Seleccione una opción" },
   nullOption: { default: false },
   validation: { default: null },
+  autoClose: { default: null },
+  dropDirection: { default: null },
 });
 
 const selectRef = ref(null);
@@ -160,71 +162,82 @@ function tabAction(_item) {
       </div>
     </template>
     <template v-slot:form>
-      <button
-        :id="id"
-        ref="selectRef"
-        :disabled="disabled"
-        :class="['g-select form-select form-select-sm text-start', selectClass]"
-        type="button"
-        aria-expanded="false"
-        data-bs-toggle="dropdown"
-        data-bs-popper-config='{"strategy":"fixed"}'
-        @click="clickButton"
-      >
-        <span class="dropdown-text">
-          <div v-if="!isEmpty(selectValue.text)">{{ selectValue.text }}</div>
-          <div v-else>&nbsp;</div>
+      <div :class="dropDirection">
+        <button
+          :id="id"
+          ref="selectRef"
+          :disabled="disabled"
+          :class="[
+            'g-select form-select form-select-sm text-start ',
+            selectClass,
+          ]"
+          type="button"
+          aria-expanded="false"
+          data-bs-toggle="dropdown"
+          data-bs-popper-config='{"strategy":"fixed"}'
+          :data-bs-auto-close="autoClose"
+          @click="clickButton"
+        >
+          <span class="dropdown-text">
+            <div v-if="!isEmpty(selectValue.text)">{{ selectValue.text }}</div>
+            <div v-else>&nbsp;</div>
 
-          <div
-            v-if="selectValue.additional !== undefined && showAditionalInSelect"
-            class="additional-data-input"
-          >
-            {{ selectValue.additional }}
-          </div>
-        </span>
-      </button>
-      <div class="dropdown-menu dropdown-select" tabindex="-1">
-        <LoadingContainer :loading="loading" loadingClass="loading-transparent">
-          <slot name="header-list"></slot>
-          <ul class="list-items">
-            <li v-if="nullOption">
-              <button
-                :class="['dropdown-item item-select item-active-hover']"
-                @click="clear()"
-                @keydown.tab="tabAction()"
-                tabindex="-1"
-                type="button"
-              >
-                {{ nullText }}
-              </button>
-            </li>
-            <li v-for="(item, index) in activeOptions" :key="index">
-              <button
-                :ref="'selectlistItem' + index"
-                :class="['dropdown-item item-select item-active-hover']"
-                @click="selectItem(item)"
-                @keydown.tab="tabAction(item)"
-                tabindex="-1"
-                type="button"
-              >
-                {{ item[props.textOptions] }}
-                <div
-                  v-if="item.additional !== undefined"
-                  class="additional-data-input"
-                >
-                  {{ item.additional }}
-                </div>
-              </button>
-            </li>
-            <li
-              v-show="activeOptions.length <= 0 && !nullOption"
-              class="empty-text-list text-center"
+            <div
+              v-if="
+                selectValue.additional !== undefined && showAditionalInSelect
+              "
+              class="additional-data-input"
             >
-              No se encontraron registros
-            </li>
-          </ul>
-          <slot name="footer-list"></slot>
-        </LoadingContainer>
+              {{ selectValue.additional }}
+            </div>
+          </span>
+        </button>
+        <div class="dropdown-menu dropdown-select" tabindex="-1">
+          <LoadingContainer
+            :loading="loading"
+            loadingClass="loading-transparent"
+          >
+            <slot name="header-list"></slot>
+            <ul class="list-items">
+              <li v-if="nullOption">
+                <button
+                  :class="['dropdown-item item-select item-active-hover']"
+                  @click="clear()"
+                  @keydown.tab="tabAction()"
+                  tabindex="-1"
+                  type="button"
+                >
+                  {{ nullText }}
+                </button>
+              </li>
+              <li v-for="(item, index) in activeOptions" :key="index">
+                <button
+                  :ref="'selectlistItem' + index"
+                  :class="['dropdown-item item-select item-active-hover']"
+                  @click="selectItem(item)"
+                  @keydown.tab="tabAction(item)"
+                  tabindex="-1"
+                  type="button"
+                >
+                  {{ item[props.textOptions] }}
+                  <div
+                    v-if="item.additional !== undefined"
+                    class="additional-data-input"
+                  >
+                    {{ item.additional }}
+                  </div>
+                </button>
+              </li>
+              <li
+                v-show="activeOptions.length <= 0 && !nullOption"
+                class="empty-text-list text-center"
+              >
+                No se encontraron registros
+              </li>
+            </ul>
+            <slot name="footer-list"></slot>
+          </LoadingContainer>
+        </div>
       </div>
     </template>
   </ElementFormLayout>
@@ -267,6 +280,9 @@ function tabAction(_item) {
   background-color: var(--color-1) !important;
   color: var(--color-w-v2) !important;
 }
+.dropdown-item:hover .additional-data-input {
+  color: var(--color-w-v4);
+}
 </style>
 <style scoped>
 .empty-text-list {
@@ -274,6 +290,8 @@ function tabAction(_item) {
   padding-right: 1rem;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
+  color: var(--color-b-v3);
+  font-size: 14px;
 }
 .list-items {
   overflow-y: auto;

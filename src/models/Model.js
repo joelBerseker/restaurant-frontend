@@ -179,4 +179,14 @@ export class Model {
   getTextModel() {
     return null;
   }
+  getDataTable() {
+    return [
+      {
+        label: "ID",
+        field: "id",
+        sortable: true,
+        width: "1%",
+      },
+    ];
+  }
 }

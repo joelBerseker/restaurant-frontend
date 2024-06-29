@@ -31,6 +31,7 @@ const router = createRouter({
         productRouter,
         ticketRouter,
         testRouter,
+        menuRouter,
         {
           path: "/rol/:id?",
           name: "rol",
@@ -94,6 +95,7 @@ const router = createRouter({
 import { useUserStore, useSystemUtilStore } from "@/stores/"; // Asegúrate de proporcionar la ruta correcta a tu tienda
 import { sleep } from "@/helpers";
 import { ticketRouter } from "./ticketRouter";
+import { menuRouter } from "./menuRouter";
 
 router.beforeEach(async (to, from, next) => {
   console.log("entre");

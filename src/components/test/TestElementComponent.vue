@@ -48,17 +48,33 @@ function generateCode() {
   let _model = new props.modelTest();
 
   listKey.value.forEach((key) => {
-    resp +=
-      "<g-input-file-val\n" +
-      '\t:label="element.' +
-      key +
-      '.name"\n' +
-      '\tv-model="element.' +
-      key +
-      '"\n' +
-      '\t:disabled="false"\n' +
-      '\t@validate="validateLabel"\n' +
-      "/>\n";
+    if (_model[key].value === true || _model[key].value === false) {
+      resp +=
+        "<g-input-check\n" +
+        '\t:label="element.' +
+        key +
+        '.name"\n' +
+        '\tv-model="element.' +
+        key +
+        '.value"\n' +
+        '\t:switchMode="true"\n' +
+        '\tlabelClass="imp-label"\n' +
+        '\t:disabled="false"\n' +
+        '\t@validate="validateLabel"\n' +
+        "/>\n";
+    } else {
+      resp +=
+        "<g-input-val\n" +
+        '\t:label="element.' +
+        key +
+        '.name"\n' +
+        '\tv-model="element.' +
+        key +
+        '"\n' +
+        '\t:disabled="false"\n' +
+        '\t@validate="validateLabel"\n' +
+        "/>\n";
+    }
   });
   emit("generateCode", resp);
 }

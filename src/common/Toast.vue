@@ -176,7 +176,7 @@ function clearAll() {
                 <div class="text-toast">
                   <div>
                     <span>{{ toast.prevText }}</span>
-                    <span class="important-text">{{
+                    <span class="important-text uppercase">{{
                       toast.importantText
                     }}</span>
                     <span>{{ toast.nextText }}</span>
@@ -210,9 +210,11 @@ function clearAll() {
 </template>
 
 <style scoped>
+.uppercase {
+  text-transform: uppercase;
+}
 .important-text {
   font-weight: 600;
-  text-transform: uppercase;
 }
 
 .list-errors {

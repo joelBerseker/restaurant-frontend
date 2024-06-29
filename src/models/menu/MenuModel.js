@@ -5,7 +5,6 @@ export class MenuModel extends Model {
     id: "name",
     name: "Nombre",
     value: null,
-    required: false, // null=True, blank=True in Django
     validation: {},
     validate: ["length"],
   };
@@ -13,21 +12,31 @@ export class MenuModel extends Model {
   starters = {
     id: "starters",
     name: "Entradas",
+    element: {
+      id: "starter",
+      name: "Entrada",
+      value: null,
+      validation: {},
+    },
     value: [],
     additional: {},
-    required: false, // blank=True in Django
+
     validation: {},
-    validate: ["select"],
   };
 
   main_courses = {
     id: "main_courses",
     name: "Platos principales",
+    element: {
+      id: "starter",
+      name: "Entrada",
+      value: null,
+      validation: {},
+    },
     value: [],
     additional: {},
-    required: false, // blank=True in Django
+
     validation: {},
-    validate: ["select"],
   };
 
   day = {
@@ -36,28 +45,23 @@ export class MenuModel extends Model {
     value: null,
     required: true, // No null or blank in Django, has default value
     validation: {},
-    validate: ["number"],
     default: 1,
   };
 
   price = {
     id: "price",
-    name: "Precio s/",
+    name: "Precio",
     value: null,
     required: true, // No null or blank in Django, has default value
     validation: {},
-    validate: ["decimal"],
-    default: 0,
+    validate: ["decimal", "length"],
+    default: "0.00",
   };
 
   is_publish = {
     id: "is_publish",
     name: "Publicado",
-    value: null,
-    required: false, // null=True, blank=True in Django
-    validation: {},
-    validate: ["boolean"],
-    default: true,
+    value: true,
   };
 
   getDataOptions() {

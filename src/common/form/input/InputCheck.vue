@@ -74,4 +74,20 @@ function change(_data) {
   margin-left: 0;
   margin-top: 0.32rem;
 }
+
+.form-check-input:checked {
+  background-color: var(--color-1-v3);
+  border-color: var(--color-1-v3);
+}
+.form-check-input:focus {
+  border-color: rgba(var(--color-s-rgb), 0.25);
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(var(--color-s-rgb), 0.25);
+}
+.form-switch .form-check-input:focus {
+  --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e");
+}
+.form-switch .form-check-input:checked {
+  --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+}
 </style>

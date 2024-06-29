@@ -1,19 +1,21 @@
 import ButtonXMin from "./common/button/ButtonXMin.vue";
 
-import Input from "./common/form/Input.vue";
-import InputCheck from "./common/form/InputCheck.vue";
+import Input from "./common/form/input/Input.vue";
+import InputCheck from "./common/form/input/InputCheck.vue";
 
-import InputValidation from "./common/form/InputValidation.vue";
+import InputValidation from "./common/form/input/InputValidation.vue";
 
-import InputImage from "./common/form/InputImage.vue";
-import InputImageValidation from "./common/form/InputImageValidation.vue";
+import InputImage from "./common/form/file/InputImage.vue";
+import InputImageValidation from "./common/form/file/InputImageValidation.vue";
 
-import InputFile from "./common/form/InputFile.vue";
-import InputFileValidation from "./common/form/InputFileValidation.vue";
+import InputFile from "./common/form/file/InputFile.vue";
+import InputFileValidation from "./common/form/file/InputFileValidation.vue";
 
-import Select from "./common/form/Select.vue";
-import SelectConsultValidation from "./common/form/SelectConsultValidation.vue";
-import SelectValidation from "./common/form/SelectValidation.vue";
+import Select from "./common/form/select/Select.vue";
+import SelectConsultValidation from "./common/form/select/SelectConsultValidation.vue";
+import SelectMultipleConsultValidation from "./common/form/select/SelectMultipleConsultValidation.vue";
+
+import SelectValidation from "./common/form/select/SelectValidation.vue";
 import Form from "./common/form/Form.vue";
 import Button from "./common/button/Button.vue";
 import ButtonSelect from "./common/button/ButtonSelect.vue";
@@ -42,6 +44,10 @@ function registerComponents(app) {
   app.component("g-select", Select);
   app.component("g-select-val", SelectValidation);
   app.component("g-select-consult-val", SelectConsultValidation);
+  app.component(
+    "g-select-multiple-consult-val",
+    SelectMultipleConsultValidation
+  );
 
   app.component("g-form", Form);
   app.component("g-button", Button);

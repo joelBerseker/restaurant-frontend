@@ -103,6 +103,7 @@ defineExpose({
     :viewMode="viewMode"
     @clear="clear"
     :validation="validation"
+    wrapperClass="g-input-image"
     type="image"
   >
     <template v-slot:view>
@@ -112,7 +113,7 @@ defineExpose({
         :imageEmptyClass="imageEmptyClass"
         :iconEmpty="iconEmpty"
     /></template>
-    <template v-slot:form>
+    <template v-slot:form="{ onFocus, onBlur }">
       <g-image
         :src="srcFinal"
         :imageClass="imageClass"
@@ -137,6 +138,8 @@ defineExpose({
           type="file"
           :multiple="props.multiple"
           accept="image/png, image/gif, image/jpeg"
+          @focus="onFocus"
+          @blur="onBlur"
         />
       </g-image>
       <slot name="aditional"></slot>

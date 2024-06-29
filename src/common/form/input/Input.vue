@@ -73,6 +73,8 @@ async function inputAwait() {
 
 function blur() {
   if (props.type === "decimal") {
+    console.log("dec");
+
     let number = Number(value.value);
     if (isNaN(number)) return;
     if (value.value === null) return;
@@ -114,7 +116,9 @@ defineExpose({
     :viewMode="viewMode"
     :type="type"
     @clear="clear"
+    @blur="blur()"
     :validation="validation"
+    wrapperClass="g-input"
   >
     <template v-slot:view>
       <div :class="[viewClass]">
@@ -129,7 +133,7 @@ defineExpose({
         </span>
       </div>
     </template>
-    <template v-slot:form>
+    <template v-slot:form="{ onFocus, onBlur }">
       <textarea
         v-if="type == 'textarea'"
         ref="inputRef"
@@ -142,7 +146,8 @@ defineExpose({
         :disabled="disabled"
         :placeholder="placeholder"
         @input="input()"
-        @blur="blur()"
+        @focus="onFocus"
+        @blur="onBlur"
       >
       </textarea>
       <input
@@ -156,7 +161,8 @@ defineExpose({
         :disabled="disabled"
         :placeholder="placeholder"
         @input="input()"
-        @blur="blur()"
+        @focus="onFocus"
+        @blur="onBlur"
       />
     </template>
   </ElementFormLayout>
@@ -166,6 +172,7 @@ defineExpose({
   field-sizing: content;
   min-height: 5rem !important;
   max-height: 15rem !important;
+  padding-right: 1.45rem !important;
 }
 .form-control-sm,
 .form-control,
@@ -175,9 +182,7 @@ defineExpose({
   border-color: var(--color-border) !important;
   padding-left: 0rem;
   padding-right: 0rem;
-  border-left: none;
-  border-right: none;
-  border-top: none;
+  border: none;
   padding-top: calc(0.25rem + 1px);
   padding-bottom: 0.25rem;
 

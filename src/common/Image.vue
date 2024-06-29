@@ -29,7 +29,7 @@ const props = defineProps({
 
   width: auto;
 
-  border-radius: var(--br-v2);
+  border-radius: var(--br);
 }
 
 .user-img {
@@ -81,26 +81,26 @@ const props = defineProps({
 .image-modal {
   width: 100% !important;
   height: auto;
-  border-radius: var(--br-v2);
+  border-radius: var(--br);
 }
 .image-modal-empty {
   width: 100% !important;
   height: auto;
   aspect-ratio: 2 / 1.3;
 
-  border-radius: var(--br-v2);
+  border-radius: var(--br);
 }
 .article-image {
   width: 190px !important;
   height: 142px;
-  border-radius: var(--br-v2);
+  border-radius: var(--br);
 }
 </style>
 <style scoped>
 .g-default-image {
   width: 150px;
   height: 150px;
-  border-radius: var(--br-v2);
+  border-radius: var(--br);
 }
 .g-image-container {
   position: relative;

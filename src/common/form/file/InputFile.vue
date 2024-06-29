@@ -112,6 +112,7 @@ defineExpose({
     @clear="clear"
     :validation="validation"
     type="file"
+    wrapperClass="g-input-file"
   >
     <template v-slot:view>
       <span v-if="isEmpty(src)" class="status-element no-defined-status">
@@ -124,7 +125,7 @@ defineExpose({
         </div>
       </span>
     </template>
-    <template v-slot:form>
+    <template v-slot:form="{ onFocus, onBlur }">
       <div class="g-file-input">
         <div class="break-word text-cover">
           <span v-if="value === null" class="empty-text">
@@ -133,7 +134,7 @@ defineExpose({
           </span>
           <span v-else>
             <font-awesome-icon icon="fa-solid fa-file" class="me-1" />
-            Seleccionar archivo: {{ value.name }}
+            {{ value.name }}
           </span>
         </div>
 
@@ -149,6 +150,8 @@ defineExpose({
           :disabled="disabled"
           type="file"
           :multiple="props.multiple"
+          @focus="onFocus"
+          @blur="onBlur"
         />
       </div>
       <slot name="aditional"></slot>
@@ -174,9 +177,7 @@ defineExpose({
   width: 100%;
   height: 100%;
 
-  border: 1px solid var(--color-border);
-  border-radius: var(--br-v3);
-  padding: 0.5rem 0.75rem;
+  padding: 0.5rem 0rem;
 }
 .empty-text {
   color: var(--color-b-v3);

@@ -101,6 +101,9 @@ defineExpose({
     :disabled="disabled"
     :viewMode="viewMode"
     :validation="value.validation"
+    wrapperClass="g-select-multiple"
+    type="select-multiple"
+    :validationIcon="false"
   >
     <template v-slot:view>
       <ul class="fix-padding-ul list-selected-view">
@@ -115,23 +118,19 @@ defineExpose({
       </ul>
     </template>
     <template v-slot:form>
-      <div :class="['input-array g-input validation', inputClass]">
-        <div class="row g-1">
-          <div class="col">
-            <g-select-consult-val
-              ref="selectRef"
-              v-model="value.element"
-              :consult="consult"
-              :filter="filter"
-              :noChangeValue="true"
-              nullText="Seleccione multiples opciones"
-              @changeGetComplete="addItem"
-              :showAditionalInSelect="false"
-              dropDirection="dropup"
-              autoClose="outside"
-            />
-          </div>
-        </div>
+      <div :class="['input-array g-input validation w-100', inputClass]">
+        <g-select-consult-val
+          ref="selectRef"
+          v-model="value.element"
+          :consult="consult"
+          :filter="filter"
+          :noChangeValue="true"
+          nullText="Seleccione multiples opciones"
+          @changeGetComplete="addItem"
+          :showAditionalInSelect="false"
+          dropDirection="dropup"
+          autoClose="outside"
+        />
 
         <div class="list-selected">
           <div v-show="value.value.length <= 0" class="empty-text">

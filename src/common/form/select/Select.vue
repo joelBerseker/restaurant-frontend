@@ -140,6 +140,7 @@ function tabAction(_item) {
     :clearButton="clearButton"
     @clear="clear"
     :validation="validation"
+    wrapperClass="g-select"
   >
     <template v-slot:view>
       <div :class="[viewClass]">
@@ -161,14 +162,14 @@ function tabAction(_item) {
         </span>
       </div>
     </template>
-    <template v-slot:form>
-      <div :class="dropDirection">
+    <template v-slot:form="{ onFocus, onBlur }">
+      <div :class="[dropDirection, 'w-100']">
         <button
           :id="id"
           ref="selectRef"
           :disabled="disabled"
           :class="[
-            'g-select form-select form-select-sm text-start ',
+            'g-select form-select form-select-sm text-start w-100',
             selectClass,
           ]"
           type="button"
@@ -177,6 +178,8 @@ function tabAction(_item) {
           data-bs-popper-config='{"strategy":"fixed"}'
           :data-bs-auto-close="autoClose"
           @click="clickButton"
+          @focus="onFocus"
+          @blur="onBlur"
         >
           <span class="dropdown-text">
             <div v-if="!isEmpty(selectValue.text)">{{ selectValue.text }}</div>
@@ -245,12 +248,9 @@ function tabAction(_item) {
 <style>
 .form-select {
   background-position: right 0rem center;
-  padding-right: 1.5rem;
+  padding-right: 1.3rem;
 }
-.g-form-wrapper.show-extra .form-select {
-  padding-right: 2.5rem;
-  background-position: right 1.4rem center;
-}
+
 .form-select:disabled {
   --bs-form-select-bg-img: none;
   padding-right: 0rem;

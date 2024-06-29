@@ -189,5 +189,31 @@ const validations = {
       resp = noValid("Solo se permite numeros, ejemplo: [1.00 o 1]");
     return resp;
   },
+
+  array(_data) {
+    let _value = getValue(_data);
+
+    let min = _data.min;
+    let max = _data.max;
+
+    if (min === undefined) {
+      min = globalSettings.array_min_size;
+    }
+    if (max === undefined) {
+      max = globalSettings.array_max_size;
+    }
+    var resp = valid();
+    var _valueLength = 0;
+    if (!isEmpty(_value)) _valueLength = _value.length;
+
+    if (_valueLength < min) {
+      resp = noValid("Debe contener minimo " + min + " elementos");
+      if (min === max) resp = noValid("Debe contener " + min + " elementos");
+    } else if (_valueLength > max) {
+      resp = noValid("Debe contener maximo " + max + " elementos");
+      if (min === max) resp = noValid("Debe contener " + min + " elementos");
+    }
+    return resp;
+  },
 };
 export { validations, valid, noValid, validating };

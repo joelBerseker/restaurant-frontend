@@ -99,6 +99,7 @@ body {
   justify-content: center;
   align-items: center;
   border-radius: 999rem;
+  z-index: 3;
 }
 p {
   margin-bottom: 0;
@@ -119,6 +120,7 @@ hr {
 
 .button-input-right {
   margin-left: -0.75rem !important;
+  z-index: 2;
 }
 
 .input-search-icon {

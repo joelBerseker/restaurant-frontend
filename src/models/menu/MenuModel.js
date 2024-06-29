@@ -20,6 +20,7 @@ export class MenuModel extends Model {
     },
     value: [],
     additional: {},
+    validate: ["array"],
 
     validation: {},
     getValueText() {
@@ -48,6 +49,8 @@ export class MenuModel extends Model {
     value: [],
     additional: [],
     validation: {},
+    validate: ["array"],
+
     getValueText() {
       if (!this.additional) return [];
       let resp = [];
@@ -74,6 +77,7 @@ export class MenuModel extends Model {
   price = {
     id: "price",
     name: "Precio",
+    type: "decimal",
     value: null,
     required: true, // No null or blank in Django, has default value
     validation: {},

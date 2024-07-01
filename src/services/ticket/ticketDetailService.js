@@ -116,6 +116,8 @@ export const ticketDetailService = {
         searches,
         // Otros parámetros de filtro que puedas necesitar
         is_publish,
+        is_menu,
+        product_id,
       } = filterParams;
 
       const filters = {
@@ -130,6 +132,8 @@ export const ticketDetailService = {
         year_date,
         // Otros parámetros de filtro que puedas necesitar
         is_publish,
+        is_menu,
+        product_id,
       };
 
       filteredFilters = Object.entries(filters)

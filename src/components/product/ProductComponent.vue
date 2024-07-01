@@ -6,6 +6,7 @@ import { ref, reactive, onMounted, inject } from "vue";
 import { productService } from "@/services";
 import { formatSubTitle } from "@/helpers";
 import { useRouter } from "vue-router";
+import { ProductModel } from "@/models";
 
 const emit = defineEmits(["onFirstLoad"]);
 const router = useRouter();
@@ -14,28 +15,11 @@ const tableRef = ref(null);
 const modalRef = ref(null);
 
 const subTitle = ref(null);
+const elementModel = ref(new ProductModel());
+
 const table = reactive({
-  columns: [
-    {
-      label: "ID",
-      field: "id",
-      sortable: true,
-      width: "1%",
-    },
-    {
-      label: "Nombre",
-      field: "name",
-      sortable: true,
-      searchable: true,
-      sort: "asc",
-    },
-    {
-      label: "Descripción",
-      field: "description",
-      sortable: true,
-      searchable: true,
-    },
-  ],
+  columns: elementModel.value.getDataTable(),
+
   defaultFilter: {
     order: "asc",
     orderBy: "name",
@@ -85,6 +69,7 @@ function switchSearch() {
         @onUpdate="onUpdate"
         @onFirstLoad="onFirstLoad"
         @onFilterCache="switchSearchValue = true"
+        iconDetail="fa-solid fa-arrow-right"
       ></TableConsult>
     </template>
   </g-section-1>

@@ -17,6 +17,8 @@ const props = defineProps({
   defaultFilter: { default: {} },
   date: { default: false },
   status: { default: true },
+  border: { default: false },
+
   resetOtherFilters: { default: null },
   filterCacheName: { default: null },
 });
@@ -108,7 +110,7 @@ defineExpose({
 });
 </script>
 <template>
-  <div class="filter-container">
+  <div :class="['filter-container', border ? 'border-cont' : '']">
     <div class="filters-container">
       <div class="filter-search-container">
         <FilterSearch
@@ -161,6 +163,9 @@ defineExpose({
   </div>
 </template>
 <style scoped>
+.border-cont {
+  border: 1px solid var(--color-border2);
+}
 .filter-container {
   background-color: var(--color-c1);
   padding: 1rem;

@@ -3,6 +3,12 @@ import { Model } from "@/models/";
 export class TicketDetailModel extends Model {
   ticket_id = {
     value: null,
+    additionalKey: "code",
+    additional: {},
+    getValueText() {
+      if (!this.additional) return;
+      return this.additional.code;
+    },
   };
 
   is_menu = {

@@ -28,7 +28,7 @@ const props = defineProps({
   display: { default: null },
   loadingSelect: { default: true },
   showAditionalInSelect: { default: true },
-  noChangeValue: { default: false },
+  changeInSelect: { default: true },
   nullText: { default: "Seleccione una opción" },
   nullOption: { default: false },
   validation: { default: null },
@@ -40,7 +40,7 @@ const selectRef = ref(null);
 const emit = defineEmits([
   "update:modelValue",
   "change",
-  "changeGetComplete",
+  "select",
   "clear",
   "clickButton",
 ]);
@@ -54,7 +54,7 @@ const value = computed({
     emit("change", value);
   },
 });
-const valueComplete = ref(null);
+const selected = ref(null);
 const activeOptions = computed(() => {
   let resp = [];
   props.options.forEach((element) => {
@@ -72,49 +72,53 @@ const selectValue = computed(() => {
     text: "No encontrado",
     additional: null,
   };
-  if (typeof props.valueText === "object" && props.valueText !== null) {
-    _valueText = props.valueText.text;
-    _valueTextAditional = props.valueText.additional;
-  } else {
-    _valueText = props.valueText;
+  if (isEmpty(value.value)) {
+    if (props.disabled) resp.text = "No definido";
+    else resp.text = props.nullText;
+    return resp;
   }
 
-  if (!props.disabled) {
-    if (isEmpty(value.value)) {
-      resp.text = props.nullText;
-      return resp;
-    }
-    let search = props.options.find(
-      (x) => x[props.valueOptions] === value.value
-    );
-    if (search) return search;
+  if (
+    !isEmpty(selected.value) &&
+    !props.disabled &&
+    selected.value.value === value.value
+  ) {
+    console.log(selected.value);
+    resp.text = selected.value.text;
+    resp.additional = selected.value.additional;
+    return resp;
   }
 
-  if (!isEmpty(_valueText)) {
-    resp.text = _valueText;
-    resp.additional = _valueTextAditional;
-    if (props.display) {
-      resp.text = props.display(resp.text);
+  if (!isEmpty(props.valueText)) {
+    if (typeof props.valueText === "object") {
+      resp.text = props.valueText.text;
+      resp.additional = props.valueText.additional;
+    } else {
+      resp.text = props.valueText;
     }
     return resp;
   }
+  let search = props.options.find((x) => x[props.valueOptions] === value.value);
+  if (search) return search;
+
   return resp;
 });
 function clear() {
-  if (!props.noChangeValue) {
+  if (!props.changeInSelect) {
     value.value = null;
+    selected.value = null;
+
     emit("clear", null);
   }
-  emit("changeGetComplete", null);
+  emit("select", null);
 }
 function changeValue(_item) {
-  if (!props.noChangeValue) {
+  if (props.changeInSelect) {
     value.value = _item[props.valueOptions];
+    selected.value = _item;
   }
-  emit("changeGetComplete", {
-    value: _item[props.valueOptions],
-    valueComplete: _item,
-  });
+  console.log(_item);
+  emit("select", _item);
 }
 function selectItem(_item) {
   changeValue(_item);

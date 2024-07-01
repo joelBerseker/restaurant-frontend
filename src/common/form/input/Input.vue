@@ -22,9 +22,15 @@ const props = defineProps({
   viewClass: { default: "" },
   labelClass: { default: "" },
   helpText: { default: "" },
-  awaitInput: { default: false },
+  delay: { default: false },
 });
-const emit = defineEmits(["update:modelValue", "input", "clear"]);
+const emit = defineEmits([
+  "update:modelValue",
+  "input",
+  "clear",
+  "change",
+  "delayChange",
+]);
 const inputRef = ref(null);
 const localType = ref("text");
 const value = computed({
@@ -45,41 +51,37 @@ const value = computed({
       }
     }
     emit("update:modelValue", _value);
+    emit("change", _value);
   },
 });
 function focus() {
   inputRef.value.focus();
 }
-function input() {
-  if (props.awaitInput) {
-    inputAwait();
-    return;
-  }
-  emit("input");
+function input(_data) {
+  inputAwait();
+  emit("input", _data);
 }
 
 const waitNumber = ref(0);
 const waitLoading = ref(false);
 async function inputAwait() {
+  if (!props.delay) return;
   waitLoading.value = true;
   waitNumber.value++;
   const _waitNumber = waitNumber.value;
   await sleep(400);
   if (_waitNumber === waitNumber.value) {
     waitLoading.value = false;
-    emit("input");
+    emit("delayChange", value.value);
   }
 }
 
 function blur() {
   if (props.type === "decimal") {
-    console.log("dec");
-
     let number = Number(value.value);
     if (isNaN(number)) return;
     if (value.value === null) return;
     value.value = number.toFixed(2);
-    emit("input");
   }
 }
 function clear() {
@@ -92,7 +94,6 @@ function displayText() {
     return props.display(value.value);
   }
 }
-
 function init() {
   if (props.type !== "number" && props.type !== "decimal") {
     localType.value = props.type;
@@ -145,7 +146,7 @@ defineExpose({
         ]"
         :disabled="disabled"
         :placeholder="placeholder"
-        @input="input()"
+        @input="input"
         @focus="onFocus"
         @blur="onBlur"
       >
@@ -160,7 +161,7 @@ defineExpose({
         :class="['g-input form-control form-control-sm', inputClass]"
         :disabled="disabled"
         :placeholder="placeholder"
-        @input="input()"
+        @input="input"
         @focus="onFocus"
         @blur="onBlur"
       />

@@ -16,7 +16,7 @@ const props = defineProps({
   clearButton: { default: true },
   display: { default: null },
   loadingSelect: { default: true },
-  noChangeValue: { default: false },
+
   showHelpText: { default: false },
   showAditionalInSelect: { default: true },
   nullOption: { default: false },
@@ -63,7 +63,6 @@ function clear() {
     :display="display"
     :loadingSelect="loadingSelect"
     :showAditionalInSelect="showAditionalInSelect"
-    :noChangeValue="noChangeValue"
     :nullText="nullText"
     :nullOption="nullOption"
     :validation="value.validation"

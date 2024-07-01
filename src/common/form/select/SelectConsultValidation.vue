@@ -13,7 +13,7 @@ const props = defineProps({
   display: { default: null },
   showFilter: { default: true },
   showAditionalInSelect: { default: true },
-  noChangeValue: { default: false },
+
   nullOption: { default: false },
   nullText: { default: "Seleccione una opción" },
   formatOptions: { default: "getDataOptions" },
@@ -137,7 +137,6 @@ defineExpose({
     :viewMode="viewMode"
     :display="display"
     :showAditionalInSelect="showAditionalInSelect"
-    :noChangeValue="noChangeValue"
     :nullOption="nullOption"
     :nullText="nullText"
     @clickButton="click()"
@@ -149,11 +148,11 @@ defineExpose({
             <g-input
               placeholder="Buscar..."
               v-model="searchInput"
-              @input="getList()"
+              @delayChange="getList()"
               @clear="clearInput()"
               :disabled="filter === null"
               :viewMode="false"
-              :awaitInput="true"
+              :delay="true"
               class="w-100 input-button-left"
               inputClass="input-search-icon"
             />

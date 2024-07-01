@@ -99,9 +99,9 @@ defineExpose({
         inputClass="input-search-icon  "
         class="input-button-left"
         placeholder="¿Que estas buscando?"
-        @input="search()"
+        @delayChange="search()"
         @clear="search()"
-        :awaitInput="true"
+        :delay="true"
       />
       <div class="search-icon">
         <font-awesome-icon icon="fa-solid fa-magnifying-glass" />

@@ -147,7 +147,7 @@ const totalCalc = ref("0.00");
 
 function changeProduct(_data, _row) {
   console.log(_data);
-  _row.setLabelValue("price", _data.valueComplete.price);
+  _row.setLabelValue("price", _data.price);
   calcTotalElement(_row);
 }
 function calcTotalElement(_row) {
@@ -208,7 +208,7 @@ defineExpose({
           :filter="products.filter"
           :ousideData="products"
           :showAditionalInSelect="false"
-          @changeGetComplete="changeProduct($event, row)"
+          @select="changeProduct($event, row)"
         />
       </template>
       <template v-slot:quantity="{ row, index, disabledRow, validateLabel }">

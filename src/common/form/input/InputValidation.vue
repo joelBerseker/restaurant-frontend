@@ -27,13 +27,9 @@ const value = computed({
   },
 });
 const inputRef = ref(null);
-function input() {
+function change(_value) {
   emit("validate", value.value);
-  emit("change", value.value.value);
-}
-function clear() {
-  emit("validate", value.value);
-  emit("change", value.value.value);
+  emit("change", _value);
 }
 const localPlaceHolder = computed(() => {
   if (value.value.default) return value.value.default;
@@ -67,7 +63,7 @@ const localPlaceHolder = computed(() => {
     :labelClass="labelClass"
     :helpText="helpText"
     :showHelpText="showHelpText"
-    @input="input()"
+    @change="change()"
     @clear="clear()"
     :formatInBlur="value.formatInBlur"
     :validation="value.validation"

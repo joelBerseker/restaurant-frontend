@@ -55,10 +55,7 @@ function addItem(_data) {
   }
   value.value.element.validation = {};
   value.value.value.push(_data.value);
-  selectList.value.push({
-    text: _data.valueComplete.text,
-    additional: _data.valueComplete.additional,
-  });
+  selectList.value.push(_data);
   emit("validate", value.value);
 }
 function existElement(_value) {
@@ -124,9 +121,9 @@ defineExpose({
           v-model="value.element"
           :consult="consult"
           :filter="filter"
-          :noChangeValue="true"
+          :changeInSelect="false"
           nullText="Seleccione multiples opciones"
-          @changeGetComplete="addItem"
+          @select="addItem"
           :showAditionalInSelect="false"
           dropDirection="dropup"
           autoClose="outside"

@@ -66,10 +66,7 @@ function clear() {
 }
 function changeValue(_item) {
   if (props.noChangeValue) {
-    emit("noChangeValue", {
-      value: _item[props.valueOptions],
-      valueComplete: _item,
-    });
+    emit("noChangeValue", _item);
     return;
   }
   value.value = _item[props.valueOptions];

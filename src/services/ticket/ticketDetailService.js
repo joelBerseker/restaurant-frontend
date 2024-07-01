@@ -157,7 +157,7 @@ export const ticketDetailService = {
     }
     try {
       const response = await axiosInstance.get(
-        `${servicePath}/?${filteredFilters}`
+        `${servicePathOption}/?${filteredFilters}`
       );
       const data_menus = response.data.menus.map((apiData) =>
         dataTransform.transformApiData(apiData, MenuModel)

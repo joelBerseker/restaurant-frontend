@@ -45,6 +45,7 @@ function clear() {
 <template>
   <g-select
     ref="selectRef"
+    :id="value.id"
     v-model="value.value"
     :options="options"
     :valueText="value.valueText"

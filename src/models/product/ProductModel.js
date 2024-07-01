@@ -72,6 +72,7 @@ export class ProductModel extends Model {
       text: this.name.value,
       additional: ` S/. ${this.price.value} - ${this.description.value}`,
       price: this.price.value,
+      section: "product",
     };
   }
 }

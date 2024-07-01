@@ -18,6 +18,7 @@ const props = defineProps({
   nullText: { default: "Seleccione una opción" },
   formatOptions: { default: "getDataOptions" },
   ousideData: { default: null },
+  multipleOptions: { default: false },
 });
 
 const listLocal = ref([]);
@@ -81,7 +82,20 @@ async function getList() {
 
   loading.value = true;
   let resp = await props.consult(props.filter);
-  if (resp) list.value = resp.map((element) => element[props.formatOptions]());
+  console.log(resp);
+  if (resp)
+    if (props.multipleOptions) {
+      for (var key in resp) {
+        console.log(resp[key].name);
+        resp[key].list = resp[key].list.map((element) =>
+          element[props.formatOptions]()
+        );
+        console.log(resp[key].list);
+      }
+      list.value = resp;
+    } else {
+      list.value = resp.map((element) => element[props.formatOptions]());
+    }
   loading.value = false;
 }
 
@@ -140,6 +154,7 @@ defineExpose({
     :nullOption="nullOption"
     :nullText="nullText"
     @clickButton="click()"
+    :multipleOptions="multipleOptions"
   >
     <template v-slot:header-list>
       <div v-if="showFilter" class="search-select">

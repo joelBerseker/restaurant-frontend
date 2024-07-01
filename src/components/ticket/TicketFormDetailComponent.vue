@@ -147,6 +147,7 @@ const totalCalc = ref("0.00");
 
 function changeProduct(_data, _row) {
   console.log(_data);
+  _row.setLabelValue("is_menu", _data.section === "menu");
   _row.setLabelValue("price", _data.price);
   calcTotalElement(_row);
 }

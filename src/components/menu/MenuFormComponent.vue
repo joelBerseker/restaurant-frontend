@@ -67,7 +67,7 @@ defineExpose({
     v-slot="{ element, validateLabel }"
   >
     <div class="row gutter-sec container-content">
-      <div class="col-12 col-sm-10 col-md-6 col-lg-5 col-xl-4">
+      <div class="col-12 col-sm-10 col-md-6 col-lg-4 col-xl-4">
         <g-section-4
           title="Información del Menu"
           contentClass="row gutter-form"
@@ -103,12 +103,8 @@ defineExpose({
           />
         </g-section-4>
       </div>
-      <div class="col-12 col-sm-10 col-md-6 col-lg-5 col-xl-4">
-        <g-section-4
-          title="Entradas"
-          contentClass="row gutter-form"
-          :mbTitle="true"
-        >
+      <div class="col-12 col-sm-10 col-md-6 col-lg-4 col-xl-4">
+        <g-section-4 title="Entradas" contentClass="row gutter-form">
           <g-select-multiple-consult-val
             v-model="element.starters"
             :consult="productService.getListProduct"
@@ -121,6 +117,8 @@ defineExpose({
             @validate="validateLabel"
           />
         </g-section-4>
+      </div>
+      <div class="col-12 col-sm-10 col-md-6 col-lg-4 col-xl-4">
         <g-section-4 title="Platos Principales" contentClass="row gutter-form">
           <g-select-multiple-consult-val
             v-model="element.main_courses"

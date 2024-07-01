@@ -148,14 +148,7 @@ function tabAction(_item) {
   >
     <template v-slot:view>
       <div :class="[viewClass]">
-        <span
-          v-if="isEmpty(selectValue.text) || selectValue.text === nullText"
-          class="status-element no-defined-status"
-        >
-          Por determinar
-        </span>
-
-        <span v-else>
+        <span>
           {{ selectValue.text }}
           <div
             v-if="selectValue.additional !== undefined && showAditionalInSelect"

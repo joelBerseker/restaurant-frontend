@@ -1,3 +1,4 @@
+import { confirmation, days } from "@/helpers";
 import { Model } from "@/models/";
 
 export class MenuModel extends Model {
@@ -96,6 +97,43 @@ export class MenuModel extends Model {
       value: this.id.value,
       text: this.menu_name.value,
     };
+  }
+  getDataTable() {
+    return [
+      {
+        label: "ID",
+        field: "id",
+        sortable: true,
+        width: "1%",
+      },
+      {
+        label: this.name.name,
+        field: this.name.id,
+        searchable: true,
+      },
+      {
+        label: this.day.name,
+        field: this.day.id,
+
+        display: (row) => {
+          return days.get(row.day);
+        },
+      },
+      {
+        label: this.price.name,
+        field: this.price.id,
+
+        columnClass: "number",
+      },
+      {
+        label: this.is_publish.name,
+        field: this.is_publish.id,
+        width: "1%",
+        display: (row) => {
+          return confirmation.get(row.is_publish);
+        },
+      },
+    ];
   }
   getTextModel() {
     return "Menu " + this.id.value + " - " + this.name.value;

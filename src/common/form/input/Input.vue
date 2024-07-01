@@ -123,10 +123,7 @@ defineExpose({
   >
     <template v-slot:view>
       <div :class="[viewClass]">
-        <span v-if="isEmpty(value)" class="status-element no-defined-status">
-          Por determinar
-        </span>
-        <span v-else-if="display !== null">
+        <span v-if="display !== null">
           {{ displayText() }}
         </span>
         <span v-else>

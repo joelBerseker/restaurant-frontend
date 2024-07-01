@@ -138,4 +138,13 @@ export class MenuModel extends Model {
   getTextModel() {
     return "Menu " + this.id.value + " - " + this.name.value;
   }
+  getDataOptions() {
+    return {
+      value: this.id.value,
+      text: this.name.value,
+      additional: ` S/. ${this.price.value}`,
+      price: this.price.value,
+      section: "menu",
+    };
+  }
 }

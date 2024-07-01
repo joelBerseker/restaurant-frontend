@@ -58,19 +58,31 @@ const value = computed({
 const selected = ref(null);
 const activeOptions = computed(() => {
   let resp = [];
+  let respMultiple = {};
   if (props.multipleOptions) {
-    props.options.forEach((key) => {
-      console.log(key);
-    });
+    for (var key in props.options) {
+      if (props.options[key].list <= 0) continue;
+      respMultiple[key] = {};
+      respMultiple[key].name = props.options[key].name;
+      respMultiple[key].list = [];
+      props.options[key].list.forEach((element) => {
+        if (element.disabled !== true) {
+          respMultiple[key].list.push(element);
+        }
+      });
+    }
+    console.log(respMultiple);
+
+    return respMultiple;
   } else {
     props.options.forEach((element) => {
       if (element.disabled !== true) {
         resp.push(element);
       }
     });
+    return resp;
   }
-
-  return resp;
+  return null;
 });
 const selectValue = computed(() => {
   let _valueText = null;
@@ -112,9 +124,9 @@ const selectValue = computed(() => {
   return resp;
 });
 function searchInList(_data) {
+  console.log("No deberia llegar aqui " + props.id);
   let search = null;
-  if (props.multipleOptions) {
-  } else {
+  if (!props.multipleOptions) {
     search = props.options.find((x) => x[props.valueOptions] === _data);
   }
   return search;
@@ -226,7 +238,34 @@ function tabAction(_item) {
                   {{ nullText }}
                 </button>
               </li>
-              <span v-if="multipleOptions"> </span>
+              <span v-if="multipleOptions">
+                <span v-for="(section, index) in activeOptions" :key="index">
+                  <div class="title-section">
+                    <div class="title-section-text">
+                      {{ section.name }}
+                    </div>
+                    <div class="title-section-line"></div>
+                  </div>
+                  <li v-for="(item, index) in section.list" :key="index">
+                    <button
+                      :ref="'selectlistItem' + index"
+                      :class="['dropdown-item item-select item-active-hover']"
+                      @click="selectItem(item)"
+                      @keydown.tab="tabAction(item)"
+                      tabindex="-1"
+                      type="button"
+                    >
+                      {{ item[props.textOptions] }}
+                      <div
+                        v-if="item.additional !== undefined"
+                        class="additional-data-input"
+                      >
+                        {{ item.additional }}
+                      </div>
+                    </button>
+                  </li>
+                </span>
+              </span>
               <span v-else>
                 <li v-for="(item, index) in activeOptions" :key="index">
                   <button
@@ -301,6 +340,23 @@ function tabAction(_item) {
 }
 </style>
 <style scoped>
+.title-section-text {
+}
+.title-section-line {
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-border);
+  margin-left: 0.5rem;
+}
+.title-section {
+  font-size: 13px;
+  padding: 0 1rem;
+  color: var(--color-b-v3);
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .empty-text-list {
   padding-left: 1rem;
   padding-right: 1rem;

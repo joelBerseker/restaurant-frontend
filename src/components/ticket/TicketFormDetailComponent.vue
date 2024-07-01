@@ -204,10 +204,11 @@ defineExpose({
           v-model="row.product_id"
           :disabled="disabledRow"
           @validate="validateLabel($event, index)"
-          :consult="productService.getListProduct"
+          :consult="ticketDetailService.getListProdutMenu"
           :filter="products.filter"
           :ousideData="products"
           :showAditionalInSelect="false"
+          :multipleOptions="true"
           @select="changeProduct($event, row)"
         />
       </template>

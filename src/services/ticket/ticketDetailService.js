@@ -99,7 +99,7 @@ export const ticketDetailService = {
       handleError(error, "get_list_error", module);
     }
   },
-  async getListoption(filterParams = null) {
+  async getListProdutMenu(filterParams = null) {
     let filteredFilters = "";
     if (filterParams != null) {
       const {

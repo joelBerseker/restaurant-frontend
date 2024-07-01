@@ -34,6 +34,7 @@ const props = defineProps({
   validation: { default: null },
   autoClose: { default: null },
   dropDirection: { default: null },
+  multipleOptions: { default: false },
 });
 
 const selectRef = ref(null);
@@ -57,11 +58,18 @@ const value = computed({
 const selected = ref(null);
 const activeOptions = computed(() => {
   let resp = [];
-  props.options.forEach((element) => {
-    if (element.disabled !== true) {
-      resp.push(element);
-    }
-  });
+  if (props.multipleOptions) {
+    props.options.forEach((key) => {
+      console.log(key);
+    });
+  } else {
+    props.options.forEach((element) => {
+      if (element.disabled !== true) {
+        resp.push(element);
+      }
+    });
+  }
+
   return resp;
 });
 const selectValue = computed(() => {
@@ -98,11 +106,19 @@ const selectValue = computed(() => {
     }
     return resp;
   }
-  let search = props.options.find((x) => x[props.valueOptions] === value.value);
+  let search = searchInList(value.value);
   if (search) return search;
 
   return resp;
 });
+function searchInList(_data) {
+  let search = null;
+  if (props.multipleOptions) {
+  } else {
+    search = props.options.find((x) => x[props.valueOptions] === _data);
+  }
+  return search;
+}
 function clear() {
   if (!props.changeInSelect) {
     value.value = null;
@@ -210,24 +226,27 @@ function tabAction(_item) {
                   {{ nullText }}
                 </button>
               </li>
-              <li v-for="(item, index) in activeOptions" :key="index">
-                <button
-                  :ref="'selectlistItem' + index"
-                  :class="['dropdown-item item-select item-active-hover']"
-                  @click="selectItem(item)"
-                  @keydown.tab="tabAction(item)"
-                  tabindex="-1"
-                  type="button"
-                >
-                  {{ item[props.textOptions] }}
-                  <div
-                    v-if="item.additional !== undefined"
-                    class="additional-data-input"
+              <span v-if="multipleOptions"> </span>
+              <span v-else>
+                <li v-for="(item, index) in activeOptions" :key="index">
+                  <button
+                    :ref="'selectlistItem' + index"
+                    :class="['dropdown-item item-select item-active-hover']"
+                    @click="selectItem(item)"
+                    @keydown.tab="tabAction(item)"
+                    tabindex="-1"
+                    type="button"
                   >
-                    {{ item.additional }}
-                  </div>
-                </button>
-              </li>
+                    {{ item[props.textOptions] }}
+                    <div
+                      v-if="item.additional !== undefined"
+                      class="additional-data-input"
+                    >
+                      {{ item.additional }}
+                    </div>
+                  </button>
+                </li>
+              </span>
               <li
                 v-show="activeOptions.length <= 0 && !nullOption"
                 class="empty-text-list text-center"

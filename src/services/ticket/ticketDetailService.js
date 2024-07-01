@@ -47,6 +47,7 @@ export const ticketDetailService = {
         // Otros parámetros de filtro que puedas necesitar
         product_id,
         ticket_id,
+        is_menu,
       } = filterParams;
 
       const filters = {
@@ -62,6 +63,7 @@ export const ticketDetailService = {
         // Otros parámetros de filtro que puedas necesitar
         product_id,
         ticket_id,
+        is_menu,
       };
 
       filteredFilters = Object.entries(filters)
@@ -116,8 +118,6 @@ export const ticketDetailService = {
         searches,
         // Otros parámetros de filtro que puedas necesitar
         is_publish,
-        is_menu,
-        product_id,
       } = filterParams;
 
       const filters = {

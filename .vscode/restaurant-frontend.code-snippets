@@ -25,6 +25,19 @@
 		  "prefix": "funcRes",
 		  "body": ["function ${1:name}(${2:params}) {", "\t$0", "}"],
 		  "description": "Function declaration for Restaurant Frontend"
+		},
+		"TryCatchFunction": {
+			"prefix": "TryPer",
+			"body": [
+				
+				"\ttry {",
+				"\t\t$0",
+				"\t} catch (error) {",
+				"\t\thandleError(error, \"get_list_error\", module);",
+				"\t}",
+	
+			],
+ 			 "description": "Function declaration with try-catch for Restaurant Frontend"
 		}
 
 	  

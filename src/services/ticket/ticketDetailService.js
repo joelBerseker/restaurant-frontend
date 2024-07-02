@@ -6,6 +6,7 @@ import { MenuModel, ProductModel, TicketDetailModel } from "@/models";
 import { useToastStore } from "@/stores";
 const servicePath = "/ticket_detail/detail";
 const servicePathOption = "/ticket_detail/option";
+const servicePathStatistics = "/ticket_detail/statistics";
 const module = "Detalle";
 export const ticketDetailService = {
   async getTicketDetail(ticketdetail_id) {
@@ -173,6 +174,14 @@ export const ticketDetailService = {
         menu: { name: "Menus", list: data_menus },
         product: { name: "Productos", list: data_products },
       };
+    } catch (error) {
+      handleError(error, "get_list_error", module);
+    }
+  },
+  async getStatistics(filterParams = null) {
+    try {
+      const response = await axiosInstance.get(`${servicePathStatistics}/`);
+      return response;
     } catch (error) {
       handleError(error, "get_list_error", module);
     }

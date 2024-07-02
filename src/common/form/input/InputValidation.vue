@@ -40,7 +40,7 @@ const localPlaceHolder = computed(() => {
 
   if (value.value.required === false) return "No requerido";
   else {
-    return "Requerido*";
+    return "*Requerido";
   }
 });
 </script>
@@ -67,5 +67,8 @@ const localPlaceHolder = computed(() => {
     @clear="clear()"
     :formatInBlur="value.formatInBlur"
     :validation="value.validation"
-  />
+  >
+    <template #next><slot name="next"></slot></template>
+    <template #prev><slot name="prev"></slot></template>
+  </g-input>
 </template>

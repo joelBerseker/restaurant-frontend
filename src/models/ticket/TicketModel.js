@@ -62,6 +62,7 @@ export class TicketModel extends Model {
     name: "Encargado",
     type: "select",
     value: null,
+    additionalKey: "first_name",
     additional: {},
     getValueText() {
       if (!this.additional) return;
@@ -82,8 +83,16 @@ export class TicketModel extends Model {
   getDataOptions() {
     return {
       value: this.id.value,
-      text: `${this.code.value} - s/ ${this.priceFinal.value}`,
+      text: `${this.code.value} - S/. ${this.priceFinal.value}`,
     };
+  }
+  getText() {
+    return this.code.value + " - S/." + this.priceFinal.value;
+  }
+  getTextModel() {
+    return (
+      "Boleta [" + this.code.value + " - S/." + this.priceFinal.value + "]"
+    );
   }
   getDataTable() {
     return [
@@ -101,7 +110,7 @@ export class TicketModel extends Model {
       },
       {
         label: this.user_id.name,
-        field: this.user_id.id,
+        field: this.user_id.id + "__" + this.user_id.additionalKey,
         sortable: true,
         searchable: true,
       },
@@ -116,25 +125,33 @@ export class TicketModel extends Model {
         label: this.priceTotal.name,
         field: this.priceTotal.id,
         sortable: true,
-        searchable: true,
-        columnClass: "number",
+
+        columnClass: "number no-wrap",
         width: "1%",
+        display: (row) => {
+          return "S/. " + row.priceTotal;
+        },
       },
       {
         label: this.discount.name,
         field: this.discount.id,
         sortable: true,
-        searchable: true,
-        columnClass: "number",
+
+        columnClass: "number no-wrap",
         width: "1%",
+        display: (row) => {
+          return row.discount + " %";
+        },
       },
       {
         label: this.priceFinal.name,
         field: this.priceFinal.id,
         sortable: true,
-        searchable: true,
-        columnClass: "number",
+        columnClass: "number no-wrap",
         width: "1%",
+        display: (row) => {
+          return "S/. " + row.priceFinal;
+        },
       },
     ];
   }

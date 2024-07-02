@@ -28,8 +28,10 @@ const table = reactive({
     {
       label: "Precio",
       field: "price",
-      columnClass: "number",
-
+      columnClass: "number no-wrap",
+      display: (row) => {
+        return "S/. " + row.price;
+      },
       sortable: true,
     },
     {
@@ -42,8 +44,10 @@ const table = reactive({
     {
       label: "Precio total",
       field: "price_total",
-      columnClass: "number",
-
+      columnClass: "number no-wrap",
+      display: (row) => {
+        return "S/. " + row.price_total;
+      },
       sortable: true,
     },
   ],

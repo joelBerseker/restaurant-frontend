@@ -5,40 +5,18 @@ import TableElementModalComponent from "@/components/table/TableElementModalComp
 import { ref, reactive, onMounted, inject } from "vue";
 import { tableService } from "@/services";
 import { formatSubTitle } from "@/helpers";
+import { TableModel } from "@/models";
 const emit = defineEmits(["onFirstLoad"]);
 
 const tableRef = ref(null);
 const modalRef = ref(null);
 
 const subTitle = ref(null);
+
+const elementModel = ref(new TableModel());
 const table = reactive({
-  columns: [
-    {
-      label: "ID",
-      field: "id",
-      sortable: true,
-      width: "1%",
-    },
-    {
-      label: "Nombre",
-      field: "name",
-      sortable: true,
-      searchable: true,
-      sort: "asc",
-    },
-    {
-      label: "Sitios",
-      field: "number",
-      sortable: true,
-      columnClass: "number",
-    },
-    {
-      label: "Descripción",
-      field: "description",
-      sortable: true,
-      searchable: true,
-    },
-  ],
+  columns: elementModel.value.getDataTable(),
+
   defaultFilter: {
     order: "asc",
     orderBy: "name",

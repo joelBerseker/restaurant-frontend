@@ -137,6 +137,7 @@ defineExpose({
         :filterCacheName="filterCacheName"
         @filterSearch="refresh"
         :border="border"
+        :status="showStatus"
       />
     </div>
   </g-collapse>

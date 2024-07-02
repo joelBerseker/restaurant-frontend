@@ -84,7 +84,9 @@ function onBlur(params) {
     </div>
     <div v-show="!(viewMode && disabled)" class="g-form-container">
       <main class="g-form-container-aditional">
-        <div :class="['g-form-wrapper', wrapperClass]">
+        <div
+          :class="['g-form-wrapper', wrapperClass, disabled ? 'disabled' : '']"
+        >
           <div :class="['focus-container', isFocus ? 'focus' : '']"></div>
           <slot name="form" :onFocus="onFocus" :onBlur="onBlur"></slot>
           <div v-show="loading" class="form-loading addtional-element">
@@ -165,10 +167,15 @@ function onBlur(params) {
   border-bottom: 1px solid var(--color-border);
   transition: 0.2s ease;
 }
+.g-form-wrapper.g-select.disabled,
+.g-form-wrapper.g-input.disabled {
+  border-color: rgba(0, 0, 0, 0);
+}
 .g-form-wrapper.g-select > .focus-container.focus,
 .g-form-wrapper.g-input > .focus-container.focus {
   box-shadow: 0px -3px 0px 0px rgba(0, 0, 0, 0.1) inset;
 }
+
 .g-form-wrapper.g-input-image {
   width: fit-content;
 }

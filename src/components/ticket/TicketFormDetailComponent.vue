@@ -50,7 +50,7 @@ async function getList() {
 }
 async function addElement(_data) {
   _data.ticket_id.value = idElement;
-  let resp = await ticketDetailService.addTicketDetail(_data);
+  let resp = await ticketDetailService.addTicketDetail(_data, totalCalc.value);
   if (resp) {
     getList();
   }
@@ -67,7 +67,7 @@ async function editElement(_data) {
   return resp;
 }
 async function deleteElement(_id) {
-  let resp = await ticketDetailService.deleteTicketDetail(_id);
+  let resp = await ticketDetailService.deleteTicketDetail(_id, totalCalc.value);
   if (resp) {
     getList();
   }
@@ -193,7 +193,7 @@ defineExpose({
       :columns="tableForm.columns"
       @onUpdated="onUpdated"
       @onChangeDisabled="onChangeDisabled"
-      @onDeleteItem="deleteElement"
+      @onDeleteElement="deleteElement"
       @onSaveElement="editElement"
       @onNewElement="addElement"
       :viewMode="disabled"
@@ -227,7 +227,9 @@ defineExpose({
           @validate="validateLabel($event, index)"
           :disabled="true"
           :viewMode="disabledRow"
-        />
+        >
+          <template #prev>S/.&nbsp;</template>
+        </g-input-val>
       </template>
       <template v-slot:price_total="{ row, disabledRow, index, validateLabel }">
         <g-input-val
@@ -235,7 +237,9 @@ defineExpose({
           @validate="validateLabel($event, index)"
           :disabled="true"
           :viewMode="disabledRow"
-        />
+        >
+          <template #prev>S/.&nbsp;</template>
+        </g-input-val>
       </template>
       <template
         v-slot:additionalSpace="{ row, disabledRow, index, validateLabel }"
@@ -255,7 +259,7 @@ defineExpose({
             <td colspan="3" class="text-end">
               <label class="imp-label">Precio Total:</label>
             </td>
-            <td class="text-end">{{ totalCalc }}</td>
+            <td class="text-end no-wrap">S/. {{ totalCalc }}</td>
             <td v-if="(activeColumns.length = 5)"></td>
           </tr>
         </tbody>

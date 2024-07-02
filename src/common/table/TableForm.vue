@@ -60,7 +60,7 @@ async function deleteElement(index) {
   let itemDeleted = list.value[index];
 
   if (itemDeleted.id.value) {
-    console.log(itemDeleted);
+    console.log("delete consult");
     emit("onDeleteElement", index);
   } else {
     disabled.value = false;
@@ -225,7 +225,12 @@ defineExpose({
     </template>
 
     <template v-slot:quick="{ row, index }">
-      <div class="btns-container">
+      <div
+        :class="[
+          'btns-container',
+          !listDisabled[index] ? 'fix-padding-disabled' : '',
+        ]"
+      >
         <div v-if="listMode[index] === 'add'">
           <g-button
             icon="fa-solid fa-trash-can"
@@ -291,5 +296,8 @@ defineExpose({
 <style scoped>
 .btns-container {
   display: flex;
+}
+.fix-padding-disabled {
+  padding-top: calc(0.25rem + 1px);
 }
 </style>

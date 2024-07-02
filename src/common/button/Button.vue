@@ -184,10 +184,10 @@ init();
   background-color: transparent !important;
 }
 .status-button.active {
-  color: var(--color-1-v3);
+  color: var(--color-1-v3) !important;
 }
 .status-button.inactive {
-  color: var(--color-d);
+  color: var(--color-d) !important;
 }
 .g-btn-link-min {
   padding-top: 0;

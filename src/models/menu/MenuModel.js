@@ -98,22 +98,32 @@ export class MenuModel extends Model {
       text: this.menu_name.value,
     };
   }
+  getText() {
+    return this.id.value + " - " + this.name.value;
+  }
+  getTextModel() {
+    return "Menu [" + this.id.value + " - " + this.name.value + "]";
+  }
   getDataTable() {
     return [
       {
         label: "ID",
         field: "id",
         sortable: true,
+        searchable: true,
         width: "1%",
       },
       {
         label: this.name.name,
         field: this.name.id,
+        sortable: true,
+
         searchable: true,
       },
       {
         label: this.day.name,
         field: this.day.id,
+        sortable: true,
 
         display: (row) => {
           return days.get(row.day);
@@ -122,12 +132,18 @@ export class MenuModel extends Model {
       {
         label: this.price.name,
         field: this.price.id,
+        sortable: true,
 
         columnClass: "number",
+        display: (row) => {
+          return "S/. " + row.price;
+        },
       },
       {
         label: this.is_publish.name,
         field: this.is_publish.id,
+        sortable: true,
+
         width: "1%",
         display: (row) => {
           return confirmation.get(row.is_publish);
@@ -135,9 +151,7 @@ export class MenuModel extends Model {
       },
     ];
   }
-  getTextModel() {
-    return "Menu " + this.id.value + " - " + this.name.value;
-  }
+
   getDataOptions() {
     return {
       value: this.id.value,

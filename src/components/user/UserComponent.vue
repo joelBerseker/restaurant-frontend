@@ -6,6 +6,7 @@ import { ref, reactive, onMounted, inject } from "vue";
 import { userService } from "@/services";
 import { formatSubTitle } from "@/helpers";
 import { useRouter } from "vue-router";
+import { UserModel } from "@/models";
 const emit = defineEmits(["onFirstLoad"]);
 
 const router = useRouter();
@@ -13,34 +14,11 @@ const router = useRouter();
 const tableRef = ref(null);
 
 const subTitle = ref(null);
+
+const elementModel = ref(new UserModel());
 const table = reactive({
-  columns: [
-    {
-      label: "ID",
-      field: "id",
-      sortable: true,
-      width: "1%",
-    },
-    {
-      label: "Nombres",
-      field: "first_name",
-      sortable: true,
-      searchable: true,
-      sort: "asc",
-    },
-    {
-      label: "Apellidos",
-      field: "last_name",
-      sortable: true,
-      searchable: true,
-    },
-    {
-      label: "Correo Electronico",
-      field: "email",
-      sortable: true,
-      searchable: true,
-    },
-  ],
+  columns: elementModel.value.getDataTable(),
+
   defaultFilter: {
     order: "asc",
     orderBy: "first_name",

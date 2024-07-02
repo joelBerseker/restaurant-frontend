@@ -24,6 +24,7 @@ export class ProductModel extends Model {
   id_typeproduct = {
     id: "id_typeproduct",
     name: "Tipo de Producto",
+    type: "select",
     value: null,
     additionalKey: "name",
     additional: {},
@@ -50,7 +51,7 @@ export class ProductModel extends Model {
     value: null,
     validation: {},
     default: "0.00",
-    required: false,
+
     validate: ["length", "decimal"],
   };
 
@@ -60,10 +61,10 @@ export class ProductModel extends Model {
     type: "number",
 
     value: null,
-    required: false,
+
     validation: {},
     default: "0",
-    required: false,
+
     validate: ["length", "number"],
   };
 
@@ -75,6 +76,12 @@ export class ProductModel extends Model {
       price: this.price.value,
       section: "product",
     };
+  }
+  getText() {
+    return this.id.value + " - " + this.name.value;
+  }
+  getTextModel() {
+    return "Producto [" + this.id.value + " - " + this.name.value + "]";
   }
   getDataTable() {
     return [
@@ -103,16 +110,23 @@ export class ProductModel extends Model {
       {
         label: this.price.name,
         field: this.price.id,
-        columnClass: "number",
+        columnClass: "number no-wrap",
         sortable: true,
+        display: (row) => {
+          return "S/. " + row.price;
+        },
       },
 
       {
         label: this.discount.name,
         field: this.discount.id,
 
-        columnClass: "number",
+        columnClass: "number no-wrap",
+
         sortable: true,
+        display: (row) => {
+          return row.discount + " %";
+        },
       },
     ];
   }

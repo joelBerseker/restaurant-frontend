@@ -95,12 +95,12 @@ export class TicketDetailModel extends Model {
         field: this.price.id,
         width: "20%",
 
-        columnClass: "number",
+        columnClass: "number no-wrap",
       },
       {
         label: this.quantity.name,
         field: this.quantity.id,
-        columnClass: "number",
+        columnClass: "number no-wrap",
         width: "20%",
       },
       {
@@ -108,7 +108,7 @@ export class TicketDetailModel extends Model {
         field: this.price_total.id,
         width: "20%",
 
-        columnClass: "number",
+        columnClass: "number no-wrap",
       },
     ];
   }

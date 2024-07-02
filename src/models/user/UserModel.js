@@ -3,10 +3,12 @@ import { Model } from "@/models/";
 export class UserModel extends Model {
   id_role = {
     id: "id_role",
-    name: "rol",
+    name: "Rol",
     type: "select",
     navigation: "rol",
     value: null,
+    additionalKey: "name",
+
     additional: {},
     validation: {},
     getValueText() {
@@ -18,7 +20,7 @@ export class UserModel extends Model {
 
   email = {
     id: "email",
-    name: "correo electrónico",
+    name: "Correo Electrónico",
     value: null,
     validation: {},
     validate: ["length", "email"],
@@ -26,7 +28,7 @@ export class UserModel extends Model {
 
   first_name = {
     id: "first_name",
-    name: "nombres",
+    name: "Nombres",
     value: null,
     validation: {},
     validate: ["length"],
@@ -34,7 +36,7 @@ export class UserModel extends Model {
 
   last_name = {
     id: "last_name",
-    name: "apellidos",
+    name: "Apellidos",
     value: null,
     validation: {},
     validate: ["length"],
@@ -53,7 +55,7 @@ export class UserModel extends Model {
   photo = {
     id: "photo",
     name: "foto de perfil",
-    type: "image",
+    type: "Image",
     value: null,
     file: null,
     required: false,
@@ -62,7 +64,7 @@ export class UserModel extends Model {
 
   dark_mode = {
     id: "dark_mode",
-    name: "modo oscuro",
+    name: "Modo oscuro",
     value: false,
   };
   password = {
@@ -139,12 +141,47 @@ export class UserModel extends Model {
   }
   getTextModel() {
     return (
-      "Usuario " +
+      "Usuario [" +
       this.id.value +
       " - " +
       this.first_name.value +
       " " +
-      this.last_name.value
+      this.last_name.value +
+      "]"
     );
+  }
+  getDataTable() {
+    return [
+      {
+        label: "ID",
+        field: "id",
+        sortable: true,
+        width: "1%",
+      },
+      {
+        label: this.first_name.name,
+        field: this.first_name.id,
+        sortable: true,
+        searchable: true,
+      },
+      {
+        label: this.last_name.name,
+        field: this.last_name.id,
+        sortable: true,
+        searchable: true,
+      },
+      {
+        label: this.email.name,
+        field: this.email.id,
+        sortable: true,
+        searchable: true,
+      },
+      {
+        label: this.id_role.name,
+        field: this.id_role.id + "__" + this.id_role.additionalKey,
+        sortable: true,
+        searchable: true,
+      },
+    ];
   }
 }

@@ -92,7 +92,9 @@ defineExpose({
             v-model="element.price"
             :disabled="disabled"
             @validate="validateLabel"
-          />
+          >
+            <template #prev>S/.&nbsp;</template>
+          </g-input-val>
           <g-input-check
             :label="element.is_publish.name"
             v-model="element.is_publish.value"

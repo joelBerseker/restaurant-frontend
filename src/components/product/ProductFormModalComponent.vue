@@ -92,14 +92,18 @@ defineExpose({
       @validate="validateLabel"
       :disabled="disabled"
       class="col-6"
-    />
+    >
+      <template #prev>S/.&nbsp;</template>
+    </g-input-val>
     <g-input-val
       v-model="element.discount"
       :label="element.discount.name"
       @validate="validateLabel"
       :disabled="disabled"
       class="col-6"
-    />
+    >
+      <template #next>&nbsp;%</template>
+    </g-input-val>
 
     <g-input-val
       v-model="element.description"

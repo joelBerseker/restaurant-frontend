@@ -123,15 +123,19 @@ defineExpose({
   >
     <template v-slot:view>
       <div :class="[viewClass]">
+        <span><slot name="prev"></slot></span>
         <span v-if="display !== null">
           {{ displayText() }}
         </span>
         <span v-else>
           {{ value }}
         </span>
+        <span><slot name="next"></slot></span>
       </div>
     </template>
     <template v-slot:form="{ onFocus, onBlur }">
+      <div class="additional"><slot name="prev"></slot></div>
+
       <textarea
         v-if="type == 'textarea'"
         ref="inputRef"
@@ -162,6 +166,7 @@ defineExpose({
         @focus="onFocus"
         @blur="onBlur"
       />
+      <div class="additional"><slot name="next"></slot></div>
     </template>
   </ElementFormLayout>
 </template>
@@ -218,4 +223,10 @@ defineExpose({
   color: var(--color-b-v3) !important;
 }
 </style>
-<style scoped></style>
+<style scoped>
+.additional {
+  padding-top: calc(0.25rem + 1px);
+  padding-bottom: 0.25rem;
+  color: var(--color-b-v3);
+}
+</style>

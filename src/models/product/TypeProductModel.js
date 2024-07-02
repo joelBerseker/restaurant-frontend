@@ -42,6 +42,6 @@ export class TypeProductModel extends Model {
     return this.id.value + " - " + this.name.value;
   }
   getTextModel() {
-    return "Tipo de Producto " + this.id.value + " - " + this.name.value;
+    return "Tipo de Producto [" + this.id.value + " - " + this.name.value + "]";
   }
 }

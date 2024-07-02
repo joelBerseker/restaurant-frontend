@@ -47,6 +47,36 @@ export class TableModel extends Model {
     return this.id.value + " - " + this.name.value;
   }
   getTextModel() {
-    return "Mesa " + this.id.value + " - " + this.name.value;
+    return "Mesa [" + this.id.value + " - " + this.name.value + "]";
+  }
+  getDataTable() {
+    return [
+      {
+        label: "ID",
+        field: "id",
+        sortable: true,
+        width: "1%",
+      },
+      {
+        label: this.name.name,
+        field: this.name.id,
+        sortable: true,
+        searchable: true,
+        sort: "asc",
+      },
+      {
+        label: this.number.name,
+        field: this.number.id,
+        sortable: true,
+        columnClass: "number",
+        width: "1%",
+      },
+      {
+        label: this.description.name,
+        field: this.description.id,
+        sortable: true,
+        searchable: true,
+      },
+    ];
   }
 }

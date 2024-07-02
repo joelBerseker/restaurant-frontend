@@ -146,14 +146,18 @@ defineExpose({
         @validate="validateLabel"
         :disabled="disabled"
         @change="changeDiscount"
-      />
+      >
+        <template #next>&nbsp;%</template>
+      </g-input-val>
       <div>
         <g-input-val
           v-model="element.priceFinal"
           :label="element.priceFinal.name"
           @validate="validateLabel"
           :disabled="disabled"
-        />
+        >
+          <template #prev>S/.&nbsp;</template>
+        </g-input-val>
         <div v-show="totalCorrect" class="help-text">
           <font-awesome-icon icon="fa-regular fa-circle-question" />
           <span>&nbsp;{{ totalCorrect }}</span>

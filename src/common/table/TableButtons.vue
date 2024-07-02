@@ -1,6 +1,7 @@
 <script setup>
 const props = defineProps({
   switchSearchValue: { default: false },
+  showAdd: { default: true },
 });
 const emit = defineEmits(["onSearch", "onPrint", "onAdd"]);
 
@@ -30,7 +31,12 @@ function add() {
       text="Descargar"
       @click="print()"
     />
-    <g-button icon="fa-solid fa-plus" text="Agregar" @click="add()" />
+    <g-button
+      v-if="showAdd"
+      icon="fa-solid fa-plus"
+      text="Agregar"
+      @click="add()"
+    />
   </div>
 </template>
 <style scoped>

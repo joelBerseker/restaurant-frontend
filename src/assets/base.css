@@ -138,3 +138,6 @@ hr {
   color: var(--color-b-v3);
   text-align: start;
 }
+.no-wrap {
+  text-wrap: nowrap;
+}

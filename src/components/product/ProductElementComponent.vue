@@ -1,5 +1,7 @@
 <script setup>
 import ProductFormComponent from "@/components/product/ProductFormComponent.vue";
+import ProductMovementComponent from "@/components/product/ProductMovementComponent.vue";
+
 import FormButtons from "@/common/form/FormButtons.vue";
 import { ref, inject } from "vue";
 import { useRouter } from "vue-router";
@@ -113,13 +115,25 @@ defineExpose({
       />
     </template>
     <template #content>
-      <ProductFormComponent
-        ref="formRef"
-        :disabled="disabled"
-        :mode="mode"
-        @onUpdated="onUpdated"
-        @onFirstLoad="onFirstLoad"
-      />
+      <div class="row gutter-sec container-content">
+        <div class="col-12 col-sm-10 col-md-6 col-lg-5 col-xl-4">
+          <ProductFormComponent
+            ref="formRef"
+            :disabled="disabled"
+            :mode="mode"
+            @onUpdated="onUpdated"
+            @onFirstLoad="onFirstLoad"
+          />
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-8">
+          <ProductMovementComponent />
+        </div>
+      </div>
     </template>
   </g-section-1>
 </template>
+<style scoped>
+.container-content {
+  justify-content: center;
+}
+</style>

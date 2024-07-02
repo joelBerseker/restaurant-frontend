@@ -13,6 +13,10 @@ const props = defineProps({
   deleteConsult: { default: null },
   getListConsult: { default: null },
   filterCacheName: { default: null },
+  showDelete: { default: true },
+  showStatus: { default: true },
+  border: { default: false },
+
   iconDetail: { default: "fa-solid fa-arrow-up-right-from-square" },
 });
 const emit = defineEmits([
@@ -77,20 +81,33 @@ async function deleteItem(_data) {
 }
 async function init() {
   verifyFilterCache();
-  localColumns.value = [
-    ...props.columns,
-    {
-      label: "Estado",
-      field: "status",
-      width: "1%",
-    },
-    {
-      label: "",
-      field: "quick",
-      width: "1%",
-      rowClass: "th-buttons",
-    },
-  ];
+  if (props.showStatus) {
+    localColumns.value = [
+      ...props.columns,
+      {
+        label: "Estado",
+        field: "status",
+        width: "1%",
+      },
+      {
+        label: "",
+        field: "quick",
+        width: "1%",
+        rowClass: "th-buttons",
+      },
+    ];
+  } else {
+    localColumns.value = [
+      ...props.columns,
+
+      {
+        label: "",
+        field: "quick",
+        width: "1%",
+        rowClass: "th-buttons",
+      },
+    ];
+  }
 
   await getList(false);
   emit("onFirstLoad");
@@ -119,6 +136,7 @@ defineExpose({
         :defaultFilter="defaultFilter"
         :filterCacheName="filterCacheName"
         @filterSearch="refresh"
+        :border="border"
       />
     </div>
   </g-collapse>
@@ -128,12 +146,14 @@ defineExpose({
     :rows="rows"
     :columns="localColumns"
     :isLoading="isLoading"
+    :border="border"
     @sort="sort"
     @rowClicked="viewItem"
   >
     <template v-slot:quick="{ row, index }">
       <div class="btns-container">
         <g-button
+          v-if="showDelete"
           icon="fa-solid fa-trash-can"
           @click.stop="deleteItem(row)"
           type="transparent-1"

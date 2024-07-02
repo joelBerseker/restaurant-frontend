@@ -157,14 +157,14 @@ export class Model {
     console.log(resp);
     return resp;
   }
+
   getData() {
     let resp = {};
     for (var key in this) {
-      if (this[key].getValueText) {
-        resp[key] = this[key].getValueText();
-      } else {
-        resp[key] = this[key].value;
+      if (this[key].getValueText && this[key].additionalKey) {
+        resp[key + "__" + this[key].additionalKey] = this[key].getValueText();
       }
+      resp[key] = this[key].value;
     }
     resp.elementText = this.getText();
     resp.elementTextModel = this.getTextModel();

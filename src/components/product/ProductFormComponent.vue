@@ -69,73 +69,61 @@ defineExpose({
     :elementModel="ProductModel"
     v-slot="{ element, validateLabel }"
   >
-    <hr class="section-2-line" />
-    <div class="row gutter-form">
-      <div class="col-8">
-        <g-section-2
-          title="Información del Producto"
-          contentClass="row gutter-form"
-          :topLine="false"
-        >
-          <g-input-val
-            v-model="element.name"
-            :label="element.name.name"
-            @validate="validateLabel"
-            :disabled="disabled"
-            class="col-6"
-          />
-          <g-select-consult-val
-            v-model="element.id_typeproduct"
-            :label="element.id_typeproduct.name"
-            :disabled="disabled"
-            @validate="validateLabel"
-            :consult="typeProductService.getListTypeProduct"
-            :filter="{ order: 'asc', orderBy: 'name', searchBy: ['name'] }"
-            class="col-4"
-          />
-          <g-input-val
-            v-model="element.price"
-            :label="element.price.name"
-            @validate="validateLabel"
-            :disabled="disabled"
-            class="col-6"
-          />
-          <g-input-val
-            v-model="element.discount"
-            :label="element.discount.name"
-            @validate="validateLabel"
-            :disabled="disabled"
-            class="col-6"
-          />
-          <g-input-val
-            v-model="element.description"
-            :label="element.description.name"
-            @validate="validateLabel"
-            :disabled="disabled"
-          />
-        </g-section-2>
+    <g-section-4
+      title="Información del Producto"
+      contentClass="row gutter-form"
+      :topLine="false"
+    >
+      <div class="img-data">
+        <g-input-image-val
+          imageClass="type-product-img"
+          v-model="element.product_type_image"
+          :disabled="disabled"
+          @validate="validateLabel"
+        />
       </div>
-      <div class="col-4">
-        <div class="img-data">
-          <g-input-image-val
-            imageClass="type-product-img"
-            v-model="element.product_type_image"
-            :disabled="disabled"
-            @validate="validateLabel"
-          />
-        </div>
-      </div>
-    </div>
-    <g-section-2 title="Entradas y Salidas" contentClass="row gutter-form">
-    </g-section-2>
+      <g-input-val
+        v-model="element.name"
+        :label="element.name.name"
+        @validate="validateLabel"
+        :disabled="disabled"
+      />
+      <g-select-consult-val
+        v-model="element.id_typeproduct"
+        :label="element.id_typeproduct.name"
+        :disabled="disabled"
+        @validate="validateLabel"
+        :consult="typeProductService.getListTypeProduct"
+        :filter="{ order: 'asc', orderBy: 'name', searchBy: ['name'] }"
+      />
+      <g-input-val
+        v-model="element.price"
+        :label="element.price.name"
+        @validate="validateLabel"
+        :disabled="disabled"
+        class="col-6"
+      />
+      <g-input-val
+        v-model="element.discount"
+        :label="element.discount.name"
+        @validate="validateLabel"
+        :disabled="disabled"
+        class="col-6"
+      />
+
+      <g-input-val
+        v-model="element.description"
+        :label="element.description.name"
+        @validate="validateLabel"
+        :disabled="disabled"
+      />
+    </g-section-4>
   </g-form>
 </template>
 <style scoped>
-.data-img-container {
-  display: flex;
-  position: relative;
-}
 .img-data {
-  margin-left: 1.5rem;
+  display: flex;
+  width: 100%;
+  justify-content: center;
 }
 </style>

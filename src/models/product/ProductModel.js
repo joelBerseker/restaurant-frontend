@@ -25,6 +25,7 @@ export class ProductModel extends Model {
     id: "id_typeproduct",
     name: "Tipo de Producto",
     value: null,
+    additionalKey: "name",
     additional: {},
     validation: {},
     getValueText() {
@@ -74,5 +75,45 @@ export class ProductModel extends Model {
       price: this.price.value,
       section: "product",
     };
+  }
+  getDataTable() {
+    return [
+      {
+        label: "ID",
+        field: "id",
+        sortable: true,
+        searchable: true,
+
+        width: "1%",
+      },
+      {
+        label: this.name.name,
+        field: this.name.id,
+        searchable: true,
+        sortable: true,
+      },
+      {
+        label: this.id_typeproduct.name,
+        field:
+          this.id_typeproduct.id + "__" + this.id_typeproduct.additionalKey,
+        searchable: true,
+        sortable: true,
+      },
+
+      {
+        label: this.price.name,
+        field: this.price.id,
+        columnClass: "number",
+        sortable: true,
+      },
+
+      {
+        label: this.discount.name,
+        field: this.discount.id,
+
+        columnClass: "number",
+        sortable: true,
+      },
+    ];
   }
 }

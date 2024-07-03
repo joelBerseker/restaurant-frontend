@@ -61,7 +61,7 @@ async function deleteElement(index) {
 
   if (itemDeleted.id.value) {
     console.log("delete consult");
-    emit("onDeleteElement", index);
+    emit("onDeleteElement", itemDeleted.id.value);
   } else {
     disabled.value = false;
 

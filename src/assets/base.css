@@ -148,3 +148,6 @@ hr {
   border-radius: 99rem;
   background: rgb(190, 190, 190);
 }
+#printable {
+  display: none;
+}

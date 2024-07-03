@@ -4,6 +4,7 @@ import FormButtons from "@/common/form/FormButtons.vue";
 import LoadingContainer from "@/common/container/LoadingContainer.vue";
 import { ref, inject } from "vue";
 import { useRouter } from "vue-router";
+import { printDocument } from "@/helpers";
 const emit = defineEmits(["onFirstLoad"]);
 
 const router = useRouter();
@@ -80,6 +81,9 @@ async function onStatus() {
   }
   isLoading.value = false;
 }
+function onPrint() {
+  printDocument("hola");
+}
 function onUpdated(_data) {
   statusValue.value = _data.status.value;
   subTitle.value = _data.getText();
@@ -112,6 +116,8 @@ defineExpose({
           @onSave="onSave"
           @onDelete="onDelete"
           @onStatus="onStatus"
+          @onPrint="onPrint"
+          :showPrint="true"
         />
       </template>
       <template #content>
@@ -124,5 +130,6 @@ defineExpose({
         />
       </template>
     </g-section-1>
+    <div id="printable">holaasdadasd</div>
   </LoadingContainer>
 </template>

@@ -67,6 +67,7 @@ async function editElement(_data) {
   return resp;
 }
 async function deleteElement(_id) {
+  console.log(_id);
   let resp = await ticketDetailService.deleteTicketDetail(_id, totalCalc.value);
   if (resp) {
     getList();

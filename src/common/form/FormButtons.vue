@@ -8,6 +8,7 @@ const props = defineProps({
   elementText: { default: null },
   showDelete: { default: true },
   showEdit: { default: true },
+  showPrint: { default: false },
 });
 
 const statusData = computed(() => {
@@ -24,6 +25,7 @@ const emit = defineEmits([
   "onEdit",
   "onSave",
   "onCancel",
+  "onPrint",
 ]);
 
 function onAdd() {
@@ -47,6 +49,9 @@ function onCancel() {
 function onSave() {
   emit("onSave");
 }
+function onPrint() {
+  emit("onPrint");
+}
 </script>
 <template>
   <div class="buttons-container">
@@ -54,6 +59,14 @@ function onSave() {
       <g-button icon="fa-solid fa-check" text="Guardar" @click="onAdd()" />
     </span>
     <span v-else-if="mode === 'view' || !showEdit" class="buttons-container">
+      <g-button
+        type="transparent-1"
+        icon="fa-solid fa-print"
+        text="Imprimir"
+        @click="onPrint()"
+        :separationLine="true"
+        v-if="showPrint"
+      />
       <g-button
         class="delete-button"
         type="transparent-1"

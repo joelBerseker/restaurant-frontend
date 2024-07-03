@@ -314,7 +314,9 @@ const formatData = {
     return resp;
   },
 };
-function printDocument(element, title = null) {
+function printDocument(title = null, name = "#printable") {
+  var element = document.querySelector(name);
+
   var ventana = window.open(
     "",
     "PRINT",

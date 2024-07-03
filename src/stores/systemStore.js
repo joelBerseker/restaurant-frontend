@@ -3,9 +3,11 @@ import { copyObject } from "@/helpers";
 export const useSystemStore = defineStore("system", {
   state: () => ({
     filter_cache: {},
+    test_cache: "",
   }),
   getters: {
     filterCache: (state) => state.filter_cache,
+    testCache: (state) => state.test_cache,
   },
   actions: {
     addFilterCache(_name, _value) {
@@ -15,6 +17,9 @@ export const useSystemStore = defineStore("system", {
     },
     deleteFilterCache(_name) {
       delete this.filter_cache[_name];
+    },
+    setTestCache(_value) {
+      this.test_cache = _value;
     },
   },
   persist: true,

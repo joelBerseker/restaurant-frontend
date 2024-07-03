@@ -7,6 +7,9 @@ import TestStatusElementComponent from "@/components/test/TestStatusElementCompo
 import { RolModel, TableModel } from "@/models";
 import { rolService, tableService } from "@/services";
 import { isEmpty, sleep } from "@/helpers";
+import { useSystemStore } from "@/stores/systemStore";
+
+const useSystem = useSystemStore();
 
 /*INICIO CAMBIAR SEGUN LO REQUERIDO*/
 const modelTest = ref(TableModel);
@@ -389,13 +392,7 @@ const okService = ref(false);
 const errorClass = ref(null);
 const errorService = ref(null);
 
-const inputNameCorrect = computed(() => {
-  if (okClass.value && okService.value) {
-    return inputName.value;
-  }
-  return null;
-});
-
+const inputNameCorrect = ref(null);
 async function generateClass() {
   status.clear();
   await import(`@/models/index.js`)
@@ -419,7 +416,7 @@ async function generateClass() {
 
       okClass.value = false;
     });
-  import(`@/services/index.js`)
+  await import(`@/services/index.js`)
     .then((module) => {
       let _serviceName = isEmpty(inputService.value)
         ? defaultService.value
@@ -445,6 +442,10 @@ async function generateClass() {
       okService.value = false;
       errorService.value = "No se encontro el servicio";
     });
+  if (okService.value && okClass.value) {
+    useSystem.setTestCache(inputName.value);
+    inputNameCorrect.value = inputName.value;
+  }
 }
 function onInputKeyWord() {
   if (isEmpty(inputName.value)) return;
@@ -470,11 +471,32 @@ async function copyClipboard() {
     console.error("Error al copiar: ", err);
   }
 }
+function clearInput() {
+  inputName.value = "";
+  useSystem.setTestCache("");
+}
+function init() {
+  if (useSystem.testCache) {
+    console.log("existe en cache");
+    inputName.value = useSystem.testCache;
+    onInputKeyWord();
+    generateClass();
+  }
+}
+init();
 </script>
 <template>
   <div class="row g-4 container-content">
     <div class="col-5">
       <g-section-4 title="Ingreso de datos" contentClass="row gutter-form">
+        <template #buttons
+          ><g-button
+            v-if="useSystem.testCache"
+            icon="fa-solid fa-broom"
+            @click="clearInput()"
+            type="secondary"
+            title="Limpiar cache"
+        /></template>
         <g-input
           class="col-12"
           label="Palabra clave"

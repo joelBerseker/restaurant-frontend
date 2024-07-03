@@ -6,7 +6,7 @@ import { ReservationModel } from "@/models";
 import { useToastStore } from "@/stores";
 
 const servicePath = "/reservation";
-const module = "reservation";
+const module = "reservación";
 
 export const reservationService = {
   async getReservation(reservation_id) {
@@ -110,7 +110,7 @@ export const reservationService = {
       const response = await axiosInstance(config);
       const data_new = dataTransform.transformApiData(
         response.data,
-        ArticleModel
+        ReservationModel
       );
       const useToast = useToastStore();
       useToast.show("add_success", {
@@ -150,7 +150,7 @@ export const reservationService = {
       const response = await axiosInstance.delete(`${servicePath}/${dataid}/`);
       const useToast = useToastStore();
       useToast.show("delete_success", {
-        important_text: `${module} eliminado Correctamente`,
+        important_text: module,
       });
       return response;
     } catch (error) {

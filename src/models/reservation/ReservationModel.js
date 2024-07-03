@@ -51,7 +51,14 @@ export class ReservationModel extends Model {
   getDataOptions() {
     return {
       value: this.id.value,
-      text: `${this.id.value} - Reserva para el: ${this.date.value}, a las ${this.hour}`,
+      text: `${this.id.value} - Reserva para el: ${this.date.value}, a las ${this.hour.value}`,
     };
+  }
+
+  getText() {
+    return this.id.value + " - " + this.date.value + " " + this.hour.value;
+  }
+  getTextModel() {
+    return "Reservación [" + this.getText() + "]";
   }
 }

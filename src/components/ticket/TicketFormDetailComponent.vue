@@ -66,9 +66,13 @@ async function editElement(_data) {
   }
   return resp;
 }
-async function deleteElement(_id) {
-  console.log(_id);
-  let resp = await ticketDetailService.deleteTicketDetail(_id, totalCalc.value);
+async function deleteElement(_data) {
+  console.log(totalCalc.value);
+  let rest = totalCalc.value - Number(_data.price_total.value);
+  let resp = await ticketDetailService.deleteTicketDetail(
+    _data.id.value,
+    rest.toFixed(2)
+  );
   if (resp) {
     getList();
   }

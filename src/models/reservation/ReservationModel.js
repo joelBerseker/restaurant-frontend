@@ -1,14 +1,18 @@
+import { formatData } from "@/helpers";
 import { Model } from "@/models/";
 
 export class ReservationModel extends Model {
   user_id = {
+    omit: true,
     id: "user_id",
-    name: "Usuario",
+    name: "Encargado",
     value: null,
-    aditional: {},
-    required: false, // null=True, blank=True in Django
-    validation: {},
-    validate: ["select"],
+    additionalKey: "first_name",
+    additional: {},
+    getValueText() {
+      if (!this.additional) return;
+      return this.additional.first_name + " " + this.additional.last_name;
+    },
   };
 
   date = {
@@ -56,9 +60,58 @@ export class ReservationModel extends Model {
   }
 
   getText() {
-    return this.id.value + " - " + this.date.value + " " + this.hour.value;
+    return (
+      this.id.value +
+      " - " +
+      formatData.datesMin(this.date.value) +
+      " " +
+      formatData.times(this.hour.value)
+    );
   }
   getTextModel() {
     return "Reservación [" + this.getText() + "]";
+  }
+  getDataTable() {
+    return [
+      {
+        label: "ID",
+        field: "id",
+        sortable: true,
+        searchable: true,
+
+        width: "1%",
+      },
+      {
+        label: this.user_id.name,
+        field: this.user_id.id + "__" + this.user_id.additionalKey,
+        sortable: true,
+        searchable: true,
+      },
+      {
+        label: this.date.name,
+        field: this.date.id,
+        sortable: true,
+        display: (row) => {
+          return formatData.dates(row.date);
+        },
+      },
+      {
+        label: this.hour.name,
+        field: this.hour.id,
+        sortable: true,
+        display: (row) => {
+          return formatData.times(row.hour);
+        },
+      },
+
+      {
+        label: this.number_person.name,
+        field: this.number_person.id,
+        sortable: true,
+
+        columnClass: "number",
+        width: "1%",
+      },
+    ];
   }
 }

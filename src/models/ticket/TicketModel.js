@@ -100,6 +100,8 @@ export class TicketModel extends Model {
         label: "ID",
         field: "id",
         sortable: true,
+        searchable: true,
+
         width: "1%",
       },
       {

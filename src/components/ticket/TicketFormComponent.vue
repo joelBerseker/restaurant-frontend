@@ -117,11 +117,6 @@ defineExpose({
         :disabled="disabled"
         @validate="validateLabel"
         :consult="userService.getListUser"
-        :filter="{
-          order: 'asc',
-          orderBy: 'first_name',
-          searchBy: ['first_name'],
-        }"
       />
       <g-input-val
         v-show="mode !== 'view' || !isEmpty(element.ruc.value)"

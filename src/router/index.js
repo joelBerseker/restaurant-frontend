@@ -132,22 +132,33 @@ const router = createRouter({
                 title: "Gestión de Mesas",
               },
             },
+            {
+              path: "/table/:id?",
+              name: "table",
+              component: () => import("@/components/table/TableView.vue"),
+              meta: {
+                requiresAuth: true,
+                moduleid: 0,
+                icon: "fa-solid fa-border-all",
+                title: "Mesas",
+              },
+            },
+            {
+              path: "/reservation/:id?",
+              name: "reservation",
+              component: () =>
+                import("@/components/reservation/ReservationView.vue"),
+              meta: {
+                requiresAuth: true,
+                moduleid: 0,
+                icon: "fa-regular fa-calendar-days",
+                title: "Reservaciones",
+              },
+            },
           ],
         },
         ticketRouter,
         testRouter,
-
-        {
-          path: "/table/:id?",
-          name: "table",
-          component: () => import("@/components/table/TableView.vue"),
-          meta: {
-            requiresAuth: true,
-            moduleid: 0,
-            icon: "fa-solid fa-border-all",
-            title: "Mesas",
-          },
-        },
       ],
     },
     {

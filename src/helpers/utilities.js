@@ -164,6 +164,10 @@ function fixRefreshment(text) {
   else return text + " almuerzos";
 }
 const formatData = {
+  times(_time) {
+    if (!_time) return _time;
+    return _time.substring(0, 5);
+  },
   datesHour(fecha) {
     var fechaActual = new Date();
     var fechaPublicacion = new Date(fecha);

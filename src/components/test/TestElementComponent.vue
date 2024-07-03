@@ -59,7 +59,7 @@ function generateCode() {
         '.value"\n' +
         '\t:switchMode="true"\n' +
         '\tlabelClass="imp-label"\n' +
-        '\t:disabled="false"\n' +
+        '\t:disabled="disabled"\n' +
         '\t@validate="validateLabel"\n' +
         "/>\n";
     } else {
@@ -71,7 +71,7 @@ function generateCode() {
         '\tv-model="element.' +
         key +
         '"\n' +
-        '\t:disabled="false"\n' +
+        '\t:disabled="disabled"\n' +
         '\t@validate="validateLabel"\n' +
         "/>\n";
     }

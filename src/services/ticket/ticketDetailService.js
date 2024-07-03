@@ -198,12 +198,16 @@ export const ticketDetailService = {
         response.data,
         TicketDetailModel
       );
+      const useToast = useToastStore();
+      useToast.show("add_success", {
+        important_text: data_new.getTextModel(),
+      });
       return data_new;
     } catch (error) {
       const useToast = useToastStore();
       useToast.show(
         "add_error",
-        error.message ? error.message : "Error al agregar los usuarios"
+        error.message ? error.message : `Error al agregar ${module}`
       );
       handleError(error, "add_error", module);
     }
@@ -240,6 +244,10 @@ export const ticketDetailService = {
         response.data,
         TicketDetailModel
       );
+      const useToast = useToastStore();
+      useToast.show("edit_success", {
+        important_text: module,
+      });
       return data_new;
     } catch (error) {
       handleError(error, "edit_error", module);

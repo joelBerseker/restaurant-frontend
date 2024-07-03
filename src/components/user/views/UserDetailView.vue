@@ -10,7 +10,11 @@ const setTopbar = inject("setTopbar");
 const idElement = ref(null);
 
 const topbar = ref({
-  breadcrumb: [{ name: "home" }, { name: "userList" }],
+  breadcrumb: [
+    { name: "home" },
+    { name: "userManagementList" },
+    { name: "userList" },
+  ],
 });
 async function init() {
   idElement.value = route.params.id;

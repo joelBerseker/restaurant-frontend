@@ -5,7 +5,11 @@ import { ref, inject } from "vue";
 const setTopbar = inject("setTopbar");
 
 const topbar = ref({
-  breadcrumb: [{ name: "home" }, { name: "menuList" }],
+  breadcrumb: [
+    { name: "home" },
+    { name: "productManagementList" },
+    { name: "menuList" },
+  ],
 });
 async function init() {
   setTopbar(topbar.value);

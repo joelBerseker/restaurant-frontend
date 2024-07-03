@@ -6,7 +6,7 @@ const setTopbar = inject("setTopbar");
 
 const topbar = ref({
   name: "productType",
-  breadcrumb: [{ name: "home" }],
+  breadcrumb: [{ name: "home" }, { name: "productManagementList" }],
 });
 async function init() {
   setTopbar(topbar.value);

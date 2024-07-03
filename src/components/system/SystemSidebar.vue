@@ -11,9 +11,7 @@ let list = [
     name: "productManagementList",
     children: ["productList", "productType", "menuList"],
   },
-  { name: "tableManagementList" },
-
-  { name: "table" },
+  { name: "tableManagementList", children: ["table"] },
 
   { name: "ticketList" },
 

@@ -1,2 +1,3 @@
 <script setup></script>
-<template>graficos</template>
+<template>graficos xcd</template>
+<style></style>

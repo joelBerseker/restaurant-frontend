@@ -59,7 +59,7 @@ export class TicketModel extends Model {
   user_id = {
     omit: true,
     id: "user_id",
-    name: "Encargado",
+    name: "Gestionado por",
     type: "select",
     value: null,
     additionalKey: "first_name",

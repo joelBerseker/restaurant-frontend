@@ -127,7 +127,7 @@ async function login() {
   padding: 1rem;
 }
 .image-bg {
-  background-image: url("@/assets/images/login.jpg");
+  background-image: url("@/assets/imgs/login.jpg");
   background-position: center;
   background-size: cover;
 }

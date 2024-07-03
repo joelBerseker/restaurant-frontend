@@ -14,29 +14,28 @@ export class ReservationModel extends Model {
   date = {
     id: "date",
     name: "Fecha de Reserva",
+    type: "date",
     value: null,
-    required: false, // null=True, blank=True in Django
     validation: {},
-    validate: ["date"],
   };
 
   hour = {
     id: "hour",
     name: "Hora de Reserva",
+    type: "time",
     value: null,
-    required: true, // null=True in Django
     validation: {},
-    validate: ["time"],
   };
 
   number_person = {
     id: "number_person",
     name: "Numero de personas",
+    type: "number",
+
     value: null,
-    required: false, // null=True in Django
     validation: {},
-    validate: ["number"],
-    default: 0,
+    validate: ["number", "length"],
+    default: "0",
   };
 
   description = {
@@ -44,7 +43,6 @@ export class ReservationModel extends Model {
     name: "Descripcion de la Reserva",
     type: "textarea",
     value: null,
-    required: false, // blank=True, null=True in Django
     validation: {},
     validate: ["length"],
     default: "Sin descripción",

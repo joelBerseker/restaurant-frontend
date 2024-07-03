@@ -32,7 +32,6 @@ const emit = defineEmits([
   "delayChange",
 ]);
 const inputRef = ref(null);
-const localType = ref("text");
 const value = computed({
   get() {
     return props.modelValue;
@@ -94,12 +93,13 @@ function displayText() {
     return props.display(value.value);
   }
 }
-function init() {
+
+const localType = computed(() => {
   if (props.type !== "number" && props.type !== "decimal") {
-    localType.value = props.type;
+    return props.type;
   }
-}
-init();
+  return "text";
+});
 defineExpose({
   focus,
 });

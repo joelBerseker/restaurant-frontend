@@ -77,6 +77,9 @@ const validations = {
         case "date":
           _txtInvalid = "Seleccione una fecha";
           break;
+        case "time":
+          _txtInvalid = "Seleccione una hora";
+          break;
         default:
           break;
       }

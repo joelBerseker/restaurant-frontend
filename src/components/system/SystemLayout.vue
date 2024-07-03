@@ -9,7 +9,7 @@ function closeSidebar() {
     <aside id="system-sidebar" class="open">
       <slot name="sidebar"></slot>
     </aside>
-    <main id="system-main" class="open-sidebar">
+    <main id="system-main" class="open-sidebar custom-scrollbar">
       <div class="cover-system-main" @click="closeSidebar"></div>
       <header id="system-topbar">
         <slot name="topbar"></slot>
@@ -25,13 +25,7 @@ function closeSidebar() {
   overflow: auto;
   scrollbar-gutter: stable;
 }
-#system-main::-webkit-scrollbar {
-  width: 10px; /* Cambiar el ancho de la barra de desplazamiento */
-}
-#system-main::-webkit-scrollbar-thumb {
-  border-radius: 99rem;
-  background: rgb(190, 190, 190);
-}
+
 #system-content {
   height: 100%;
 }
@@ -61,8 +55,12 @@ function closeSidebar() {
   padding-left: 1.75rem !important;
   padding-right: 1.75rem !important;
 }
+#system-sidebar.open .sidebar-item.with-children {
+  padding-right: 3rem !important;
+}
 
-#system-sidebar .text-sidebar-item {
+#system-sidebar .text-sidebar-item,
+#system-sidebar.transition.open .text-sidebar-item {
   opacity: 0;
   transition: 0s;
   width: 0px;
@@ -74,11 +72,8 @@ function closeSidebar() {
   opacity: 1;
   width: auto;
   height: auto;
-  transition-delay: 0.15s;
 }
-.text-sidebar-item {
-  text-wrap: nowrap;
-}
+
 @media screen and (max-width: 1199px) {
   #system-main.open-sidebar {
     margin-left: 60px !important;

@@ -1,17 +1,23 @@
 <script setup>
+import { sleep } from "@/helpers";
 import { ref, onMounted, onUnmounted } from "vue";
 
 const showSidebar = ref(true);
 let list = [
-  "home",
-  "userList",
-  "table",
-  "rol",
-  "productList",
-  "productType",
-  "ticketList",
-  "menuList",
-  "test",
+  { name: "home" },
+
+  { name: "userManagementList", children: ["userList", "rol"] },
+  {
+    name: "productManagementList",
+    children: ["productList", "productType", "menuList"],
+  },
+  { name: "tableManagementList" },
+
+  { name: "table" },
+
+  { name: "ticketList" },
+
+  { name: "test" },
 ];
 
 async function getPermise(module_id) {
@@ -42,7 +48,19 @@ function openSidebar() {
 
   showSidebar.value = true;
 }
-function switchSidebar() {
+async function awaitTransition() {
+  transitionSwitch.value = true;
+  document.getElementById("system-sidebar").classList.add("transition");
+
+  await sleep(300);
+  transitionSwitch.value = false;
+  document.getElementById("system-sidebar").classList.remove("transition");
+}
+const transitionSwitch = ref(false);
+
+async function switchSidebar() {
+  if (transitionSwitch.value) return;
+  awaitTransition();
   if (showSidebar.value) {
     closeSidebar();
   } else {
@@ -107,63 +125,85 @@ defineExpose({
         />
       </transition>
     </header>
-    <ul class="w-100 sidebar-list-item px-0">
+    <ul class="w-100 sidebar-list-item px-0 custom-scrollbar">
       <li v-for="item in list" :key="item.title">
         <div class="d-flex">
           <div class="container-link">
             <RouterLink
-              :to="{ name: item }"
-              class="sidebar-item"
-              active-class="sidebar-item-active"
-              exact-active-class="disbled-click"
-              v-slot="{ route }"
+              :to="{ name: item.name }"
+              v-slot="{ route, navigate, href, isActive, isExactActive }"
+              custom
             >
-              <span class="sidebar-item-icon">
-                <font-awesome-icon :icon="route.meta.icon" />
-              </span>
-              <span class="text-sidebar-item">
-                {{
-                  route.meta.title_short
-                    ? route.meta.title_short
-                    : route.meta.title
-                }}
-              </span>
+              <div>
+                <a
+                  :class="[
+                    'sidebar-item',
+                    isActive ? 'sidebar-item-active' : '',
+                    isExactActive ? 'disbled-click' : '',
+                    item.children && showSidebar ? 'with-children' : '',
+                  ]"
+                  @click="navigate"
+                  :href="href"
+                >
+                  <div class="sidebar-item-icon">
+                    <font-awesome-icon :icon="route.meta.icon" />
+                  </div>
+                  <div class="text-sidebar-item">
+                    {{
+                      route.meta.title_short
+                        ? route.meta.title_short
+                        : route.meta.title
+                    }}
+                  </div>
+                </a>
+                <div
+                  v-if="item.children && showSidebar"
+                  class="collapse"
+                  :id="item.name"
+                >
+                  <ul
+                    :class="[
+                      'w-100 sidebar-list-item-child px-0 ',
+                      isActive ? 'active' : '',
+                    ]"
+                  >
+                    <li v-for="item2 in item.children" :key="item2.title">
+                      <RouterLink
+                        :to="{ name: item2 }"
+                        class="sidebar-item-children"
+                        active-class="sidebar-item-children-active"
+                        exact-active-class="disbled-click"
+                        v-slot="{ route }"
+                      >
+                        <i :class="item2.icon"></i>
+                        <span
+                          v-show="showSidebar"
+                          class="text-sidebar-item-child"
+                          >{{
+                            route.meta.title_short
+                              ? route.meta.title_short
+                              : route.meta.title
+                          }}</span
+                        >
+                      </RouterLink>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </RouterLink>
             <div class="button-container">
               <div>
                 <g-button
-                  v-if="item.children != undefined && showSidebar"
-                  type="transparent"
-                  textColor="light"
-                  icon="bi bi-chevron-left"
+                  v-if="item.children && showSidebar"
+                  type="transparent-2"
+                  icon="fa-solid fa-chevron-down"
                   class="button-colapse collapsed"
                   data-bs-toggle="collapse"
-                  :data-bs-target="'#' + item.title"
+                  :data-bs-target="'#' + item.name"
                 />
               </div>
             </div>
           </div>
-        </div>
-        <div
-          v-if="item.children != undefined && showSidebar"
-          class="collapse"
-          :id="item.title"
-        >
-          <ul class="w-100 sidebar-list-item-child px-0">
-            <li v-for="item2 in item.children" :key="item2.title">
-              <RouterLink
-                :to="{ name: item2.name }"
-                class="w-100 sidebar-item-children m-0 mb-1"
-                active-class="sidebar-item-active"
-                exact-active-class="disbled-click"
-              >
-                <i :class="item2.icon"></i>
-                <span v-show="showSidebar" class="text-sidebar-item-child">{{
-                  item2.title
-                }}</span>
-              </RouterLink>
-            </li>
-          </ul>
         </div>
       </li>
     </ul>
@@ -177,8 +217,11 @@ defineExpose({
 </template>
 <style scoped>
 .sidebar-item-icon {
+  flex-shrink: 0;
   width: 2rem;
+  display: inline-block;
 }
+
 .normal-img-container {
   display: flex;
 
@@ -193,7 +236,6 @@ defineExpose({
   margin-right: calc(1rem - 0.25rem);
 }
 .text-sidebar-item-child {
-  margin-left: 0.8rem;
 }
 .container-link {
   width: 100%;
@@ -206,8 +248,8 @@ defineExpose({
   align-items: center;
   right: 0;
   top: 0;
-  height: 100%;
-  margin-right: calc(0.25rem - 1px);
+  margin-top: 0.35rem;
+  margin-right: calc(0.75rem - 1px);
 }
 .sidebar {
   height: 100%;
@@ -247,11 +289,20 @@ defineExpose({
 
 .sidebar-list-item-child {
   list-style-type: none;
-  padding-left: 0.9rem !important;
+  padding-left: calc(1.75rem + 2rem - 0.35rem) !important;
+  padding-top: 0.25rem;
+  padding-bottom: 0.75rem;
+  transition: 0.3s;
+  margin-left: calc(0.35rem);
 }
+.sidebar-list-item-child.active {
+  background-color: #38a55a;
+  border-color: var(--color-2);
+}
+
 .sidebar-item {
   text-decoration-line: none;
-  color: var(--color-w-v2);
+  color: var(--color-w);
   transform: translateX(0px);
   display: inline-block;
   padding-top: 0.6rem;
@@ -260,7 +311,11 @@ defineExpose({
   transition: 0.3s;
   position: relative;
 }
-.sidebar-item::before {
+.sidebar-item * {
+  font-weight: 500;
+}
+.sidebar-item::before,
+.sidebar-list-item-child::before {
   content: "";
   background-color: var(--color-w);
   width: 100%;
@@ -270,7 +325,8 @@ defineExpose({
   left: 0;
   z-index: -1;
 }
-.sidebar-item::after {
+.sidebar-item::after,
+.sidebar-list-item-child::after {
   content: "";
   width: 100%;
   height: 100%;
@@ -284,21 +340,21 @@ defineExpose({
 .sidebar-item:hover::after {
   background-color: var(--color-1);
 }
-.sidebar-item-active::after {
+.sidebar-item-active::after,
+.sidebar-list-item-child.active::after {
   transform: translateX(0.35rem);
   background-color: var(--color-1);
 }
 .sidebar-item-children {
   text-decoration-line: none;
-  color: var(--g-wb100);
-  border-radius: var(--g-br1);
+  color: rgba(255, 255, 255, 0.685);
+
   transform: translateX(0px);
   display: inline-block;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  transition: 0.4s;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+
+  transition: 0.3s;
   font-size: 13px;
 }
 .sidebar-item-compressed {
@@ -306,9 +362,28 @@ defineExpose({
   padding-right: 0rem;
   text-align: center;
 }
+.sidebar-item-children::after,
+.sidebar-item-children::before {
+  content: "";
+  width: 100%;
+  height: 2px;
+  border-radius: 999rem;
+  position: absolute;
+  bottom: 1px;
+  left: 0;
+  transition: 0.3s;
+}
+.sidebar-item-children:hover,
+.sidebar-item-children-active {
+  color: var(--color-w);
+}
+
+.sidebar-item-children-active::after {
+  background-color: rgb(218, 218, 218);
+}
+
 .sidebar-item:hover,
-.sidebar-item-active,
-.sidebar-item-children:hover {
+.sidebar-item-active {
   background-color: var(--color-1);
 }
 .sidebar-item-children:focus-visible,

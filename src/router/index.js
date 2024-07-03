@@ -27,23 +27,116 @@ const router = createRouter({
             title: "Inicio",
           },
         },
-        userRouter,
-        productRouter,
-        ticketRouter,
-        testRouter,
-        menuRouter,
         {
-          path: "/rol/:id?",
-          name: "rol",
-          component: () => import("@/components/rol/RolView.vue"),
+          path: "/user_management",
+          name: "userManagement",
+          redirect: { name: "userManagementList" },
+          component: () =>
+            import("@/components/section/views/UserManagementView.vue"),
           meta: {
             requiresAuth: true,
             moduleid: 0,
-            icon: "fa-solid fa-users-gear",
-            title: "Roles",
           },
+          children: [
+            {
+              path: "",
+              name: "userManagementList",
+              component: () =>
+                import(
+                  "@/components/section/viewsList/UserManagementListView.vue"
+                ),
+              meta: {
+                requiresAuth: true,
+                moduleid: 0,
+                icon: "fa-solid fa-user-gear",
+                title: "Gestión de Usuarios",
+              },
+            },
+            userRouter,
+            {
+              path: "/rol/:id?",
+              name: "rol",
+              component: () => import("@/components/rol/RolView.vue"),
+              meta: {
+                requiresAuth: true,
+                moduleid: 0,
+                icon: "fa-solid fa-users-gear",
+                title: "Roles",
+              },
+            },
+          ],
         },
-        userRouter,
+        {
+          path: "/product_management",
+          name: "productManagement",
+          redirect: { name: "productManagementList" },
+          component: () =>
+            import("@/components/section/views/ProductManagementView.vue"),
+          meta: {
+            requiresAuth: true,
+            moduleid: 0,
+          },
+          children: [
+            {
+              path: "",
+              name: "productManagementList",
+              component: () =>
+                import(
+                  "@/components/section/viewsList/ProductManagementListView.vue"
+                ),
+              meta: {
+                requiresAuth: true,
+                moduleid: 0,
+                icon: "fa-solid fa-boxes-stacked",
+                title: "Gestión de Productos",
+              },
+            },
+            productRouter,
+            menuRouter,
+            {
+              path: "/product_type/:id?",
+              name: "productType",
+              component: () =>
+                import("@/components/productType/ProductTypeView.vue"),
+              meta: {
+                requiresAuth: true,
+                moduleid: 0,
+                icon: "fa-solid fa-tags",
+                title: "Tipo de Producto",
+              },
+            },
+          ],
+        },
+        {
+          path: "/table_management",
+          name: "tableManagement",
+          redirect: { name: "tableManagementList" },
+          component: () =>
+            import("@/components/section/views/TableManagementView.vue"),
+          meta: {
+            requiresAuth: true,
+            moduleid: 0,
+          },
+          children: [
+            {
+              path: "",
+              name: "tableManagementList",
+              component: () =>
+                import(
+                  "@/components/section/viewsList/TableManagementListView.vue"
+                ),
+              meta: {
+                requiresAuth: true,
+                moduleid: 0,
+                icon: "fa-solid fa-border-all",
+                title: "Gestión de Mesas",
+              },
+            },
+          ],
+        },
+        ticketRouter,
+        testRouter,
+
         {
           path: "/table/:id?",
           name: "table",
@@ -53,18 +146,6 @@ const router = createRouter({
             moduleid: 0,
             icon: "fa-solid fa-border-all",
             title: "Mesas",
-          },
-        },
-        {
-          path: "/product_type/:id?",
-          name: "productType",
-          component: () =>
-            import("@/components/productType/ProductTypeView.vue"),
-          meta: {
-            requiresAuth: true,
-            moduleid: 0,
-            icon: "fa-solid fa-tags",
-            title: "Tipo de Producto",
           },
         },
       ],

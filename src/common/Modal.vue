@@ -79,7 +79,7 @@ defineExpose({
           </div>
         </header>
 
-        <main class="modal-body">
+        <main class="modal-body custom-scrollbar">
           <div class="first-loading" v-show="isFirstLoading && isLoading"></div>
           <slot></slot>
         </main>
@@ -114,13 +114,7 @@ defineExpose({
   width: 100%;
   z-index: 1;
 }
-.modal-body::-webkit-scrollbar {
-  width: 10px; /* Cambiar el ancho de la barra de desplazamiento */
-}
-.modal-body::-webkit-scrollbar-thumb {
-  border-radius: 99rem;
-  background: rgb(190, 190, 190);
-}
+
 .title-principal {
   font-size: 20px;
   font-weight: 500;

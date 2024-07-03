@@ -180,6 +180,10 @@ init();
   background-color: transparent !important;
   color: var(--color-b-v2) !important;
 }
+.g-btn-transparent-2 {
+  background-color: transparent !important;
+  color: var(--color-w-v2) !important;
+}
 .g-btn-transparent-1:disabled {
   background-color: transparent !important;
 }

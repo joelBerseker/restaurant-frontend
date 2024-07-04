@@ -5,6 +5,7 @@ import { BaseService } from "@/services/BaseService";
 import { TypeProductModel } from "@/models";
 import { useToastStore } from "@/stores";
 const servicePath = "/product_type";
+const serviceCart = "/product_type/plate_list";
 const module = "Tipo de Producto";
 export const typeProductService = {
   async getTypeProduct(typeproduct_id) {
@@ -90,6 +91,16 @@ export const typeProductService = {
       const datas = response.data.map((apiData) =>
         dataTransform.transformApiData(apiData, TypeProductModel)
       );
+      return datas;
+    } catch (error) {
+      handleError(error, "get_list_error", module);
+    }
+  },
+
+  async getCart() {
+    try {
+      const response = await axiosInstance.get(`${serviceCart}/`);
+      const datas = response.data;
       return datas;
     } catch (error) {
       handleError(error, "get_list_error", module);

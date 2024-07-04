@@ -109,7 +109,7 @@ export class UserModel extends Model {
       photo: this.photo.value,
       rol: this.id_role.value,
       is_p: this.is_admin.value,
-      company: this.company_id.value,
+      company: this.company_id.additional,
     };
   }
   beforeValidate() {

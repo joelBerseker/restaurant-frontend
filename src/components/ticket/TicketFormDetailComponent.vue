@@ -11,7 +11,7 @@ import TableForm from "@/common/table/TableForm.vue";
 import TableFormButtons from "@/common/table/TableFormButtons.vue";
 import { formatSubTitle, isEmpty } from "@/helpers";
 
-const emit = defineEmits(["onFirstLoad", "onChangeTotal"]);
+const emit = defineEmits(["onFirstLoad", "onChangeTotal", "onUpdated"]);
 
 const props = defineProps({
   mode: { default: null },
@@ -67,7 +67,6 @@ async function editElement(_data) {
   return resp;
 }
 async function deleteElement(_data) {
-  console.log(totalCalc.value);
   let rest = totalCalc.value - Number(_data.price_total.value);
   let resp = await ticketDetailService.deleteTicketDetail(
     _data.id.value,
@@ -104,6 +103,7 @@ function onAdd() {
 
 function onUpdated(_data) {
   subTitle.value = formatSubTitle.countElement(_data);
+  emit("onUpdated", _data);
 }
 function getListValue() {
   return tableFormRef.value.getListValue();
@@ -131,8 +131,6 @@ const listElements = computed(() => {
 watch(
   () => listElements.value,
   (_new, _old) => {
-    console.log("hola");
-    console.log(_new);
     let sum = 0;
     for (let index = 0; index < _new.length; index++) {
       const element = _new[index];
@@ -151,7 +149,6 @@ watch(
 const totalCalc = ref("0.00");
 
 function changeProduct(_data, _row) {
-  console.log(_data);
   _row.setLabelValue("is_menu", _data.section === "menu");
   _row.setLabelValue("price", _data.price);
   calcTotalElement(_row);

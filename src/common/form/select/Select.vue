@@ -71,7 +71,6 @@ const activeOptions = computed(() => {
         }
       });
     }
-    console.log(respMultiple);
 
     return respMultiple;
   } else {
@@ -103,7 +102,6 @@ const selectValue = computed(() => {
     !props.disabled &&
     selected.value.value === value.value
   ) {
-    console.log(selected.value);
     resp.text = selected.value.text;
     resp.additional = selected.value.additional;
     return resp;
@@ -145,7 +143,7 @@ function changeValue(_item) {
     value.value = _item[props.valueOptions];
     selected.value = _item;
   }
-  console.log(_item);
+
   emit("select", _item);
 }
 function selectItem(_item) {

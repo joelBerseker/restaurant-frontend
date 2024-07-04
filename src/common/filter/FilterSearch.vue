@@ -31,7 +31,6 @@ function search() {
   emit("search");
 }
 function checkValidation(_key) {
-  console.log(filterOptions.searchBySelected);
   if (filterOptions.searchBySelected.length <= 0) {
     filterOptions.searchBySelected.push(_key);
     useToast.show("check_validation_filter");

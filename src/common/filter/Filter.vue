@@ -67,7 +67,6 @@ function equalsToDefault() {
       resp = false;
     }
   }
-  console.log({ resp });
   return resp;
 }
 function sort(_data) {

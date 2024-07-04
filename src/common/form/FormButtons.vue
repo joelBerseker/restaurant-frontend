@@ -12,7 +12,6 @@ const props = defineProps({
 });
 
 const statusData = computed(() => {
-  console.log(status.getAll(props.statusValue));
   return status.getAll(props.statusValue);
 });
 

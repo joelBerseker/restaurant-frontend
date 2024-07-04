@@ -314,14 +314,26 @@ const formatData = {
     return resp;
   },
 };
-function printDocument(title = null, name = "#printable") {
-  var element = document.querySelector(name);
+function printDocument(title = null, element, dev = false) {
+  var ventana = null;
+  if (dev) {
+    ventana = window.open(
+      "",
+      "PRINT",
+      "height=" + screen.height + " ,width=600px"
+    );
+  } else {
+    ventana = window.open(
+      "",
+      "PRINT",
+      "height=" +
+        screen.height +
+        " ,width=" +
+        screen.width +
+        ", fullscreen=yes "
+    );
+  }
 
-  var ventana = window.open(
-    "",
-    "PRINT",
-    "height=" + screen.height + " ,width=" + screen.width + ", fullscreen=yes "
-  );
   ventana.document.write("<html><head><title>" + title + "</title>");
   ventana.document.write(
     '<link rel="stylesheet" type="text/css" href="/public/print.css">'
@@ -331,6 +343,9 @@ function printDocument(title = null, name = "#printable") {
   ventana.document.write("</body></html>");
   ventana.document.close();
   ventana.focus();
+  if (dev) {
+    return;
+  }
 
   ventana.onload = function () {
     ventana.print();

@@ -58,7 +58,7 @@ export class Model {
         if (!resp.isValid) break;
       }
     }
-    console.log(_data.name);
+
     _data.validation = resp;
   }
   beforeValidate() {}
@@ -93,7 +93,6 @@ export class Model {
       }
       if (data[key].file !== undefined) {
         this[key].file = data[key].file;
-        console.log(this[key].file);
       }
       if (data[key].valueText) {
         this[key].valueText = JSON.parse(JSON.stringify(data[key].valueText));
@@ -117,9 +116,7 @@ export class Model {
     }
   }
   init() {
-    console.log(this);
     this.initValueText();
-    console.log(this);
   }
   changeStatus() {
     let status_new = 1;
@@ -154,7 +151,7 @@ export class Model {
         resp[key] = element.value;
       }
     }
-    console.log(resp);
+
     return resp;
   }
 
@@ -163,6 +160,11 @@ export class Model {
     for (var key in this) {
       if (this[key].getValueText && this[key].additionalKey) {
         resp[key + "__" + this[key].additionalKey] = this[key].getValueText();
+      }
+      if (this[key].additional && this[key].otherKeys) {
+        this[key].otherKeys.forEach((other) => {
+          resp[key + "__" + other] = this[key].additional.other;
+        });
       }
       resp[key] = this[key].value;
     }

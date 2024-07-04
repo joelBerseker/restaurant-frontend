@@ -34,7 +34,6 @@ function change(_value) {
 const localPlaceHolder = computed(() => {
   if (value.value.default) return value.value.default;
   if (value.value.placeholder) {
-    console.log(value.value.placeholder);
     return value.placeholder;
   }
 

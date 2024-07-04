@@ -41,8 +41,6 @@ const countToast = ref(0);
 function show(_text, _additional = null) {
   let type = toastText[_text].type;
 
-  console.log(_additional);
-
   let _toast = {
     id: countToast.value,
     prevText: toastText[_text].prevText,
@@ -89,7 +87,6 @@ const miFuncion = () => {
 
 const iniciarTimeout = () => {
   if (listToast.value.length > 0) {
-    console.log("start");
     timeoutID.value = setTimeout(miFuncion, 5000); // 5000 milisegundos = 5 segundos
   }
 };

@@ -40,9 +40,7 @@ const localColumns = ref([]);
 function additem() {
   list.value.push(new props.elementModel());
 
-  console.log(props.mode);
   if (props.mode !== "add") {
-    console.log("no add");
     emit("onChangeDisabled", true);
     disabled.value = true;
     listMode.value.push("new");
@@ -60,7 +58,6 @@ async function deleteElement(index) {
   let itemDeleted = list.value[index];
 
   if (itemDeleted.id.value) {
-    console.log("delete consult");
     emit("onDeleteElement", itemDeleted);
   } else {
     disabled.value = false;
@@ -93,8 +90,6 @@ async function saveElement(_data) {
   emit("onSaveElement", _data);
 }
 function validateLabel(_data, index) {
-  console.log({ _data });
-  console.log({ index });
   list.value[index].validateLabel(_data);
 }
 function validate() {
@@ -109,7 +104,7 @@ function validate() {
     }
     resp = resp && respEl.value;
   }
-  console.log(resp);
+
   if (!resp) {
     useToast.show("validation_list_error", {
       list_error: list_error,
@@ -128,12 +123,11 @@ function copy(_data) {
   listDisabled.value = [];
   listMode.value = [];
 
-  console.log(_data);
   for (let i = 0; i < _data.length; i++) {
     const element = _data[i];
     let _item = new props.elementModel();
     let _itemBackup = new props.elementModel();
-    console.log(element);
+
     _item.copy(element);
     _item.init();
 

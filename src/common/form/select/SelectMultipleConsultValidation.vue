@@ -47,8 +47,6 @@ function deleteItem(index) {
 function addItem(_data) {
   if (!_data) return;
 
-  console.log(_data);
-
   if (existElement(_data.value)) {
     value.value.element.validation = noValid("El elemento ya existe");
     return;
@@ -78,7 +76,6 @@ function reset() {
 watch(
   () => value.value.valueText,
   (_new, _old) => {
-    console.log(_new);
     selectList.value = JSON.parse(JSON.stringify(value.value.valueText));
   },
   { deep: true }

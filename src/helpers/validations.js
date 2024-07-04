@@ -95,7 +95,7 @@ const validations = {
     } else {
       _value = _data.value;
     }
-    console.log(_data);
+
     if (_data.validate) resp = noValid();
     else resp = valid();
 
@@ -106,7 +106,6 @@ const validations = {
   },
 
   length(_data) {
-    console.log("legt");
     let _value = getValue(_data);
 
     let _type = _data.type;

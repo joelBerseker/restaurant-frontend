@@ -29,7 +29,6 @@ function refresh() {
   tableRef.value.refresh();
 }
 function viewItem(_data) {
-  console.log(_data);
   router.push({ name: "ticketDetail", params: { id: _data.id } });
 }
 function addItem() {

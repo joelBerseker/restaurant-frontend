@@ -119,6 +119,13 @@ defineExpose({
         :consult="userService.getListUser"
       />
       <g-input-val
+        v-show="mode !== 'view' || !isEmpty(element.client_name.value)"
+        v-model="element.client_name"
+        :label="element.client_name.name"
+        @validate="validateLabel"
+        :disabled="disabled"
+      />
+      <g-input-val
         v-show="mode !== 'view' || !isEmpty(element.ruc.value)"
         v-model="element.ruc"
         :label="element.ruc.name"

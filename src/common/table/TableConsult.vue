@@ -46,8 +46,6 @@ function viewItem(_data) {
 }
 async function getList(loading = true) {
   isLoading.value = loading;
-  console.log(filter.value);
-  console.log(props.defaultFilter);
 
   let resp = await props.getListConsult(filter.value);
   if (resp) {

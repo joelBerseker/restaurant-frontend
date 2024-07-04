@@ -1,12 +1,14 @@
 <script setup>
 import TicketFormComponent from "@/components/ticket/TicketFormComponent.vue";
 import TicketDetailFormComponent from "@/components/ticket/TicketFormDetailComponent.vue";
+import TicketPrintComponent from "@/components/ticket/TicketPrintComponent.vue";
 
 import FormButtons from "@/common/form/FormButtons.vue";
 import LoadingContainer from "@/common/container/LoadingContainer.vue";
 import { ref, inject } from "vue";
 import { useRouter } from "vue-router";
-import { sleep } from "@/helpers";
+import { sleep, printDocument } from "@/helpers";
+
 const emit = defineEmits(["onFirstLoad"]);
 
 const router = useRouter();
@@ -48,12 +50,9 @@ async function onAdd() {
   await sleep(0);
   let _valList = listFormRef.value.validateList();
 
-  console.log({ _valElement });
-  console.log({ _valList });
-
   if (!_valElement || !_valList) return;
   isLoading.value = true;
-  console.log("validado");
+
   let resp = await formRef.value.addElement(listFormRef.value.getListValue());
   if (resp) {
     toList();
@@ -92,13 +91,21 @@ async function onStatus() {
   }
   isLoading.value = false;
 }
+const printData = ref({});
+const printRef = ref(null);
+function onPrint() {
+  printRef.value.print();
+}
 function onUpdated(_data) {
-  console.log("onupdated");
+  console.log(_data);
+  printData.value.header = _data;
 
-  console.log(_data.getText());
   statusValue.value = _data.status.value;
   subTitle.value = _data.getText();
   elementText.value = _data.getTextModel();
+}
+function onUpdatedDetail(_data) {
+  printData.value.detail = _data;
 }
 function onChangeTotal(_value) {
   formRef.value.changeTotal(_value);
@@ -130,6 +137,8 @@ defineExpose({
           @onDelete="onDelete"
           @onStatus="onStatus"
           :showEdit="false"
+          @onPrint="onPrint"
+          :showPrint="true"
         />
       </template>
       <template #content>
@@ -149,6 +158,7 @@ defineExpose({
           <div class="col-8">
             <TicketDetailFormComponent
               ref="listFormRef"
+              @onUpdated="onUpdatedDetail"
               :mode="mode"
               @onChangeTotal="onChangeTotal"
             />
@@ -156,5 +166,7 @@ defineExpose({
         </div>
       </template>
     </g-section-1>
+
+    <TicketPrintComponent ref="printRef" :data="printData" />
   </LoadingContainer>
 </template>

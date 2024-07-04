@@ -27,13 +27,13 @@ const statusOptionsPermises = computed(() => {
   status.options.forEach((element) => {
     element.disabled = false;
   });
-  console.log(userStore.isAdmin());
+
   if (userStore.isAdmin()) {
     return status.options;
   } else {
     status.options[3].disabled = true;
   }
-  console.log(permises.value);
+
   if (!permises.value.active) {
     status.options[2].disabled = true;
   }
@@ -50,12 +50,9 @@ function reset() {
   }
 }
 function init() {
-  console.log(props.filter.status);
   if (props.filter.status !== undefined) {
     statusOptions.value = props.filter.status;
-    console.log("#asdasd");
   }
-  console.log(statusOptions.value);
 }
 init();
 defineExpose({

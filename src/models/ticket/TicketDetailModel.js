@@ -21,6 +21,7 @@ export class TicketDetailModel extends Model {
     type: "select",
     id: "product_id",
     name: "Producto",
+    additionalKey: "name",
     additional: {},
 
     getValueText() {

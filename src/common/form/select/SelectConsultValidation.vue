@@ -82,15 +82,13 @@ async function getList() {
 
   loading.value = true;
   let resp = await props.consult(props.filter);
-  console.log(resp);
+
   if (resp)
     if (props.multipleOptions) {
       for (var key in resp) {
-        console.log(resp[key].name);
         resp[key].list = resp[key].list.map((element) =>
           element[props.formatOptions]()
         );
-        console.log(resp[key].list);
       }
       list.value = resp;
     } else {

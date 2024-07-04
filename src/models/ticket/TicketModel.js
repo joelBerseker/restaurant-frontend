@@ -12,9 +12,17 @@ export class TicketModel extends Model {
     id: "ruc",
     name: "RUC",
     value: null,
-    required: false, // blank=True in Django
+    required: false,
     validation: {},
     validate: ["length", "number"],
+  };
+  client_name = {
+    id: "client_name",
+    name: "Nombre del cliente",
+    value: null,
+    required: false,
+    validation: {},
+    validate: ["length"],
   };
 
   discount = {
@@ -78,6 +86,10 @@ export class TicketModel extends Model {
     required: false, // blank=True in Django
     aditional: {},
     validation: {},
+  };
+  created_at = {
+    omit: true,
+    value: null,
   };
 
   getDataOptions() {

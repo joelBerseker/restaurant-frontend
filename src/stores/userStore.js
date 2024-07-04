@@ -47,6 +47,10 @@ export const useUserStore = defineStore("user", {
     getRol() {
       return this.User.rol;
     },
+    getCompany() {
+      return this.User.company;
+    },
+
     changePasswordPermises(id) {
       if (this.User.is_p) return true;
       if (id == this.id) return true;

@@ -336,7 +336,7 @@ function printDocument(title = null, element, dev = false) {
 
   ventana.document.write("<html><head><title>" + title + "</title>");
   ventana.document.write(
-    '<link rel="stylesheet" type="text/css" href="/public/print.css">'
+    '<link rel="stylesheet" type="text/css" href="/print.css">'
   ); //Cargamos otra hoja, no la normal
   ventana.document.write("</head><body >");
   ventana.document.write(element.innerHTML);

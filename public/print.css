@@ -36,6 +36,12 @@ table th {
 .footer-space {
   height: calc(8mm);
 }
+.no-footer .footer-space {
+  height: 0 !important;
+}
+.no-footer .footer {
+  height: 0 !important;
+}
 .td-content {
   display: block;
 }

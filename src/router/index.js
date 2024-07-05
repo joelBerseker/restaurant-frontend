@@ -64,6 +64,17 @@ const router = createRouter({
                 title: "Roles",
               },
             },
+            {
+              path: "/permises/:id?",
+              name: "permise",
+              component: () => import("@/components/permises/PermisesView.vue"),
+              meta: {
+                requiresAuth: true,
+                moduleid: 0,
+                icon: "fa-solid fa-users-gear",
+                title: "Permisos",
+              },
+            },
           ],
         },
         {

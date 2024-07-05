@@ -55,6 +55,24 @@ const confirmation = {
   },
 };
 
+const module = {
+  options: [
+    { id: 1, name: "Usuarios" },
+    { id: 2, name: "Compañia" }, // usuario, roles/permisos
+    { id: 3, name: "Roles" }, // conductores
+    { id: 4, name: "Permisos" },
+    { id: 5, name: "Mesas" },
+    { id: 6, name: "Tipo de Productos" },
+    { id: 7, name: "Productos" },
+    { id: 8, name: "Boleta" },
+    { id: 9, name: "Reservas" },
+  ],
+  get(value) {
+    if (isEmpty(value)) return value;
+    return this.options[value - 1].name;
+  },
+};
+
 const days = {
   options: [
     { value: 0, text: "Todos los dias" },
@@ -72,4 +90,4 @@ const days = {
   },
 };
 
-export { status, confirmation, days };
+export { status, confirmation, days, module };

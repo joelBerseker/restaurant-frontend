@@ -1,6 +1,7 @@
 export * from "./BaseService";
 export * from "./authService";
 export * from "./company";
+export * from "./dataService";
 export * from "./menu";
 export * from "./product";
 export * from "./reservation";

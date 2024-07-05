@@ -67,6 +67,11 @@ export class ProductModel extends Model {
 
     validate: ["length", "number"],
   };
+  is_publish = {
+    id: "is_publish",
+    name: "Publicado",
+    value: true,
+  };
 
   getDataOptions() {
     return {

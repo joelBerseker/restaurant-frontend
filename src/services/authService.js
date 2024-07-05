@@ -76,6 +76,5 @@ export const authService = {
     }
     let data = [true, true, true];
     const add = userStore.setPermises(data);
-    console.log(data);
   },
 };

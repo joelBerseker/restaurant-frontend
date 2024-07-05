@@ -6,7 +6,7 @@ const showSidebar = ref(true);
 let list = [
   { name: "home" },
 
-  { name: "userManagementList", children: ["userList", "rol"] },
+  { name: "userManagementList", children: ["userList", "rol", "permise"] },
   {
     name: "productManagementList",
     children: ["productList", "productType", "menuList"],
@@ -233,8 +233,8 @@ defineExpose({
   margin-left: calc(1rem - 0.25rem);
   margin-right: calc(1rem - 0.25rem);
 }
-.text-sidebar-item-child {
-}
+/*.text-sidebar-item-child {
+}*/
 .container-link {
   width: 100%;
   position: relative;
@@ -395,8 +395,8 @@ defineExpose({
 .t-sidebar-item-enter {
   transition: all 0.4s ease;
 }
-.t-sidebar-item-leave-active {
-}
+/*.t-sidebar-item-leave-active {
+}*/
 .t-sidebar-item-leave-to {
   transform: translateY(10px);
   opacity: 0;

@@ -2,22 +2,23 @@ import axiosInstance from "@/services/axios-instance";
 import { handleError } from "@/helpers";
 import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
-import { TypeProductModel } from "@/models";
+import { PermisesModel } from "@/models";
 import { useToastStore } from "@/stores";
-const servicePath = "/product_type";
-const serviceCart = "/product_type/plate_list";
-const module = "Tipo de Producto";
-export const typeProductService = {
-  async getTypeProduct(typeproduct_id) {
+
+const servicePath = "/user/permissions";
+const module = "permises";
+
+export const permisesService = {
+  async getPermises(permises_id) {
     try {
       const response = await axiosInstance.get(
-        `${servicePath}/${typeproduct_id}/`
+        `${servicePath}/${permises_id}/`
       );
 
       if (response && response.data) {
         const data = dataTransform.transformApiData(
           response.data,
-          TypeProductModel
+          PermisesModel
         );
         return data;
       } else {
@@ -29,7 +30,7 @@ export const typeProductService = {
       handleError(error, "get_element_error", module);
     }
   },
-  async getListTypeProduct(filterParams = null) {
+  async getListPermises(filterParams = null) {
     let filteredFilters = "";
     if (filterParams != null) {
       const {
@@ -45,6 +46,7 @@ export const typeProductService = {
         year_date,
         searches,
         // Otros parámetros de filtro que puedas necesitar
+        role_id,
       } = filterParams;
 
       const filters = {
@@ -58,6 +60,7 @@ export const typeProductService = {
         specific_date,
         year_date,
         // Otros parámetros de filtro que puedas necesitar
+        role_id,
       };
 
       filteredFilters = Object.entries(filters)
@@ -73,7 +76,6 @@ export const typeProductService = {
         filteredFilters += searchByParam ? `&${searchByParam}` : "";
       }
       if (searches && searches != undefined) {
-        console.log("entre a searches");
         searches.forEach((search, index) => {
           if (search.value && search.by) {
             filteredFilters += `&search${index + 1}=${encodeURIComponent(
@@ -88,87 +90,78 @@ export const typeProductService = {
       const response = await axiosInstance.get(
         `${servicePath}/?${filteredFilters}`
       );
-      const datas = response.data.map((apiData) =>
-        dataTransform.transformApiData(apiData, TypeProductModel)
-      );
-      return datas;
+      const permises = response.data;
+      return permises;
     } catch (error) {
       handleError(error, "get_list_error", module);
     }
   },
-
-  async getCart() {
-    try {
-      const response = await axiosInstance.get(`${serviceCart}/`);
-      const datas = response.data.data;
-      return datas;
-    } catch (error) {
-      handleError(error, "get_list_error", module);
+  async editPermission(permissions) {
+    if (permissions == null || permissions.length == 0) {
+      throw new Error(`No se envio los permisos para editar correctamente`);
     }
-  },
-
-  async addTypeProduct(new_data) {
     try {
       const config = {
-        method: "POST",
-        url: `${servicePath}/`,
-        data: new_data.addData(),
+        method: "PATCH",
+        url: `user/bulk-permissions/`,
+        data: permissions,
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
       };
+      // Usa la función con el alias para configurar el encabezado "Content-Type"
       const response = await axiosInstance(config);
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  async addPermises(new_data) {
+    try {
+      const response = await axiosInstance.post(
+        `${servicePath}/`,
+        new_data.addData()
+      );
       const data_new = dataTransform.transformApiData(
         response.data,
-        TypeProductModel
+        PermisesModel
       );
-      const useToast = useToastStore();
-      useToast.show("add_success", {
-        important_text: data_new.getTextModel(),
-      });
       return data_new;
     } catch (error) {
       handleError(error, "add_error", module);
     }
   },
-  async updateTypeProduct(new_data) {
+  async updatePermises(new_data) {
+    let dataid = new_data.id.value;
     try {
-      const config = {
-        method: "PATCH",
-        url: `${servicePath}/${new_data.id.value}/`,
-        data: new_data.addData(),
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
-      const response = await axiosInstance(config);
+      const response = await axiosInstance.put(
+        `${servicePath}/${dataid}/`,
+        new_data.addData()
+      );
       const data_new = dataTransform.transformApiData(
         response.data,
-        TypeProductModel
+        PermisesModel
       );
-      const useToast = useToastStore();
-      useToast.show("edit_success", {
-        important_text: data_new.getTextModel(),
-      });
       return data_new;
     } catch (error) {
       handleError(error, "edit_error", module);
     }
   },
-  async deleteTypeProduct(dataid) {
+  async deletePermises(dataid) {
     try {
       const response = await axiosInstance.delete(`${servicePath}/${dataid}/`);
       const useToast = useToastStore();
       useToast.show("delete_success", {
-        important_text: module,
+        important_text: `${module} `,
       });
       return response;
     } catch (error) {
       handleError(error, "delete_error", module);
     }
   },
-  async changeStatusTypeProduct(data) {
+  async changeStatusPermises(data) {
     const endpoint = `${servicePath}/${data.id.value}/`;
-    return BaseService.changeStatus(endpoint, data, "module");
+    return BaseService.changeStatus(endpoint, data);
   },
 };

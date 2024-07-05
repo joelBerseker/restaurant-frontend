@@ -31,6 +31,11 @@ export class TypeProductModel extends Model {
     required: false,
     validation: {},
   };
+  is_publish = {
+    id: "is_publish",
+    name: "Publicado",
+    value: true,
+  };
 
   getDataOptions() {
     return {

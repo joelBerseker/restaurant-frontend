@@ -214,9 +214,13 @@ router.beforeEach(async (to, from, next) => {
   if (to.meta.requiresAuth && !isLoggedIn) {
     // Si la ruta requiere autenticación y el usuario no está autenticado, redirige a la página de inicio de sesión
     next("/login");
+
+    return;
   } else if (to.fullPath === "/login" && isLoggedIn) {
     // Si el usuario ya está autenticado y trata de acceder a la página de inicio de sesión, redirige a la página de inicio (por ejemplo, /home)
     next("/");
+
+    return;
   } else {
     const module_id = to.meta.moduleid;
 
@@ -237,10 +241,14 @@ router.beforeEach(async (to, from, next) => {
     }
     if (hasPermission || module_id == 0) {
       next();
+
+      return;
     } else {
       // Si el usuario no tiene permisos, muestra un mensaje de alerta y redirige a la página de inicio
       alert("No tienes permiso para entrar");
       next("/");
+
+      return;
     }
   }
 });

@@ -110,25 +110,29 @@ export const useUserStore = defineStore("user", {
       };
     },
     getPermiseAction(moduleid, action = 2) {
-      if (moduleid == 0) return true;
+      if (moduleid === 0) return true;
+      if (!moduleid) return true;
+
       const decryptedUser = decrypt(this.User);
+      const is_admin = decryptedUser.is_p;
+
+      if (is_admin) return true;
+
       const decryptedPermises = decrypt(this.permises);
       if (!Array.isArray(decryptedPermises)) {
         console.error("this.permises no es un array válido.");
         return null;
       }
-      console.log(moduleid);
 
       const data = decryptedPermises.find(
         (objeto) => objeto.module_id == moduleid
       );
       this.modulePermises = data;
-      console.log(data);
+
       let permise = false;
       switch (action) {
         case 1:
           permise = data.create;
-
           break;
         case 2:
           permise = data.read;
@@ -140,8 +144,7 @@ export const useUserStore = defineStore("user", {
           permise = data.read;
           break;
       }
-      const is_admin = decryptedUser.is_p ? decryptedUser.is_p : false;
-      return permise || is_admin;
+      return permise;
     },
 
     encryptAndSave() {

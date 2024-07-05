@@ -21,6 +21,17 @@ export class Model {
     val.value = value;
     return val;
   }
+  setLabelValueText(key, value) {
+    const val = this[key];
+    val.valueText = value;
+    return val;
+  }
+  setLabelValueAll(key, value) {
+    const val = this[key];
+    val.value = value.value;
+    val.valueText = value.valueText;
+    return val;
+  }
   resetLabelValidation(key) {
     const val = this[key];
     val.validation = {};

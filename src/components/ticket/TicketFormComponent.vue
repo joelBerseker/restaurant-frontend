@@ -4,6 +4,8 @@ import { TicketModel } from "@/models";
 import { ticketService, userService, tableService } from "@/services";
 import { ref, onMounted, inject, computed } from "vue";
 import FormButtons from "@/common/form/FormButtons.vue";
+import { useUserStore } from "@/stores";
+const userStore = useUserStore();
 
 const emit = defineEmits(["onFirstLoad", "onSave", "onCancel", "onEdit"]);
 
@@ -80,7 +82,11 @@ const totalCorrect = computed(() => {
   return null;
 });
 onMounted(async () => {
-  if (idElement) await getElement(idElement);
+  if (idElement) {
+    await getElement(idElement);
+  } else {
+    formRef.value.setLabelValueAll("user_id", userStore.getToSelect());
+  }
   emit("onFirstLoad");
 });
 defineExpose({
@@ -111,10 +117,11 @@ defineExpose({
         :viewMode="disabled"
       />
       <g-select-consult-val
-        v-show="mode === 'view'"
+        v-show="mode !== 'edit'"
         v-model="element.user_id"
         :label="element.user_id.name"
-        :disabled="disabled"
+        :disabled="true"
+        :viewMode="disabled"
         @validate="validateLabel"
         :consult="userService.getListUser"
       />

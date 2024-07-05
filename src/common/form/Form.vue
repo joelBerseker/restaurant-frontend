@@ -59,6 +59,9 @@ function getLabelValue(key) {
 function setLabelValue(key, value) {
   element.value.setLabelValue(key, value);
 }
+function setLabelValueAll(key, value) {
+  element.value.setLabelValueAll(key, value);
+}
 onMounted(() => {
   emit("onMountedForm");
 });
@@ -72,6 +75,7 @@ defineExpose({
   copyDefulttTest,
   getLabelValue,
   setLabelValue,
+  setLabelValueAll,
 });
 </script>
 <template>

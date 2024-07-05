@@ -4,6 +4,8 @@ import ReservationFormComponent from "@/components/reservation/ReservationFormCo
 import FormButtons from "@/common/form/FormButtons.vue";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
+import { useUserStore } from "@/stores";
+const userStore = useUserStore();
 
 const route = useRoute();
 
@@ -34,6 +36,7 @@ function addMode() {
   disabled.value = false;
   openModal();
   formRef.value.resetElement();
+  formRef.value.setLabelValueAll("user_id", userStore.getToSelect());
 }
 async function viewMode(_id = null) {
   mode.value = "view";

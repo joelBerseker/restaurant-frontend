@@ -109,6 +109,15 @@ export const useUserStore = defineStore("user", {
         rol_name: decryptedUser.rol_name || "sin rol",
       };
     },
+    getToSelect() {
+      if (!this.User) return {};
+      const decryptedUser = decrypt(this.User);
+
+      return {
+        value: decryptedUser.id || "",
+        valueText: decryptedUser.name || "",
+      };
+    },
     getPermiseAction(moduleid, action = 2) {
       if (moduleid === 0) return true;
       if (!moduleid) return true;

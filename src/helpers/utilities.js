@@ -429,32 +429,6 @@ const selectFormatData = {
   },
 };
 
-async function consult(
-  messageText,
-  messageFunction,
-  consultFunction,
-  args1 = null
-) {
-  let _data = null;
-  let _error = null;
-  let _resp = null;
-  let _ok = false;
-  try {
-    await sleep(1000);
-    if (args1 !== null) _resp = await consultFunction(args1);
-    else _resp = await consultFunction();
-    messageFunction("success", messageText);
-    _data = _resp;
-    _error = null;
-    _ok = true;
-  } catch (error) {
-    _data = null;
-    _error = error;
-    _ok = false;
-    messageFunction("error", messageText, error);
-  }
-  return { data: _data, error: _error, success: _ok };
-}
 function dateDiffInDays(a, b) {
   const _MS_PER_DAY = 1000 * 60 * 60 * 24;
   // Discard the time and time-zone information.

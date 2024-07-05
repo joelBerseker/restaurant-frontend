@@ -86,7 +86,6 @@ const activeOptions = computed(() => {
 const selectValue = computed(() => {
   let _valueText = null;
   let _valueTextAditional = null;
-
   let resp = {
     text: "No encontrado",
     additional: null,
@@ -338,6 +337,9 @@ function tabAction(_item) {
 }
 </style>
 <style scoped>
+.g-select:disabled {
+  color: var(--color-b-v3) !important;
+}
 .title-section-text {
 }
 .title-section-line {

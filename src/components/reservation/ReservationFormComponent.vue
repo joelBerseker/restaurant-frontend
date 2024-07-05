@@ -52,6 +52,9 @@ function resetElement() {
 function validateElement() {
   return formRef.value.validate();
 }
+function setLabelValueAll(key, value) {
+  formRef.value.setLabelValueAll(key, value);
+}
 defineExpose({
   getElement,
   addElement,
@@ -61,6 +64,7 @@ defineExpose({
   resetElement,
   editStatusElement,
   validateElement,
+  setLabelValueAll,
 });
 </script>
 <template>
@@ -71,10 +75,11 @@ defineExpose({
     class="row gutter-form"
   >
     <g-select-consult-val
-      v-show="mode === 'view'"
+      v-show="mode !== 'edit'"
       v-model="element.user_id"
       :label="element.user_id.name"
-      :disabled="disabled"
+      :disabled="true"
+      :viewMode="disabled"
       :consult="userService.getListUser"
     />
 

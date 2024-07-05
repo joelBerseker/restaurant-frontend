@@ -37,9 +37,9 @@ const localPlaceHolder = computed(() => {
     return value.placeholder;
   }
 
-  if (value.value.required === false) return "No requerido";
+  if (value.value.required === false) return "Valor no requerido";
   else {
-    return "*Requerido";
+    return "*Valor requerido";
   }
 });
 </script>

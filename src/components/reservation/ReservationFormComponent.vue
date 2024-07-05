@@ -82,6 +82,12 @@ defineExpose({
       :viewMode="disabled"
       :consult="userService.getListUser"
     />
+    <g-input-val
+      :label="element.name.name"
+      v-model="element.name"
+      :disabled="disabled"
+      @validate="validateLabel"
+    />
 
     <g-input-val
       :label="element.date.name"

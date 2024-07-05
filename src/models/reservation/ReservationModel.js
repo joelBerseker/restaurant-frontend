@@ -3,7 +3,6 @@ import { Model } from "@/models/";
 
 export class ReservationModel extends Model {
   user_id = {
-    omit: true,
     id: "user_id",
     name: "Gestionado por",
     value: null,
@@ -14,7 +13,13 @@ export class ReservationModel extends Model {
       return this.additional.first_name + " " + this.additional.last_name;
     },
   };
-
+  name = {
+    id: "name",
+    name: "Reservado por",
+    value: null,
+    validation: {},
+    validate: ["length"],
+  };
   date = {
     id: "date",
     name: "Fecha de Reserva",
@@ -82,6 +87,12 @@ export class ReservationModel extends Model {
         width: "1%",
       },
       {
+        label: this.name.name,
+        field: this.name.id,
+        sortable: true,
+        searchable: true,
+      },
+      {
         label: this.user_id.name,
         field: this.user_id.id + "__" + this.user_id.additionalKey,
         sortable: true,
@@ -95,6 +106,7 @@ export class ReservationModel extends Model {
           return formatData.dates(row.date);
         },
       },
+
       {
         label: this.hour.name,
         field: this.hour.id,

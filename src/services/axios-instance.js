@@ -14,7 +14,6 @@ axiosInstance.interceptors.request.use((config) => {
     let authToken = userStore.isLoggedIn;
     config.headers.Authorization = `Bearer ${authToken}`;
   }
-  console.log("estoy aca");
   return config;
 });
 let isRefreshing = false; // Bandera para evitar múltiples intentos de renovación del token
@@ -22,7 +21,6 @@ let subscribers = [];
 
 axiosInstance.interceptors.response.use(
   (response) => {
-    console.log("estoy acax2");
     // Maneja las respuestas exitosas
     return response;
   },

@@ -106,6 +106,7 @@ export const useUserStore = defineStore("user", {
         email: decryptedUser.email || "",
         rol: decryptedUser.rol || "",
         photo: decryptedUser.photo || null,
+        rol_name: decryptedUser.rol_name || "sin rol",
       };
     },
     getPermiseAction(moduleid, action = 2) {

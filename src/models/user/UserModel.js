@@ -104,10 +104,11 @@ export class UserModel extends Model {
   saveUser() {
     return {
       id: this.id.value,
-      email: this.email.value.toLowerCase(),
+      email: this.email.value,
       name: this.first_name.value + " " + this.last_name.value,
       photo: this.photo.value,
       rol: this.id_role.value,
+      rol_name: this.id_role.getValueText(),
       is_p: this.is_admin.value,
       company: this.company_id.additional,
     };

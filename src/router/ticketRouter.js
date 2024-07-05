@@ -5,7 +5,7 @@ export const ticketRouter = {
   redirect: { name: "ticketList" },
   meta: {
     requiresAuth: true,
-    moduleid: 0,
+    moduleid: 8,
   },
   children: [
     {
@@ -14,7 +14,7 @@ export const ticketRouter = {
       component: () => import("@/components/ticket/views/TicketListView.vue"),
       meta: {
         requiresAuth: true,
-        moduleid: 0,
+        moduleid: 8,
         icon: "Fa-regular fa-rectangle-list",
         title: "Boletas",
       },
@@ -25,7 +25,8 @@ export const ticketRouter = {
       component: () => import("@/components/ticket/views/TicketAddView.vue"),
       meta: {
         requiresAuth: true,
-        moduleid: 0,
+        moduleid: 8,
+        action: 1,
         icon: "fa-solid fa-plus",
         title: "Agregar Boleta",
       },
@@ -36,7 +37,7 @@ export const ticketRouter = {
       component: () => import("@/components/ticket/views/TicketDetailView.vue"),
       meta: {
         requiresAuth: true,
-        moduleid: 0,
+        moduleid: 8,
         icon: "fa-solid fa-bars-staggered",
         title: "Visualizar Boleta",
       },

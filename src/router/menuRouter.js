@@ -5,7 +5,7 @@ export const menuRouter = {
   redirect: { name: "menuList" },
   meta: {
     requiresAuth: true,
-    moduleid: 0,
+    moduleid: 7,
   },
   children: [
     {
@@ -14,7 +14,7 @@ export const menuRouter = {
       component: () => import("@/components/menu/views/MenuListView.vue"),
       meta: {
         requiresAuth: true,
-        moduleid: 0,
+        moduleid: 7,
         icon: "fa-solid fa-utensils",
         title: "Menus",
       },
@@ -25,7 +25,8 @@ export const menuRouter = {
       component: () => import("@/components/menu/views/MenuAddView.vue"),
       meta: {
         requiresAuth: true,
-        moduleid: 0,
+        moduleid: 7,
+        action: 1,
         icon: "fa-solid fa-plus",
         title: "Agregar Menu",
       },
@@ -36,7 +37,7 @@ export const menuRouter = {
       component: () => import("@/components/menu/views/MenuDetailView.vue"),
       meta: {
         requiresAuth: true,
-        moduleid: 0,
+        moduleid: 7,
         icon: "fa-solid fa-bars-staggered",
         title: "Visualizar Menu",
       },

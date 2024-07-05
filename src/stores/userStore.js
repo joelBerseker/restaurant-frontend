@@ -1,4 +1,7 @@
 import { defineStore } from "pinia";
+import { AES, enc } from "crypto-js";
+
+const SECRET_KEY = import.meta.env.VITE_APP_SECRET_KEY_USER_STORE;
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -8,75 +11,204 @@ export const useUserStore = defineStore("user", {
     id: "",
     mayus: true,
     permises: {},
+    modulePermises: {},
   }),
   getters: {
-    isLoggedIn: (state) => state.token,
-    isLoggedIn2: (state) => state.refresh,
-    getId: (state) => state.id,
-    getUser: (state) => state.User,
-    isActive: (state) => state.token != "" || state.token == null,
-    getPermises: (state) => state.permises,
-    isActive2: (state) => state.est,
+    isLoggedIn: (state) => {
+      return state.token ? decrypt(state.token) : "";
+    },
+    isLoggedIn2: (state) => {
+      return state.refresh ? decrypt(state.refresh) : "";
+    },
+    getId: (state) => {
+      return state.id;
+    },
+    getUser: (state) => {
+      return state.User ? decrypt(state.User) : "";
+    },
+    isActive: (state) => {
+      return state.token !== "" || state.token === null;
+    },
+    getPermises: (state) => {
+      return state.permises ? decrypt(state.permises) : {};
+    },
+    isActive2: (state) => {
+      return state.est;
+    },
+    getModulePermise: (state) => {
+      return state.modulePermises ? decrypt(state.modulePermises) : {};
+    },
   },
   actions: {
     setPermises(p) {
-      this.permises = p;
+      this.permises = encrypt(p);
+      this.encryptAndSave();
     },
-    logout() {
-      console.log("entre a realizar un logout");
-      this.token = ""; // Limpiar el token
+    setModulePermises(p) {
+      this.modulePermises = encrypt(p);
+      this.encryptAndSave();
+    },
 
-      this.$reset();
-    },
     updateUser(new_user) {
-      this.User = new_user;
+      this.User = encrypt(new_user);
+      this.encryptAndSave();
     },
+
     updateToken(new_token, new_refresh) {
-      this.token = new_token;
-      this.refresh = new_refresh;
+      this.token = encrypt(new_token);
+      this.refresh = encrypt(new_refresh);
+      this.encryptAndSave();
     },
+
     updateId(new_id) {
       this.id = new_id;
+      this.encryptAndSave();
     },
+
+    logout() {
+      this.clearSensitiveData();
+      this.$reset();
+    },
+
     isAdmin() {
-      return this.User.is_p;
+      const decryptedUser = decrypt(this.User);
+      return decryptedUser.is_p;
     },
+
     isUser() {
       return true;
     },
+
     getRol() {
-      return this.User.rol;
+      const decryptedUser = decrypt(this.User);
+      return decryptedUser.rol;
     },
+
     getCompany() {
-      return this.User.company;
+      const decryptedUser = decrypt(this.User);
+      return decryptedUser.company;
     },
 
     changePasswordPermises(id) {
-      if (this.User.is_p) return true;
+      const decryptedUser = decrypt(this.User);
+      if (decryptedUser.is_p) return true;
       if (id == this.id) return true;
       return false;
     },
+
     dataProfile() {
+      if (!this.User) return {};
+
+      const decryptedUser = decrypt(this.User);
+
       return {
-        name: this.User.name,
-        email: this.User.email,
-        rol: this.User.rol,
-        photo: this.User.photo,
+        name: decryptedUser.name || "",
+        email: decryptedUser.email || "",
+        rol: decryptedUser.rol || "",
+        photo: decryptedUser.photo || null,
       };
     },
-    getPermiseModule(moduleid) {
-      // Verificar si this.permises es un array
-      if (!Array.isArray(this.permises)) {
+    getPermiseAction(moduleid, action = 2) {
+      if (moduleid == 0) return true;
+      const decryptedUser = decrypt(this.User);
+      const decryptedPermises = decrypt(this.permises);
+      if (!Array.isArray(decryptedPermises)) {
         console.error("this.permises no es un array válido.");
         return null;
       }
-      const data = this.permises.find(
-        (objeto) => objeto.module_id.value == moduleid
+      console.log(moduleid);
+
+      const data = decryptedPermises.find(
+        (objeto) => objeto.module_id == moduleid
       );
-      return data || null; // Devolver el objeto encontrado o null si no se encuentra
+      this.modulePermises = data;
+      console.log(data);
+      let permise = false;
+      switch (action) {
+        case 1:
+          permise = data.create;
+
+          break;
+        case 2:
+          permise = data.read;
+          break;
+        case 3:
+          permise = data.update;
+          break;
+        default:
+          permise = data.read;
+          break;
+      }
+      const is_admin = decryptedUser.is_p ? decryptedUser.is_p : false;
+      return permise || is_admin;
+    },
+
+    encryptAndSave() {
+      const dataToEncrypt = {
+        User: this.User,
+        token: this.token,
+        refresh: this.refresh,
+        id: this.id,
+        mayus: this.mayus,
+        permises: this.permises,
+        module: this.modulePermises,
+      };
+
+      const encryptedData = AES.encrypt(
+        JSON.stringify(dataToEncrypt),
+        SECRET_KEY
+      ).toString();
+      localStorage.setItem("userData", encryptedData);
+    },
+
+    loadAndDecrypt() {
+      const storedData = localStorage.getItem("userData");
+      if (storedData) {
+        const bytes = AES.decrypt(storedData, SECRET_KEY);
+        const decryptedData = JSON.parse(bytes.toString(enc.Utf8));
+
+        this.User = decryptedData.User;
+        this.token = decryptedData.token;
+        this.refresh = decryptedData.refresh;
+        this.id = decryptedData.id;
+        this.mayus = decryptedData.mayus;
+        this.permises = decryptedData.permises;
+        this.modulePermises = decryptedData.modulePermises;
+      }
+    },
+
+    clearSensitiveData() {
+      this.User = "";
+      this.token = "";
+      this.refresh = "";
+      this.id = "";
+      this.mayus = true;
+      this.permises = {};
+      this.modulePermises = {};
+
+      localStorage.removeItem("userData");
     },
   },
   persist: {
-    paths: ["User", "id", "mayus", "permises", "token", "refresh"], //id: "",
+    paths: [
+      "User",
+      "id",
+      "mayus",
+      "permises",
+      "token",
+      "refresh",
+      "modulePermises",
+    ],
   },
 });
+
+// Función para encriptar datos
+function encrypt(data) {
+  return AES.encrypt(JSON.stringify(data), SECRET_KEY).toString();
+}
+
+// Función para desencriptar datos
+function decrypt(data) {
+  const bytes = AES.decrypt(data, SECRET_KEY);
+  return JSON.parse(bytes.toString(enc.Utf8));
+}

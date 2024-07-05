@@ -1,6 +1,6 @@
 import { useUserStore } from "@/stores";
 import axiosInstance from "./axios-instance";
-import { userService } from "@/services";
+import { permisesService, userService } from "@/services";
 import { handleError } from "@/helpers";
 import router from "@/router";
 //import { rolService } from "./user";
@@ -65,16 +65,16 @@ export const authService = {
   async logoutUser() {
     const user = useUserStore();
     await user.logout();
+    console.log("Fin de sesison");
   },
   async setPermisos() {
     const userStore = useUserStore();
-    //let rol = userStore.getRole();
-    //console.log(rol);
+    let rol = userStore.getRol();
     if (!userStore.isUser()) {
       this.logoutUser();
       throw Error("No tiene permiso de ingreso");
     }
-    let data = [true, true, true];
+    let data = await permisesService.getListPermises({ role_id: rol });
     const add = userStore.setPermises(data);
   },
 };

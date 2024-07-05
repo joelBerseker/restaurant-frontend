@@ -59,7 +59,7 @@ const router = createRouter({
               component: () => import("@/components/rol/RolView.vue"),
               meta: {
                 requiresAuth: true,
-                moduleid: 0,
+                moduleid: 3,
                 icon: "fa-solid fa-users-gear",
                 title: "Roles",
               },
@@ -70,7 +70,7 @@ const router = createRouter({
               component: () => import("@/components/permises/PermisesView.vue"),
               meta: {
                 requiresAuth: true,
-                moduleid: 0,
+                moduleid: 4,
                 icon: "fa-solid fa-users-gear",
                 title: "Permisos",
               },
@@ -111,7 +111,7 @@ const router = createRouter({
                 import("@/components/productType/ProductTypeView.vue"),
               meta: {
                 requiresAuth: true,
-                moduleid: 0,
+                moduleid: 6,
                 icon: "fa-solid fa-tags",
                 title: "Tipo de Producto",
               },
@@ -149,7 +149,7 @@ const router = createRouter({
               component: () => import("@/components/table/TableView.vue"),
               meta: {
                 requiresAuth: true,
-                moduleid: 0,
+                moduleid: 5,
                 icon: "fa-solid fa-border-all",
                 title: "Mesas",
               },
@@ -161,7 +161,7 @@ const router = createRouter({
                 import("@/components/reservation/ReservationView.vue"),
               meta: {
                 requiresAuth: true,
-                moduleid: 0,
+                moduleid: 9,
                 icon: "fa-regular fa-calendar-days",
                 title: "Reservaciones",
               },
@@ -192,6 +192,10 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: "/:catchAll(.*)",
+      redirect: "/",
+    },
   ],
 });
 
@@ -207,7 +211,6 @@ router.beforeEach(async (to, from, next) => {
 
   const userStore = useUserStore();
   const isLoggedIn = userStore.isActive;
-  console.log("->" + isLoggedIn);
   if (to.meta.requiresAuth && !isLoggedIn) {
     // Si la ruta requiere autenticación y el usuario no está autenticado, redirige a la página de inicio de sesión
     next("/login");
@@ -223,10 +226,12 @@ router.beforeEach(async (to, from, next) => {
     }
     useSystemUtil.isLoadingContentSystem(true);
 
-    const hasPermission = true; /*await permissionsService.getPermises(
+    /*await permissionsService.getPermises(
       module_id,
       Permission_data.View
     );*/
+    let hasPermission = userStore.getPermiseAction(module_id, to.meta.action);
+
     if (to.fullPath !== "/login") {
       await authService.setPermisos();
     }

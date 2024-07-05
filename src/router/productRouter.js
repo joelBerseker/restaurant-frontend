@@ -5,7 +5,7 @@ export const productRouter = {
   redirect: { name: "productList" },
   meta: {
     requiresAuth: true,
-    moduleid: 0,
+    moduleid: 7,
   },
   children: [
     {
@@ -14,7 +14,7 @@ export const productRouter = {
       component: () => import("@/components/product/views/ProductListView.vue"),
       meta: {
         requiresAuth: true,
-        moduleid: 0,
+        moduleid: 7,
         icon: "fa-solid fa-boxes-stacked",
         title: "Productos",
       },
@@ -26,7 +26,7 @@ export const productRouter = {
         import("@/components/product/views/ProductDetailView.vue"),
       meta: {
         requiresAuth: true,
-        moduleid: 0,
+        moduleid: 7,
         icon: "fa-solid fa-bars-staggered",
         title: "Visualizar Producto",
       },

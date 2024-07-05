@@ -14,7 +14,8 @@ export const userRouter = {
       component: () => import("@/components/user/views/UserListView.vue"),
       meta: {
         requiresAuth: true,
-        moduleid: 0,
+        moduleid: 1,
+        action: 2,
         icon: "fa-solid fa-user",
         title: "Usuarios",
       },
@@ -25,7 +26,8 @@ export const userRouter = {
       component: () => import("@/components/user/views/UserAddView.vue"),
       meta: {
         requiresAuth: true,
-        moduleid: 0,
+        moduleid: 1,
+        action: 1,
         icon: "fa-solid fa-plus",
         title: "Agregar Usuario",
       },
@@ -36,7 +38,8 @@ export const userRouter = {
       component: () => import("@/components/user/views/UserDetailView.vue"),
       meta: {
         requiresAuth: true,
-        moduleid: 0,
+        moduleid: 1,
+        action: 2,
         icon: "fa-solid fa-bars-staggered",
         title: "Visualizar Usuario",
       },

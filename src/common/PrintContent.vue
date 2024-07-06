@@ -10,14 +10,18 @@ const props = defineProps({
   printName: { default: "Imprimir documento" },
   documentName: { default: null },
   documentId: { default: "printable" },
+  footer: { default: false },
+  header: { default: true },
+
+  printClass: { default: null },
 });
 
 const printableRef = ref(null);
 const company = ref(userStore.getCompany());
 
 async function print() {
-  await sleep(0);
-  printDocument(props.printName, printableRef.value);
+  await sleep(100);
+  printDocument(props.printName, printableRef.value, true);
 }
 
 defineExpose({
@@ -26,9 +30,11 @@ defineExpose({
 </script>
 <template>
   <div id="printable" ref="printableRef">
-    <div class="no-footer">
+    <div :class="[printClass]">
       <div class="print-cover"></div>
-      <div class="header">
+      <slot name="background"></slot>
+
+      <div v-if="header" class="header">
         <div class="header-container">
           <div class="company-wrapper">
             <div class="img-container">
@@ -72,7 +78,7 @@ defineExpose({
           <tr>
             <td class="td-content">
               <div class="content">
-                <slot></slot>
+                <slot :company="company"></slot>
               </div>
             </td>
           </tr>
@@ -86,8 +92,8 @@ defineExpose({
         </tfoot>
       </table>
 
-      <div class="footer">
-        <div class="footer-container">footer</div>
+      <div v-if="footer" class="footer">
+        <div class="footer-container"></div>
       </div>
     </div>
   </div>

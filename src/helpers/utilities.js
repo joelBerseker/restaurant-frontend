@@ -347,7 +347,8 @@ function printDocument(title = null, element, dev = false) {
     return;
   }
 
-  ventana.onload = function () {
+  ventana.onload = async function () {
+    await sleep(1);
     ventana.print();
     ventana.close();
   };

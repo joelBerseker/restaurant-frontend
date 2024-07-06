@@ -1,11 +1,24 @@
+@font-face {
+  font-family: "Permanent_Marker";
+  src: url("src/assets/fonts/Permanent_Marker/PermanentMarker-Regular.ttf")
+    format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
 :root {
-  --g-pc500: #0070c0; /*0070c0 original*/
-  --g-br-color: #0070c0; /*0070c0 original*/
+  --color-1: #38a55a;
+  --color-1-v2: rgb(36, 206, 90);
+  --color-1-v3: rgb(38, 182, 84);
 
   --color-font: #181818;
+  --color-font2: rgb(255, 255, 255);
+
   --color-font-secondary: #8b8b8b;
+  --color-font-secondary2: #b1b1b1;
+
   --color-lines: #272727;
 }
+
 .print-cover {
   /*position: absolute;
   background-color: rgb(65, 65, 65);
@@ -36,11 +49,11 @@ table th {
 .footer-space {
   height: calc(8mm);
 }
-.no-footer .footer-space {
-  height: 0 !important;
+.print-menu .footer-space {
+  height: 16mm !important;
 }
-.no-footer .footer {
-  height: 0 !important;
+.print-menu .header-space {
+  height: 16mm !important;
 }
 .td-content {
   display: block;
@@ -49,6 +62,7 @@ table th {
   display: flex;
   flex-direction: column;
   gap: 2mm;
+  position: relative;
 }
 .header {
   position: fixed;
@@ -177,5 +191,129 @@ body * {
 }
 .company-wrapper > * {
   flex-shrink: 0;
+}
+/*MENU*/
+
+.menu-container {
+  background-color: #181818;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  position: fixed;
+}
+.menu-wrapper {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.border-menu {
+  width: calc(100% - 8mm);
+  height: calc(100% - 8mm);
+  border: 0.5mm solid var(--color-font2);
+
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.border-dot {
+  width: calc(100% - 4mm);
+  height: calc(100% - 4mm);
+  border: 1.5mm dotted var(--color-font2);
+}
+.menu-content {
+  position: relative;
+  z-index: 20;
+  color: var(--color-font2);
+  padding: 0mm 16mm;
+}
+.menu-content * {
+  font-size: 4mm;
+}
+.ex-text {
+  font-family: "Permanent_Marker";
+}
+.company-name {
+  font-size: 8mm;
+  font-family: "Permanent_Marker";
+  text-align: center;
+  color: var(--color-font2);
+
+  line-height: 0.8;
+}
+.company-desc {
+  font-family: "Permanent_Marker";
+  text-align: center;
+  color: var(--color-font-secondary2);
+  margin-bottom: 10mm;
+}
+.company-img-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3mm;
+}
+.company-img {
+  max-height: 20mm;
+}
+
+.title-type {
+  font-size: 5mm;
+  font-family: "Permanent_Marker";
+  text-align: center;
+  color: var(--color-font2);
+  line-height: 0.8;
+}
+.desc-type {
+  font-family: "Permanent_Marker";
+  text-align: center;
+  color: var(--color-font-secondary2);
+  margin-bottom: 6mm;
+}
+ul {
+  padding-left: 4mm;
+  margin: 0;
+}
+.types-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8mm;
+}
+.products-wrapper {
+  display: flex;
+}
+.products {
+  display: flex;
+  flex-direction: column;
+  gap: 2mm;
+}
+.product-title {
+  font-size: 4mm;
+  font-weight: 700;
+}
+.product-desc {
+  color: var(--color-font-secondary);
+}
+.dot-product {
+  height: 2mm;
+  width: 2mm;
+  background-color: var(--color-font2);
+  margin-right: 3mm;
+  margin-top: 1.5mm;
+
+  border-radius: 999rem;
+}
+.product {
+  display: flex;
+  justify-content: space-between;
+  break-before: auto;
+  break-inside: avoid;
+}
+.product-wrapper {
+  display: flex;
+}
+.type-img {
+  max-width: 20mm;
 }
 /*}*/

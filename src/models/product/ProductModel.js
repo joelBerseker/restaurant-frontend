@@ -1,3 +1,4 @@
+import { confirmation } from "@/helpers";
 import { Model } from "@/models/";
 
 export class ProductModel extends Model {
@@ -131,6 +132,16 @@ export class ProductModel extends Model {
         sortable: true,
         display: (row) => {
           return row.discount + " %";
+        },
+      },
+      {
+        label: this.is_publish.name,
+        field: this.is_publish.id,
+        sortable: true,
+
+        width: "1%",
+        display: (row) => {
+          return confirmation.get(row.is_publish);
         },
       },
     ];

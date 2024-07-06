@@ -5,33 +5,17 @@ import ProductTypeElementModalComponent from "@/components/productType/ProductTy
 import { ref, reactive, onMounted, inject } from "vue";
 import { typeProductService } from "@/services";
 import { formatSubTitle } from "@/helpers";
+import { TypeProductModel } from "@/models";
 const emit = defineEmits(["onFirstLoad"]);
 
 const tableRef = ref(null);
 const modalRef = ref(null);
 
 const subTitle = ref(null);
+const elementModel = ref(new TypeProductModel());
+
 const table = reactive({
-  columns: [
-    {
-      label: "ID",
-      field: "id",
-      sortable: true,
-      width: "1%",
-    },
-    {
-      label: "Nombre",
-      field: "name",
-      sortable: true,
-      searchable: true,
-    },
-    {
-      label: "Descripción",
-      field: "description",
-      sortable: true,
-      searchable: true,
-    },
-  ],
+  columns: elementModel.value.getDataTable(),
   defaultFilter: {
     order: "asc",
     orderBy: "name",

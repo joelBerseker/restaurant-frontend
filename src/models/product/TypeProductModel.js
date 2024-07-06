@@ -1,3 +1,4 @@
+import { confirmation } from "@/helpers";
 import { Model } from "@/models/";
 
 export class TypeProductModel extends Model {
@@ -48,5 +49,37 @@ export class TypeProductModel extends Model {
   }
   getTextModel() {
     return "Tipo de Producto [" + this.id.value + " - " + this.name.value + "]";
+  }
+  getDataTable() {
+    return [
+      {
+        label: "ID",
+        field: "id",
+        sortable: true,
+        width: "1%",
+      },
+      {
+        label: this.name.name,
+        field: this.name.id,
+        sortable: true,
+        searchable: true,
+      },
+      {
+        label: this.description.name,
+        field: this.description.id,
+        sortable: true,
+        searchable: true,
+      },
+      {
+        label: this.is_publish.name,
+        field: this.is_publish.id,
+        sortable: true,
+
+        width: "1%",
+        display: (row) => {
+          return confirmation.get(row.is_publish);
+        },
+      },
+    ];
   }
 }

@@ -23,7 +23,8 @@ const documentId = ref(null);
 const list = ref([]);
 
 async function getList() {
-  list.value = await typeProductService.getCart();
+  let resp = await typeProductService.getCart();
+  list.value = resp.filter((type) => type.products.length > 0);
 }
 
 const printRef = ref(null);
@@ -71,8 +72,11 @@ defineExpose({
             class="type-container"
           >
             <div class="type-title-container">
-              <div class="title-type">{{ type.product_type }}</div>
-              <div class="desc-type">{{ type.description }}</div>
+              <fieldset class="title-type-fielset">
+                <legend class="title-type">
+                  {{ type.product_type }}
+                </legend>
+              </fieldset>
             </div>
             <div class="products-wrapper">
               <div class="products">
@@ -88,12 +92,15 @@ defineExpose({
                       <div class="product-desc">{{ product.description }}</div>
                     </div>
                   </div>
-                  <div class="product-price">
-                    S/. {{ product.price.toFixed(2) }}
+                  <div class="product-price-wrapper">
+                    <span class="product-price-simbol"> S/. </span>
+                    <span class="product-price">{{
+                      product.price.toFixed(2)
+                    }}</span>
                   </div>
                 </div>
               </div>
-              <div>
+              <div class="type-img-container">
                 <img
                   :src="'http://localhost:8000' + type.product_image"
                   alt="Imagen tipo"

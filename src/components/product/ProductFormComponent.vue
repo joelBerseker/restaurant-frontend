@@ -121,6 +121,14 @@ defineExpose({
         @validate="validateLabel"
         :disabled="disabled"
       />
+      <g-input-check
+        :label="element.is_publish.name"
+        v-model="element.is_publish.value"
+        :switchMode="true"
+        labelClass="imp-label"
+        :disabled="disabled"
+        @validate="validateLabel"
+      />
     </g-section-4>
   </g-form>
 </template>

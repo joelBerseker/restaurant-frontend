@@ -5,14 +5,29 @@
   font-weight: 400;
   font-style: normal;
 }
+@font-face {
+  font-family: "Lilita_One";
+  src: url("src/assets/fonts/Lilita_One/LilitaOne-Regular.ttf")
+    format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Anton";
+  src: url("src/assets/fonts/Anton/Anton-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
 :root {
-  --color-1: #14bd4a;
+  --color-1: #23b852;
 
   --color-font: #181818;
   --color-font2: rgb(255, 255, 255);
+  --color-line: #7e7e7e;
 
-  --color-font-secondary: #8b8b8b;
-  --color-font-secondary2: #b1b1b1;
+  --color-font-secondary: #5c5c5c;
+
+  --color-font-secondary2: #dddddd;
 
   --color-lines: #272727;
 }
@@ -48,10 +63,10 @@ table th {
   height: calc(8mm);
 }
 .print-menu .footer-space {
-  height: 16mm !important;
+  height: 20mm !important;
 }
 .print-menu .header-space {
-  height: 16mm !important;
+  height: 20mm !important;
 }
 .td-content {
   display: block;
@@ -193,7 +208,6 @@ body * {
 /*MENU*/
 
 .menu-container {
-  background-color: #181818;
   width: 100%;
   height: 100%;
   left: 0;
@@ -208,9 +222,9 @@ body * {
   display: flex;
 }
 .border-menu {
-  width: calc(100% - 8mm);
-  height: calc(100% - 8mm);
-  border: 1mm solid var(--color-1);
+  width: calc(100% - 16mm);
+  height: calc(100% - 16mm);
+  border: 1.5mm solid var(--color-line);
 
   justify-content: center;
   align-items: center;
@@ -219,13 +233,13 @@ body * {
 .border-dot {
   width: calc(100% - 4mm);
   height: calc(100% - 4mm);
-  border: 0.5mm solid var(--color-1);
+  border: 1mm dotted var(--color-line);
 }
 .menu-content {
   position: relative;
   z-index: 20;
-  color: var(--color-font2);
-  padding: 0mm 16mm;
+  color: var(--color-font);
+  padding: 0mm 20mm;
 }
 .menu-content * {
   font-size: 4mm;
@@ -234,7 +248,7 @@ body * {
   font-family: "Permanent_Marker";
 }
 .company-name {
-  font-size: 8mm;
+  font-size: 9mm;
   font-family: "Permanent_Marker";
   text-align: center;
   color: var(--color-1);
@@ -244,8 +258,8 @@ body * {
 .company-desc {
   font-family: "Permanent_Marker";
   text-align: center;
-  color: var(--color-font-secondary2);
-  margin-bottom: 10mm;
+  color: var(--color-font-secondary);
+  margin-bottom: 12mm;
 }
 .company-img-container {
   display: flex;
@@ -257,11 +271,16 @@ body * {
 }
 
 .title-type {
-  font-size: 5mm;
+  font-size: 7mm;
   font-family: "Permanent_Marker";
   text-align: center;
-  color: var(--color-font2);
+  color: var(--color-font-secondary);
   line-height: 0.8;
+  padding: 0 5mm;
+}
+.type-container {
+  break-before: auto;
+  break-inside: avoid;
 }
 .desc-type {
   font-family: "Permanent_Marker";
@@ -275,11 +294,11 @@ ul {
 .types-container {
   display: flex;
   flex-direction: column;
-  gap: 8mm;
+  gap: 12mm;
 }
 .products-wrapper {
   display: flex;
-  gap: 8mm;
+  gap: 12mm;
 }
 
 .products {
@@ -287,10 +306,11 @@ ul {
   flex-direction: column;
   gap: 2mm;
   width: 100%;
+  justify-content: center;
 }
 .product-title {
-  font-size: 4mm;
-  font-weight: 700;
+  font-size: 5.5mm;
+  font-family: "Anton";
 }
 .product-desc {
   color: var(--color-font-secondary);
@@ -298,9 +318,9 @@ ul {
 .dot-product {
   height: 2mm;
   width: 2mm;
-  background-color: var(--color-font2);
+  background-color: var(--color-font);
   margin-right: 3mm;
-  margin-top: 1.5mm;
+  margin-top: 3mm;
 
   border-radius: 999rem;
 }
@@ -314,18 +334,38 @@ ul {
 .product-wrapper {
   display: flex;
 }
+.type-img-container {
+  display: flex;
+  align-items: center;
+}
 .type-img {
-  width: 60mm;
-  border: 1mm solid var(--color-font2);
+  width: 65mm;
 }
 .product-price {
-  font-size: 5mm;
-  font-weight: 800;
+  font-size: 6.5mm;
 
+  font-family: "Anton";
+  color: var(--color-1);
+}
+.product-price-simbol {
+  font-family: "Anton";
   color: var(--color-1);
 }
 .type-title-container {
-  margin-bottom: 6mm;
-  background-color: var(--color-1);
+  margin-bottom: 8mm;
+}
+.product-price-wrapper {
+  text-wrap: nowrap;
+}
+.title-type-fielset {
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+  border-top: 0.5mm solid var(--color-line);
+  padding: 0;
+  margin: 0;
+}
+.type-container:nth-child(even) .products-wrapper .products {
+  order: 3;
 }
 /*}*/

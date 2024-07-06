@@ -30,6 +30,7 @@ const printRef = ref(null);
 async function print() {
   await getList();
   console.log(list.value);
+
   await printRef.value.print();
 }
 defineExpose({
@@ -69,9 +70,11 @@ defineExpose({
             :key="index"
             class="type-container"
           >
-            <div class="title-type">{{ type.product_type }}</div>
-            <div class="desc-type">{{ type.description }}</div>
-            <div clas="products-wrapper">
+            <div class="type-title-container">
+              <div class="title-type">{{ type.product_type }}</div>
+              <div class="desc-type">{{ type.description }}</div>
+            </div>
+            <div class="products-wrapper">
               <div class="products">
                 <div
                   class="product"
@@ -86,13 +89,13 @@ defineExpose({
                     </div>
                   </div>
                   <div class="product-price">
-                    {{ product.price }}
+                    S/. {{ product.price.toFixed(2) }}
                   </div>
                 </div>
               </div>
               <div>
                 <img
-                  :src="type.product_image"
+                  :src="'http://localhost:8000' + type.product_image"
                   alt="Imagen tipo"
                   class="type-img"
                 />

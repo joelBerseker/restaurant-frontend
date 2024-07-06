@@ -183,7 +183,7 @@ export const ticketDetailService = {
   async getStatistics(filterParams = null) {
     try {
       const response = await axiosInstance.get(`${servicePathStatistics}/`);
-      return response;
+      return response.data;
     } catch (error) {
       handleError(error, "get_list_error", module);
     }

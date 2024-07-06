@@ -55,7 +55,7 @@ export class UserModel extends Model {
   photo = {
     id: "photo",
     name: "foto de perfil",
-    type: "Image",
+    type: "image",
     value: null,
     file: null,
     required: false,

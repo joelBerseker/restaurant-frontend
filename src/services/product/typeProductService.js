@@ -100,7 +100,8 @@ export const typeProductService = {
   async getCart() {
     try {
       const response = await axiosInstance.get(`${serviceCart}/`);
-      const datas = response.data.data;
+      const datas = response.data;
+      console.log(datas);
       return datas;
     } catch (error) {
       handleError(error, "get_list_error", module);

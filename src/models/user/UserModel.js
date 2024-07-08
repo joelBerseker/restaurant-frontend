@@ -70,6 +70,7 @@ export class UserModel extends Model {
   password = {
     id: "password",
     name: "Contraseña",
+    type: "password",
     value: null,
 
     min: 8,
@@ -82,6 +83,8 @@ export class UserModel extends Model {
   confirm_password = {
     id: "confirm_password",
     name: "Confirmar Contraseña",
+    type: "password",
+
     value: null,
 
     equalsTo: this.password,

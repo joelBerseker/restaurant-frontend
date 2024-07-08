@@ -93,9 +93,10 @@ function displayText() {
     return props.display(value.value);
   }
 }
-
+const showPassword = ref(false);
 const localType = computed(() => {
   if (props.type !== "number" && props.type !== "decimal") {
+    if (props.type === "password" && showPassword.value) return "text";
     return props.type;
   }
   return "text";
@@ -166,6 +167,20 @@ defineExpose({
         @focus="onFocus"
         @blur="onBlur"
       />
+      <div
+        v-if="type === 'password'"
+        class="password-icon"
+        @click="showPassword = !showPassword"
+        title="Ver / Ocultar contraseña"
+      >
+        <span>
+          <font-awesome-icon
+            icon="fa-solid fa-eye-slash"
+            v-show="!showPassword"
+          />
+          <font-awesome-icon icon="fa-solid fa-eye" v-show="showPassword" />
+        </span>
+      </div>
       <div class="additional"><slot name="next"></slot></div>
     </template>
   </ElementFormLayout>
@@ -224,6 +239,12 @@ defineExpose({
 }
 </style>
 <style scoped>
+.password-icon {
+  display: flex;
+  align-items: center;
+  margin-left: 0.25rem;
+  cursor: pointer;
+}
 .additional {
   padding-top: calc(0.25rem + 1px);
   padding-bottom: 0.25rem;

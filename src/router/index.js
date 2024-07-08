@@ -41,6 +41,19 @@ const router = createRouter({
           },
         },
         {
+          path: "/notification",
+          name: "notification",
+          component: () =>
+            import("@/components/notification/NotificationView.vue"),
+          meta: {
+            requiresAuth: true,
+            moduleid: 1,
+            action: 2,
+            icon: "fa-solid fa-bell",
+            title: "Notificaciones",
+          },
+        },
+        {
           path: "/user_management",
           name: "userManagement",
           redirect: { name: "userManagementList" },

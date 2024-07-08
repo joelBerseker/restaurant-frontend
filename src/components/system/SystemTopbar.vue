@@ -68,7 +68,7 @@ defineExpose({
       <div class="d-flex justify-content-end">
         <div>
           <RouterLink
-            to="#"
+            :to="{ name: 'notification' }"
             class="topbar-item d-flex align-items-center h-100 big-icon notifys"
             active-class="topbar-item-active"
             exact-active-class="disbled-click"
@@ -137,8 +137,7 @@ defineExpose({
     display: none;
   }
 }
-.notifys {
-}
+
 .notifys:hover {
   box-shadow: inset 0px 0px 0px 200px rgba(51, 51, 51, 0.2);
 }
@@ -192,6 +191,9 @@ defineExpose({
 
 .active-text {
   color: var(--color-1-v3) !important;
+}
+.active-text .square-div {
+  background-color: var(--color-1-v3) !important;
 }
 .active-text:hover,
 .active-text:focus-visible,
@@ -249,20 +251,19 @@ defineExpose({
 }
 .topbar-item {
   text-decoration-line: none;
-  color: var(--g-wb900);
-  border-radius: var(--g-br1);
+  color: var(--color-b-v2);
+  border-radius: var(--br-v3);
+
   display: inline-block;
   padding-top: calc(1px + 0.25rem);
   padding-bottom: calc(1px + 0.25rem);
   padding-left: calc(1px + 0.75rem);
   padding-right: calc(1px + 0.75rem);
   transition: 0.4s;
-  background-color: rgba(0, 0, 0, 0.08);
 }
 .topbar-item:hover,
 .topbar-item-active {
-  background-color: var(--g-sc500);
-  color: var(--g-wb100);
+  color: var(--color-1-v3);
 }
 .topbar-item:focus-visible {
   background-color: var(--g-sc500);

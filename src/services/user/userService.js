@@ -128,7 +128,7 @@ export const userService = {
       handleError(error, "edit_error", module);
     }
   },
-  async ChangePassword(user = null, credential) {
+  async changePassword(user = null, credential) {
     try {
       let url = `${servicePath}`;
       if (user !== null) {

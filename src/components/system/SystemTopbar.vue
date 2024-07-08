@@ -40,7 +40,7 @@ const userImage = computed(() => {
   return resp;
 });
 const isProfile = computed(() => {
-  if (route.path === "/perfil") return true;
+  if (route.path === "/profile") return true;
   return false;
 });
 defineExpose({
@@ -69,7 +69,7 @@ defineExpose({
         <div>
           <RouterLink
             to="#"
-            class="topbar-item d-flex align-items-center h-100 big-icon"
+            class="topbar-item d-flex align-items-center h-100 big-icon notifys"
             active-class="topbar-item-active"
             exact-active-class="disbled-click"
             title="Notificaciones"
@@ -103,7 +103,7 @@ defineExpose({
                 <div class="cover-image"></div>
               </div>
               <div class="ms-2">
-                <div>
+                <div class="user-name">
                   {{ userName }}
                 </div>
                 <div class="aditional-text">Administrador</div>
@@ -113,16 +113,16 @@ defineExpose({
           <ul class="dropdown-menu dropdown-menu-end">
             <li>
               <RouterLink
-                to="#"
+                :to="{ name: 'userProfile' }"
                 class="dropdown-item"
                 exact-active-class="disbled-click"
               >
-                <i class="bi bi-person-fill"></i> Ver perfil
+                <font-awesome-icon icon="fa-solid fa-address-card" /> Ver perfil
               </RouterLink>
             </li>
             <li @click="buttonLogout()">
               <button class="dropdown-item">
-                <i class="bi bi-power"></i> Cerrar sesión
+                <font-awesome-icon icon="fa-solid fa-door-open" /> Cerrar sesión
               </button>
             </li>
           </ul>
@@ -136,6 +136,14 @@ defineExpose({
   .text-user-button {
     display: none;
   }
+}
+.notifys {
+}
+.notifys:hover {
+  box-shadow: inset 0px 0px 0px 200px rgba(51, 51, 51, 0.2);
+}
+.user-name {
+  font-weight: 500;
 }
 .button-container {
   display: flex;
@@ -161,11 +169,10 @@ defineExpose({
 .btn-user {
   font-size: 13px;
   transition: 0.3s;
-  padding-top: 0;
-  padding-bottom: 0;
+  padding: 0.25rem 0.5rem;
 
   overflow: hidden;
-  border-radius: 0;
+  border-radius: var(--br-v3);
   line-height: 1.3;
 }
 .btn-user:hover,
@@ -184,16 +191,13 @@ defineExpose({
 }
 
 .active-text {
-  background-color: var(--g-sc500) !important;
-  border-color: var(--g-sc500) !important;
-
-  color: var(--g-wb100) !important;
+  color: var(--color-1-v3) !important;
 }
 .active-text:hover,
 .active-text:focus-visible,
 .active-text:active,
 .active-text.show {
-  border-color: #c23153 !important;
+  color: var(--color-1-v3) !important;
 }
 
 .cover-image {
@@ -284,10 +288,10 @@ defineExpose({
 
 .content {
   transition: 0.5s;
-  padding-left: var(--p-1);
-  padding-right: var(--p-1);
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding-left: calc(var(--py-1) - 0.32rem);
+  padding-right: calc(var(--py-1) - 0.5rem);
+  padding-top: calc(1rem - 0.25rem);
+  padding-bottom: calc(1rem - 0.25rem);
 }
 
 .active {

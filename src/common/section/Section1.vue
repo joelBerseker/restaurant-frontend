@@ -123,7 +123,7 @@ function buttonCollapse() {
   margin-left: 0.25rem;
 }
 .title-back {
-  margin-left: -0.4rem;
+  margin-left: -0.5rem;
 }
 .title-text div {
   font-weight: 500;

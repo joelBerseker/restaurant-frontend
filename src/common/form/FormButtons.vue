@@ -9,6 +9,7 @@ const props = defineProps({
   showDelete: { default: true },
   showEdit: { default: true },
   showPrint: { default: false },
+  showActive: { default: true },
 });
 
 const statusData = computed(() => {
@@ -77,7 +78,7 @@ function onPrint() {
       />
       <g-button
         class="status-button"
-        v-if="statusData !== null"
+        v-if="statusData !== null && showActive"
         type="transparent-1"
         :class="['status-button', statusData.color]"
         :icon="statusData.icon"

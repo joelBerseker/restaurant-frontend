@@ -20,17 +20,18 @@ const props = defineProps({
 const documentName = ref("Boleta de Venta Electronica");
 const documentId = ref(null);
 
-const list = ref([]);
+const lisProduct = ref([]);
 
 async function getList() {
   let resp = await typeProductService.getCart();
-  list.value = resp.filter((type) => type.products.length > 0);
+  console.log(resp.data);
+  lisProduct.value = resp.data.filter((type) => type.products.length > 0);
 }
 
 const printRef = ref(null);
 async function print() {
   await getList();
-  console.log(list.value);
+  console.log(lisProduct.value);
 
   await printRef.value.print();
 }
@@ -67,7 +68,7 @@ defineExpose({
         <div class="company-desc">{{ company.description }}</div>
         <div class="types-container">
           <div
-            v-for="(type, index) in list"
+            v-for="(type, index) in lisProduct"
             :key="index"
             class="type-container"
           >
@@ -94,9 +95,7 @@ defineExpose({
                   </div>
                   <div class="product-price-wrapper">
                     <span class="product-price-simbol"> S/. </span>
-                    <span class="product-price">{{
-                      product.price.toFixed(2)
-                    }}</span>
+                    <span class="product-price">{{ product.price }}</span>
                   </div>
                 </div>
               </div>

@@ -6,6 +6,10 @@ import { ref, inject } from "vue";
 import { useRouter } from "vue-router";
 const emit = defineEmits(["onFirstLoad"]);
 
+const props = defineProps({
+  isProfile: { default: false },
+});
+
 const router = useRouter();
 
 const formRef = ref(null);
@@ -112,6 +116,8 @@ defineExpose({
           @onSave="onSave"
           @onDelete="onDelete"
           @onStatus="onStatus"
+          :showDelete="!isProfile"
+          :showActive="!isProfile"
         />
       </template>
       <template #content>

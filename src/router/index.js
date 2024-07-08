@@ -28,6 +28,19 @@ const router = createRouter({
           },
         },
         {
+          path: "/profile",
+          name: "userProfile",
+          component: () =>
+            import("@/components/user/views/UserProfileView.vue"),
+          meta: {
+            requiresAuth: true,
+            moduleid: 1,
+            action: 2,
+            icon: "fa-solid fa-address-card",
+            title: "Perfil de Usuario",
+          },
+        },
+        {
           path: "/user_management",
           name: "userManagement",
           redirect: { name: "userManagementList" },

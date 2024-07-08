@@ -3,63 +3,60 @@ import { Model } from "@/models/";
 export class CompanyModel extends Model {
   name = {
     id: "name",
-    name: "Nombre de la Compañia",
+    name: "Nombre",
     value: null,
-    required: false, // blank=True in Django
     validation: {},
     validate: ["length"],
   };
 
   description = {
     id: "description",
-    name: "Descripción de la Compañia",
+    name: "Descripción",
+    type: "textarea",
     value: null,
-    required: false, // null=True, blank=True in Django
+    required: false,
     type: "textarea",
     validation: {},
     validate: ["length"],
-    default: "Sin descripción",
   };
 
   ruc = {
     id: "ruc",
-    name: "RUC de la Compañia",
+    name: "RUC",
     value: null,
-    required: false, // null=True, blank=True in Django
     validation: {},
-    validate: ["length"],
+    validate: ["length", "number"],
   };
 
   company_image = {
     id: "company_image",
     name: "Imagen de la Compañia",
+    type: "image",
     value: null,
-    required: false, // null=True, blank=True in Django
+    file: null,
+    required: false,
     validation: {},
-    validate: ["image"],
   };
 
   address = {
     id: "address",
-    name: "Dirección de la Compañia",
+    name: "Dirección ",
     value: null,
-    required: false, // null=True, blank=True in Django
     validation: {},
     validate: ["length"],
   };
 
   phone_principal = {
     id: "phone_principal",
-    name: "Teléfono de la Compañia",
+    name: "Teléfono",
     value: null,
-    required: false, // null=True, blank=True in Django
     validation: {},
     validate: ["length"],
   };
 
   phone_secundary = {
     id: "phone_secundary",
-    name: "Teléfono Secundario de la Compañia",
+    name: "Teléfono Secundario",
     value: null,
     required: false, // null=True, blank=True in Django
     validation: {},
@@ -71,5 +68,11 @@ export class CompanyModel extends Model {
       value: this.id.value,
       text: this.name.value,
     };
+  }
+  getText() {
+    return this.id.value + " - " + this.name.value + " ";
+  }
+  getTextModel() {
+    return "Empresa [" + this.getText() + "]";
   }
 }

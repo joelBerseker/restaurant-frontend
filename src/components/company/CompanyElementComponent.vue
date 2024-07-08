@@ -1,5 +1,5 @@
 <script setup>
-import UserFormComponent from "@/components/user/UserFormComponent.vue";
+import CompanyFormComponent from "@/components/company/CompanyFormComponent.vue";
 import FormButtons from "@/common/form/FormButtons.vue";
 import LoadingContainer from "@/common/container/LoadingContainer.vue";
 import { ref, inject } from "vue";
@@ -39,19 +39,10 @@ function editMode() {
   disabled.value = false;
 }
 function toList() {
-  router.push({ name: "user" });
+  router.push({ name: "company" });
 }
 
 /*BUTTONS*/
-async function onAdd() {
-  if (!formRef.value.validateElement()) return;
-  isLoading.value = true;
-  let resp = await formRef.value.addElement();
-  if (resp) {
-    toList();
-  }
-  isLoading.value = false;
-}
 function onEdit() {
   editMode();
 }
@@ -68,22 +59,7 @@ function onCancel() {
   viewMode();
   formRef.value.restoreElement();
 }
-async function onDelete() {
-  isLoading.value = true;
-  let resp = await formRef.value.deleteElement();
-  if (resp) {
-    toList();
-  }
-  isLoading.value = false;
-}
-async function onStatus() {
-  isLoading.value = true;
-  let resp = await formRef.value.editStatusElement();
-  if (resp) {
-    statusValue.value = resp;
-  }
-  isLoading.value = false;
-}
+
 function onUpdated(_data) {
   statusValue.value = _data.status.value;
   subTitle.value = _data.getText();
@@ -110,18 +86,15 @@ defineExpose({
           :mode="mode"
           :statusValue="statusValue"
           :elementText="elementText"
-          @onAdd="onAdd"
           @onEdit="onEdit"
           @onCancel="onCancel"
           @onSave="onSave"
-          @onDelete="onDelete"
-          @onStatus="onStatus"
-          :showDelete="!isProfile"
-          :showStatus="!isProfile"
+          :showDelete="false"
+          :showStatus="false"
         />
       </template>
       <template #content>
-        <UserFormComponent
+        <CompanyFormComponent
           ref="formRef"
           :disabled="disabled"
           :mode="mode"

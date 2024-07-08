@@ -1,6 +1,6 @@
 <script setup>
 import SystemContainer from "@/components/system/SystemContainer.vue";
-import UserElementComponent from "@/components/user/UserElementComponent.vue";
+import CompanyElementComponent from "@/components/company/CompanyElementComponent.vue";
 import { ref, inject, provide } from "vue";
 import { useRoute } from "vue-router";
 import { useUserStore } from "@/stores";
@@ -15,7 +15,8 @@ const topbar = ref({
   breadcrumb: [{ name: "home" }],
 });
 async function init() {
-  idElement.value = userStore.getId;
+  idElement.value = userStore.getCompany().id;
+
   setTopbar(topbar.value);
 }
 init();
@@ -23,6 +24,6 @@ provide("idElement", idElement.value);
 </script>
 <template>
   <SystemContainer v-slot="{ addPercentage }">
-    <UserElementComponent @onFirstLoad="addPercentage(100)" :isProfile="true" />
+    <CompanyElementComponent @onFirstLoad="addPercentage(100)" />
   </SystemContainer>
 </template>

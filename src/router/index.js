@@ -37,7 +37,19 @@ const router = createRouter({
             moduleid: 1,
             action: 2,
             icon: "fa-solid fa-address-card",
-            title: "Perfil de Usuario",
+            title: "Mi Perfil",
+          },
+        },
+        {
+          path: "/company",
+          name: "company",
+          component: () => import("@/components/company/CompanyView.vue"),
+          meta: {
+            requiresAuth: true,
+            moduleid: 1,
+            action: 2,
+            icon: "fa-solid fa-building-user",
+            title: "Mi Empresa",
           },
         },
         {

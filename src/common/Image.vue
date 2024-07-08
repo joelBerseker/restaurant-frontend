@@ -31,7 +31,14 @@ const props = defineProps({
 
   border-radius: var(--br);
 }
+.company-img {
+  height: 140px;
+  display: block;
+  aspect-ratio: 2/1.5;
+  border-radius: var(--br);
 
+  width: auto;
+}
 .user-img {
   height: 140px;
   display: block;

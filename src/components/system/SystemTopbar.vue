@@ -115,14 +115,31 @@ defineExpose({
               <RouterLink
                 :to="{ name: 'userProfile' }"
                 class="dropdown-item"
+                active-class="active-dropdown-item"
                 exact-active-class="disbled-click"
               >
-                <font-awesome-icon icon="fa-solid fa-address-card" /> Ver perfil
+                <span class="icon-option"
+                  ><font-awesome-icon icon="fa-solid fa-address-card" /></span
+                >Mi perfil
+              </RouterLink>
+            </li>
+            <li>
+              <RouterLink
+                :to="{ name: 'company' }"
+                class="dropdown-item"
+                active-class="active-dropdown-item"
+                exact-active-class="disbled-click"
+              >
+                <span class="icon-option"
+                  ><font-awesome-icon icon="fa-solid fa-building-user" /></span
+                >Mi empresa
               </RouterLink>
             </li>
             <li @click="buttonLogout()">
               <button class="dropdown-item">
-                <font-awesome-icon icon="fa-solid fa-door-open" /> Cerrar sesión
+                <span class="icon-option"
+                  ><font-awesome-icon icon="fa-solid fa-door-open" /></span
+                >Cerrar sesión
               </button>
             </li>
           </ul>
@@ -137,7 +154,13 @@ defineExpose({
     display: none;
   }
 }
-
+.active-dropdown-item {
+  color: var(--color-1-v3);
+}
+.icon-option {
+  display: inline-block;
+  width: 1.4rem;
+}
 .notifys:hover {
   box-shadow: inset 0px 0px 0px 200px rgba(51, 51, 51, 0.2);
 }

@@ -128,6 +128,22 @@ export const userService = {
       handleError(error, "edit_error", module);
     }
   },
+  async ChangePassword(user = null, credential) {
+    try {
+      let url = `${servicePath}`;
+      if (user !== null) {
+        url = `${url}/${user}`;
+      }
+      const response = await axiosInstance.patch(`${url}/`, credential);
+      const useToast = useToastStore();
+      useToast.show("delete_success", {
+        important_text: module,
+      });
+      return response;
+    } catch (error) {
+      handleError(error, "delete_error", module);
+    }
+  },
   async deleteUser(dataid) {
     try {
       const response = await axiosInstance.delete(`${servicePath}/${dataid}/`);

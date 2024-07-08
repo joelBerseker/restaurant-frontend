@@ -2,7 +2,8 @@
 import { UserModel } from "@/models";
 import { userService, rolService } from "@/services";
 import { ref, onMounted, inject } from "vue";
-const emit = defineEmits(["onFirstLoad"]);
+
+const emit = defineEmits(["onFirstLoad", "onChangePassword"]);
 
 const props = defineProps({
   disabled: { default: false },
@@ -34,6 +35,9 @@ async function editStatusElement() {
   let resp = await userService.changeStatusUser(formRef.value.getElement());
   if (resp) return formRef.value.getElement().status.value;
   return;
+}
+function changePassword() {
+  emit("onChangePassword");
 }
 function restoreElement() {
   formRef.value.restore();
@@ -180,6 +184,7 @@ defineExpose({
               icon="fa-solid fa-lock"
               text="Cambiar Contraseña"
               type="search"
+              @click="changePassword"
             >
             </g-button>
           </div>

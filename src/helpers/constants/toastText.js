@@ -94,6 +94,16 @@ const toastText = {
     prevText: "Debe existir al menos un elemento marcado.",
     type: 2,
   },
+  password_error: {
+    prevText: "Error al cambiar contraseña",
+    defaultText: ", si continúa sucediendo contacte con su proveedor.",
+    listErrorMessage: ", posibles errores:",
+    type: 2,
+  },
+  password_success: {
+    prevText: "Contraseña cambiada correctamente",
+    type: 2,
+  },
 };
 
 export { toastText };

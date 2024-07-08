@@ -136,12 +136,10 @@ export const userService = {
       }
       const response = await axiosInstance.patch(`${url}/`, credential);
       const useToast = useToastStore();
-      useToast.show("delete_success", {
-        important_text: module,
-      });
+      useToast.show("password_success");
       return response;
     } catch (error) {
-      handleError(error, "delete_error", module);
+      handleError(error, "password_error");
     }
   },
   async deleteUser(dataid) {

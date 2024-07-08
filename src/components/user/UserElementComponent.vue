@@ -2,6 +2,8 @@
 import UserFormComponent from "@/components/user/UserFormComponent.vue";
 import FormButtons from "@/common/form/FormButtons.vue";
 import LoadingContainer from "@/common/container/LoadingContainer.vue";
+import PasswordElementModalComponent from "@/components/user/password/PasswordElementModalComponent.vue";
+
 import { ref, inject } from "vue";
 import { useRouter } from "vue-router";
 const emit = defineEmits(["onFirstLoad"]);
@@ -13,6 +15,7 @@ const props = defineProps({
 const router = useRouter();
 
 const formRef = ref(null);
+const passwordRef = ref(null);
 
 const statusValue = ref(null);
 
@@ -89,6 +92,10 @@ function onUpdated(_data) {
   subTitle.value = _data.getText();
   elementText.value = _data.getTextModel();
 }
+function changePassword() {
+  console.log("www");
+  passwordRef.value.addMode();
+}
 function onFirstLoad() {
   emit("onFirstLoad");
 }
@@ -104,6 +111,8 @@ defineExpose({
 </script>
 <template>
   <LoadingContainer :loading="isLoading" loadingClass="loading-transparent">
+    <PasswordElementModalComponent ref="passwordRef" :isProfile="isProfile" />
+
     <g-section-1 :subTitle="subTitle">
       <template #buttons>
         <FormButtons
@@ -127,6 +136,7 @@ defineExpose({
           :mode="mode"
           @onUpdated="onUpdated"
           @onFirstLoad="onFirstLoad"
+          @onChangePassword="changePassword"
         />
       </template>
     </g-section-1>

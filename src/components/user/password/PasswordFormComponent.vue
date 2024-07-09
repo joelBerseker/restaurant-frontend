@@ -19,7 +19,7 @@ async function addElement() {
     id_user = idElement;
   }
   let resp = await userService.changePassword(
-    null,
+    id_user,
     formRef.value.getElement().getData()
   );
   return resp;

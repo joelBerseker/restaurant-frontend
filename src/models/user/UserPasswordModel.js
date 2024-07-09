@@ -6,7 +6,7 @@ export class UserPasswordModel extends Model {
   };
   password = {
     id: "password",
-    name: "Antigua Contraseña",
+    name: "Contraseña Actual",
     value: null,
     type: "password",
 
@@ -18,7 +18,7 @@ export class UserPasswordModel extends Model {
   };
   new_password = {
     id: "new_password",
-    name: "Nueva Contraseña",
+    name: "Contraseña Nueva",
     value: null,
     type: "password",
 

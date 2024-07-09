@@ -236,7 +236,7 @@ init();
         :isLoading="isLoading"
       >
         <template #headerNext="{ col }">
-          <div v-if="col.all !== undefined">
+          <div v-if="checkColStatus[col.field] !== undefined">
             <g-input-check
               v-show="!disabled"
               v-model="checkColStatus[col.field].all"

@@ -102,7 +102,7 @@ const toastText = {
   },
   password_success: {
     prevText: "Contraseña cambiada correctamente",
-    type: 2,
+    type: 1,
   },
 };
 

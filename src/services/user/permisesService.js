@@ -6,7 +6,7 @@ import { PermisesModel } from "@/models";
 import { useToastStore } from "@/stores";
 
 const servicePath = "/user/permissions";
-const module = "permises";
+const module = "permisos";
 
 export const permisesService = {
   async getPermises(permises_id) {
@@ -111,10 +111,13 @@ export const permisesService = {
       };
       // Usa la función con el alias para configurar el encabezado "Content-Type"
       const response = await axiosInstance(config);
-
+      const useToast = useToastStore();
+      useToast.show("edit_success", {
+        important_text: module,
+      });
       return response.data;
     } catch (error) {
-      throw error;
+      handleError(error, "edit_error", module);
     }
   },
   async addPermises(new_data) {

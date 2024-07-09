@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineEmits, computed } from "vue";
+import { ref, defineEmits, computed, watch } from "vue";
 import Table from "@/common/table/Table.vue";
 import { rolService, permisesService, Permissions_table } from "@/services";
 import { module } from "@/helpers";
@@ -11,7 +11,7 @@ const emit = defineEmits(["onFirstLoad"]);
 // Definición de referencias reactivas
 const id_role = ref({ value: null, name: "" });
 const isLoading = ref(false);
-const subTitle = ref("Permisos de los modulos del sistema segun roles");
+const subTitle = ref("Permisos segun modulos");
 const columns = ref(Permissions_table);
 const data = ref([]);
 const data_ = ref([]);
@@ -38,6 +38,7 @@ function editMode() {
 }
 
 async function init() {
+  fillColStatus(columns.value);
   onFirstLoad();
 }
 
@@ -48,14 +49,17 @@ async function getRol(role) {
 
     return;
   }
-  await getData(role);
+  await getData();
   console.log(role);
 }
 
 // permisos segun el rol
-async function getData(role) {
+async function getData() {
   isLoading.value = true;
-  const response = await permisesService.getListPermises({ role_id: role });
+  const response = await permisesService.getListPermises({
+    role_id: id_role.value.value,
+  });
+  fillRowStatus(response);
   data.value = response;
   data_.value = JSON.parse(JSON.stringify(response)); // Clonar el objeto para evitar referencias
   console.log(data.value);
@@ -68,11 +72,15 @@ async function asyncData(response) {
 }
 
 async function onSave(params) {
+  isLoading.value = true;
+
   data_.value = JSON.parse(JSON.stringify(data.value)); // Clonar el objeto para evitar referencias
   const response_save = await permisesService.editPermission(
     JSON.stringify(data.value)
   );
   asyncData(response_save);
+  isLoading.value = false;
+  viewMode();
 }
 
 function onCancel(params) {
@@ -86,47 +94,96 @@ function onEdit() {
 }
 
 //checks all
-const checkAllCount = ref(0);
-const checkAllValue = computed(() => {
-  if (
-    checkAllCount.value <
-    data.value.length *
-      (columns.value.length - 1) /*- 1 por la columna de modulo */
-  ) {
-    return false;
+const checkAllValue = ref(false);
+
+const checkRowStatus = ref([]);
+const checkColStatus = ref({});
+
+function fillRowStatus(_data) {
+  let resp = [];
+
+  for (let i = 0; i < _data.length; i++) {
+    const element = _data[i];
+    let _push = { all: false, aux: false };
+    resp.push(_push);
   }
-  return true;
-});
+  checkRowStatus.value = resp;
+  console.log(checkRowStatus.value);
+}
+function fillColStatus(_data) {
+  let resp = {};
+  for (let i = 0; i < _data.length; i++) {
+    const element = _data[i];
+
+    if (i !== 0) {
+      resp[element.field] = {};
+      resp[element.field].all = false;
+      resp[element.field].aux = false;
+    }
+  }
+  checkColStatus.value = resp;
+  console.log(checkColStatus.value);
+}
 
 function checkAll(_value) {
   for (let i = 0; i < data.value.length; i++) {
     const _row = data.value[i];
-    _row.countChecks = _value ? columns.value.length - 1 : 0;
-    _row.all = _value;
-
-    for (let j = 0; j < columns.value.length; j++) {
-      if (j === 0) continue;
-      const _col = columns.value[j];
-      if (i === 0) {
-        _col.countChecks = _value ? data.value.length : 0;
-        _col.all = _value;
-      }
-      _row[_col.key] = _value;
+    for (var key in checkColStatus.value) {
+      _row[key] = _value;
     }
   }
-  if (_value) {
-    checkAllCount.value = data.value.length * (columns.value.length - 1);
-  } else {
-    checkAllCount.value = 0;
+}
+function checkAllRow(_element, _value) {
+  for (var key in checkColStatus.value) {
+    _element[key] = _value;
   }
-  console.log(checkAllCount.value);
 }
 
+function checkAllCol(_key, _value) {
+  for (let i = 0; i < data.value.length; i++) {
+    const _row = data.value[i];
+    _row[_key] = _value;
+  }
+}
+
+watch(
+  () => data.value,
+  (_new, _old) => {
+    let all = true;
+    for (let i = 0; i < data.value.length; i++) {
+      const _row = data.value[i];
+      checkRowStatus.value[i].aux = true;
+
+      for (var key in checkColStatus.value) {
+        let _value = _row[key];
+        if (i === 0) {
+          checkColStatus.value[key].aux = true;
+        }
+        if (!_value) {
+          checkRowStatus.value[i].aux = false;
+          checkColStatus.value[key].aux = false;
+          all = false;
+        }
+        if (i >= data.value.length - 1) {
+          checkColStatus.value[key].all = checkColStatus.value[key].aux;
+        }
+      }
+
+      checkRowStatus.value[i].all = checkRowStatus.value[i].aux;
+    }
+    checkAllValue.value = all;
+  },
+  { deep: true }
+);
 // Inicializar el componente al montar
 init();
 </script>
 <template>
-  <g-section-1 :subTitle="subTitle">
+  <g-section-1
+    :subTitle="subTitle"
+    :refresh="id_role.value"
+    @onRefresh="getData"
+  >
     <template #buttons>
       <FormButtons
         v-if="id_role.value"
@@ -156,12 +213,14 @@ init();
             <div><label>&nbsp;</label></div>
             <g-button
               v-show="!checkAllValue"
+              icon="fa-solid fa-check"
               text="Seleccionar Todos"
               type="search"
               @click="checkAll(true)"
             />
             <g-button
               v-show="checkAllValue"
+              icon="fa-solid fa-xmark"
               text="Deseleccionar Todos"
               type="search"
               @click="checkAll(false)"
@@ -180,15 +239,20 @@ init();
           <div v-if="col.all !== undefined">
             <g-input-check
               v-show="!disabled"
-              v-model="col.all"
+              v-model="checkColStatus[col.field].all"
               :disabled="disabled"
+              @update:modelValue="checkAllCol(col.field, $event)"
             />
           </div>
         </template>
         <template v-slot:module_id="{ row, index }">
           <div class="d-flex">
             <div v-show="!disabled" class="me-1">
-              <g-input-check v-model="row.all" :disabled="disabled" />
+              <g-input-check
+                v-model="checkRowStatus[index].all"
+                :disabled="disabled"
+                @update:modelValue="checkAllRow(row, $event)"
+              />
             </div>
             <div>
               {{ module.get(row.module_id) }}

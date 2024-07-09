@@ -78,13 +78,13 @@ function iconCurrentSort(sort) {
             ]"
             @click="sortColumn(col)"
           >
-            <slot name="headerPrev" :col="col"></slot>
+            <slot name="headerPrev" :col="col" :index="index"></slot>
 
             <span> {{ col.label }}</span>
             <span v-if="col.sortable" class="ms-1">
               <font-awesome-icon :icon="iconCurrentSort(col.sort)" />
             </span>
-            <slot name="headerNext" :col="col"></slot>
+            <slot name="headerNext" :col="col" :index="index"></slot>
           </th>
         </tr>
       </thead>

@@ -10,7 +10,7 @@ export class UserPasswordModel extends Model {
     value: null,
     type: "password",
 
-    min: 8,
+    min: 4,
     max: 20,
 
     validation: {},

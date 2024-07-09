@@ -1,7 +1,7 @@
 <script setup>
 import { ref, reactive, onMounted, inject } from "vue";
 import CardLink from "@/common/CardLink.vue";
-const list = ref(["userList", "rol"]);
+const list = ref(["userList", "rol", "permise"]);
 </script>
 <template>
   <g-section-1 subTitle="Gestion de usuarios y sus roles en el sistema">

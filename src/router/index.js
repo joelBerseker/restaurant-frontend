@@ -98,7 +98,7 @@ const router = createRouter({
               meta: {
                 requiresAuth: true,
                 moduleid: 3,
-                icon: "fa-solid fa-users-gear",
+                icon: "fa-solid fa-user-tag",
                 title: "Roles",
               },
             },

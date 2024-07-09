@@ -12,12 +12,11 @@ const props = defineProps({
   inputClass: { default: "" },
   viewClass: { default: "" },
   labelClass: { default: "" },
-  helpText: { default: "" },
+
   clearButton: { default: true },
   display: { default: null },
   loadingSelect: { default: true },
 
-  showHelpText: { default: false },
   showAditionalInSelect: { default: true },
   nullOption: { default: false },
   nullText: { default: "Seleccione una opción" },
@@ -56,8 +55,6 @@ function clear() {
     selectClass="validation"
     :label="label"
     :labelClass="labelClass"
-    :helpText="helpText"
-    :showHelpText="showHelpText"
     :clearButton="clearButton"
     @change="change"
     @clear="clear()"

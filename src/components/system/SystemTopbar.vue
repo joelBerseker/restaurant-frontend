@@ -284,7 +284,7 @@ defineExpose({
   padding-right: calc(1px + 0.75rem);
   transition: 0.4s;
 }
-.topbar-item:hover,
+
 .topbar-item-active {
   color: var(--color-1-v3);
 }

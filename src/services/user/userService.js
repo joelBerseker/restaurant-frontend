@@ -3,8 +3,8 @@ import { handleError } from "@/helpers";
 import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
 import { UserModel } from "@/models";
-import { useToastStore } from "@/stores";
-//const useToast = useToastStore();
+import { useToastStore, useUserStore } from "@/stores";
+import { authService } from "@/services";
 const servicePath = "/user/users";
 const servicePass = "/user/change-password";
 
@@ -120,7 +120,14 @@ export const userService = {
         },
       };
       const response = await axiosInstance(config);
-      const data_new = dataTransform.transformApiData(response.data, UserModel);
+      const data_new = await dataTransform.transformApiData(
+        response.data,
+        UserModel
+      );
+      const userStore = useUserStore();
+      if (data_new.id.value == userStore.getId) {
+        authService.setUser();
+      }
       const useToast = useToastStore();
       useToast.show("edit_success", {
         important_text: data_new.getTextModel(),

@@ -28,17 +28,11 @@ function buttonBack() {
     });
   }
 }
-const userName = computed(() => {
+const currentUser = computed(() => {
   var user = useUserStore();
-  var resp = user.dataProfile().name;
-  console.log(user.dataProfile());
-  return resp;
+  return user.getUser;
 });
-const userImage = computed(() => {
-  var user = useUserStore();
-  var resp = user.dataProfile().photo;
-  return resp;
-});
+
 const isProfile = computed(() => {
   if (route.path === "/profile") return true;
   return false;
@@ -83,7 +77,7 @@ defineExpose({
             :class="[
               'btn btn-user no-wrap',
               isProfile ? 'active-text' : '',
-              userImage !== null ? 'with-image' : '',
+              currentUser.photo !== null ? 'with-image' : '',
             ]"
             data-bs-toggle="dropdown"
             aria-expanded="false"
@@ -91,8 +85,8 @@ defineExpose({
             <div class="user-container">
               <div class="square-div">
                 <img
-                  v-if="userImage !== null"
-                  :src="userImage"
+                  v-if="currentUser.photo !== null"
+                  :src="currentUser.photo"
                   alt="Foto de perfil"
                   class="profile-photo"
                 />
@@ -102,11 +96,11 @@ defineExpose({
 
                 <div class="cover-image"></div>
               </div>
-              <div class="ms-2">
+              <div class="ms-2 info-user">
                 <div class="user-name">
-                  {{ userName }}
+                  {{ currentUser.name }}
                 </div>
-                <div class="aditional-text">Administrador</div>
+                <div class="aditional-text">{{ currentUser.rol_name }}</div>
               </div>
             </div>
           </button>
@@ -150,7 +144,7 @@ defineExpose({
 </template>
 <style scoped>
 @media screen and (max-width: 767px) {
-  .text-user-button {
+  .info-user {
     display: none;
   }
 }
@@ -186,6 +180,8 @@ defineExpose({
   height: 100%;
   font-size: 16px;
   color: var(--color-w);
+  background-color: var(--color-2);
+  transition: 0.3s;
 }
 
 .btn-user {
@@ -196,6 +192,7 @@ defineExpose({
   overflow: hidden;
   border-radius: var(--br-v3);
   line-height: 1.3;
+  text-align: left;
 }
 .btn-user:hover,
 .btn-user:focus-visible,
@@ -215,8 +212,11 @@ defineExpose({
 .active-text {
   color: var(--color-1-v3) !important;
 }
-.active-text .square-div {
+.active-text .img-user {
   background-color: var(--color-1-v3) !important;
+}
+.active-text .profile-photo {
+  border-color: var(--color-1-v3) !important;
 }
 .active-text:hover,
 .active-text:focus-visible,
@@ -236,13 +236,16 @@ defineExpose({
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border: 1px solid var(--color-2);
+  border-radius: 999rem;
 }
 .square-div {
   width: 30px;
   height: 30px;
   position: relative;
-  background-color: var(--color-2);
+
   border-radius: 999rem;
+  overflow: hidden;
 }
 
 .user-togle {

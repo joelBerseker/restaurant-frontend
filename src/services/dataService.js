@@ -24,7 +24,7 @@ export const Permissions_table = [
     id: 0,
     label: "Modulo",
     field: "module_id",
-    all: false,
+
     countChecks: 0,
   },
   {

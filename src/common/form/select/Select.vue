@@ -129,7 +129,7 @@ function searchInList(_data) {
   return search;
 }
 function clear() {
-  if (!props.changeInSelect) {
+  if (props.changeInSelect) {
     value.value = null;
     selected.value = null;
 

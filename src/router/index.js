@@ -46,7 +46,7 @@ const router = createRouter({
           component: () => import("@/components/company/CompanyView.vue"),
           meta: {
             requiresAuth: true,
-            moduleid: 1,
+            moduleid: 2,
             action: 2,
             icon: "fa-solid fa-building-user",
             title: "Mi Empresa",
@@ -241,10 +241,8 @@ import { useUserStore, useSystemUtilStore } from "@/stores/"; // Asegúrate de p
 import { sleep } from "@/helpers";
 import { ticketRouter } from "./ticketRouter";
 import { menuRouter } from "./menuRouter";
-
+let first_time = false;
 router.beforeEach(async (to, from, next) => {
-  console.log("entre");
-
   const useSystemUtil = useSystemUtilStore();
 
   const userStore = useUserStore();
@@ -253,11 +251,13 @@ router.beforeEach(async (to, from, next) => {
     // Si la ruta requiere autenticación y el usuario no está autenticado, redirige a la página de inicio de sesión
     next("/login");
 
+    first_time = true;
     return;
   } else if (to.fullPath === "/login" && isLoggedIn) {
     // Si el usuario ya está autenticado y trata de acceder a la página de inicio de sesión, redirige a la página de inicio (por ejemplo, /home)
     next("/");
 
+    first_time = true;
     return;
   } else {
     const module_id = to.meta.moduleid;
@@ -276,16 +276,23 @@ router.beforeEach(async (to, from, next) => {
 
     if (to.fullPath !== "/login") {
       await authService.setPermisos();
+      if (!first_time) {
+        console.log("entre a hacer la pendejada de Jhon");
+        authService.setUser();
+      }
     }
     if (hasPermission || module_id == 0) {
       next();
 
+      first_time = true;
       return;
     } else {
       // Si el usuario no tiene permisos, muestra un mensaje de alerta y redirige a la página de inicio
       alert("No tienes permiso para entrar");
+
       next("/");
 
+      first_time = true;
       return;
     }
   }

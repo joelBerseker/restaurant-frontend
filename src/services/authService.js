@@ -12,7 +12,6 @@ export const authService = {
       console.log("enviando consulta");
       const response = await axiosInstance.post("user/token/", credentials);
       const userStore = useUserStore();
-      console.log("respuesta recivida");
       userStore.updateToken(response.data.access, response.data.refresh);
       userStore.updateId(response.data.user_id);
       await this.setUser();

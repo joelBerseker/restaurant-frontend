@@ -120,8 +120,11 @@ export const userService = {
         },
       };
       const response = await axiosInstance(config);
-      const data_new = dataTransform.transformApiData(response.data, UserModel);
-      const userStore = useToastStore();
+      const data_new = await dataTransform.transformApiData(
+        response.data,
+        UserModel
+      );
+      const userStore = useUserStore();
       if (data_new.id.value == userStore.getId) {
         authService.setUser();
       }

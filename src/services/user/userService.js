@@ -6,6 +6,8 @@ import { UserModel } from "@/models";
 import { useToastStore } from "@/stores";
 //const useToast = useToastStore();
 const servicePath = "/user/users";
+const servicePass = "/user/change-password";
+
 const module = "Usuario";
 export const userService = {
   async getUser(user_id) {
@@ -130,7 +132,7 @@ export const userService = {
   },
   async changePassword(user = null, credential) {
     try {
-      let url = `${servicePath}`;
+      let url = `${servicePass}`;
       if (user !== null) {
         url = `${url}/${user}`;
       }

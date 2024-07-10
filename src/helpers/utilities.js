@@ -333,7 +333,7 @@ function printDocument(title = null, element, dev = false) {
         ", fullscreen=yes "
     );
   }
-
+  console.log(ventana);
   ventana.document.write("<html><head><title>" + title + "</title>");
   ventana.document.write(
     '<link rel="stylesheet" type="text/css" href="/print.css">'

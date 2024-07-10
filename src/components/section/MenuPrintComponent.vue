@@ -12,6 +12,7 @@ import { ref, onMounted, inject, computed } from "vue";
 import FormButtons from "@/common/form/FormButtons.vue";
 import PrintContent from "@/common/PrintContent.vue";
 
+const url = import.meta.env.VITE_APP_RUTA_MEDIA;
 const emit = defineEmits(["onFirstLoad", "onSave", "onCancel", "onEdit"]);
 
 const props = defineProps({
@@ -101,7 +102,7 @@ defineExpose({
               </div>
               <div class="type-img-container">
                 <img
-                  :src="'http://localhost:8000' + type.product_image"
+                  :src="url + type.product_image"
                   alt="Imagen tipo"
                   class="type-img"
                 />

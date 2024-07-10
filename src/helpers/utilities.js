@@ -314,7 +314,7 @@ const formatData = {
     return resp;
   },
 };
-function printDocument(title = null, element, dev = false) {
+async function printDocument(title = null, element, dev = false) {
   var ventana = null;
   if (dev) {
     ventana = window.open(
@@ -333,6 +333,7 @@ function printDocument(title = null, element, dev = false) {
         ", fullscreen=yes "
     );
   }
+
   console.log(ventana);
   ventana.document.write("<html><head><title>" + title + "</title>");
   ventana.document.write(
@@ -343,6 +344,7 @@ function printDocument(title = null, element, dev = false) {
   ventana.document.write("</body></html>");
   ventana.document.close();
   ventana.focus();
+
   if (dev) {
     return;
   }

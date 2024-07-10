@@ -8,7 +8,7 @@ import VueDevTools from "vite-plugin-vue-devtools";
 export default defineConfig({
   base:
     process.env.NODE_ENV === "production"
-      ? "/" // Establece el valor de BASE_URL en producción
+      ? "./" // Establece el valor de BASE_URL en producción
       : "/",
   plugins: [vue(), VueDevTools()],
   build: {

@@ -174,7 +174,7 @@ function clearAll() {
                 <div class="text-toast">
                   <div>
                     <span>{{ toast.prevText }}</span>
-                    <span class="important-text uppercase">{{
+                    <span class="important-text">{{
                       toast.importantText
                     }}</span>
                     <span>{{ toast.nextText }}</span>

@@ -74,9 +74,10 @@ async function deleteElement(index) {
     useToast.show("permission_button_error");
     return;
   }
-  let confirm = await confirmDialogue("delete");
-  if (!confirm) return;
   let itemDeleted = list.value[index];
+
+  let confirm = await confirmDialogue("delete", itemDeleted.getTextModel());
+  if (!confirm) return;
 
   if (itemDeleted.id.value) {
     emit("onDeleteElement", itemDeleted);

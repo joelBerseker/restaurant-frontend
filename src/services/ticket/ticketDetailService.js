@@ -7,7 +7,7 @@ import { useToastStore } from "@/stores";
 const servicePath = "/ticket_detail/detail";
 const servicePathOption = "/ticket_detail/option";
 const servicePathStatistics = "/ticket_detail/statistics";
-const module = "Detalle";
+const module = "Detalle de Boleta";
 export const ticketDetailService = {
   async getTicketDetail(ticketdetail_id) {
     try {
@@ -246,7 +246,7 @@ export const ticketDetailService = {
       );
       const useToast = useToastStore();
       useToast.show("edit_success", {
-        important_text: module,
+        important_text: data_new.getTextModel(),
       });
       return data_new;
     } catch (error) {

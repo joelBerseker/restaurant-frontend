@@ -85,6 +85,12 @@ export class TicketDetailModel extends Model {
       text: this.ticketdetail_name.value,
     };
   }
+  getText() {
+    return this.id.value + " - " + this.product_id.getValueText();
+  }
+  getTextModel() {
+    return "Detalle de Boleta [" + this.getText() + "]";
+  }
   getDataTable() {
     return [
       {

@@ -222,11 +222,11 @@ defineExpose({
 .form-select:focus {
   background-color: transparent;
 }
-.input-white {
+.input-white .g-input {
   color: var(--color-w-v2);
 }
-.input-white:hover,
-.input-white:focus {
+.input-white:hover .g-input,
+.input-white:focus .g-input {
   color: var(--color-w-v2);
 }
 ::placeholder {

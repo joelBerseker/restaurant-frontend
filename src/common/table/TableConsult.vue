@@ -5,6 +5,8 @@ import { copyObject, status } from "@/helpers";
 import { ref, inject, computed } from "vue";
 import { useSystemStore } from "@/stores/systemStore";
 import { useUserStore } from "@/stores/userStore";
+import { useToastStore } from "@/stores";
+const useToast = useToastStore();
 
 const userStore = useUserStore();
 
@@ -49,7 +51,11 @@ function viewItem(_data) {
 }
 async function getList(loading = true) {
   isLoading.value = loading;
-
+  if (!showStatusLocal.value) {
+    filter.value.status = 1;
+  } else if (!userStore.isAdmin() && filter.value.status === "3") {
+    filter.value.status = undefined;
+  }
   let resp = await props.getListConsult(filter.value);
   if (resp) {
     rows.value = resp.map((element) => element.getData());
@@ -71,6 +77,10 @@ function verifyFilterCache() {
   filter.value = copyObject(props.defaultFilter);
 }
 async function deleteItem(_data) {
+  if (!userStore.getModulePermise.delete) {
+    useToast.show("permission_button_error");
+    return;
+  }
   let confirm = await confirmDialogue("delete", _data.elementTextModel);
   if (confirm) {
     isLoading.value = true;
@@ -82,7 +92,7 @@ async function deleteItem(_data) {
 }
 async function init() {
   verifyFilterCache();
-  if (props.showStatus) {
+  if (showStatusLocal.value) {
     localColumns.value = [
       ...props.columns,
       {
@@ -121,9 +131,11 @@ function switchSearch() {
 }
 const showDeleteLocal = computed(() => {
   if (!props.showDelete) return false;
-
-  if (userStore.isAdmin()) return true;
   return userStore.getModulePermise.delete;
+});
+const showStatusLocal = computed(() => {
+  if (!props.showStatus) return false;
+  return userStore.getModulePermise.active;
 });
 init();
 
@@ -160,7 +172,7 @@ defineExpose({
     <template v-slot:quick="{ row, index }">
       <div class="btns-container">
         <g-button
-          v-if="showDeleteLocal"
+          v-if="showDeleteLocal && row.status !== 3"
           icon="fa-solid fa-trash-can"
           @click.stop="deleteItem(row)"
           type="transparent-1"
@@ -195,6 +207,7 @@ defineExpose({
 }
 .btns-container {
   display: flex;
+  justify-content: end;
 }
 .status-container {
   text-wrap: nowrap;
@@ -206,7 +219,8 @@ defineExpose({
 .status-container.active {
   color: var(--color-1-v3);
 }
-.status-container.inactive {
+.status-container.inactive,
+.status-container.delete {
   color: var(--color-d);
 }
 </style>

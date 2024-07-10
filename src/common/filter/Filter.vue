@@ -2,11 +2,14 @@
 import { ref, reactive, computed, onMounted } from "vue";
 import { useSystemStore } from "@/stores/systemStore";
 import { copyObject } from "@/helpers";
+import { useUserStore } from "@/stores/userStore";
+
 import FilterDate from "@/common/filter/FilterDate.vue";
 import FilterSearch from "@/common/filter/FilterSearch.vue";
 import FilterOrder from "@/common/filter/FilterOrder.vue";
 
 import FilterStatus from "@/common/filter/FilterStatus.vue";
+const userStore = useUserStore();
 
 const useSystem = useSystemStore();
 
@@ -76,7 +79,7 @@ function clearFilter() {
   filterSearchRef.value.reset();
   filterOrderRef.value.reset();
 
-  if (props.status) {
+  if (showStatusLocal.value) {
     filterStatusRef.value.reset();
   }
   if (props.date) {
@@ -93,6 +96,10 @@ function clearFilter() {
     useSystem.deleteFilterCache(props.filterCacheName);
   }
 }
+const showStatusLocal = computed(() => {
+  if (!props.status) return false;
+  return userStore.getModulePermise.active;
+});
 function init() {
   if (props.filterCacheName) {
     let _filter = useSystem.filterCache[props.filterCacheName];
@@ -129,7 +136,7 @@ defineExpose({
         :defaultFilter="defaultFilter"
         @search="search()"
       />
-      <div v-if="status">
+      <div v-if="showStatusLocal">
         <FilterStatus
           class="ms-2"
           ref="filterStatusRef"

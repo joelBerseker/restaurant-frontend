@@ -1,10 +1,13 @@
 <script setup>
 import { useSlots, ref, computed, inject } from "vue";
 import { useToastStore } from "@/stores";
-import TableContainer from "@/common/container/TableContainer.vue";
+import { useUserStore } from "@/stores/userStore";
+
 import Table from "@/common/table/Table.vue";
 
 const useToast = useToastStore();
+const userStore = useUserStore();
+
 const confirmDialogue = inject("confirmDialogue");
 
 const props = defineProps({
@@ -14,7 +17,6 @@ const props = defineProps({
   noHeader: { default: false },
   isLoading: { default: false },
   elementModel: { default: null },
-  viewMode: { default: false },
   mode: { default: "add" },
 });
 const emit = defineEmits([
@@ -37,7 +39,22 @@ const listMode = ref([]); /*CONTROLAR LOS BOTONES INDIVIDUALMENTE */
 
 const localColumns = ref([]);
 
+function confirmPermises() {
+  if (props.mode === "add" && !userStore.getModulePermise.create) {
+    return false;
+  }
+  if (props.mode !== "add" && !userStore.getModulePermise.update) {
+    return false;
+  }
+  return true;
+}
+
 function additem() {
+  if (!confirmPermises()) {
+    useToast.show("permission_button_error");
+    return;
+  }
+
   list.value.push(new props.elementModel());
 
   if (props.mode !== "add") {
@@ -53,6 +70,10 @@ function additem() {
   emit("onUpdated", list.value);
 }
 async function deleteElement(index) {
+  if (!confirmPermises()) {
+    useToast.show("permission_button_error");
+    return;
+  }
   let confirm = await confirmDialogue("delete");
   if (!confirm) return;
   let itemDeleted = list.value[index];
@@ -80,11 +101,19 @@ function valdiateElement(_data) {
   return resp.value;
 }
 async function newElement(_data) {
+  if (!userStore.getModulePermise.update) {
+    useToast.show("permission_button_error");
+    return;
+  }
   if (!valdiateElement(_data)) return;
 
   emit("onNewElement", _data);
 }
 async function saveElement(_data) {
+  if (!userStore.getModulePermise.update) {
+    useToast.show("permission_button_error");
+    return;
+  }
   if (!valdiateElement(_data)) return;
 
   emit("onSaveElement", _data);
@@ -142,6 +171,10 @@ function copy(_data) {
   emit("onUpdated", list.value);
 }
 function edit(index) {
+  if (!userStore.getModulePermise.update) {
+    useToast.show("permission_button_error");
+    return;
+  }
   emit("onChangeDisabled", true);
 
   disabled.value = true;
@@ -150,6 +183,10 @@ function edit(index) {
   listMode.value[index] = "edit";
 }
 function cancel(index) {
+  if (!userStore.getModulePermise.update) {
+    useToast.show("permission_button_error");
+    return;
+  }
   emit("onChangeDisabled", false);
   disabled.value = false;
 
@@ -158,22 +195,27 @@ function cancel(index) {
   list.value[index].copy(listBackup.value[index]);
 }
 
-async function init() {
-  localColumns.value = [
-    ...props.columns,
-    {
-      label: "",
-      field: "quick",
-      width: "1%",
-      rowClass: "th-buttons",
-    },
-  ];
+function init() {
+  if (confirmPermises()) {
+    localColumns.value = [
+      ...props.columns,
+      {
+        label: "",
+        field: "quick",
+        width: "1%",
+        rowClass: "th-buttons",
+      },
+    ];
+  } else {
+    localColumns.value = [...props.columns];
+  }
 }
 
 function changeDisabled(_value) {
   disabled.value = _value;
   emit("onChangeDisabled", _value);
 }
+
 init();
 defineExpose({
   additem,

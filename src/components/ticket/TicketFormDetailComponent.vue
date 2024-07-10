@@ -262,7 +262,7 @@ defineExpose({
               <label class="imp-label">Precio Total:</label>
             </td>
             <td class="text-end no-wrap">S/. {{ totalCalc }}</td>
-            <td v-if="(activeColumns.length = 5)"></td>
+            <td v-if="activeColumns.length === 5"></td>
           </tr>
         </tbody>
       </template>

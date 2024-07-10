@@ -45,11 +45,24 @@ export const useUserStore = defineStore("user", {
       this.encryptAndSave();
     },
     setModulePermises(moduleid) {
-      const decryptedPermises = decrypt(this.permises);
+      let data = null;
 
-      const data = decryptedPermises.find(
-        (objeto) => objeto.module_id == moduleid
-      );
+      if (moduleid && !this.isAdmin()) {
+        const decryptedPermises = decrypt(this.permises);
+        data = decryptedPermises.find((objeto) => objeto.module_id == moduleid);
+      } else {
+        data = {
+          active: true,
+          create: true,
+          delete: true,
+          export: true,
+          notify: true,
+          print: true,
+          read: true,
+          update: true,
+        };
+      }
+      console.log(data);
       this.modulePermises = encrypt(data);
       this.encryptAndSave();
     },

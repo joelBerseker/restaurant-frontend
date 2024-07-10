@@ -13,7 +13,7 @@ function click() {
 </template>
 <style scoped>
 .close-button {
-  background-color: var(--color-w-v4);
+  background-color: rgba(138, 138, 138, 0.411);
   border-radius: 999rem;
   position: relative;
   height: 1.2rem;

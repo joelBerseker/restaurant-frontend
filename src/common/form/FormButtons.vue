@@ -2,7 +2,8 @@
 import { status } from "@/helpers";
 import { inject, computed } from "vue";
 import { useUserStore } from "@/stores/userStore";
-
+import { useToastStore } from "@/stores";
+const useToast = useToastStore();
 const userStore = useUserStore();
 
 const props = defineProps({
@@ -13,6 +14,7 @@ const props = defineProps({
   showEdit: { default: true },
   showPrint: { default: false },
   showStatus: { default: true },
+  showAdd: { default: true },
 });
 
 const statusData = computed(() => {
@@ -32,6 +34,10 @@ const emit = defineEmits([
 ]);
 
 function onAdd() {
+  if (!userStore.getModulePermise.create) {
+    useToast.show("permission_button_error");
+    return;
+  }
   emit("onAdd");
 }
 async function onStatus() {
@@ -44,42 +50,64 @@ async function onDelete() {
   if (confirm) emit("onDelete");
 }
 function onEdit() {
+  if (!userStore.getModulePermise.update) {
+    useToast.show("permission_button_error");
+    return;
+  }
   emit("onEdit");
 }
 function onCancel() {
+  if (!userStore.getModulePermise.update) {
+    useToast.show("permission_button_error");
+    return;
+  }
   emit("onCancel");
 }
 function onSave() {
+  if (!userStore.getModulePermise.update) {
+    useToast.show("permission_button_error");
+    return;
+  }
   emit("onSave");
 }
 function onPrint() {
+  if (!userStore.getModulePermise.print) {
+    useToast.show("permission_button_error");
+    return;
+  }
   emit("onPrint");
 }
+const showAddLocal = computed(() => {
+  if (!props.showAdd) return false;
+  return userStore.getModulePermise.create;
+});
 const showEditLocal = computed(() => {
   if (!props.showEdit) return false;
-  if (userStore.isAdmin()) return true;
   return userStore.getModulePermise.update;
 });
 const showDeleteLocal = computed(() => {
   if (!props.showDelete) return false;
-  if (userStore.isAdmin()) return true;
   return userStore.getModulePermise.delete;
 });
 const showStatusLocal = computed(() => {
   if (!props.showStatus) return false;
-  if (userStore.isAdmin()) return true;
+
   return userStore.getModulePermise.active;
 });
 const showPrintLocal = computed(() => {
   if (!props.showPrint) return false;
-  if (userStore.isAdmin()) return true;
   return userStore.getModulePermise.print;
 });
 </script>
 <template>
   <div class="buttons-container">
     <span v-if="mode === 'add'" class="buttons-container">
-      <g-button icon="fa-solid fa-check" text="Guardar" @click="onAdd()" />
+      <g-button
+        icon="fa-solid fa-check"
+        text="Guardar"
+        @click="onAdd()"
+        v-if="showAddLocal"
+      />
     </span>
     <span v-else-if="mode === 'view' || !showEdit" class="buttons-container">
       <g-button

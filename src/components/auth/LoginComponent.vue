@@ -40,17 +40,15 @@ async function login() {
 <template>
   <div class="center">
     <div class="form-container">
-      <h6 class="title-text">Iniciar Sesión</h6>
-      <p>Bienvenido, ingrese sus datos para acceder al sistema</p>
-      <hr class="my-4" />
+      <h5 class="title-text">Iniciar Sesión</h5>
+      <p class="mb-5">Bienvenido, ingrese sus datos para acceder al sistema</p>
 
       <g-input
         v-model="_email"
         label="Correo electrónico"
         labelClass="label-login"
         id="email"
-        class="mb-4"
-        inputClass="input-white"
+        class="mb-4 input-white"
         :uppercase="false"
       />
       <g-input
@@ -59,8 +57,7 @@ async function login() {
         labelClass="label-login"
         id="password"
         type="password"
-        class="margin-b"
-        inputClass="input-white"
+        class="margin-b input-white"
         :uppercase="false"
       />
       <div>
@@ -86,7 +83,6 @@ async function login() {
   text-align: center;
 }
 .title-text {
-  text-transform: uppercase;
   margin-bottom: 1rem;
   color: var(--color-1-v2);
 }

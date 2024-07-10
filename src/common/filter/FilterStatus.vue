@@ -50,8 +50,13 @@ function reset() {
   }
 }
 function init() {
+  if (!userStore.isAdmin()) {
+    statusOptions.options.splice(3, 1);
+  }
   if (props.filter.status !== undefined) {
-    statusOptions.value = props.filter.status;
+    if (!(!userStore.isAdmin() && props.filter.status === "3")) {
+      statusOptions.value = props.filter.status;
+    }
   }
 }
 init();

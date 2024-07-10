@@ -95,13 +95,27 @@ const toastText = {
     type: 2,
   },
   password_error: {
-    prevText: "Error al cambiar contraseña",
+    prevText: "No se pudo editar la contraseña",
     defaultText: ", si continúa sucediendo contacte con su proveedor.",
     listErrorMessage: ", posibles errores:",
     type: 2,
   },
   password_success: {
-    prevText: "Contraseña cambiada correctamente",
+    prevText: "Contraseña editada correctamente",
+    type: 1,
+  },
+  permission_button_error: {
+    prevText: "No tienes permiso para realizar esta acción",
+    type: 2,
+  },
+  permission_edit_error: {
+    prevText: "No se pudo editar los permisos",
+    defaultText: ", si continúa sucediendo contacte con su proveedor.",
+    listErrorMessage: ", posibles errores:",
+    type: 2,
+  },
+  permission_edit_success: {
+    prevText: "Permisos editados correctamente",
     type: 1,
   },
 };

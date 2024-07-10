@@ -272,9 +272,6 @@ router.beforeEach(async (to, from, next) => {
       module_id,
       Permission_data.View
     );*/
-    userStore.setModulePermises(module_id);
-
-    let hasPermission = userStore.getPermiseAction(module_id, to.meta.action);
 
     if (to.fullPath !== "/login") {
       await authService.setPermisos();
@@ -282,6 +279,9 @@ router.beforeEach(async (to, from, next) => {
         authService.setUser();
       }
     }
+    userStore.setModulePermises(module_id);
+    let hasPermission = userStore.getPermiseAction(module_id, to.meta.action);
+
     if (hasPermission || module_id == 0) {
       next();
 

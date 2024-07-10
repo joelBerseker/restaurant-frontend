@@ -173,9 +173,11 @@ function onBlur(params) {
 }
 .g-form-wrapper.g-select > .focus-container.focus,
 .g-form-wrapper.g-input > .focus-container.focus {
-  box-shadow: 0px -3px 0px 0px rgba(0, 0, 0, 0.1) inset;
+  box-shadow: 0px -3px 0px 0px rgba(129, 129, 129, 0.25) inset;
 }
-
+.input-white .g-form-wrapper.g-input > .focus-container.focus {
+  box-shadow: 0px -3px 0px 0px rgb(255, 255, 255, 0.25) inset;
+}
 .g-form-wrapper.g-input-image {
   width: fit-content;
 }

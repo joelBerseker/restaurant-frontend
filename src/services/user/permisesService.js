@@ -112,12 +112,10 @@ export const permisesService = {
       // Usa la función con el alias para configurar el encabezado "Content-Type"
       const response = await axiosInstance(config);
       const useToast = useToastStore();
-      useToast.show("edit_success", {
-        important_text: module,
-      });
+      useToast.show("permission_edit_success");
       return response.data;
     } catch (error) {
-      handleError(error, "edit_error", module);
+      handleError(error, "permission_edit_error");
     }
   },
   async addPermises(new_data) {

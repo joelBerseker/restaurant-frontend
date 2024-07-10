@@ -63,16 +63,17 @@ function show(_text, _additional = null) {
 
     _toast.importantText = _additional.important_text;
 
-    _toast.error = _additional.error;
+    //_toast.error = _additional.error;
   }
   countToast.value++;
   if (listToast.value.length >= maxToast.value) {
     listToast.value.pop();
   }
+
+  listToast.value.unshift(_toast);
   if (!hover.value) {
     reiniciarTimeout();
   }
-  listToast.value.unshift(_toast);
 }
 
 const hover = ref(false);

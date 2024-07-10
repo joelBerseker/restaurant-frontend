@@ -2,8 +2,11 @@
 import Table from "@/common/table/Table.vue";
 import Filter from "@/common/filter/Filter.vue";
 import { copyObject, status } from "@/helpers";
-import { ref, inject, onMounted } from "vue";
+import { ref, inject, computed } from "vue";
 import { useSystemStore } from "@/stores/systemStore";
+import { useUserStore } from "@/stores/userStore";
+
+const userStore = useUserStore();
 
 const useSystem = useSystemStore();
 
@@ -116,7 +119,12 @@ function refresh(filter = null) {
 function switchSearch() {
   return collapseRef.value.swichCollapse();
 }
+const showDeleteLocal = computed(() => {
+  if (!props.showDelete) return false;
 
+  if (userStore.isAdmin()) return true;
+  return userStore.getModulePermise.delete;
+});
 init();
 
 defineExpose({
@@ -152,7 +160,7 @@ defineExpose({
     <template v-slot:quick="{ row, index }">
       <div class="btns-container">
         <g-button
-          v-if="showDelete"
+          v-if="showDeleteLocal"
           icon="fa-solid fa-trash-can"
           @click.stop="deleteItem(row)"
           type="transparent-1"

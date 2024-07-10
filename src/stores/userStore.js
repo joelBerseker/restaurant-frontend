@@ -44,8 +44,13 @@ export const useUserStore = defineStore("user", {
       this.permises = encrypt(p);
       this.encryptAndSave();
     },
-    setModulePermises(p) {
-      this.modulePermises = encrypt(p);
+    setModulePermises(moduleid) {
+      const decryptedPermises = decrypt(this.permises);
+
+      const data = decryptedPermises.find(
+        (objeto) => objeto.module_id == moduleid
+      );
+      this.modulePermises = encrypt(data);
       this.encryptAndSave();
     },
 
@@ -136,7 +141,6 @@ export const useUserStore = defineStore("user", {
       const data = decryptedPermises.find(
         (objeto) => objeto.module_id == moduleid
       );
-      this.modulePermises = data;
 
       let permise = false;
       switch (action) {

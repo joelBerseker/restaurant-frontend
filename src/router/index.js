@@ -272,12 +272,13 @@ router.beforeEach(async (to, from, next) => {
       module_id,
       Permission_data.View
     );*/
+    userStore.setModulePermises(module_id);
+
     let hasPermission = userStore.getPermiseAction(module_id, to.meta.action);
 
     if (to.fullPath !== "/login") {
       await authService.setPermisos();
       if (!first_time) {
-        console.log("entre a hacer la pendejada de Jhon");
         authService.setUser();
       }
     }

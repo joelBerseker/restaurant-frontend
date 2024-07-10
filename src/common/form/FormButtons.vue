@@ -1,6 +1,9 @@
 <script setup>
 import { status } from "@/helpers";
 import { inject, computed } from "vue";
+import { useUserStore } from "@/stores/userStore";
+
+const userStore = useUserStore();
 
 const props = defineProps({
   mode: { default: null },
@@ -52,6 +55,26 @@ function onSave() {
 function onPrint() {
   emit("onPrint");
 }
+const showEditLocal = computed(() => {
+  if (!props.showEdit) return false;
+  if (userStore.isAdmin()) return true;
+  return userStore.getModulePermise.update;
+});
+const showDeleteLocal = computed(() => {
+  if (!props.showDelete) return false;
+  if (userStore.isAdmin()) return true;
+  return userStore.getModulePermise.delete;
+});
+const showStatusLocal = computed(() => {
+  if (!props.showStatus) return false;
+  if (userStore.isAdmin()) return true;
+  return userStore.getModulePermise.active;
+});
+const showPrintLocal = computed(() => {
+  if (!props.showPrint) return false;
+  if (userStore.isAdmin()) return true;
+  return userStore.getModulePermise.print;
+});
 </script>
 <template>
   <div class="buttons-container">
@@ -65,7 +88,7 @@ function onPrint() {
         text="Imprimir"
         @click="onPrint()"
         :separationLine="true"
-        v-if="showPrint"
+        v-if="showPrintLocal"
       />
       <g-button
         class="delete-button"
@@ -74,11 +97,11 @@ function onPrint() {
         text="Eliminar"
         @click="onDelete()"
         :separationLine="true"
-        v-if="showDelete"
+        v-if="showDeleteLocal"
       />
       <g-button
         class="status-button"
-        v-if="statusData !== null && showStatus"
+        v-if="statusData !== null && showStatusLocal"
         type="transparent-1"
         :class="['status-button', statusData.color]"
         :icon="statusData.icon"
@@ -90,7 +113,7 @@ function onPrint() {
         icon="fa-solid fa-pen-to-square"
         text="Editar"
         @click="onEdit()"
-        v-if="showEdit"
+        v-if="showEditLocal"
       />
     </span>
     <span v-else class="buttons-container">

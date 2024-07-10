@@ -1,6 +1,10 @@
 <script setup>
 import { sleep } from "@/helpers";
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, computed, watch, shallowRef } from "vue";
+import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/userStore";
+const userStore = useUserStore();
+const router = useRouter();
 
 const showSidebar = ref(true);
 let list = [
@@ -18,13 +22,59 @@ let list = [
   { name: "test" },
 ];
 
-async function getPermise(module_id) {
-  let status = await permissionsService.getPermises(
-    module_id,
-    Permission_data.View
-  );
-  return status;
+const listWithPermises = ref([]);
+
+function getModuleId(name) {
+  const resolved = router.resolve({ name: name });
+  return resolved.meta.moduleid;
 }
+
+function getListWithPermises() {
+  let resp = [];
+  for (let i = 0; i < list.length; i++) {
+    const element = list[i];
+
+    let moduleId = getModuleId(element.name);
+    let havePermise = userStore.getPermiseAction(moduleId);
+    if (element.children) {
+      let respChildren = [];
+
+      for (let j = 0; j < element.children.length; j++) {
+        const child = element.children[j];
+        let moduleChild = getModuleId(child);
+
+        let havePermiseChild = userStore.getPermiseAction(moduleChild);
+        if (havePermiseChild) {
+          respChildren.push(child);
+        }
+      }
+      if (havePermise && respChildren.length > 0) {
+        resp.push({ name: element.name, children: respChildren });
+      }
+    } else {
+      if (havePermise) {
+        resp.push(element);
+      }
+    }
+  }
+  listWithPermises.value = resp;
+}
+function init() {
+  getListWithPermises();
+}
+init();
+watch(
+  () => userStore.getPermises,
+  (_new, _old) => {
+    let strNew = JSON.stringify(_new);
+    let strOld = JSON.stringify(_old);
+
+    if (strNew !== strOld) {
+      getListWithPermises();
+    }
+  },
+  { deep: true }
+);
 
 function closeSidebar() {
   let _sidebar = document.getElementById("system-sidebar");
@@ -124,7 +174,7 @@ defineExpose({
       </transition>
     </header>
     <ul class="w-100 sidebar-list-item px-0 custom-scrollbar">
-      <li v-for="item in list" :key="item.title">
+      <li v-for="item in listWithPermises" :key="item.title">
         <div class="d-flex">
           <div class="container-link">
             <RouterLink

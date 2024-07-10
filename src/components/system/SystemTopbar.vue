@@ -4,6 +4,7 @@ import { useUserStore } from "@/stores/userStore";
 import { useRouter } from "vue-router";
 import SystemBreadcrumb from "@/components/system/SystemBreadcrumb.vue";
 import { useRoute } from "vue-router";
+const userStore = useUserStore();
 
 const props = defineProps({
   topbar: {
@@ -29,8 +30,13 @@ function buttonBack() {
   }
 }
 const currentUser = computed(() => {
-  var user = useUserStore();
-  return user.getUser;
+  return userStore.getUser;
+});
+
+const showCompany = computed(() => {
+  let havePermise = userStore.getPermiseAction(2);
+
+  return havePermise;
 });
 
 const isProfile = computed(() => {
@@ -117,7 +123,7 @@ defineExpose({
                 >Mi perfil
               </RouterLink>
             </li>
-            <li>
+            <li v-if="showCompany">
               <RouterLink
                 :to="{ name: 'company' }"
                 class="dropdown-item"

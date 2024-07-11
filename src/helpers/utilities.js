@@ -318,8 +318,11 @@ async function printDocument(title = null, element, dev = false) {
   var ventana = null;
 
   console.log("prueba");
-  window.electron.openNewWindow("New Window", element.innerHTML);
-  return;
+  const isElectron = import.meta.env.VITE_APP_ELECTRON;
+  if (isElectron == true) {
+    window.electron.openNewWindow("New Window", element.innerHTML);
+    return;
+  }
   if (dev) {
     ventana = window.open(
       "",

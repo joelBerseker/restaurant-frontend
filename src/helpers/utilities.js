@@ -316,6 +316,10 @@ const formatData = {
 };
 async function printDocument(title = null, element, dev = false) {
   var ventana = null;
+
+  console.log("prueba");
+  window.electron.openNewWindow("New Window", element.innerHTML);
+  return;
   if (dev) {
     ventana = window.open(
       "",

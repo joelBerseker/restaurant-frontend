@@ -21,7 +21,7 @@ const company = ref(userStore.getCompany());
 
 async function print() {
   await sleep(100);
-  printDocument(props.printName, printableRef.value);
+  printDocument(props.printName, printableRef.value, true);
 }
 
 defineExpose({
@@ -30,7 +30,7 @@ defineExpose({
 </script>
 <template>
   <div id="printable" ref="printableRef">
-    <div :class="[printClass]">
+    <div :class="[printClass, 'print-container']">
       <div class="print-cover"></div>
       <slot name="background"></slot>
 
@@ -76,10 +76,8 @@ defineExpose({
         </thead>
         <tbody>
           <tr>
-            <td class="td-content">
-              <div class="content">
-                <slot :company="company"></slot>
-              </div>
+            <td class="content">
+              <slot :company="company"></slot>
             </td>
           </tr>
         </tbody>

@@ -39,7 +39,7 @@ defineExpose({
     :documentName="documentName"
     :documentId="documentId"
   >
-    <div class="customer">
+    <div class="customer mb-document">
       <div>
         <span class="info-label">Cliente: </span>{{ header.client_name }}
       </div>

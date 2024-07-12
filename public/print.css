@@ -43,52 +43,54 @@
 }
 /*@media print {*/
 
+/*CONFIGURACIONES BASICAS DE LA TABLA CONTAINER*/
 table td,
 table th {
   border: none;
   padding: 0;
 }
+.print-container {
+  padding: 10mm;
+}
+/*HEADER*/
 .header {
   height: 25mm;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10mm; /*Container*/
+  padding-bottom: 0;
+  box-sizing: border-box;
 }
 .header-space {
   height: calc(25mm);
 }
-
-.footer {
-  height: 8mm;
+.print-menu .header-space {
+  height: 20mm !important;
 }
 
+/*FOOTER*/
+.footer {
+  height: 8mm;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+
+  padding: 10mm; /*Container*/
+  padding-top: 0;
+  box-sizing: border-box;
+}
 .footer-space {
   height: calc(8mm);
 }
 .print-menu .footer-space {
   height: 20mm !important;
 }
-.print-menu .header-space {
-  height: 20mm !important;
-}
-.td-content {
-  display: block;
-}
+/*CONTENT*/
 .content {
-}
-.header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  display: flex;
-}
-.footer {
-  position: fixed;
-  background-color: rgb(207, 207, 207);
-
-  width: 100%;
-  color: white;
-
-  bottom: 0;
-  display: flex;
-  align-items: center;
+  display: block;
 }
 
 .break-page {
@@ -200,6 +202,9 @@ body * {
 }
 .company-wrapper > * {
   flex-shrink: 0;
+}
+.mb-document {
+  margin-bottom: 2mm;
 }
 /*MENU*/
 

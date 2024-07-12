@@ -325,7 +325,7 @@ defineExpose({
   bottom: 0.1rem;
   right: 0.35rem;
   overflow: hidden;
-  text-wrap: nowrap;
+  white-space: nowrap;
 }
 .sidebar-list-item {
   margin-top: 2rem;

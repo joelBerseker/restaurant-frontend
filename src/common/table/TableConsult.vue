@@ -210,7 +210,7 @@ defineExpose({
   justify-content: end;
 }
 .status-container {
-  text-wrap: nowrap;
+  white-space: nowrap;
   font-size: 13px;
 }
 .status-text {

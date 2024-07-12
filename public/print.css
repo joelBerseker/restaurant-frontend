@@ -43,7 +43,15 @@
 }
 /*@media print {*/
 
-/*CONFIGURACIONES BASICAS DE LA TABLA CONTAINER*/
+/*CONFIGURACIONES BASICAS*/
+body {
+  margin: 0;
+  font-family: Arial;
+  color: var(--color-font);
+}
+body * {
+  font-size: 3mm;
+}
 table td,
 table th {
   border: none;
@@ -51,6 +59,9 @@ table th {
 }
 .print-container {
   padding: 10mm;
+}
+.break-page {
+  break-before: page;
 }
 /*HEADER*/
 .header {
@@ -93,9 +104,8 @@ table th {
   display: block;
 }
 
-.break-page {
-  break-before: page;
-}
+/*CLASE TABLE*/
+
 .table td,
 .table th {
   border: 0.1mm solid var(--color-lines);
@@ -113,20 +123,15 @@ table {
   border-collapse: collapse;
   width: 100%;
 }
-body {
-  margin: 0;
-  font-family: Arial;
-  color: var(--color-font);
-}
-body * {
-  font-size: 3mm;
-}
+
+/*OTROS*/
+
 .text-end {
   text-align: end;
 }
 
 .no-wrap {
-  text-wrap: nowrap;
+  white-space: nowrap;
 }
 .header-container {
   display: flex;
@@ -350,7 +355,7 @@ ul {
   margin-bottom: 8mm;
 }
 .product-price-wrapper {
-  text-wrap: nowrap;
+  white-space: nowrap;
 }
 .title-type-fielset {
   border-bottom: none;

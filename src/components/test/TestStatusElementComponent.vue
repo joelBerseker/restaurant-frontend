@@ -81,7 +81,7 @@ function getClassStatus() {
   border: 1px solid var(--color-border);
   border-radius: var(--br-v2);
   position: relative;
-  text-wrap: nowrap;
+  white-space: nowrap;
 }
 
 .status-element.el-success {

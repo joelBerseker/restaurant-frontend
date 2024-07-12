@@ -139,7 +139,7 @@ hr {
   text-align: start;
 }
 .no-wrap {
-  text-wrap: nowrap;
+  white-space: nowrap;
 }
 .custom-scrollbar::-webkit-scrollbar {
   width: 10px;

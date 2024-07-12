@@ -185,7 +185,7 @@ function iconCurrentSort(sort) {
   cursor: pointer;
   width: fit-content;
   transition: 0.3s;
-  text-wrap: nowrap;
+  white-space: nowrap;
 }
 .sort-column {
   color: var(--color-1-v2);

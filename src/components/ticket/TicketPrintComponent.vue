@@ -35,7 +35,7 @@ defineExpose({
 <template>
   <PrintContent
     ref="printRef"
-    printName="Imprimir Boleta"
+    :printName="'BOLETA_' + documentId"
     :documentName="documentName"
     :documentId="documentId"
   >

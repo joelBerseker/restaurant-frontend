@@ -7,7 +7,7 @@ const userStore = useUserStore();
 
 const props = defineProps({
   version: { default: "V0001" },
-  printName: { default: "Imprimir documento" },
+  printName: { default: "Documento" },
   documentName: { default: null },
   documentId: { default: "printable" },
   footer: { default: false },

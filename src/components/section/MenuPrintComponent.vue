@@ -43,7 +43,7 @@ defineExpose({
 <template>
   <PrintContent
     ref="printRef"
-    printName="Imprimir Menu"
+    printName="CARTA"
     :header="false"
     printClass="print-menu"
   >

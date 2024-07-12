@@ -163,6 +163,20 @@ function fixRefreshment(text) {
   if (text == 1) return text + " almuerzo";
   else return text + " almuerzos";
 }
+function getDateToDocument() {
+  let ahora = new Date();
+
+  // Obtenemos los componentes de la fecha y hora
+  let dia = ahora.getDate().toString().padStart(2, "0");
+  let mes = (ahora.getMonth() + 1).toString().padStart(2, "0"); // Los meses van de 0 a 11, por eso sumamos 1
+  let año = ahora.getFullYear();
+  let horas = ahora.getHours().toString().padStart(2, "0");
+  let minutos = ahora.getMinutes().toString().padStart(2, "0");
+  let segundos = ahora.getSeconds().toString().padStart(2, "0");
+
+  // Devolvemos la fecha y hora formateada
+  return `${dia}_${mes}_${año} ${horas}_${minutos}_${segundos}`;
+}
 const formatData = {
   times(_time) {
     if (!_time) return _time;
@@ -318,9 +332,11 @@ async function printDocument(title = null, element, dev = false) {
   var ventana = null;
 
   console.log("prueba");
+
+  let titleComplete = title + " " + getDateToDocument();
   const isElectron = import.meta.env.VITE_APP_ELECTRON;
   if (isElectron == true) {
-    window.electron.openNewWindow("New Window", element.innerHTML);
+    window.electron.openNewWindow(titleComplete, element.innerHTML);
     return;
   }
   if (dev) {
@@ -342,7 +358,7 @@ async function printDocument(title = null, element, dev = false) {
   }
 
   console.log(ventana);
-  ventana.document.write("<html><head><title>" + title + "</title>");
+  ventana.document.write("<html><head><title>" + titleComplete + "</title>");
   ventana.document.write(
     '<link rel="stylesheet" type="text/css" href="/print.css">'
   ); //Cargamos otra hoja, no la normal

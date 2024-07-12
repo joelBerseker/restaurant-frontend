@@ -49,10 +49,8 @@ defineExpose({
   >
     <template #background>
       <div class="menu-container">
-        <div class="menu-wrapper">
-          <div class="border-menu">
-            <div class="border-dot"></div>
-          </div>
+        <div class="border-menu">
+          <div class="border-dot"></div>
         </div>
       </div>
     </template>

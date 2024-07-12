@@ -22,6 +22,8 @@ import ButtonSelect from "./common/button/ButtonSelect.vue";
 
 import Collapse from "./common/Collapse.vue";
 
+import Title1 from "./common/section/Title1.vue";
+
 import Section1 from "./common/section/Section1.vue";
 import Section2 from "./common/section/Section2.vue";
 import Section3 from "./common/section/Section3.vue";
@@ -53,6 +55,8 @@ function registerComponents(app) {
   app.component("g-button", Button);
   app.component("g-collapse", Collapse);
   app.component("g-section-1", Section1);
+  app.component("g-title-1", Title1);
+
   app.component("g-section-2", Section2);
   app.component("g-section-3", Section3);
   app.component("g-section-4", Section4);

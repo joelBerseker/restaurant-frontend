@@ -17,6 +17,25 @@
   font-weight: 500;
   font-style: normal;
 }
+@font-face {
+  font-family: "Permanent_Marker";
+  src: url("@/assets/fonts/Permanent_Marker/PermanentMarker-Regular.ttf")
+    format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Lilita_One";
+  src: url("@/assets/fonts/Lilita_One/LilitaOne-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Anton";
+  src: url("@/assets/fonts/Anton/Anton-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
 :root {
   --color-1: #38a55a;
   --color-1-v2: rgb(36, 206, 90);

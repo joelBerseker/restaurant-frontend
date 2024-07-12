@@ -149,9 +149,20 @@ const router = createRouter({
                 import("@/components/productType/ProductTypeView.vue"),
               meta: {
                 requiresAuth: true,
-                moduleid: 6,
+                moduleid: 7,
                 icon: "fa-solid fa-tags",
                 title: "Tipo de Producto",
+              },
+            },
+            {
+              path: "/card_menu",
+              name: "cardMenu",
+              component: () => import("@/components/cardMenu/CardMenuView.vue"),
+              meta: {
+                requiresAuth: true,
+                moduleid: 6,
+                icon: "fa-solid fa-book-open",
+                title: "Carta",
               },
             },
           ],

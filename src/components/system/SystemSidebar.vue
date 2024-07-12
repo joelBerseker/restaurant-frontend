@@ -13,7 +13,7 @@ let list = [
   { name: "userManagementList", children: ["userList", "rol", "permise"] },
   {
     name: "productManagementList",
-    children: ["productList", "productType", "menuList"],
+    children: ["productList", "productType", "menuList", "cardMenu"],
   },
   { name: "tableManagementList", children: ["table", "reservation"] },
 

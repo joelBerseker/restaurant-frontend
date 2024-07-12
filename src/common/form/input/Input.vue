@@ -239,6 +239,9 @@ defineExpose({
 }
 </style>
 <style scoped>
+.g-form-element.color > div > main > div > .g-input {
+  padding: 0;
+}
 .password-icon {
   display: flex;
   align-items: center;

@@ -7,7 +7,7 @@ import { useUserStore } from "@/stores/userStore";
 const userStore = useUserStore();
 const router = useRouter();
 
-const list = ref(["productList", "productType", "menuList"]);
+const list = ref(["productList", "productType", "menuList", "cardMenu"]);
 
 const listWithPermises = ref([]);
 

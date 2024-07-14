@@ -21,7 +21,7 @@ const company = ref(userStore.getCompany());
 
 async function print() {
   await sleep(100);
-  printDocument(props.printName, printableRef.value, true);
+  printDocument(props.printName, printableRef.value);
 }
 
 defineExpose({

@@ -15,6 +15,7 @@ const emit = defineEmits(["onFirstLoad", "onChangeTotal", "onUpdated"]);
 
 const props = defineProps({
   mode: { default: null },
+  elementData: { default: null },
 });
 const localMode = ref("add");
 const disabled = ref(false);
@@ -48,9 +49,14 @@ async function getList() {
 
   return resp;
 }
+
 async function addElement(_data) {
   _data.ticket_id.value = idElement;
-  let resp = await ticketDetailService.addTicketDetail(_data, totalCalc.value);
+  let resp = await ticketDetailService.addTicketDetail(
+    _data,
+    totalCalc.value,
+    props.elementData.priceFinal.value
+  );
   if (resp) {
     getList();
   }
@@ -59,18 +65,32 @@ async function addElement(_data) {
 async function editElement(_data) {
   let resp = await ticketDetailService.updateTicketDetail(
     _data,
-    totalCalc.value
+    totalCalc.value,
+    props.elementData.priceFinal.value
   );
   if (resp) {
     getList();
   }
   return resp;
 }
+function calcDiscount() {
+  let priceTotal = props.elementData.getLabelValue("priceTotal");
+  let discount = props.elementData.getLabelValue("discount");
+  let numDisc = Number(discount);
+  if (!isNaN(numDisc) && numDisc > 0) {
+    let priceDisc = priceTotal * (numDisc / 100);
+    let calc = Number(priceTotal) - priceDisc;
+    return calc.toFixed(2);
+  } else {
+    return priceTotal;
+  }
+}
 async function deleteElement(_data) {
   let rest = totalCalc.value - Number(_data.price_total.value);
   let resp = await ticketDetailService.deleteTicketDetail(
     _data.id.value,
-    rest.toFixed(2)
+    rest.toFixed(2),
+    calcDiscount()
   );
   if (resp) {
     getList();

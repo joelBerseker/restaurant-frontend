@@ -66,9 +66,9 @@ function changeDiscount() {
   if (!isNaN(numDisc) && numDisc > 0) {
     let priceDisc = priceTotal * (numDisc / 100);
     let calc = Number(priceTotal) - priceDisc;
-    formRef.value.getElement().priceFinal.default = calc.toFixed(2);
+    formRef.value.getElement().priceFinal.value = calc.toFixed(2);
   } else {
-    formRef.value.getElement().priceFinal.default = priceTotal;
+    formRef.value.getElement().priceFinal.value = priceTotal;
   }
 }
 const totalCorrect = computed(() => {
@@ -163,14 +163,11 @@ defineExpose({
           v-model="element.priceFinal"
           :label="element.priceFinal.name"
           @validate="validateLabel"
-          :disabled="disabled"
+          :disabled="true"
+          :viewMode="disabled"
         >
           <template #prev>S/.&nbsp;</template>
         </g-input-val>
-        <div v-show="totalCorrect" class="help-text">
-          <font-awesome-icon icon="fa-regular fa-circle-question" />
-          <span>&nbsp;{{ totalCorrect }}</span>
-        </div>
       </div>
 
       <template v-if="mode !== 'add'" #bottomButtons>

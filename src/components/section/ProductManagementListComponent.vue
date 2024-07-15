@@ -37,7 +37,9 @@ function onPrint() {
 }
 </script>
 <template>
-  <g-section-1 subTitle="Gestion de usuarios y sus roles en el sistema">
+  <g-section-1
+    subTitle="Gestion de productos, tipos de productos y  menus en el sistema"
+  >
     <template #buttons>
       <g-button
         text="Generar Carta"

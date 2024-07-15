@@ -31,7 +31,7 @@ function init() {
 init();
 </script>
 <template>
-  <g-section-1 subTitle="Gestion de usuarios y sus roles en el sistema">
+  <g-section-1 subTitle="Gestion de mesas y reservaciones en el sistema">
     <template #content>
       <div class="row gutter-sec">
         <div

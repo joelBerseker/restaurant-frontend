@@ -18,6 +18,8 @@ const listFormRef = ref(null);
 
 const statusValue = ref(null);
 
+const elementData = ref(null);
+
 /*INITIAL SETTINGS*/
 
 const subTitle = ref(null);
@@ -99,6 +101,7 @@ function onPrint() {
 function onUpdated(_data) {
   console.log(_data);
   printData.value.header = _data;
+  elementData.value = _data;
 
   statusValue.value = _data.status.value;
   subTitle.value = _data.getText();
@@ -160,6 +163,7 @@ defineExpose({
               ref="listFormRef"
               @onUpdated="onUpdatedDetail"
               :mode="mode"
+              :elementData="elementData"
               @onChangeTotal="onChangeTotal"
             />
           </div>

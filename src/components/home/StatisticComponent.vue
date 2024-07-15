@@ -319,7 +319,7 @@ onMounted(() => {
       <div class="col-12 col-sm-10 col-md-8 col-lg-6">
         <g-section-4
           title="Venta semanal"
-          subTitle="Dinero generado los últimos 7 días."
+          subTitle="Ganacias generadas los últimos 7 días."
         >
           <LoadingContainer :loading="isLoadingCharts">
             <VueApexCharts

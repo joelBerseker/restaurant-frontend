@@ -97,7 +97,7 @@ export class Model {
     for (var key in data) {
       if (this[key].copy !== false)
         this[key].value = JSON.parse(JSON.stringify(data[key].value));
-      if (this[key].additional)
+      if (data[key].additional)
         this[key].additional = JSON.parse(JSON.stringify(data[key].additional));
       if (data[key].validation) {
         this[key].validation = {};
@@ -149,7 +149,6 @@ export class Model {
   addData() {
     this.beforeAddData();
     let resp = {};
-    console.log(this);
 
     for (var key in this) {
       let element = this[key];

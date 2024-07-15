@@ -1,6 +1,6 @@
 import axiosInstance from "@/services/axios-instance";
 import { handleError } from "@/helpers";
-import { dataTransform } from "@/services";
+import { dataTransform, authService } from "@/services";
 import { BaseService } from "@/services/BaseService";
 import { CompanyModel } from "@/models";
 import { useToastStore } from "@/stores";
@@ -129,6 +129,8 @@ export const companyService = {
         response.data,
         CompanyModel
       );
+      authService.setUser();
+
       const useToast = useToastStore();
       useToast.show("edit_success", {
         important_text: data_new.getTextModel(),

@@ -34,7 +34,6 @@ const chartOptionsSalesWeek = ref({
 const chartOptionsCombined = ref({
   chart: {
     type: "bar",
-    height: 350,
     stacked: true,
     toolbar: {
       show: true,
@@ -64,22 +63,8 @@ const chartOptionsCombined = ref({
   noData: {
     text: "No se encontraron registros.",
   },
-  plotOptions: {
-    bar: {
-      horizontal: false,
-      borderRadius: 4,
-      borderRadiusApplication: "end", // 'around', 'end'
-      borderRadiusWhenStacked: "last", // 'all', 'last'
-      dataLabels: {
-        total: {
-          enabled: true,
-          style: {
-            fontSize: "13px",
-            fontWeight: 900,
-          },
-        },
-      },
-    },
+  dataLabels: {
+    enabled: false,
   },
 });
 
@@ -246,9 +231,21 @@ const updateLabels = (
       position: "right",
       offsetY: 40,
     },
+    xaxis: {
+      labels: {
+        formatter: function (value) {
+          return formatData.datesMin(value);
+        },
+      },
+      title: {
+        text: "Ultimos 7 dias",
+      },
+      categories: sales_week,
+      tickPlacement: "on",
+    },
     plotOptions: {
       bar: {
-        horizontal: false,
+        horizontal: true,
         borderRadius: 4,
         borderRadiusApplication: "end", // 'around', 'end'
         borderRadiusWhenStacked: "last", // 'all', 'last'
@@ -274,18 +271,6 @@ const updateLabels = (
       },
     ],
 
-    xaxis: {
-      labels: {
-        formatter: function (value) {
-          return formatData.datesMin(value);
-        },
-      },
-      title: {
-        text: "Ultimos 7 dias",
-      },
-      categories: sales_week,
-      tickPlacement: "on",
-    },
     noData: {
       text: "No se encontraron registros.",
     },

@@ -203,6 +203,19 @@ const updateLabels = (
         },
       },
     },
+    responsive: [
+      {
+        breakpoint: 600,
+        options: {
+          chart: {
+            width: 200,
+          },
+          legend: {
+            position: "bottom",
+          },
+        },
+      },
+    ],
   };
   seriesCombined.value = {
     chart: {
@@ -238,6 +251,19 @@ const updateLabels = (
         },
       },
     },
+    responsive: [
+      {
+        breakpoint: 600,
+        options: {
+          chart: {
+            width: 200,
+          },
+          legend: {
+            position: "bottom",
+          },
+        },
+      },
+    ],
 
     xaxis: {
       labels: {

@@ -189,10 +189,11 @@ export const ticketDetailService = {
     }
   },
 
-  async addTicketDetail(new_data, total = 10) {
+  async addTicketDetail(new_data, total = 10, final = 10) {
     try {
       let sendData = new_data.addData();
       sendData.new_total = total;
+      sendData.new_final = final;
       const response = await axiosInstance.post(`${servicePath}/`, sendData);
       const data_new = dataTransform.transformApiData(
         response.data,
@@ -230,11 +231,12 @@ export const ticketDetailService = {
       throw error;
     }
   },
-  async updateTicketDetail(new_data, total = 10) {
+  async updateTicketDetail(new_data, total = 10, final = 10) {
     let dataid = new_data.id.value;
     try {
       let sendData = new_data.addData();
       sendData.new_total = total;
+      sendData.new_final = final;
       console.log(sendData);
       const response = await axiosInstance.patch(
         `${servicePath}/${dataid}/`,
@@ -253,12 +255,12 @@ export const ticketDetailService = {
       handleError(error, "edit_error", module);
     }
   },
-  async deleteTicketDetail(dataid, total = 0) {
+  async deleteTicketDetail(dataid, total = 0, final = 10) {
     try {
       const config = {
         method: "DELETE",
         url: `${servicePath}/${dataid}/`,
-        data: { new_total: total },
+        data: { new_total: total, new_final: final },
       };
       const response = await axiosInstance(config);
       const useToast = useToastStore();

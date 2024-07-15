@@ -104,6 +104,9 @@ export class UserModel extends Model {
     value: "",
     additional: {},
   };
+  full_name = {
+    value: "",
+  };
   saveUser() {
     return {
       id: this.id.value,
@@ -132,6 +135,7 @@ export class UserModel extends Model {
     if (this.generate_password.value) {
       this.password.value = this.first_name.value + this.last_name.value;
     }
+    this.full_name.value = this.first_name.value + " " + this.last_name.value;
   }
   getDataOptions() {
     return {

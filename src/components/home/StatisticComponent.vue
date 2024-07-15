@@ -8,12 +8,15 @@ const chartOptionsTypeProducts = ref({
     id: "pie",
   },
   noData: {
-    text: "Loading...",
+    text: "No se encontraron registros.",
   },
 });
 const chartOptionsSalesWeek = ref({
   chart: {
     id: "bar",
+  },
+  noData: {
+    text: "No se encontraron registros.",
   },
   series: [
     {
@@ -55,6 +58,9 @@ const chartOptionsCombined = ref({
       data: [21, 7, 25, 13, 22, 8],
     },
   ],
+  noData: {
+    text: "No se encontraron registros.",
+  },
   plotOptions: {
     bar: {
       horizontal: false,
@@ -129,6 +135,9 @@ const updateLabels = (
         },
       },
     ],
+    noData: {
+      text: "No se encontraron registros.",
+    },
   };
   chartOptionsSalesWeek.value = {
     series: [
@@ -216,6 +225,9 @@ const updateLabels = (
         },
       },
     ],
+    noData: {
+      text: "No se encontraron registros.",
+    },
   };
   seriesCombined.value = {
     chart: {
@@ -276,6 +288,9 @@ const updateLabels = (
       },
       categories: sales_week,
       tickPlacement: "on",
+    },
+    noData: {
+      text: "No se encontraron registros.",
     },
   };
 };

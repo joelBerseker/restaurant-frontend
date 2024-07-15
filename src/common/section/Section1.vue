@@ -15,6 +15,9 @@ const props = defineProps({
   subTitle: {
     default: null,
   },
+  backButton: {
+    default: true,
+  },
   name: {
     default: null,
   },
@@ -66,13 +69,18 @@ function buttonCollapse() {
 <template>
   <div class="title-container" ref="titleRef" :class="{ sticking }">
     <div class="title-wrap">
-      <span class="title-back">
+      <span class="title-back" v-if="backButton">
         <g-button
           type="transparent-1"
           icon="fa-solid fa-arrow-left"
           @click="buttonBack()"
           title="Atras"
         />
+      </span>
+      <span v-else>
+        <div class="icon-route">
+          <font-awesome-icon :icon="currentRoute.icon" />
+        </div>
       </span>
       <span class="title-text">
         <div>
@@ -109,6 +117,14 @@ function buttonCollapse() {
   </div>
 </template>
 <style scoped>
+.icon-route {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 31px;
+  margin-left: -0.5rem;
+}
 .content-container {
   margin-top: 1.5rem;
 }

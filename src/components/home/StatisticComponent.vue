@@ -2,7 +2,10 @@
 import { ref, onMounted } from "vue";
 import VueApexCharts from "vue3-apexcharts";
 import { ticketDetailService } from "@/services";
-import { fixedDates } from "@/helpers";
+import LoadingContainer from "@/common/container/LoadingContainer.vue";
+import { formatData } from "@/helpers";
+
+const isLoadingCharts = ref(false);
 const chartOptionsTypeProducts = ref({
   chart: {
     id: "pie",
@@ -64,7 +67,7 @@ const chartOptionsCombined = ref({
   plotOptions: {
     bar: {
       horizontal: false,
-      borderRadius: 10,
+      borderRadius: 4,
       borderRadiusApplication: "end", // 'around', 'end'
       borderRadiusWhenStacked: "last", // 'all', 'last'
       dataLabels: {
@@ -85,6 +88,7 @@ const seriesSalesWeek = ref([]);
 const seriesCombined = ref([]);
 
 const init = async () => {
+  isLoadingCharts.value = true;
   const data = await ticketDetailService.getStatistics();
   const productTypeStats = data.product_type_stats;
   const productTotalPrice = data.daily_total_price;
@@ -99,6 +103,7 @@ const init = async () => {
   seriesCombined.value = combined;
   seriesTypeProduct.value = Object.values(productTypeStats);
   seriesSalesWeek.value = Object.values(productTotalPrice);
+  isLoadingCharts.value = false;
 };
 const updateLabels = (
   type_product,
@@ -115,10 +120,11 @@ const updateLabels = (
       onItemClick: {
         toggleDataSeries: true,
       },
+      position: "bottom",
     },
     plotOptions: {
       bar: {
-        borderRadius: 10,
+        borderRadius: 4,
         columnWidth: "50%",
       },
     },
@@ -126,9 +132,6 @@ const updateLabels = (
       {
         breakpoint: 600,
         options: {
-          chart: {
-            width: 200,
-          },
           legend: {
             position: "bottom",
           },
@@ -186,7 +189,7 @@ const updateLabels = (
     xaxis: {
       labels: {
         formatter: function (value) {
-          return fixedDates(value);
+          return formatData.datesMin(value);
         },
       },
       title: {
@@ -198,7 +201,7 @@ const updateLabels = (
     plotOptions: {
       bar: {
         horizontal: false,
-        borderRadius: 10,
+        borderRadius: 4,
         borderRadiusApplication: "end", // 'around', 'end'
         borderRadiusWhenStacked: "last", // 'all', 'last'
         dataLabels: {
@@ -216,9 +219,6 @@ const updateLabels = (
       {
         breakpoint: 600,
         options: {
-          chart: {
-            width: 200,
-          },
           legend: {
             position: "bottom",
           },
@@ -249,7 +249,7 @@ const updateLabels = (
     plotOptions: {
       bar: {
         horizontal: false,
-        borderRadius: 10,
+        borderRadius: 4,
         borderRadiusApplication: "end", // 'around', 'end'
         borderRadiusWhenStacked: "last", // 'all', 'last'
         dataLabels: {
@@ -267,9 +267,6 @@ const updateLabels = (
       {
         breakpoint: 600,
         options: {
-          chart: {
-            width: 200,
-          },
           legend: {
             position: "bottom",
           },
@@ -280,7 +277,7 @@ const updateLabels = (
     xaxis: {
       labels: {
         formatter: function (value) {
-          return fixedDates(value);
+          return formatData.datesMin(value);
         },
       },
       title: {
@@ -301,29 +298,57 @@ onMounted(() => {
 
 <template>
   <div id="chart">
-    <VueApexCharts
-      width="500"
-      height="350"
-      type="pie"
-      :options="chartOptionsTypeProducts"
-      :series="seriesTypeProduct"
-    ></VueApexCharts>
-
-    <VueApexCharts
-      width="500"
-      height="350"
-      type="bar"
-      :options="chartOptionsSalesWeek"
-      :series="seriesSalesWeek"
-    ></VueApexCharts>
-
-    <VueApexCharts
-      width="500"
-      height="350"
-      type="bar"
-      :options="chartOptionsCombined"
-      :series="seriesCombined"
-    ></VueApexCharts>
+    <div class="row gutter-sec justify-content-center">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+        <g-section-4
+          title="Venta de Tipo de Productos"
+          subTitle="Porcentaje de ventas de los últimos 7 días."
+          class="h-100"
+        >
+          <LoadingContainer :loading="isLoadingCharts">
+            <VueApexCharts
+              width="100%"
+              height="350"
+              type="pie"
+              :options="chartOptionsTypeProducts"
+              :series="seriesTypeProduct"
+            ></VueApexCharts>
+          </LoadingContainer>
+        </g-section-4>
+      </div>
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+        <g-section-4
+          title="Venta semanal"
+          subTitle="Dinero generado los últimos 7 días."
+        >
+          <LoadingContainer :loading="isLoadingCharts">
+            <VueApexCharts
+              width="100%"
+              height="350"
+              type="bar"
+              :options="chartOptionsSalesWeek"
+              :series="seriesSalesWeek"
+            ></VueApexCharts>
+          </LoadingContainer>
+        </g-section-4>
+      </div>
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+        <g-section-4
+          title="Venta de Tipo de Productos"
+          subTitle="Cantidad de ventas de últimos 7 días."
+        >
+          <LoadingContainer :loading="isLoadingCharts">
+            <VueApexCharts
+              width="100%"
+              height="350"
+              type="bar"
+              :options="chartOptionsCombined"
+              :series="seriesCombined"
+            ></VueApexCharts>
+          </LoadingContainer>
+        </g-section-4>
+      </div>
+    </div>
   </div>
 </template>
 

@@ -177,6 +177,44 @@ function getDateToDocument() {
   // Devolvemos la fecha y hora formateada
   return `${dia}_${mes}_${año} ${horas}_${minutos}_${segundos}`;
 }
+function getTodayDayFormated() {
+  let today = new Date();
+
+  const diasSemana = [
+    "Domingo",
+    "Lunes",
+    "Martes",
+    "Miércoles",
+    "Jueves",
+    "Viernes",
+    "Sábado",
+  ];
+
+  const meses = [
+    "enero",
+    "febrero",
+    "marzo",
+    "abril",
+    "mayo",
+    "junio",
+    "julio",
+    "agosto",
+    "septiembre",
+    "octubre",
+    "noviembre",
+    "diciembre",
+  ];
+
+  // Obtener el día de la semana, día, mes y año
+  let diaSemana = diasSemana[today.getDay()];
+  let dia = today.getDate();
+  let mes = meses[today.getMonth()];
+  let año = today.getFullYear();
+
+  // Construir la fecha en el formato deseado
+  let fechaFormateada = `${diaSemana}, ${dia} de ${mes} de ${año}`;
+  return fechaFormateada;
+}
 const formatData = {
   times(_time) {
     if (!_time) return _time;
@@ -572,4 +610,5 @@ export {
   formatSubTitle,
   formatearErrores,
   copyObject,
+  getTodayDayFormated,
 };

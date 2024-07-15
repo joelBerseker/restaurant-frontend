@@ -73,8 +73,9 @@ async function editElement(_data) {
   }
   return resp;
 }
-function calcDiscount() {
-  let priceTotal = props.elementData.getLabelValue("priceTotal");
+function calcDiscount(_deleteTotal) {
+  let priceTotal =
+    props.elementData.getLabelValue("priceTotal") - Number(_deleteTotal);
   let discount = props.elementData.getLabelValue("discount");
   let numDisc = Number(discount);
   if (!isNaN(numDisc) && numDisc > 0) {
@@ -90,7 +91,7 @@ async function deleteElement(_data) {
   let resp = await ticketDetailService.deleteTicketDetail(
     _data.id.value,
     rest.toFixed(2),
-    calcDiscount()
+    calcDiscount(_data.price_total.value)
   );
   if (resp) {
     getList();

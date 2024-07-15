@@ -83,7 +83,7 @@ function calcDiscount(_deleteTotal) {
     let calc = Number(priceTotal) - priceDisc;
     return calc.toFixed(2);
   } else {
-    return priceTotal;
+    return priceTotal.toFixed(2);
   }
 }
 async function deleteElement(_data) {

@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "company_id": 2,
+    "company_id": 1,
     "name": "Carnes a la Parrilla",
     "description": "Carnes como costillas y asado cocinadas a la parrilla, con sabor ahumado y textura crujiente.",
     "is_publish": true,
@@ -21,7 +21,7 @@
   },
   {
     "id": 3,
-    "company_id": 3,
+    "company_id": 1,
     "name": "Segundos Platos de Carne",
     "is_publish": true,
     "description": "Platos como estofado y filete a la mostaza, cocidos lentamente para lograr carne tierna y sabrosa.",

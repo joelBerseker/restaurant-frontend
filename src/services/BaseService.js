@@ -1,7 +1,7 @@
 // En un archivo BaseService.js
 import axiosInstance from "./axios-instance";
 import { handleError } from "@/helpers";
-import { useToastStore } from "@/stores";
+import { useToastStore, useUserStore } from "@/stores";
 
 export const BaseService = {
   async changeStatus(endpoint, data, module = null) {
@@ -26,6 +26,9 @@ export const BaseService = {
   async applyFilters(data, filterParams) {
     let filteredData = [...data]; // Hacer una copia de los datos
     console.log(filterParams);
+    const userStore = useUserStore();
+    const company = userStore.getCompany();
+    console.log(company);
 
     if (filterParams) {
       const {
@@ -42,9 +45,16 @@ export const BaseService = {
         searches,
       } = filterParams;
 
+      filteredData = data.filter((item) => {
+        if (item.company_id) {
+          return item.company_id == company.id;
+        }
+        return true;
+      });
+
       // Aplicar filtros básicos
       if (search && searchBy) {
-        filteredData = data.filter((item) => {
+        filteredData = filteredData.filter((item) => {
           // Recorre el array de campos en searchBy
           return searchBy.some((field) => {
             // Asegúrate de que el campo exista y conviértelo a minúsculas para la comparación

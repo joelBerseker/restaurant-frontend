@@ -1,0 +1,389 @@
+[
+  {
+    "id": 1,
+    "_starters": [
+      {
+        "id": 1,
+        "company_id": 2,
+        "name": "Paella",
+        "description": "Un plato español de arroz cocido con mariscos, pollo y verduras, sazonado con azafrán y otras especias.",
+        "id_typeproduct": 1,
+        "_id_typeproduct": {
+          "id": 1,
+          "name": "Carnes a la Parrilla",
+          "description": "Carnes como costillas y asado cocinadas a la parrilla, con sabor ahumado y textura crujiente."
+        },
+        "discount": 0,
+        "price": 25.00,
+    
+        "is_publish": true,
+        "status": 1,
+        "created_at": "2024-08-01T12:34:56Z"
+     
+      },
+      {
+        "id": 2,
+        "company_id": 2,
+        "name": "Chili con Carne",
+        "description": "Un guiso estadounidense a base de carne molida, frijoles, tomates y chiles, cocido lentamente para desarrollar sabores profundos.",
+        "id_typeproduct": 3,
+        "_id_typeproduct": {
+          "id": 3,
+          "name": "Segundos Platos de Carne",
+          "description": "Platos como estofado y filete a la mostaza, cocidos lentamente para lograr carne tierna y sabrosa."
+        },
+        "discount": 0,
+        "price": 25.00,
+        "is_publish": true,
+       
+        "status": 1,
+        "created_at": "2024-08-01T12:34:56Z"
+      
+      },
+      {
+        "id": 3,
+        "company_id": 3,
+        "name": "Sushi",
+        "description": "Un plato japonés que incluye arroz sazonado con vinagre, acompañado de pescado crudo, verduras y alga nori.",
+        "id_typeproduct": 2,
+        "_id_typeproduct": {
+          "id": 2,
+          "name": "Platos de Mariscos",
+          "description": "Incluye ceviche y camarones a la plancha, preparados con especias frescas y cítricos."
+        },
+        "discount": 0,
+        "price": 25.00,
+        "is_publish": true,
+        
+        "status": 1,
+        "created_at": "2024-08-01T12:34:56Z"
+      },
+      {
+        "id": 4,
+        "company_id": 2,
+        "name": "Lasagna",
+        "description": "Un plato italiano de capas de pasta, carne molida, salsa de tomate y queso, horneado hasta que esté burbujeante y dorado.",
+        "id_typeproduct": 3,
+        "_id_typeproduct": {
+          "id": 3,
+          "name": "Segundos Platos de Carne",
+          "description": "Platos como estofado y filete a la mostaza, cocidos lentamente para lograr carne tierna y sabrosa."
+        },
+        "discount": 0,
+        "price": 25.00,
+        "is_publish": true,
+        
+        "status": 2,
+        "created_at": "2024-08-01T12:34:56Z"
+      },
+      {
+        "id": 5,
+        "company_id": 1,
+        "name": "Tacos al Pastor",
+        "description": "Tortillas de maíz rellenas de carne de cerdo marinada y asada, acompañadas de piña, cebolla y cilantro.",
+        "id_typeproduct": 1,
+        "_id_typeproduct": {
+          "id": 1,
+          "name": "Carnes a la Parrilla",
+          "description": "Carnes como costillas y asado cocinadas a la parrilla, con sabor ahumado y textura crujiente."
+        },
+        "discount": 0,
+        "price": 25.00,
+        "is_publish": true,
+       
+        "status": 1,
+        "created_at": "2024-08-01T12:34:56Z"
+      }
+    ],
+    "_main_courses": [
+      {
+        "id": 1,
+        "company_id": 2,
+        "name": "Paella",
+        "description": "Un plato español de arroz cocido con mariscos, pollo y verduras, sazonado con azafrán y otras especias.",
+        "id_typeproduct": 1,
+        "_id_typeproduct": {
+          "id": 1,
+          "name": "Carnes a la Parrilla",
+          "description": "Carnes como costillas y asado cocinadas a la parrilla, con sabor ahumado y textura crujiente."
+        },
+        "discount": 0,
+        "price": 25.00,
+    
+        "is_publish": true,
+        "status": 1,
+        "created_at": "2024-08-01T12:34:56Z"
+     
+      },
+      {
+        "id": 2,
+        "company_id": 2,
+        "name": "Chili con Carne",
+        "description": "Un guiso estadounidense a base de carne molida, frijoles, tomates y chiles, cocido lentamente para desarrollar sabores profundos.",
+        "id_typeproduct": 3,
+        "_id_typeproduct": {
+          "id": 3,
+          "name": "Segundos Platos de Carne",
+          "description": "Platos como estofado y filete a la mostaza, cocidos lentamente para lograr carne tierna y sabrosa."
+        },
+        "discount": 0,
+        "price": 25.00,
+        "is_publish": true,
+       
+        "status": 1,
+        "created_at": "2024-08-01T12:34:56Z"
+      
+      },
+      {
+        "id": 3,
+        "company_id": 3,
+        "name": "Sushi",
+        "description": "Un plato japonés que incluye arroz sazonado con vinagre, acompañado de pescado crudo, verduras y alga nori.",
+        "id_typeproduct": 2,
+        "_id_typeproduct": {
+          "id": 2,
+          "name": "Platos de Mariscos",
+          "description": "Incluye ceviche y camarones a la plancha, preparados con especias frescas y cítricos."
+        },
+        "discount": 0,
+        "price": 25.00,
+        "is_publish": true,
+        
+        "status": 1,
+        "created_at": "2024-08-01T12:34:56Z"
+      },
+      {
+        "id": 4,
+        "company_id": 2,
+        "name": "Lasagna",
+        "description": "Un plato italiano de capas de pasta, carne molida, salsa de tomate y queso, horneado hasta que esté burbujeante y dorado.",
+        "id_typeproduct": 3,
+        "_id_typeproduct": {
+          "id": 3,
+          "name": "Segundos Platos de Carne",
+          "description": "Platos como estofado y filete a la mostaza, cocidos lentamente para lograr carne tierna y sabrosa."
+        },
+        "discount": 0,
+        "price": 25.00,
+        "is_publish": true,
+        
+        "status": 2,
+        "created_at": "2024-08-01T12:34:56Z"
+      }
+     
+    ],
+    "name": "MENU EMPRESARIAL",
+    "day": 1,
+    "price": "40.00",
+    "description": "desc",
+    "is_publish": false,
+    "status": 1,
+    "starters": [
+        1,
+        2,
+        3,
+        4,
+        5
+    ],
+    "main_courses": [
+        1,
+        2,
+        3,
+        4
+    ]
+},
+{
+  "id": 1,
+  "_starters": [
+    {
+      "id": 1,
+      "company_id": 2,
+      "name": "Paella",
+      "description": "Un plato español de arroz cocido con mariscos, pollo y verduras, sazonado con azafrán y otras especias.",
+      "id_typeproduct": 1,
+      "_id_typeproduct": {
+        "id": 1,
+        "name": "Carnes a la Parrilla",
+        "description": "Carnes como costillas y asado cocinadas a la parrilla, con sabor ahumado y textura crujiente."
+      },
+      "discount": 0,
+      "price": 25.00,
+  
+      "is_publish": true,
+      "status": 1,
+      "created_at": "2024-08-01T12:34:56Z"
+   
+    },
+    {
+      "id": 2,
+      "company_id": 2,
+      "name": "Chili con Carne",
+      "description": "Un guiso estadounidense a base de carne molida, frijoles, tomates y chiles, cocido lentamente para desarrollar sabores profundos.",
+      "id_typeproduct": 3,
+      "_id_typeproduct": {
+        "id": 3,
+        "name": "Segundos Platos de Carne",
+        "description": "Platos como estofado y filete a la mostaza, cocidos lentamente para lograr carne tierna y sabrosa."
+      },
+      "discount": 0,
+      "price": 25.00,
+      "is_publish": true,
+     
+      "status": 1,
+      "created_at": "2024-08-01T12:34:56Z"
+    
+    },
+    {
+      "id": 3,
+      "company_id": 3,
+      "name": "Sushi",
+      "description": "Un plato japonés que incluye arroz sazonado con vinagre, acompañado de pescado crudo, verduras y alga nori.",
+      "id_typeproduct": 2,
+      "_id_typeproduct": {
+        "id": 2,
+        "name": "Platos de Mariscos",
+        "description": "Incluye ceviche y camarones a la plancha, preparados con especias frescas y cítricos."
+      },
+      "discount": 0,
+      "price": 25.00,
+      "is_publish": true,
+      
+      "status": 1,
+      "created_at": "2024-08-01T12:34:56Z"
+    },
+    {
+      "id": 4,
+      "company_id": 2,
+      "name": "Lasagna",
+      "description": "Un plato italiano de capas de pasta, carne molida, salsa de tomate y queso, horneado hasta que esté burbujeante y dorado.",
+      "id_typeproduct": 3,
+      "_id_typeproduct": {
+        "id": 3,
+        "name": "Segundos Platos de Carne",
+        "description": "Platos como estofado y filete a la mostaza, cocidos lentamente para lograr carne tierna y sabrosa."
+      },
+      "discount": 0,
+      "price": 25.00,
+      "is_publish": true,
+      
+      "status": 2,
+      "created_at": "2024-08-01T12:34:56Z"
+    },
+    {
+      "id": 5,
+      "company_id": 1,
+      "name": "Tacos al Pastor",
+      "description": "Tortillas de maíz rellenas de carne de cerdo marinada y asada, acompañadas de piña, cebolla y cilantro.",
+      "id_typeproduct": 1,
+      "_id_typeproduct": {
+        "id": 1,
+        "name": "Carnes a la Parrilla",
+        "description": "Carnes como costillas y asado cocinadas a la parrilla, con sabor ahumado y textura crujiente."
+      },
+      "discount": 0,
+      "price": 25.00,
+      "is_publish": true,
+     
+      "status": 1,
+      "created_at": "2024-08-01T12:34:56Z"
+    }
+  ],
+  "_main_courses": [
+    {
+      "id": 1,
+      "company_id": 2,
+      "name": "Paella",
+      "description": "Un plato español de arroz cocido con mariscos, pollo y verduras, sazonado con azafrán y otras especias.",
+      "id_typeproduct": 1,
+      "_id_typeproduct": {
+        "id": 1,
+        "name": "Carnes a la Parrilla",
+        "description": "Carnes como costillas y asado cocinadas a la parrilla, con sabor ahumado y textura crujiente."
+      },
+      "discount": 0,
+      "price": 25.00,
+  
+      "is_publish": true,
+      "status": 1,
+      "created_at": "2024-08-01T12:34:56Z"
+   
+    },
+    {
+      "id": 2,
+      "company_id": 2,
+      "name": "Chili con Carne",
+      "description": "Un guiso estadounidense a base de carne molida, frijoles, tomates y chiles, cocido lentamente para desarrollar sabores profundos.",
+      "id_typeproduct": 3,
+      "_id_typeproduct": {
+        "id": 3,
+        "name": "Segundos Platos de Carne",
+        "description": "Platos como estofado y filete a la mostaza, cocidos lentamente para lograr carne tierna y sabrosa."
+      },
+      "discount": 0,
+      "price": 25.00,
+      "is_publish": true,
+     
+      "status": 1,
+      "created_at": "2024-08-01T12:34:56Z"
+    
+    },
+    {
+      "id": 3,
+      "company_id": 3,
+      "name": "Sushi",
+      "description": "Un plato japonés que incluye arroz sazonado con vinagre, acompañado de pescado crudo, verduras y alga nori.",
+      "id_typeproduct": 2,
+      "_id_typeproduct": {
+        "id": 2,
+        "name": "Platos de Mariscos",
+        "description": "Incluye ceviche y camarones a la plancha, preparados con especias frescas y cítricos."
+      },
+      "discount": 0,
+      "price": 25.00,
+      "is_publish": true,
+      
+      "status": 1,
+      "created_at": "2024-08-01T12:34:56Z"
+    },
+    {
+      "id": 4,
+      "company_id": 2,
+      "name": "Lasagna",
+      "description": "Un plato italiano de capas de pasta, carne molida, salsa de tomate y queso, horneado hasta que esté burbujeante y dorado.",
+      "id_typeproduct": 3,
+      "_id_typeproduct": {
+        "id": 3,
+        "name": "Segundos Platos de Carne",
+        "description": "Platos como estofado y filete a la mostaza, cocidos lentamente para lograr carne tierna y sabrosa."
+      },
+      "discount": 0,
+      "price": 25.00,
+      "is_publish": true,
+      
+      "status": 2,
+      "created_at": "2024-08-01T12:34:56Z"
+    }
+   
+  ],
+  "name": "MENU ECONOMICO",
+  "day": 1,
+  "price": "45.00",
+  "description": "desc",
+  "is_publish": false,
+  "status": 1,
+  "starters": [
+      1,
+      2,
+      3,
+      4,
+      5
+  ],
+  "main_courses": [
+      1,
+      2,
+      3,
+      4
+  ]
+}
+
+]

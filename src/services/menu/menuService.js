@@ -1,6 +1,6 @@
 import { menuApiRestService } from "@/services/menu/menuApiRestService";
 import { menuJsonService } from "@/services/menu/menuJsonService";
-const mode = "production";
+const mode = import.meta.env.VITE_APP_MODE;
 
 export const menuService = {
   async getMenu(menu_id) {

@@ -2,24 +2,29 @@ import axiosJsonInstance from "@/services/axios-json-instance";
 import { handleError } from "@/helpers";
 import { dataTransform } from "@/services";
 import { BaseService } from "@/services/BaseService";
-import { MenuModel } from "@/models";
+import { ReservationModel } from "@/models";
 import { useToastStore } from "@/stores";
-const servicePath = "/menu.json";
-const module = "Menu";
-export const menuJsonService = {
-  async getMenu(menu_id) {
+const servicePath = "/reservation.json";
+const module = "Mesa";
+export const reservationJsonService = {
+  async getReservation(reservation_id) {
     try {
       const response = await axiosJsonInstance.get(`${servicePath}`);
 
       if (response && response.data) {
         // Encuentra el elemento con el id correspondiente
-        const menuData = response.data.find((menu) => menu.id === menu_id);
+        const reservationData = response.data.find(
+          (reservation) => reservation.id === reservation_id
+        );
 
-        if (menuData) {
+        if (reservationData) {
           console.log("Restaurant Frontend: Entro y encontro");
 
           // Transforma los datos
-          const data = dataTransform.transformApiData(menuData, MenuModel);
+          const data = dataTransform.transformApiData(
+            reservationData,
+            ReservationModel
+          );
           return data;
         } else {
           throw new Error(`El/La ${module} solicitada no existe en los datos`);
@@ -33,7 +38,7 @@ export const menuJsonService = {
       handleError(error, "get_element_error", module);
     }
   },
-  async getListMenu(filterParams = null) {
+  async getListReservation(filterParams = null) {
     try {
       const response = await axiosJsonInstance.get(`${servicePath}`);
       const filterData = await BaseService.applyFilters(
@@ -41,7 +46,7 @@ export const menuJsonService = {
         filterParams
       );
       const datas = filterData.map((apiData) =>
-        dataTransform.transformApiData(apiData, MenuModel)
+        dataTransform.transformApiData(apiData, ReservationModel)
       );
       return datas;
     } catch (error) {
@@ -49,13 +54,16 @@ export const menuJsonService = {
     }
   },
 
-  async addMenu(new_data) {
+  async addReservation(new_data) {
     try {
       const response = await axiosJsonInstance.post(
         `${servicePath}/`,
         new_data.addData()
       );
-      const data_new = dataTransform.transformApiData(response.data, MenuModel);
+      const data_new = dataTransform.transformApiData(
+        response.data,
+        ReservationModel
+      );
       const useToast = useToastStore();
       useToast.show("add_success", {
         important_text: data_new.getTextModel(),
@@ -65,7 +73,7 @@ export const menuJsonService = {
       handleError(error, "add_error", module);
     }
   },
-  async updateMenu(new_data) {
+  async updateReservation(new_data) {
     try {
       const data_new = new_data;
       const useToast = useToastStore();
@@ -77,7 +85,7 @@ export const menuJsonService = {
       handleError(error, "edit_error", module);
     }
   },
-  async deleteMenu(dataid) {
+  async deleteReservation(dataid) {
     try {
       const useToast = useToastStore();
       useToast.show("delete_success", {
@@ -88,7 +96,7 @@ export const menuJsonService = {
       handleError(error, "delete_error", module);
     }
   },
-  async changeStatusMenu(data) {
+  async changeStatusReservation(data) {
     const endpoint = `${servicePath}/${data.id.value}/`;
     return BaseService.changeStatus(endpoint, data, module);
   },

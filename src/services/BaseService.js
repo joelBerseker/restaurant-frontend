@@ -28,6 +28,8 @@ export const BaseService = {
     console.log(filterParams);
     const userStore = useUserStore();
     const company = userStore.getCompany();
+    console.log(company);
+
     if (filterParams) {
       const {
         search,
@@ -45,7 +47,7 @@ export const BaseService = {
 
       filteredData = data.filter((item) => {
         if (item.company_id) {
-          return item.company_id == company;
+          return item.company_id == company.id;
         }
         return true;
       });

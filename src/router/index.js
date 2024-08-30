@@ -160,7 +160,7 @@ const router = createRouter({
               component: () => import("@/components/cardMenu/CardMenuView.vue"),
               meta: {
                 requiresAuth: true,
-                moduleid: 6,
+                moduleid: 99,
                 icon: "fa-solid fa-book-open",
                 title: "Carta",
               },

@@ -100,6 +100,9 @@ export class UserModel extends Model {
   is_admin = {
     value: "",
   };
+  is_staff = {
+    value: "",
+  };
   company_id = {
     value: "",
     additional: {},
@@ -117,6 +120,7 @@ export class UserModel extends Model {
       rol_name: this.id_role.getValueText(),
       is_p: this.is_admin.value,
       company: this.company_id.additional,
+      is_dev: this.is_staff.value,
     };
   }
   beforeValidate() {

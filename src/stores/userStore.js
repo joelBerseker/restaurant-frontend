@@ -92,6 +92,10 @@ export const useUserStore = defineStore("user", {
       const decryptedUser = decrypt(this.User);
       return decryptedUser.is_p;
     },
+    isDev() {
+      const decryptedUser = decrypt(this.User);
+      return decryptedUser.is_dev;
+    },
 
     isUser() {
       return true;
@@ -142,7 +146,8 @@ export const useUserStore = defineStore("user", {
 
       const decryptedUser = decrypt(this.User);
       const is_admin = decryptedUser.is_p;
-
+      const is_developer = decryptedUser.is_dev;
+      if (moduleid === 99) return is_developer;
       if (is_admin) return true;
 
       const decryptedPermises = decrypt(this.permises);

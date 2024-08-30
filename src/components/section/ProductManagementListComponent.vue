@@ -40,13 +40,13 @@ function onPrint() {
   <g-section-1
     subTitle="Gestion de productos, tipos de productos y  menus en el sistema"
   >
-    <template #buttons>
+    <!--<template #buttons>
       <g-button
         text="Generar Carta"
         icon="fa-solid fa-book-open"
         @click="onPrint()"
       />
-    </template>
+    </template>-->
     <template #content>
       <div class="row gutter-sec">
         <div

@@ -6,7 +6,7 @@ export const testRouter = {
 
   meta: {
     requiresAuth: true,
-    moduleid: 0,
+    moduleid: 99,
     icon: "fa-solid fa-flask-vial",
     title: "Pruebas",
   },
@@ -19,7 +19,7 @@ export const testRouter = {
       meta: {
         keepAlive: true,
         requiresAuth: true,
-        moduleid: 0,
+        moduleid: 99,
         icon: "Fa-regular fa-rectangle-list",
         title: "Revisión",
         type: "tab",
@@ -32,7 +32,7 @@ export const testRouter = {
       meta: {
         keepAlive: true,
         requiresAuth: true,
-        moduleid: 0,
+        moduleid: 99,
         icon: "fa-solid fa-plus",
         title: "Generar",
         type: "tab",

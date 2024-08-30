@@ -1,164 +1,67 @@
-import axiosInstance from "@/services/axios-instance";
-import { handleError } from "@/helpers";
-import { dataTransform } from "@/services";
-import { BaseService } from "@/services/BaseService";
-import { ProductModel } from "@/models";
-import { useToastStore } from "@/stores";
-const servicePath = "/product";
-const module = "Producto";
+import { productApiRestService } from "@/services/product/productApiRestService";
+import { productJsonService } from "@/services/product/productJsonService";
+const mode = import.meta.env.VITE_APP_MODE;
 
 export const productService = {
   async getProduct(product_id) {
-    try {
-      const response = await axiosInstance.get(`${servicePath}/${product_id}/`);
-
-      if (response && response.data) {
-        const data = dataTransform.transformApiData(
-          response.data,
-          ProductModel
-        );
-        return data;
-      } else {
-        throw new Error(
-          "La respuesta de la API no contiene los datos esperados"
-        );
-      }
-    } catch (error) {
-      handleError(error, "get_element_error", module);
+    switch (mode) {
+      case "production":
+        return await productApiRestService.getProduct(product_id);
+      case "test":
+        return await productJsonService.getProduct(product_id);
+      default:
+        throw new Error(`Mode "${mode}" no está soportado`);
     }
   },
   async getListProduct(filterParams = null) {
-    let filteredFilters = "";
-    if (filterParams != null) {
-      const {
-        search,
-        searchBy,
-        status,
-        order,
-        orderBy,
-        specific_date,
-        end_date,
-        start_date,
-        interval,
-        year_date,
-        searches,
-        // Otros parámetros de filtro que puedas necesitar
-        id_typeproduct,
-      } = filterParams;
-
-      const filters = {
-        orderBy,
-        order,
-        status,
-        search,
-        end_date,
-        start_date,
-        interval,
-        specific_date,
-        year_date,
-        // Otros parámetros de filtro que puedas necesitar
-        id_typeproduct,
-      };
-
-      filteredFilters = Object.entries(filters)
-        .filter(
-          ([key, value]) =>
-            value !== undefined && value !== null && value !== ""
-        )
-        .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-        .join("&");
-
-      if (search && searchBy) {
-        const searchByParam = `searchBy=${searchBy.join(",")}`;
-        filteredFilters += searchByParam ? `&${searchByParam}` : "";
-      }
-      if (searches && searches != undefined) {
-        console.log("entre a searches");
-        searches.forEach((search, index) => {
-          if (search.value && search.by) {
-            filteredFilters += `&search${index + 1}=${encodeURIComponent(
-              search.value
-            )}&searchBy${index + 1}=${encodeURIComponent(search.by)}`;
-          }
-        });
-      }
-    }
-
-    try {
-      const response = await axiosInstance.get(
-        `${servicePath}/?${filteredFilters}`
-      );
-      const datas = response.data.map((apiData) =>
-        dataTransform.transformApiData(apiData, ProductModel)
-      );
-      return datas;
-    } catch (error) {
-      handleError(error, "get_list_error", module);
+    switch (mode) {
+      case "production":
+        return await productApiRestService.getListProduct(filterParams);
+      case "test":
+        return await productJsonService.getListProduct(filterParams);
+      default:
+        throw new Error(`Mode "${mode}" no está soportado`);
     }
   },
 
   async addProduct(new_data) {
-    try {
-      const config = {
-        method: "POST",
-        url: `${servicePath}/`,
-        data: new_data.addData(),
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
-      const response = await axiosInstance(config);
-      const data_new = dataTransform.transformApiData(
-        response.data,
-        ProductModel
-      );
-      const useToast = useToastStore();
-      useToast.show("add_success", {
-        important_text: data_new.getTextModel(),
-      });
-      return data_new;
-    } catch (error) {
-      handleError(error, "add_error", module);
+    switch (mode) {
+      case "production":
+        return await productApiRestService.addProduct(new_data);
+      case "test":
+        return await productJsonService.getProduct(product_id);
+      default:
+        throw new Error(`Mode "${mode}" no está soportado`);
     }
   },
   async updateProduct(new_data) {
-    try {
-      const config = {
-        method: "PATCH",
-        url: `${servicePath}/${new_data.id.value}/`,
-        data: new_data.addData(),
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
-      const response = await axiosInstance(config);
-      const data_new = dataTransform.transformApiData(
-        response.data,
-        ProductModel
-      );
-      const useToast = useToastStore();
-      useToast.show("edit_success", {
-        important_text: data_new.getTextModel(),
-      });
-      return data_new;
-    } catch (error) {
-      handleError(error, "edit_error", module);
+    switch (mode) {
+      case "production":
+        return await productApiRestService.updateProduct(new_data);
+      case "test":
+        return await productJsonService.updateProduct(new_data);
+      default:
+        throw new Error(`Mode "${mode}" no está soportado`);
     }
   },
   async deleteProduct(dataid) {
-    try {
-      const response = await axiosInstance.delete(`${servicePath}/${dataid}/`);
-      const useToast = useToastStore();
-      useToast.show("delete_success", {
-        important_text: module,
-      });
-      return response;
-    } catch (error) {
-      handleError(error, "delete_error", module);
+    switch (mode) {
+      case "production":
+        return await productApiRestService.deleteProduct(dataid);
+      case "test":
+        return await productJsonService.deleteProduct(dataid);
+      default:
+        throw new Error(`Mode "${mode}" no está soportado`);
     }
   },
   async changeStatusProduct(data) {
-    const endpoint = `${servicePath}/${data.id.value}/`;
-    return BaseService.changeStatus(endpoint, data, module);
+    switch (mode) {
+      case "production":
+        return await productApiRestService.changeStatusProduct(data);
+      case "test":
+        return await productJsonService.changeStatusProduct(data);
+      default:
+        throw new Error(`Mode "${mode}" no está soportado`);
+    }
   },
 };

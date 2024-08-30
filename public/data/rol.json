@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Administrador",
+    "description": "Rol con acceso completo al sistema.",
+    "company_id": 1,
+    "status": 1,
+    "created_at": "2024-08-30T12:34:56Z",
+    "updated_at": "2024-08-30T12:34:56Z"
+  },
+  {
+    "id": 2,
+    "name": "Gerente",
+    "description": "Rol con acceso para la gestión de operaciones.",
+    "company_id": 2,
+    "status": 1,
+    "created_at": "2024-08-30T12:34:56Z",
+    "updated_at": "2024-08-30T12:34:56Z"
+  },
+  {
+    "id": 3,
+    "name": "Asistente",
+    "description": "Rol con acceso limitado a funciones administrativas.",
+    "company_id": 1,
+    "status": 2,
+    "created_at": "2024-08-30T12:34:56Z",
+    "updated_at": "2024-08-30T12:34:56Z"
+  },
+  {
+    "id": 4,
+    "name": "Soporte Técnico",
+    "description": "Rol enfocado en la asistencia técnica.",
+    "company_id": 2,
+    "status": 1,
+    "created_at": "2024-08-30T12:34:56Z",
+    "updated_at": "2024-08-30T12:34:56Z"
+  }
+]

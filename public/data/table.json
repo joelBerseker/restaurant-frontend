@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "company_id": 2,
+    "name": "Mesa Central",
+    "number": 4,
+    "description": "Mesa principal Jose en el centro del restaurante",
+    "status": 1,
+    "created_at": "2024-08-01T12:34:56Z",
+    "reservation_date": "2024-08-30T18:00:00Z"
+  },
+  {
+    "id": 2,
+    "company_id": 2,
+    "name": "Mesa Ventana Jose",
+    "number": 2,
+    "description": "Mesa pequeña junto a la ventana con vista al parque",
+    "status": 1,
+    "created_at": "2024-08-01T12:34:56Z",
+    "reservation_date": "2024-08-30T18:00:00Z"
+  },
+  {
+    "id": 3,
+    "company_id": 3,
+    "name": "Mesa VIP",
+    "number": 6,
+    "description": "Mesa privada en la sala VIP con cortinas",
+    "status": 1,
+    "created_at": "2024-08-01T12:34:56Z",
+    "reservation_date": "2024-08-31T20:00:00Z"
+  },
+  {
+    "id": 4,
+    "company_id": 2,
+    "name": "Mesa Terraza",
+    "number": 3,
+    "description": "Mesa en la terraza con vista al jardín",
+    "status": 2,
+    "created_at": "2024-08-01T12:34:56Z",
+    "reservation_date": "2024-08-29T15:00:00Z"
+  },
+  {
+    "id": 5,
+    "company_id": 1,
+    "name": "Mesa Familiar",
+    "number": 8,
+    "description": "Mesa grande para familias numerosas",
+    "status": 1,
+    "created_at": "2024-08-01T12:34:56Z",
+    "reservation_date": "2024-08-30T12:00:00Z"
+  }
+]

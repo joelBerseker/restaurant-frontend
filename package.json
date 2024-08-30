@@ -8,6 +8,7 @@
     "gm": "node scripts/generateModel.js",
     "dev": "vite",
     "build": "vite build --mode production",
+    "build:test": "vite build --mode test",
     "preview": "vite preview"
   },
   "dependencies": {

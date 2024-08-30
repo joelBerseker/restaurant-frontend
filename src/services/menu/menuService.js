@@ -1,144 +1,67 @@
-import axiosInstance from "@/services/axios-instance";
-import { handleError } from "@/helpers";
-import { dataTransform } from "@/services";
-import { BaseService } from "@/services/BaseService";
-import { MenuModel } from "@/models";
-import { useToastStore } from "@/stores";
-
-const servicePath = "/menu";
-const module = "menu";
+import { menuApiRestService } from "@/services/menu/menuApiRestService";
+import { menuJsonService } from "@/services/menu/menuJsonService";
+const mode = "production";
 
 export const menuService = {
   async getMenu(menu_id) {
-    try {
-      const response = await axiosInstance.get(`${servicePath}/${menu_id}/`);
-
-      if (response && response.data) {
-        const data = dataTransform.transformApiData(response.data, MenuModel);
-        return data;
-      } else {
-        throw new Error(
-          "La respuesta de la API no contiene los datos esperados"
-        );
-      }
-    } catch (error) {
-      handleError(error, "get_element_error", module);
+    switch (mode) {
+      case "production":
+        return await menuApiRestService.getMenu(menu_id);
+      case "test":
+        return await menuJsonService.getMenu(menu_id);
+      default:
+        throw new Error(`Mode "${mode}" no está soportado`);
     }
   },
   async getListMenu(filterParams = null) {
-    let filteredFilters = "";
-    if (filterParams != null) {
-      const {
-        search,
-        searchBy,
-        status,
-        order,
-        orderBy,
-        specific_date,
-        end_date,
-        start_date,
-        interval,
-        year_date,
-        searches,
-        // Otros parámetros de filtro que puedas necesitar
-      } = filterParams;
-
-      const filters = {
-        orderBy,
-        order,
-        status,
-        search,
-        end_date,
-        start_date,
-        interval,
-        specific_date,
-        year_date,
-        // Otros parámetros de filtro que puedas necesitar
-      };
-
-      filteredFilters = Object.entries(filters)
-        .filter(
-          ([key, value]) =>
-            value !== undefined && value !== null && value !== ""
-        )
-        .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-        .join("&");
-
-      if (search && searchBy) {
-        const searchByParam = `searchBy=${searchBy.join(",")}`;
-        filteredFilters += searchByParam ? `&${searchByParam}` : "";
-      }
-      if (searches && searches != undefined) {
-        searches.forEach((search, index) => {
-          if (search.value && search.by) {
-            filteredFilters += `&search${index + 1}=${encodeURIComponent(
-              search.value
-            )}&searchBy${index + 1}=${encodeURIComponent(search.by)}`;
-          }
-        });
-      }
-    }
-
-    try {
-      const response = await axiosInstance.get(
-        `${servicePath}/?${filteredFilters}`
-      );
-      const menu = response.data.map((apiData) =>
-        dataTransform.transformApiData(apiData, MenuModel)
-      );
-      return menu;
-    } catch (error) {
-      handleError(error, "get_list_error", module);
+    switch (mode) {
+      case "production":
+        return await menuApiRestService.getListMenu((filterParams = null));
+      case "test":
+        return await menuJsonService.getListMenu((filterParams = null));
+      default:
+        throw new Error(`Mode "${mode}" no está soportado`);
     }
   },
 
   async addMenu(new_data) {
-    try {
-      const response = await axiosInstance.post(
-        `${servicePath}/`,
-        new_data.addData()
-      );
-      const data_new = dataTransform.transformApiData(response.data, MenuModel);
-      const useToast = useToastStore();
-      useToast.show("add_success", {
-        important_text: data_new.getTextModel(),
-      });
-      return data_new;
-    } catch (error) {
-      handleError(error, "add_error", module);
+    switch (mode) {
+      case "production":
+        return await menuApiRestService.addMenu(new_data);
+      case "test":
+        return await menuJsonService.getMenu(menu_id);
+      default:
+        throw new Error(`Mode "${mode}" no está soportado`);
     }
   },
   async updateMenu(new_data) {
-    let dataid = new_data.id.value;
-    try {
-      const response = await axiosInstance.put(
-        `${servicePath}/${dataid}/`,
-        new_data.addData()
-      );
-      const data_new = dataTransform.transformApiData(response.data, MenuModel);
-      const useToast = useToastStore();
-      useToast.show("edit_success", {
-        important_text: data_new.getTextModel(),
-      });
-      return data_new;
-    } catch (error) {
-      handleError(error, "edit_error", module);
+    switch (mode) {
+      case "production":
+        return await menuApiRestService.updateMenu(new_data);
+      case "test":
+        return await menuJsonService.updateMenu(new_data);
+      default:
+        throw new Error(`Mode "${mode}" no está soportado`);
     }
   },
   async deleteMenu(dataid) {
-    try {
-      const response = await axiosInstance.delete(`${servicePath}/${dataid}/`);
-      const useToast = useToastStore();
-      useToast.show("delete_success", {
-        important_text: `${module} `,
-      });
-      return response;
-    } catch (error) {
-      handleError(error, "delete_error", module);
+    switch (mode) {
+      case "production":
+        return await menuApiRestService.deleteMenu(dataid);
+      case "test":
+        return await menuJsonService.deleteMenu(dataid);
+      default:
+        throw new Error(`Mode "${mode}" no está soportado`);
     }
   },
   async changeStatusMenu(data) {
-    const endpoint = `${servicePath}/${data.id.value}/`;
-    return BaseService.changeStatus(endpoint, data);
+    switch (mode) {
+      case "production":
+        return await menuApiRestService.changeStatusMenu(data);
+      case "test":
+        return await menuJsonService.changeStatusMenu(data);
+      default:
+        throw new Error(`Mode "${mode}" no está soportado`);
+    }
   },
 };

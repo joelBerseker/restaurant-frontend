@@ -19,11 +19,6 @@ axiosJsonInstance.interceptors.request.use((config) => {
 
 axiosJsonInstance.interceptors.response.use((response) => {
   // Maneja las respuestas exitosas
-  const userStore = useUserStore();
-  if (userStore.isActive) {
-    let authToken = userStore.isLoggedIn;
-    config.headers.Authorization = `Bearer ${authToken}`;
-  }
   return response;
 });
 export default axiosJsonInstance;

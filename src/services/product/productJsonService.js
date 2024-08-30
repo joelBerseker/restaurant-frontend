@@ -14,7 +14,7 @@ export const productJsonService = {
       if (response && response.data) {
         // Encuentra el elemento con el id correspondiente
         const productData = response.data.find(
-          (product) => product.id === product_id
+          (product) => product.id == product_id
         );
 
         if (productData) {

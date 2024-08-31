@@ -89,10 +89,8 @@ export const BaseService = {
   },
   async moreFilter(data, filterParams, specficFilter) {
     try {
-      // Filtramos los datos según los campos específicos en specificFilter y sus valores en filterParams
       const filteredData = data.filter((item) => {
         return specficFilter.every((key) => {
-          // Verifica si el filtro específico existe en filterParams y si el valor en data coincide
           if (filterParams[key] !== undefined) {
             return item[key] == filterParams[key];
           }

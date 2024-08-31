@@ -14,7 +14,7 @@ export const companyJsonService = {
       if (response && response.data) {
         // Encuentra el elemento con el id correspondiente
         const companyData = response.data.find(
-          (company) => company.id === company_id
+          (company) => company.id == company_id
         );
 
         if (companyData) {

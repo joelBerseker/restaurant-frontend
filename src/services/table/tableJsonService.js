@@ -13,7 +13,7 @@ export const tableJsonService = {
 
       if (response && response.data) {
         // Encuentra el elemento con el id correspondiente
-        const tableData = response.data.find((table) => table.id === table_id);
+        const tableData = response.data.find((table) => table.id == table_id);
 
         if (tableData) {
           console.log("Restaurant Frontend: Entro y encontro");

@@ -14,7 +14,7 @@ export const reservationJsonService = {
       if (response && response.data) {
         // Encuentra el elemento con el id correspondiente
         const reservationData = response.data.find(
-          (reservation) => reservation.id === reservation_id
+          (reservation) => reservation.id == reservation_id
         );
 
         if (reservationData) {

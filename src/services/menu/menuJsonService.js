@@ -13,7 +13,7 @@ export const menuJsonService = {
 
       if (response && response.data) {
         // Encuentra el elemento con el id correspondiente
-        const menuData = response.data.find((menu) => menu.id === menu_id);
+        const menuData = response.data.find((menu) => menu.id == menu_id);
 
         if (menuData) {
           console.log("Restaurant Frontend: Entro y encontro");

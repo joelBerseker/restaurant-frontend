@@ -16,7 +16,7 @@ export const userJsonService = {
 
       if (response && response.data) {
         // Encuentra el elemento con el id correspondiente
-        const userData = response.data.find((user) => user.id === user_id);
+        const userData = response.data.find((user) => user.id == user_id);
 
         if (userData) {
           console.log("Restaurant Frontend: Entro y encontro");

@@ -1,0 +1,119 @@
+{
+  "menus": [
+    {
+      "id": 1,
+      "_starters": [
+        {
+          "id": 2,
+          "_id_typeproduct": {
+            "id": 1,
+            "name": "ENTRADAS",
+            "description": "Sin descripción",
+            "status": 1
+          },
+          "id_typeproduct": 1,
+          "name": "PALTA RELLENA",
+          "description": "Sin descripción",
+          "price": "12.00",
+          "discount": 0,
+          "status": 1
+        }
+      ],
+      "_main_courses": [
+        {
+          "id": 1,
+          "_id_typeproduct": {
+            "id": 2,
+            "name": "POLLOS",
+            "description": "pollos en venta",
+            "status": 1
+          },
+          "id_typeproduct": 2,
+          "name": "POLLO A LA OLLA",
+          "description": "pollo a la olla casero",
+          "price": "25.00",
+          "discount": 0,
+          "status": 1
+        }
+      ],
+      "name": "MENU DEL LUNES",
+      "day": 1,
+      "price": "12.00",
+      "description": null,
+      "is_publish": true,
+      "status": 1,
+      "starters": [2],
+      "main_courses": [1]
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "_id_typeproduct": {
+        "id": 2,
+        "name": "POLLOS",
+        "description": "pollos en venta",
+        "status": 1
+      },
+      "name": "POLLO A LA OLLA",
+      "description": "pollo a la olla casero",
+      "product_type_image": null,
+      "price": "25.00",
+      "discount": 0,
+      "status": 1,
+      "is_publish": true,
+      "id_typeproduct": 2
+    },
+    {
+      "id": 2,
+      "_id_typeproduct": {
+        "id": 1,
+        "name": "ENTRADAS",
+        "description": "Sin descripción",
+        "status": 1
+      },
+      "name": "PALTA RELLENA",
+      "description": "Sin descripción",
+      "product_type_image": null,
+      "price": "12.00",
+      "discount": 0,
+      "status": 1,
+      "is_publish": false,
+      "id_typeproduct": 1
+    },
+    {
+      "id": 3,
+      "_id_typeproduct": {
+        "id": 3,
+        "name": "CHANCHOS",
+        "description": "Productos a base de Chancho",
+        "status": 1
+      },
+      "name": "CHANCHO AL PALO",
+      "description": "Chancho al palo con papas",
+      "product_type_image": null,
+      "price": "33.00",
+      "discount": 0,
+      "status": 1,
+      "is_publish": true,
+      "id_typeproduct": 3
+    },
+    {
+      "id": 4,
+      "_id_typeproduct": {
+        "id": 2,
+        "name": "POLLOS",
+        "description": "pollos en venta",
+        "status": 1
+      },
+      "name": "POLLO EN ESCABECHE",
+      "description": "Sin descripción",
+      "product_type_image": null,
+      "price": "23.00",
+      "discount": 0,
+      "status": 1,
+      "is_publish": true,
+      "id_typeproduct": 2
+    }
+  ]
+}

@@ -25,10 +25,8 @@ export const BaseService = {
   },
   async applyFilters(data, filterParams) {
     let filteredData = [...data]; // Hacer una copia de los datos
-    console.log(filterParams);
     const userStore = useUserStore();
-    const company = userStore.getCompany();
-    console.log(company);
+    const company = userStore.getCompany() || 1;
 
     if (filterParams) {
       const {
@@ -51,7 +49,6 @@ export const BaseService = {
         }
         return true;
       });
-
       // Aplicar filtros básicos
       if (search && searchBy) {
         filteredData = filteredData.filter((item) => {
@@ -69,16 +66,8 @@ export const BaseService = {
         });
       }
 
-      if (status) {
+      if (status || status != undefined) {
         filteredData = filteredData.filter((item) => item.status == status);
-      }
-
-      // Puedes agregar más filtros según tus necesidades
-      // Ejemplo de filtro por fecha
-      if (specific_date) {
-        filteredData = filteredData.filter(
-          (item) => item.reservation_date === specific_date
-        );
       }
 
       // Ordenar los datos si es necesario
@@ -97,5 +86,24 @@ export const BaseService = {
     }
 
     return filteredData;
+  },
+  async moreFilter(data, filterParams, specficFilter) {
+    try {
+      // Filtramos los datos según los campos específicos en specificFilter y sus valores en filterParams
+      const filteredData = data.filter((item) => {
+        return specficFilter.every((key) => {
+          // Verifica si el filtro específico existe en filterParams y si el valor en data coincide
+          if (filterParams[key] !== undefined) {
+            return item[key] == filterParams[key];
+          }
+          return true;
+        });
+      });
+
+      return filteredData;
+    } catch (error) {
+      console.error("Error al filtrar los datos:", error);
+      throw error;
+    }
   },
 };

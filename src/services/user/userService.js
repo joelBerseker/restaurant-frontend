@@ -1,170 +1,76 @@
-import axiosInstance from "@/services/axios-instance";
-import { handleError } from "@/helpers";
-import { dataTransform } from "@/services";
-import { BaseService } from "@/services/BaseService";
-import { UserModel } from "@/models";
-import { useToastStore, useUserStore } from "@/stores";
-import { authService } from "@/services";
-const servicePath = "/user/users";
-const servicePass = "/user/change-password";
-
-const module = "Usuario";
+import { userApiRestService } from "@/services/user/userApiRestService";
+import { userJsonService } from "@/services/user/userJsonService";
+const mode = import.meta.env.VITE_APP_MODE;
 export const userService = {
   async getUser(user_id) {
-    try {
-      const response = await axiosInstance.get(`${servicePath}/${user_id}/`);
-
-      if (response && response.data) {
-        const data = dataTransform.transformApiData(response.data, UserModel);
-        return data;
-      } else {
-        throw new Error(
-          "La respuesta de la API no contiene los datos esperados"
-        );
-      }
-    } catch (error) {
-      handleError(error, "get_element_error", module);
+    switch (mode) {
+      case "production":
+        return await userApiRestService.getUser(user_id);
+      case "test":
+        return await userJsonService.getUser(user_id);
+      default:
+        throw new Error(`Mode "${mode}" no está soportado`);
     }
   },
   async getListUser(filterParams = null) {
-    let filteredFilters = "";
-
-    if (filterParams) {
-      const {
-        search,
-        searchBy,
-        status,
-        order,
-        orderBy,
-        specific_date,
-        end_date,
-        start_date,
-        interval,
-        year_date,
-        searches,
-        // Otros parámetros de filtro que puedas necesitar
-        id_role,
-      } = filterParams;
-
-      const filters = {
-        orderBy,
-        order,
-        status,
-        search,
-        end_date,
-        start_date,
-        interval,
-        specific_date,
-        year_date,
-        searches,
-        // Otros parámetros de filtro que puedas necesitar
-        id_role,
-      };
-
-      filteredFilters = Object.entries(filters)
-        .filter(
-          ([key, value]) =>
-            value !== undefined && value !== null && value !== ""
-        )
-        .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-        .join("&");
-
-      if (search && searchBy) {
-        const searchByParam = `searchBy=${searchBy.join(",")}`;
-        filteredFilters += searchByParam ? `&${searchByParam}` : "";
-      }
-    }
-
-    try {
-      const response = await axiosInstance.get(
-        `${servicePath}/?${filteredFilters}`
-      );
-      const datas = response.data.map((apiData) =>
-        dataTransform.transformApiData(apiData, UserModel)
-      );
-      return datas;
-    } catch (error) {
-      handleError(error, "get_list_error", module);
+    switch (mode) {
+      case "production":
+        return await userApiRestService.getListUser(filterParams);
+      case "test":
+        return await userJsonService.getListUser(filterParams);
+      default:
+        throw new Error(`Mode "${mode}" no está soportado`);
     }
   },
 
   async addUser(new_data) {
-    try {
-      const config = {
-        method: "POST",
-        url: `${servicePath}/`,
-        data: new_data.addData(),
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
-      const response = await axiosInstance(config);
-      const data_new = dataTransform.transformApiData(response.data, UserModel);
-      const useToast = useToastStore();
-      useToast.show("add_success", {
-        important_text: data_new.getTextModel(),
-      });
-      return data_new;
-    } catch (error) {
-      handleError(error, "add_error", module);
+    switch (mode) {
+      case "production":
+        return await userApiRestService.addUser(new_data);
+      case "test":
+        return await userJsonService.addUser(new_data);
+      default:
+        throw new Error(`Mode "${mode}" no está soportado`);
     }
   },
   async updateUser(new_data) {
-    try {
-      const config = {
-        method: "PATCH",
-        url: `${servicePath}/${new_data.id.value}/`,
-        data: new_data.addData(),
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
-      const response = await axiosInstance(config);
-      const data_new = await dataTransform.transformApiData(
-        response.data,
-        UserModel
-      );
-      const userStore = useUserStore();
-      if (data_new.id.value == userStore.getId) {
-        authService.setUser();
-      }
-      const useToast = useToastStore();
-      useToast.show("edit_success", {
-        important_text: data_new.getTextModel(),
-      });
-      return data_new;
-    } catch (error) {
-      handleError(error, "edit_error", module);
+    switch (mode) {
+      case "production":
+        return await userApiRestService.updateUser(new_data);
+      case "test":
+        return await userJsonService.updateUser(new_data);
+      default:
+        throw new Error(`Mode "${mode}" no está soportado`);
     }
   },
   async changePassword(user = null, credential) {
-    try {
-      let url = `${servicePass}`;
-      if (user !== null) {
-        url = `${url}/${user}`;
-      }
-      const response = await axiosInstance.patch(`${url}/`, credential);
-      const useToast = useToastStore();
-      useToast.show("password_success");
-      return response;
-    } catch (error) {
-      handleError(error, "password_error");
+    switch (mode) {
+      case "production":
+        return await userApiRestService.changePassword(user, credential);
+      case "test":
+        return await userJsonService.changePassword(user, credential);
+      default:
+        throw new Error(`Mode "${mode}" no está soportado`);
     }
   },
   async deleteUser(dataid) {
-    try {
-      const response = await axiosInstance.delete(`${servicePath}/${dataid}/`);
-      const useToast = useToastStore();
-      useToast.show("delete_success", {
-        important_text: module,
-      });
-      return response;
-    } catch (error) {
-      handleError(error, "delete_error", module);
+    switch (mode) {
+      case "production":
+        return await userApiRestService.deleteUser(dataid);
+      case "test":
+        return await userJsonService.deleteUser(dataid);
+      default:
+        throw new Error(`Mode "${mode}" no está soportado`);
     }
   },
   async changeStatusUser(data) {
-    const endpoint = `${servicePath}/${data.id.value}/`;
-    return BaseService.changeStatus(endpoint, data, module);
+    switch (mode) {
+      case "production":
+        return await userApiRestService.changeStatusUser(data);
+      case "test":
+        return await userJsonService.changeStatusUser(data);
+      default:
+        throw new Error(`Mode "${mode}" no está soportado`);
+    }
   },
 };

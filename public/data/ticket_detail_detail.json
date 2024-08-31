@@ -1,0 +1,572 @@
+[
+  {
+    "id": 1,
+    "_ticket_id": {
+      "id": 1,
+      "_table_id": {
+        "id": 1,
+        "name": "MESA 01",
+        "number": 2,
+        "description": "MESA 01",
+        "status": 1,
+        "created_at": "2024-07-05 19:35:00",
+        "reservation_date": "2024-07-05 19:35:00",
+        "company_id": 1
+      },
+      "_user_id": {
+        "company_id": 1,
+        "id": 1,
+        "first_name": "ADMIN2",
+        "last_name": "cito",
+        "full_name": "1",
+        "email": "admin@admin.com",
+        "id_role": 1,
+        "ruc": "12312313412",
+        "status": 1,
+        "_id_role": {
+          "id": 1,
+          "name": "ADMINISTRADOR",
+          "description": "Administrador del sistema",
+          "status": 1,
+          "company_id": 1
+        }
+      },
+      "code": "OR-01001",
+      "ruc": null,
+      "client_name": null,
+      "discount": 0,
+      "priceTotal": "86.00",
+      "priceFinal": "85.00",
+      "check_discount": null,
+      "status": 1,
+      "description": "ASDASD",
+      "created_at": "2024-07-05 13:20:11",
+      "updated_at": "2024-07-13 16:57:30",
+      "deleted": false,
+      "company_id": 1,
+      "user_id": 1,
+      "table_id": 1
+    },
+    "_product_id": {
+      "id": 1,
+      "_starters": [
+        {
+          "id": 2,
+          "_id_typeproduct": {
+            "id": 1,
+            "name": "ENTRADAS",
+            "description": "Sin descripción",
+            "status": 1
+          },
+          "id_typeproduct": 1,
+          "name": "PALTA RELLENA",
+          "description": "Sin descripción",
+          "price": "12.00",
+          "discount": 0,
+          "status": 1
+        }
+      ],
+      "_main_courses": [
+        {
+          "id": 1,
+          "_id_typeproduct": {
+            "id": 2,
+            "name": "POLLOS",
+            "description": "pollos en venta",
+            "status": 1
+          },
+          "id_typeproduct": 2,
+          "name": "POLLO A LA OLLA",
+          "description": "pollo a la olla casero",
+          "price": "25.00",
+          "discount": 0,
+          "status": 1
+        }
+      ],
+      "name": "MENU DEL LUNES",
+      "day": 1,
+      "price": "12.00",
+      "description": null,
+      "is_publish": true,
+      "status": 1,
+      "starters": [2],
+      "main_courses": [1]
+    },
+    "is_menu": true,
+    "product_id": 1,
+    "price": "12.00",
+    "price_total": "24.00",
+    "quantity": 2,
+    "description": null,
+    "status": 1,
+    "created_at": "2024-07-05 13:20:11",
+    "updated_at": "2024-07-05 13:20:11",
+    "ticket_id": 1
+  },
+  {
+    "id": 2,
+    "_ticket_id": {
+      "id": 1,
+      "_table_id": {
+        "id": 1,
+        "name": "MESA 01",
+        "number": 2,
+        "description": "MESA 01",
+        "status": 1,
+        "created_at": "2024-07-05 19:35:00",
+        "reservation_date": "2024-07-05 19:35:00",
+        "company_id": 1
+      },
+      "_user_id": {
+        "company_id": 1,
+        "id": 1,
+        "first_name": "ADMIN2",
+        "last_name": "cito",
+        "full_name": "1",
+        "email": "admin@admin.com",
+        "id_role": 1,
+        "ruc": "12312313412",
+        "status": 1,
+        "_id_role": {
+          "id": 1,
+          "name": "ADMINISTRADOR",
+          "description": "Administrador del sistema",
+          "status": 1,
+          "company_id": 1
+        }
+      },
+      "code": "OR-01001",
+      "ruc": null,
+      "client_name": null,
+      "discount": 0,
+      "priceTotal": "86.00",
+      "priceFinal": "85.00",
+      "check_discount": null,
+      "status": 1,
+      "description": "ASDASD",
+      "created_at": "2024-07-05 13:20:11",
+      "updated_at": "2024-07-13 16:57:30",
+      "deleted": false,
+      "company_id": 1,
+      "user_id": 1,
+      "table_id": 1
+    },
+    "_product_id": {
+      "id": 1,
+      "_id_typeproduct": {
+        "id": 2,
+        "name": "POLLOS",
+        "description": "pollos en venta",
+        "status": 1
+      },
+      "name": "POLLO A LA OLLA",
+      "description": "pollo a la olla casero",
+      "product_type_image": null,
+      "price": "25.00",
+      "discount": 0,
+      "status": 1,
+      "is_publish": true,
+      "id_typeproduct": 2
+    },
+    "is_menu": false,
+    "product_id": 1,
+    "price": "25.00",
+    "price_total": "50.00",
+    "quantity": 2,
+    "description": null,
+    "status": 1,
+    "created_at": "2024-07-05 17:33:24",
+    "updated_at": "2024-07-05 17:33:24",
+    "ticket_id": 1
+  },
+  {
+    "id": 3,
+    "_ticket_id": {
+      "id": 2,
+      "_table_id": null,
+      "_user_id": {
+        "company_id": 1,
+        "id": 1,
+        "first_name": "ADMIN2",
+        "last_name": "cito",
+        "full_name": "1",
+        "email": "admin@admin.com",
+        "id_role": 1,
+        "ruc": "12312313412",
+        "status": 1,
+        "_id_role": {
+          "id": 1,
+          "name": "ADMINISTRADOR",
+          "description": "Administrador del sistema",
+          "status": 1,
+          "company_id": 1
+        }
+      },
+      "code": "OR-01002",
+      "ruc": null,
+      "client_name": null,
+      "discount": 0,
+      "priceTotal": "62.00",
+      "priceFinal": "62.00",
+      "check_discount": null,
+      "status": 1,
+      "description": null,
+      "created_at": "2024-07-05 19:34:13",
+      "updated_at": "2024-07-05 19:34:13",
+      "deleted": false,
+      "company_id": 1,
+      "user_id": 1,
+      "table_id": null
+    },
+    "_product_id": {
+      "id": 1,
+      "_id_typeproduct": {
+        "id": 2,
+        "name": "POLLOS",
+        "description": "pollos en venta",
+        "status": 1
+      },
+      "name": "POLLO A LA OLLA",
+      "description": "pollo a la olla casero",
+      "product_type_image": null,
+      "price": "25.00",
+      "discount": 0,
+      "status": 1,
+      "is_publish": true,
+      "id_typeproduct": 2
+    },
+    "is_menu": false,
+    "product_id": 1,
+    "price": "25.00",
+    "price_total": "50.00",
+    "quantity": 2,
+    "description": null,
+    "status": 1,
+    "created_at": "2024-07-05 19:34:14",
+    "updated_at": "2024-07-05 19:34:14",
+    "ticket_id": 2
+  },
+  {
+    "id": 4,
+    "_ticket_id": {
+      "id": 2,
+      "_table_id": null,
+      "_user_id": {
+        "company_id": 1,
+        "id": 1,
+        "first_name": "ADMIN2",
+        "last_name": "cito",
+        "full_name": "1",
+        "email": "admin@admin.com",
+        "id_role": 1,
+        "ruc": "12312313412",
+        "status": 1,
+        "_id_role": {
+          "id": 1,
+          "name": "ADMINISTRADOR",
+          "description": "Administrador del sistema",
+          "status": 1,
+          "company_id": 1
+        }
+      },
+      "code": "OR-01002",
+      "ruc": null,
+      "client_name": null,
+      "discount": 0,
+      "priceTotal": "62.00",
+      "priceFinal": "62.00",
+      "check_discount": null,
+      "status": 1,
+      "description": null,
+      "created_at": "2024-07-05 19:34:13",
+      "updated_at": "2024-07-05 19:34:13",
+      "deleted": false,
+      "company_id": 1,
+      "user_id": 1,
+      "table_id": null
+    },
+    "_product_id": {
+      "id": 2,
+      "_id_typeproduct": {
+        "id": 1,
+        "name": "ENTRADAS",
+        "description": "Sin descripción",
+        "status": 1
+      },
+      "name": "PALTA RELLENA",
+      "description": "Sin descripción",
+      "product_type_image": null,
+      "price": "12.00",
+      "discount": 0,
+      "status": 1,
+      "is_publish": false,
+      "id_typeproduct": 1
+    },
+    "is_menu": false,
+    "product_id": 2,
+    "price": "12.00",
+    "price_total": "12.00",
+    "quantity": 1,
+    "description": null,
+    "status": 1,
+    "created_at": "2024-07-05 19:34:14",
+    "updated_at": "2024-07-05 19:34:14",
+    "ticket_id": 2
+  },
+  {
+    "id": 5,
+    "_ticket_id": {
+      "id": 3,
+      "_table_id": {
+        "id": 1,
+        "name": "MESA 01",
+        "number": 2,
+        "description": "MESA 01",
+        "status": 1,
+        "created_at": "2024-07-05 19:35:00",
+        "reservation_date": "2024-07-05 19:35:00",
+        "company_id": 1
+      },
+      "_user_id": {
+        "company_id": 1,
+        "id": 1,
+        "first_name": "ADMIN2",
+        "last_name": "cito",
+        "full_name": "1",
+        "email": "admin@admin.com",
+        "id_role": 1,
+        "ruc": "12312313412",
+        "status": 1,
+        "_id_role": {
+          "id": 1,
+          "name": "ADMINISTRADOR",
+          "description": "Administrador del sistema",
+          "status": 1,
+          "company_id": 1
+        }
+      },
+      "code": "OR-01003",
+      "ruc": null,
+      "client_name": null,
+      "discount": 0,
+      "priceTotal": "83.00",
+      "priceFinal": "83.00",
+      "check_discount": null,
+      "status": 1,
+      "description": null,
+      "created_at": "2024-07-06 12:04:48",
+      "updated_at": "2024-07-06 12:04:48",
+      "deleted": false,
+      "company_id": 1,
+      "user_id": 1,
+      "table_id": 1
+    },
+    "_product_id": {
+      "id": 3,
+      "_id_typeproduct": {
+        "id": 3,
+        "name": "CHANCHOS",
+        "description": "Productos a base de Chancho",
+        "status": 1
+      },
+      "name": "CHANCHO AL PALO",
+      "description": "Chancho al palo con papas",
+      "product_type_image": null,
+      "price": "33.00",
+      "discount": 0,
+      "status": 1,
+      "is_publish": true,
+      "id_typeproduct": 3
+    },
+    "is_menu": false,
+    "product_id": 3,
+    "price": "33.00",
+    "price_total": "33.00",
+    "quantity": 1,
+    "description": null,
+    "status": 1,
+    "created_at": "2024-07-06 12:04:48",
+    "updated_at": "2024-07-06 12:04:48",
+    "ticket_id": 3
+  },
+  {
+    "id": 6,
+    "_ticket_id": {
+      "id": 3,
+      "_table_id": {
+        "id": 1,
+        "name": "MESA 01",
+        "number": 2,
+        "description": "MESA 01",
+        "status": 1,
+        "created_at": "2024-07-05 19:35:00",
+        "reservation_date": "2024-07-05 19:35:00",
+        "company_id": 1
+      },
+      "_user_id": {
+        "company_id": 1,
+        "id": 1,
+        "first_name": "ADMIN2",
+        "last_name": "cito",
+        "full_name": "1",
+        "email": "admin@admin.com",
+        "id_role": 1,
+        "ruc": "12312313412",
+        "status": 1,
+        "_id_role": {
+          "id": 1,
+          "name": "ADMINISTRADOR",
+          "description": "Administrador del sistema",
+          "status": 1,
+          "company_id": 1
+        }
+      },
+      "code": "OR-01003",
+      "ruc": null,
+      "client_name": null,
+      "discount": 0,
+      "priceTotal": "83.00",
+      "priceFinal": "83.00",
+      "check_discount": null,
+      "status": 1,
+      "description": null,
+      "created_at": "2024-07-06 12:04:48",
+      "updated_at": "2024-07-06 12:04:48",
+      "deleted": false,
+      "company_id": 1,
+      "user_id": 1,
+      "table_id": 1
+    },
+    "_product_id": {
+      "id": 1,
+      "_id_typeproduct": {
+        "id": 2,
+        "name": "POLLOS",
+        "description": "pollos en venta",
+        "status": 1
+      },
+      "name": "POLLO A LA OLLA",
+      "description": "pollo a la olla casero",
+      "product_type_image": null,
+      "price": "25.00",
+      "discount": 0,
+      "status": 1,
+      "is_publish": true,
+      "id_typeproduct": 2
+    },
+    "is_menu": false,
+    "product_id": 1,
+    "price": "25.00",
+    "price_total": "50.00",
+    "quantity": 2,
+    "description": null,
+    "status": 1,
+    "created_at": "2024-07-06 12:04:48",
+    "updated_at": "2024-07-06 12:04:48",
+    "ticket_id": 3
+  },
+  {
+    "id": 7,
+    "_ticket_id": {
+      "id": 1,
+      "_table_id": {
+        "id": 1,
+        "name": "MESA 01",
+        "number": 2,
+        "description": "MESA 01",
+        "status": 1,
+        "created_at": "2024-07-05 19:35:00",
+        "reservation_date": "2024-07-05 19:35:00",
+        "company_id": 1
+      },
+      "_user_id": {
+        "company_id": 1,
+        "id": 1,
+        "first_name": "ADMIN2",
+        "last_name": "cito",
+        "full_name": "1",
+        "email": "admin@admin.com",
+        "id_role": 1,
+        "ruc": "12312313412",
+        "status": 1,
+        "_id_role": {
+          "id": 1,
+          "name": "ADMINISTRADOR",
+          "description": "Administrador del sistema",
+          "status": 1,
+          "company_id": 1
+        }
+      },
+      "code": "OR-01001",
+      "ruc": null,
+      "client_name": null,
+      "discount": 0,
+      "priceTotal": "86.00",
+      "priceFinal": "85.00",
+      "check_discount": null,
+      "status": 1,
+      "description": "ASDASD",
+      "created_at": "2024-07-05 13:20:11",
+      "updated_at": "2024-07-13 16:57:30",
+      "deleted": false,
+      "company_id": 1,
+      "user_id": 1,
+      "table_id": 1
+    },
+    "_product_id": {
+      "id": 1,
+      "_starters": [
+        {
+          "id": 2,
+          "_id_typeproduct": {
+            "id": 1,
+            "name": "ENTRADAS",
+            "description": "Sin descripción",
+            "status": 1
+          },
+          "id_typeproduct": 1,
+          "name": "PALTA RELLENA",
+          "description": "Sin descripción",
+          "price": "12.00",
+          "discount": 0,
+          "status": 1
+        }
+      ],
+      "_main_courses": [
+        {
+          "id": 1,
+          "_id_typeproduct": {
+            "id": 2,
+            "name": "POLLOS",
+            "description": "pollos en venta",
+            "status": 1
+          },
+          "id_typeproduct": 2,
+          "name": "POLLO A LA OLLA",
+          "description": "pollo a la olla casero",
+          "price": "25.00",
+          "discount": 0,
+          "status": 1
+        }
+      ],
+      "name": "MENU DEL LUNES",
+      "day": 1,
+      "price": "12.00",
+      "description": null,
+      "is_publish": true,
+      "status": 1,
+      "starters": [2],
+      "main_courses": [1]
+    },
+    "is_menu": true,
+    "product_id": 1,
+    "price": "12.00",
+    "price_total": "12.00",
+    "quantity": 1,
+    "description": null,
+    "status": 1,
+    "created_at": "2024-07-13 16:57:09",
+    "updated_at": "2024-07-13 16:57:09",
+    "ticket_id": 1
+  }
+]

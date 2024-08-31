@@ -65,7 +65,7 @@ export const ticketDetailJsonService = {
   async getListProdutMenu(filterParams = null) {
     try {
       const response = await axiosJsonInstance.get(`${servicePathOption}`);
-      const filterData = await BaseService.applyFilters(
+      let filterData = await BaseService.applyFilters(
         response.data,
         filterParams
       );
